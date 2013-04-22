@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping>
+		<class name="com.mytalk.server.data.model.Call" table="Calls">
+			<id name="id" type="integer"></id>
+			<property name="caller" column="caller" type="string"></property>
+			<property name="receiver" column="receiver" type="string"></property>
+			<property name="duration" column="duration" type="time"></property>
+			<property name="byteSent" column="byteSent" type="integer"></property>
+			<property name="byteReceived" column="byteReceived" type="integer"></property>
+		</class>
+	</hibernate-mapping> 

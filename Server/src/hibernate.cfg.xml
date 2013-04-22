@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"> 
+<hibernate-configuration> 
+	<session-factory> 
+		<property name="hibernate.dialect"> org.hibernate.dialect.MySQLDialect </property> 
+		<property name="hibernate.connection.driver_class"> com.mysql.jdbc.Driver </property> 
+		
+		<property name="hibernate.connection.url"> jdbc:mysql://localhost/MyTalk </property> 
+		<property name="hibernate.connection.username"> root </property> 
+		<property name="hibernate.connection.password"> 011290 </property> 
+		
+		<mapping resource="com/mytalk/server/data/xml/blacklists.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/calls.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/mail_changes.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/forgotten_passwords.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/list_names.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/user_lists.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/online_users.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/to_confirm_accounts.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/users.hbm.xml"/> 
+	</session-factory> 
+</hibernate-configuration>

@@ -79,7 +79,7 @@ public interface IDataAccess{
 			
 			public List<Call> getCalls(String u);
 			
-			public void addCall(String c,String r,Time d,Integer bt,Integer br);
+			public void addCall(String c,String r,Integer d,Integer bt,Integer br);
 			
 			public void deleteUnconfirmedAccount();
 			

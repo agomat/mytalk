@@ -25,13 +25,13 @@ public class Call{
 	private int id=0;
 	private String caller;
 	private String receiver;
-	private Time duration;
+	private Integer duration;
 	private int byteSent;
 	private int byteReceived;
 	
 	public Call(){}
 
-	public Call(String call, String rece, Time time, int bs, int br){
+	public Call(String call, String rece, Integer time, int bs, int br){
 		caller=call;
 		receiver=rece;
 		duration=time;
@@ -56,10 +56,10 @@ public class Call{
 	public void setReceiver(String s){
 		receiver=s;
 	}
-	public Time getDuration(){
+	public Integer getDuration(){
 		return duration;
 	}
-	public void setDuration(Time t){
+	public void setDuration(Integer t){
 		duration=t;
 	}
 	public int getByteSent(){

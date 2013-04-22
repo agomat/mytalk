@@ -21,7 +21,6 @@ package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
 import java.util.*;
-import java.sql.Time;
 
 import com.mytalk.server.data.model.*;
 
@@ -39,10 +38,8 @@ public class CallDAO extends GenericDAO {
 	}
 	
 	//aggiunge una chiamata al database
-	public void addCall(String c,String r,Time d,Integer bt,Integer br){
-		Long n=d.getTime()-3600000;
-		Time rt=new Time(n);
-		Call s=new Call(c,r,rt,bt,br);
+	public void addCall(String c,String r,Integer d,Integer bt,Integer br){
+		Call s=new Call(c,r,d,bt,br);
 		session.save(s);
 		
 		t.commit();

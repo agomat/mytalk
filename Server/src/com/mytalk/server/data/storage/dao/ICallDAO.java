@@ -21,11 +21,10 @@ package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
 import java.util.*;
-import java.sql.Time;
 
 public interface ICallDAO {
 
 	public List<Call> getCalls(String u);
 	
-	public void addCall(String c,String r,Time d,Integer bt,Integer br);
+	public void addCall(String c,String r,Integer d,Integer bt,Integer br);
 }

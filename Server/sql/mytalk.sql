@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Calls
         id			INTEGER(12)	NOT NULL	AUTO_INCREMENT,
         caller		VARCHAR(20)	,
         receiver	VARCHAR(20)	,
-        duration	TIME		NOT NULL,
+        duration	INTEGER(10)	NOT NULL,
         byteSent	INTEGER(10)	NOT NULL,
         byteReceived	INTEGER(10)	NOT NULL,
         PRIMARY KEY (id),

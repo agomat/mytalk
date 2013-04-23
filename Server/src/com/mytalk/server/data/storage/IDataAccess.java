@@ -21,9 +21,8 @@ Date
 
 package com.mytalk.server.data.storage;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Vector;
 
 import com.mytalk.server.data.model.*;
 
@@ -79,7 +78,7 @@ public interface IDataAccess{
 			
 			public List<Call> getCalls(String u);
 			
-			public void addCall(String c,String r,int d,int bt,int br);
+			public void addCall(String c,String r,int d,Timestamp sd,int bt,int br);
 			
 			public void deleteUnconfirmedAccount();
 			

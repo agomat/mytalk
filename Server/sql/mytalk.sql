@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS Calls
         caller		VARCHAR(20)	,
         receiver	VARCHAR(20)	,
         duration	INTEGER(10)	NOT NULL,
+        startdate	TIMESTAMP NOT NULL,
         byteSent	INTEGER(10)	NOT NULL,
         byteReceived	INTEGER(10)	NOT NULL,
         PRIMARY KEY (id),

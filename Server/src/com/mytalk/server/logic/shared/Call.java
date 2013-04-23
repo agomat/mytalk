@@ -19,6 +19,7 @@ Date
 */
 
 package com.mytalk.server.logic.shared;
+import java.sql.Timestamp;
 
 public class Call{
 	
@@ -26,15 +27,17 @@ public class Call{
 	private int byteSent;
 	private int byteReceived;
 	private int duration;
+	private Timestamp startdate;
 	private boolean caller;
 	
 	public Call(){}
 	
-	public Call(String s, int bs, int br, int d, boolean c){
+	public Call(String s, int bs, int br, int d, Timestamp sd, boolean c){
 		speaker=s;
 		byteSent=bs;
 		byteReceived=br;
 		duration=d;
+		startdate=sd;
 		caller=c;
 	}
 	
@@ -67,6 +70,12 @@ public class Call{
 	}
 	public void setByteReceived(int n){
 		byteReceived=n;
+	}
+	public Timestamp getStartdate(){
+		return startdate;
+	}
+	public void setStartDate(Timestamp t){
+		startdate=t;
 	}
 	
 }

@@ -20,10 +20,8 @@ Date
 
 package com.mytalk.server.data.storage;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Vector;
-
 import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.storage.dao.*;
 
@@ -221,9 +219,9 @@ public class DataAccess implements IDataAccess{
 	//GetStats usa GetCalls e calcola le statistiche
 	
 	// aggiunge una chiamata alla tabella Call
-	public void addCall(String c,String r,int d,int bt,int br){
+	public void addCall(String c,String r,int d,Timestamp sd,int bt,int br){
 		CallDAO cd=new CallDAO();
-		cd.addCall(c,r,d,bt,br);
+		cd.addCall(c,r,d,sd,bt,br);
 	}
 	
 	// elimina tutti i record della tabella ToConfirmAccount

@@ -19,21 +19,24 @@ Date
 */
 
 package com.mytalk.server.data.model;
+import java.sql.Timestamp;
 
 public class Call{
 	private int id=0;
 	private String caller;
 	private String receiver;
 	private int duration;
+	private Timestamp startdate;
 	private int byteSent;
 	private int byteReceived;
 	
 	public Call(){}
 
-	public Call(String call, String rece, int time, int bs, int br){
+	public Call(String call, String rece, int time,Timestamp date, int bs, int br){
 		caller=call;
 		receiver=rece;
 		duration=time;
+		startdate=date;
 		byteSent=bs;
 		byteReceived=br;
 	}
@@ -72,5 +75,11 @@ public class Call{
 	}
 	public void setByteReceived(int n){
 		byteReceived=n;
+	}
+	public Timestamp getStartdate(){
+		return startdate;
+	}
+	public void setStartdate(Timestamp t){
+		startdate=t;
 	}
 }

@@ -5,9 +5,9 @@
 		<property name="hibernate.dialect"> org.hibernate.dialect.MySQLDialect </property> 
 		<property name="hibernate.connection.driver_class"> com.mysql.jdbc.Driver </property> 
 		
-		<property name="hibernate.connection.url"> jdbc:mysql://binarylab.info/MyTalk </property> 
+		<property name="hibernate.connection.url"> jdbc:mysql://localhost/MyTalk </property> 
 		<property name="hibernate.connection.username"> root </property> 
-		<property name="hibernate.connection.password"> h6Zml8982^ </property> 
+		<property name="hibernate.connection.password"> mytalk </property> 
 		
 		<mapping resource="com/mytalk/server/data/xml/blacklists.hbm.xml"/> 
 		<mapping resource="com/mytalk/server/data/xml/calls.hbm.xml"/> 

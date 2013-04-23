@@ -27,15 +27,17 @@ public class AdditionalData{
 	private String code;
 	private String sdp;
 	private String user;
+	private String stats;
 	
 	public AdditionalData(){}
 	
-	public AdditionalData(String p, String e, String c, String s, String u){
+	public AdditionalData(String p, String e, String c, String s, String u,String stat){
 		password=p;
 		email=e;
 		code=c;
 		sdp=s;
 		user=u;
+		stats=stat;
 	}
 	
 	public String getPassword(){

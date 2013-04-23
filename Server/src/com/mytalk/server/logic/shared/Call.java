@@ -20,19 +20,17 @@ Date
 
 package com.mytalk.server.logic.shared;
 
-import java.sql.Time;
-
 public class Call{
 	
 	private String speaker;
 	private int byteSent;
 	private int byteReceived;
-	private Time duration;
+	private int duration;
 	private boolean caller;
 	
 	public Call(){}
 	
-	public Call(String s, int bs, int br, Time d, boolean c){
+	public Call(String s, int bs, int br, int d, boolean c){
 		speaker=s;
 		byteSent=bs;
 		byteReceived=br;
@@ -52,10 +50,10 @@ public class Call{
 	public void setCaller(boolean s){
 		caller=s;
 	}
-	public Time getDuration(){
+	public int getDuration(){
 		return duration;
 	}
-	public void setDuration(Time t){
+	public void setDuration(int t){
 		duration=t;
 	}
 	public int getByteSent(){

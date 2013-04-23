@@ -19,19 +19,18 @@ Date
 */
 
 package com.mytalk.server.data.model;
-import java.sql.Time;
 
 public class Call{
 	private int id=0;
 	private String caller;
 	private String receiver;
-	private Integer duration;
+	private int duration;
 	private int byteSent;
 	private int byteReceived;
 	
 	public Call(){}
 
-	public Call(String call, String rece, Integer time, int bs, int br){
+	public Call(String call, String rece, int time, int bs, int br){
 		caller=call;
 		receiver=rece;
 		duration=time;
@@ -56,10 +55,10 @@ public class Call{
 	public void setReceiver(String s){
 		receiver=s;
 	}
-	public Integer getDuration(){
+	public int getDuration(){
 		return duration;
 	}
-	public void setDuration(Integer t){
+	public void setDuration(int t){
 		duration=t;
 	}
 	public int getByteSent(){

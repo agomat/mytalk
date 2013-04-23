@@ -221,7 +221,7 @@ public class DataAccess implements IDataAccess{
 	//GetStats usa GetCalls e calcola le statistiche
 	
 	// aggiunge una chiamata alla tabella Call
-	public void addCall(String c,String r,Integer d,Integer bt,Integer br){
+	public void addCall(String c,String r,int d,int bt,int br){
 		CallDAO cd=new CallDAO();
 		cd.addCall(c,r,d,bt,br);
 	}

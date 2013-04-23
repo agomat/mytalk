@@ -6,7 +6,7 @@
 			<id name="id" type="integer"></id>
 			<property name="caller" column="caller" type="string"></property>
 			<property name="receiver" column="receiver" type="string"></property>
-			<property name="duration" column="duration" type="time"></property>
+			<property name="duration" column="duration" type="integer"></property>
 			<property name="byteSent" column="byteSent" type="integer"></property>
 			<property name="byteReceived" column="byteReceived" type="integer"></property>
 		</class>

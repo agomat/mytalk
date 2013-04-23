@@ -70,4 +70,10 @@ public class AdditionalData{
 	public void setUser(String n){
 		user=n;
 	}
+	public String getStats(){
+		return stats;
+	}
+	public void setStats(String s){
+		stats=s;
+	}
 }

@@ -26,10 +26,12 @@ import java.util.*;
 public class ToConfirmAccountDAO extends GenericDAO {
 	public ToConfirmAccountDAO(){}
 	
-	// inserisce i dati nella tabella ToConfirmAccount
+	// inserisce i dati nella tabella ToConfirmAccount dopo aver verificato che non sia già presente nella
+	// tabella User e nella tabella ToConfirmAccount
 	public void addAccountToBeConfirmed(String user, String pwd, String email){
+		User u=(User) session.get(User.class, user);
 		ToConfirmAccount tcac=(ToConfirmAccount) session.get(ToConfirmAccount.class, user);
-		if(tcac==null){
+		if(tcac==null && u==null){
 			ToConfirmAccount tca= new ToConfirmAccount(user,pwd,email);
 			session.save(tca);
 		}		

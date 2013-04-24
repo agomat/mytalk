@@ -71,7 +71,7 @@ public class UserDAO extends GenericDAO {
 		if(u==null){
 			User u1=new User(user,pwd,email);
 			session.save(u1);
-		}					
+		}						
 		t.commit();
 		session.close();
 	}

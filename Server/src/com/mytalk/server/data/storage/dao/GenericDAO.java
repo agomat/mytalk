@@ -25,7 +25,5 @@ import com.mytalk.server.data.persistence.HibernateUtil;
 
 
 public abstract class GenericDAO {
-	protected Session session=HibernateUtil.getSessionFactory().openSession();
-	protected Transaction t=session.beginTransaction();
-	
+	protected SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 }

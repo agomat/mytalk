@@ -23,7 +23,7 @@ import com.mytalk.server.data.model.*;
 import java.util.*;
 import java.sql.Timestamp;
 
-public class CallDAO extends GenericDAO {
+public class CallDAO extends GenericDAO{
 
 	public CallDAO(){}
 	

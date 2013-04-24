@@ -21,37 +21,51 @@ Date
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
+import org.hibernate.*;
 import java.util.*;
 
-public class ToConfirmAccountDAO extends GenericDAO {
+public class ToConfirmAccountDAO{
 	public ToConfirmAccountDAO(){}
+	//save update delete get
 	
-	// inserisce i dati nella tabella ToConfirmAccount dopo aver verificato che non sia già presente nella
-	// tabella User e nella tabella ToConfirmAccount
-	public void addAccountToBeConfirmed(String user, String pwd, String email){
-		User u=(User) session.get(User.class, user);
-		ToConfirmAccount tcac=(ToConfirmAccount) session.get(ToConfirmAccount.class, user);
-		if(tcac==null && u==null){
-			ToConfirmAccount tca= new ToConfirmAccount(user,pwd,email);
-			session.save(tca);
-		}		
+	public void save(ToConfirmAccount toConfirmAccountObj){
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction t = session.beginTransaction();
+		session.save(toConfirmAccountObj);
 		t.commit();
 		session.close();
 	}
 	
-	//elimino il record corrispondente all'username dalla tabella ToConfirmAccount
-	public String[] deleteConfirmedAccount(String user){
-		String[] pe=new String[2];
-		ToConfirmAccount tca= (ToConfirmAccount) session.get(ToConfirmAccount.class, user);
-		if(tca!=null){
-			pe[0]=tca.getPassword();
-			pe[1]=tca.getEmail();
-			session.delete(tca);
-		}
+	public void update(ToConfirmAccount toConfirmAccountObj){
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction t = session.beginTransaction();
+		session.update(toConfirmAccountObj);
 		t.commit();
 		session.close();
-		return pe;
 	}
+	
+	public void delete(ToConfirmAccount toConfirmAccountObj){
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction t = session.beginTransaction();
+		session.delete(toConfirmAccountObj);
+		t.commit();
+		session.close();
+	}
+	
+	public ToConfirmAccount get(String primaryKey){
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction t = session.beginTransaction();
+		ToConfirmAccount account = session.get(primaryKey);
+		t.commit();
+		session.close();
+	}
+	
+	
 	
 	// elimina tutti i record della tabella ToConfirmAccount
 	public void deleteUnconfirmedAccount(){

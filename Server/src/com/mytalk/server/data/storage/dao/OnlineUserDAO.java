@@ -20,11 +20,49 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
-import java.util.*;
+import org.hibernate.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
 
-public class OnlineUserDAO extends GenericDAO{
+public class OnlineUserDAO{
 
 	public OnlineUserDAO(){}
+	
+	public void save(OnlineUser onlineObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.save(onlineObj);
+		t.commit();
+		session.close();
+	}
+	
+	public void delete(OnlineUser onlineObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.delete(onlineObj);
+		t.commit();
+		session.close();
+	}
+	
+	public void update(OnlineUser onlineObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.update(onlineObj);
+		t.commit();
+		session.close();
+	}
+	
+	public OnlineUser get(String primaryKey){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		OnlineUser online=(OnlineUser)session.get(OnlineUser.class, primaryKey);
+		t.commit();
+		session.close();
+		return online;
+	}
 	
 	//verifica la presenza dell'ip nella tabella Online
 	public boolean checkIPIsOnline(String s){

@@ -20,30 +20,45 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
+import org.hibernate.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
 
-public class MailChangeDAO extends GenericDAO {
+public class MailChangeDAO{
 	
 	public MailChangeDAO(){}
-
-	//inserisce un record nella tabella MailChange con username, email e codice
-	public void updateEmail(String u,String e,String code){
-		MailChange m=new MailChange(u,e,code);
-		MailChange n=(MailChange)session.get(MailChange.class, u);
-		if(n!=null){
-			session.delete(n);
-		}
-		session.save(m);
+	
+	public void save(MailChange mailObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.save(mailObj);
 		t.commit();
 		session.close();
 	}
 	
-	public String confirmUpdateEmail(String u,String code){
-		String mail=null;
-		MailChange n=(MailChange)session.get(MailChange.class, u);
-		if(n!=null){
-			mail=n.getNewmail();
-			session.delete(n);
-		}
+	public void delete(MailChange mailObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.delete(mailObj);
+		t.commit();
+		session.close();
+	}
+	
+	public void update(MailChange mailObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.update(mailObj);
+		t.commit();
+		session.close();
+	}
+	
+	public MailChange get(String primaryKey){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		MailChange mail=(MailChange)session.get(MailChange.class, primaryKey);
 		t.commit();
 		session.close();
 		return mail;

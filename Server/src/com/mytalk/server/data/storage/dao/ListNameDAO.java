@@ -21,12 +21,49 @@ Date
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
-import java.util.*;
+import org.hibernate.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
 
-public class ListNameDAO extends GenericDAO{
-	
+public class ListNameDAO{
 	
 	public ListNameDAO() {}
+	
+	public void save(ListName listObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.save(listObj);
+		t.commit();
+		session.close();
+	}
+	
+	public void delete(ListName listObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.delete(listObj);
+		t.commit();
+		session.close();
+	}
+	
+	public void update(ListName listObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.update(listObj);
+		t.commit();
+		session.close();
+	}
+	
+	public ListName get(String primaryKey){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		ListName list=(ListName)session.get(ListName.class, primaryKey);
+		t.commit();
+		session.close();
+		return list;
+	}
 	
 	//interroga il db e restituisce le liste degli utenti
 	public List<ListName> returnListUser(String username){

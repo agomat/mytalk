@@ -129,22 +129,29 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//inserisce un record nella tabella MailChange con username, email e codice
-	public void updateEmail(String u,String e,String code){
-		MailChangeDAO cmd=new MailChangeDAO();
-		cmd.updateEmail(u,e,code);
+	public void updateEmail(MailChange newMail){
+		MailChangeDAO mcd=new MailChangeDAO();
+		MailChange oldMail=mcd.get(newMail.getUsername());
+		if(oldMail!=null){
+			mcd.delete(newMail);
+		}
+		mcd.save(newMail);
 	}
 	
-	//
-	public boolean confirmUpdateEmail(String u,String code){
-		MailChangeDAO cmd=new MailChangeDAO();
-		String email=cmd.confirmUpdateEmail(u,code); //verifica la presenza nella tabella,elimino record e restituisce la mail
-		if(email!=null){
+	//se il codice è giusto cancella il record da mailchange e aggiorna lo username con la nuova mail
+	public void confirmUpdateEmail(MailChange newMail){
+		MailChangeDAO mcd=new MailChangeDAO();
+		MailChange mailToChange=mcd.get(newMail.getUsername());//assume che esista già un record in MailChange con quel username
+		String savedCode=mailToChange.getCode();
+		String passedCode=newMail.getCode();
+		if(savedCode==passedCode){
+			mcd.delete(mailToChange);
+			User updatedUser=new User(mailToChange.getUsername(),null,mailToChange.getNewmail());//non sono sicuro del campo null se me lo modifica facendo update o se lascia il campo originario
 			UserDAO ud=new UserDAO();
-			ud.changeUserMail(u,email); //cambia la mail
-			return true;
+			ud.update(updatedUser);
+		}else{
+			//throw //il codice passato è sbagliato, non faccio niente e lo notifico con una eccezione
 		}
-		else
-			return false;
 	}
 	
 	//elimino il record corrispondente all'username dalla tabella ToConfirmAccount e aggiungo le info alla tabella user

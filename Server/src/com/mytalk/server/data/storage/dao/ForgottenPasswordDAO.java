@@ -19,36 +19,56 @@
 
 package com.mytalk.server.data.storage.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import com.mytalk.server.data.model.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
 
 
 public class ForgottenPasswordDAO extends GenericDAO {
 
 	public ForgottenPasswordDAO(){}
 	
-	public void passwordRetriever(String u, String newpwd){
-		ForgottenPassword m=new ForgottenPassword(u,newpwd);
-		ForgottenPassword n=(ForgottenPassword)session.get(ForgottenPassword.class, u);
-		if(n!=null){
-			session.delete(n);
-		}
-		session.save(m);
-		
-		t.commit();
-		session.close();
-	}
-	
-	public String confirmChangePassword(String u){
-		String s=null;
-		ForgottenPassword m=(ForgottenPassword)session.get(ForgottenPassword.class, u);
-		if(m!=null){
-			s=m.getNewpwd();
-			session.delete(m);
+	//Aggiunge un oggetto ForgottenPassword ricevuto in input
+		public void save(ForgottenPassword forgottenPasswordObj){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			session.save(forgottenPasswordObj);
+			t.commit();
+			session.close();
 		}
 		
-		t.commit();
-		session.close();
+		//Aggiorna un oggetto Blacklist passato in input
+		public void update(ForgottenPassword forgottenPasswordObj){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			session.update(forgottenPasswordObj);
+			t.commit();
+			session.close();
+		}
 		
-		return s;
-	}
+		//Ottenere un oggetto di tipo Blacklist
+		public ForgottenPassword get(String primaryKey){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			ForgottenPassword forgottenPasswordObj=(ForgottenPassword) session.get(ForgottenPassword.class,primaryKey);
+			t.commit();
+			session.close();
+			return forgottenPasswordObj;
+		}
+		
+		//Cancella un oggetto Blacklist passato in input
+		public void delete(ForgottenPassword forgottenPasswordObj){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			session.delete(forgottenPasswordObj);
+			t.commit();
+			session.close();
+		}
 }

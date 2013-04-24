@@ -20,28 +20,55 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
+
 import java.util.*;
 import java.sql.Timestamp;
+import org.hibernate.*;
 
-public class CallDAO extends GenericDAO{
+import com.mytalk.server.data.persistence.HibernateUtil;
+
+public class CallDAO{
 
 	public CallDAO(){}
 	
-	//ritorna le chiamate effettuate e ricevute di un utente
-	public List<Call> getCalls(String u){
-		List<Call> l=session.createSQLQuery("SELECT * FROM Calls WHERE caller=:u OR receiver=:u").addEntity(Call.class).setParameter("u",u).list();
+	//Aggiunge un oggetto Call ricevuto in input
+		public void save(Call callObj){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			session.save(callObj);
+			t.commit();
+			session.close();
+		}
 		
-		t.commit();
-		session.close();
-		return l;
-	}
-	
-	//aggiunge una chiamata al database
-	public void addCall(String c,String r,int d,Timestamp sd,int bt,int br){
-		Call s=new Call(c,r,d,sd,bt,br);
-		session.save(s);
+		//Aggiorna un oggetto Call passato in input
+		public void update(Call callObj){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			session.update(callObj);
+			t.commit();
+			session.close();
+		}
 		
-		t.commit();
-		session.close();
-	}
+		//Ottenere un oggetto di tipo Call
+		public Call get(String primaryKey){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			Call callObj=(Call) session.get(Call.class,primaryKey);
+			t.commit();
+			session.close();
+			return callObj;
+		}
+		
+		//Cancella un oggetto Call passato in input
+		public void delete(Call callObj){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			session.delete(callObj);
+			t.commit();
+			session.close();
+		}
 }

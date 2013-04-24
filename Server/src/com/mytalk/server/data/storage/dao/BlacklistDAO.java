@@ -21,39 +21,68 @@ Date
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
+
 import java.util.*;
 import java.io.Serializable;
 
-public class BlacklistDAO extends GenericDAO {
+import org.hibernate.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
+
+public class BlacklistDAO {
+	
 	public BlacklistDAO(){}
 	
-	//restituisce un vettore di user che identifica la blacklist
-	public List<User> getUserBlacklist(String user){
-		List<User> l=session.createSQLQuery("SELECT * FROM Users WHERE username IN (SELECT username FROM Blacklists WHERE owner=:user)").addEntity(User.class).setParameter("user", user).list();
-		
-		t.commit();
-		session.close();
-		return l;
-	}
-	
-	//verifica che non sia già presente quell'user per quell'owner aggiunge un record alla tabella Blacklist
-	public void addUserToBlacklist(String owner,String user){
-		List<Blacklist> b=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner=:owner AND username=:user").addEntity(Blacklist.class).setParameter("owner", owner).setParameter("user", user).list();
-		if(b.size()==0){	
-			Blacklist nb=new Blacklist(owner,user);
-			session.save(nb);
-		}
-		
+	//Aggiunge un oggetto Blacklist ricevuto in input
+	public void save(Blacklist blacklistObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.save(blacklistObj);
 		t.commit();
 		session.close();
 	}
 	
-	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
-	public void removeUserFromBlacklist(String o,String u){
-		List<Blacklist> b=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner=:o && username=:u").addEntity(Blacklist.class).setParameter("o", o).setParameter("u", u).list();
-		if(b.size()>0){
-			session.delete(b.get(0));
-		}
+	//Aggiorna un oggetto Blacklist passato in input
+	public void update(Blacklist blacklistObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.update(blacklistObj);
+		t.commit();
+		session.close();
+	}
+	
+	//Ottenere un oggetto di tipo Blacklist
+	public Blacklist get(String primaryKey){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		Blacklist blacklistObj=(Blacklist) session.get(Blacklist.class,primaryKey);
+		t.commit();
+		session.close();
+		return blacklistObj;
+	}
+	
+	public List<Blacklist> getUsernameByOwner(String primaryKey){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+
+		Query query=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner=:user");
+		query=query.setParameter("owner", primaryKey);
+		List<Blacklist> ownerBlacklist=query.list();		
+		t.commit();
+		session.close();
+		return ownerBlacklist;
+	}
+	
+	//Cancella un oggetto Blacklist passato in input
+	public void delete(Blacklist blacklistObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.delete(blacklistObj);
 		t.commit();
 		session.close();
 	}

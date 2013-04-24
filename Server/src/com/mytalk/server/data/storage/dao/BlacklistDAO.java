@@ -69,7 +69,7 @@ public class BlacklistDAO {
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 
-		Query query=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner=:user");
+		Query query=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner=:owner");
 		query=query.setParameter("owner", primaryKey);
 		List<Blacklist> ownerBlacklist=query.list();		
 		t.commit();

@@ -27,6 +27,7 @@ import java.util.*;
 import java.io.Serializable;
 
 import org.hibernate.*;
+
 import com.mytalk.server.data.persistence.HibernateUtil;
 
 public class BlacklistDAO {
@@ -48,6 +49,10 @@ public class BlacklistDAO {
 		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
+		Blacklist blacklistEntity=(Blacklist)session.get(Blacklist.class, blacklistObj.getOwner());
+		if(blacklistObj.getUsername()==null){
+			blacklistObj.setUsername(blacklistEntity.getUsername());
+		}
 		session.update(blacklistObj);
 		t.commit();
 		session.close();
@@ -69,8 +74,9 @@ public class BlacklistDAO {
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 
-		Query query=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner=:owner");
-		query=query.setParameter("owner", primaryKey);
+		SQLQuery query=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner='"+primaryKey+"'");
+		query=query.addEntity(Blacklist.class);
+
 		List<Blacklist> ownerBlacklist=query.list();		
 		t.commit();
 		session.close();

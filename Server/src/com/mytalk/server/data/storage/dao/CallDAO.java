@@ -41,7 +41,7 @@ public class CallDAO{
 			session.close();
 		}
 		
-		//Aggiorna un oggetto Call passato in input
+		//Aggiorna un oggetto Call passato in input (SERVE?????)
 		public void update(Call callObj){
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
@@ -60,6 +60,18 @@ public class CallDAO{
 			t.commit();
 			session.close();
 			return callObj;
+		}
+		
+		public List<Call> getAllUserCalls(String u){
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			Transaction t=session.beginTransaction();
+			SQLQuery query=session.createSQLQuery("SELECT * FROM Calls WHERE caller='"+u+"' OR receiver='"+u+"'");
+			query=query.addEntity(Call.class);
+			List<Call> listOfUserCalls=query.list();
+			t.commit();
+			session.close();
+			return listOfUserCalls;
 		}
 		
 		//Cancella un oggetto Call passato in input

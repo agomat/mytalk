@@ -27,7 +27,7 @@ import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.persistence.HibernateUtil;
 
 
-public class ForgottenPasswordDAO extends GenericDAO {
+public class ForgottenPasswordDAO {
 
 	public ForgottenPasswordDAO(){}
 	

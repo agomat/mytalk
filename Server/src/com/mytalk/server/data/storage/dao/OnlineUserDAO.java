@@ -83,14 +83,14 @@ public class OnlineUserDAO{
 		return ip;
 	}
 	
-	
-	public List<User> getOnlineUsers(){
+	//ritorna gli user presenti anche nella tabella OnlineUsers
+	public List<OnlineUser> getOnlineUsers(){
 		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
-		SQLQuery query=session.createSQLQuery("SELECT * FROM Users WHERE username IS NOT NULL AND username IN (SELECT username FROM OnlineUsers)");
+		SQLQuery query=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE username IS NOT NULL");
 		query=query.addEntity(User.class);
-		List<User> list=(List<User>)query.list();
+		List<OnlineUser> list=(List<OnlineUser>)query.list();
 		t.commit();
 		session.close();
 		return list;

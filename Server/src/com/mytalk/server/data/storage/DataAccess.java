@@ -30,14 +30,6 @@ public class DataAccess implements IDataAccess{
 	
 	
 	public DataAccess(){}
-	
-	//crea un UserDAO e fa una select sul DB per verificare presenza username e password e restituisce TRUE o FALSE
-	public boolean authenticateClient(String u, String p){
-		UserDAO ud=new UserDAO();
-		return ud.checkAuthenticationData(u,p);
-	}
-	
-	//RefuseCall viene fatto dalla logic
 	 
 	//verifica la presenza dell'ip nella tabella OnlineUser
 	public boolean checkUserByIp(String ip){	
@@ -61,18 +53,6 @@ public class DataAccess implements IDataAccess{
 		return online; 
 	}
 	
-	// inserisce i dati nella tabella ToConfirmAccount
-	public void createAccount(String u,String p,String e){	
-		ToConfirmAccountDAO tcad=new ToConfirmAccountDAO();
-		tcad.addAccountToBeConfirmed(u,p,e);
-	}
-	
-	// cancella un record dalla tabella User con il metodo delete di hibernate
-	public void deleteAccount(String u){
-		UserDAO ud=new UserDAO();
-		ud.deleteAccount(u);
-	}
-	
 	// aggiunge un record sulla tabella OnlineUser
 	public void login(OnlineUser user){
 		OnlineUserDAO od=new OnlineUserDAO();
@@ -80,62 +60,45 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//interroga il db e restituisce le liste dell'utente
-	public List<ListName> userLists(User user){
+	public List<ListName> userLists(String user){
 		ListNameDAO ld=new ListNameDAO();
 		return ld.getUserLists(user);
 	}
 	
-	//interroga il db e restituisce le liste degli utenti
-	public List<UserList> getUserListsDetails(String u){
+	//interroga il db e restituisce gli utenti di una lista
+	public List<User> getListUsers(ListName list){
 		UserListDAO ld=new UserListDAO();
-		return ld.getUserListsDetails(u); // restituisce vector di list
-	}
-	
-	//restituisce un vettore di user che identifica la blacklist
-	public List<User> getUserBlacklist(String u){
-		BlacklistDAO bd=new BlacklistDAO();
-		return bd.getUserBlacklist(u); // restituisce un vector di user
-	}
-	
-	//restituisce un vettore di user che identifica tutti gli utenti
-	public List<User> getAllUsers(){
+		int listId=list.getId();
+		List<UserList> associations=ld.getUsersInList(listId);
 		UserDAO ud=new UserDAO();
-		return ud.giveListUser();
+		List<User> users;
+		for(int i=0; i<associations.size();i++){
+			String username=associations.get(i).getUsername();
+			User u=ud.get(username);
+			users.add(u);
+		}
+		return users;
 	}
 	
-	//restituisce un vettore di user che identifica tutti gli utenti OnlineUser
+	//restituisce una lista di user che identifica tutti gli utenti OnlineUser
 	public List<User> getOnlineUsers(){
 		OnlineUserDAO od=new OnlineUserDAO();
-		return od.getOnlineUsers();
+		List<OnlineUser> list=od.getOnlineUsers();
+		List<User> users;
+		UserDAO ud=new UserDAO();
+		String username=null;
+		for(int i=0;i<list.size();i++){
+			username=list.get(i).getUsername();
+			User u=ud.get(username);
+			users.add(u);
+		}
+		return users;
 	}
 	
-	//elimina dalla tabella OnlineUser il record corrispondente all'username u
+	//elimina dalla tabella OnlineUser il record corrispondente
 	public void logout(OnlineUser user){
 		OnlineUserDAO od=new OnlineUserDAO();
 		od.delete(user);//assume che l'utente sia stato loggato per inviare questo pacchetto, ergo non fa controlli
-	}
-	
-	//inserisco un record nella tabella ForgottenPassword con username e newpwd
-	public void passwordRetriever(String u, String newpwd){
-		ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
-		fpd.passwordRetriever(u, newpwd);
-	}
-	
-	//
-	public void confirmChangePassword(String u){ //ogni volta controllo se ci sono già Forgottenpassword nella tabella di quel username
-		ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
-		String pwd=fpd.confirmChangePassword(u); //verifico presenza record e restituisce la pwd
-		if(pwd!=null){
-			UserDAO ud=new UserDAO();
-			ud.changeUserPassword(u,pwd); //cambia la pwd
-		}
-		
-	}
-	
-	//cambia il valore della pwd sulla tabella User
-	public void changePassword(String u, String newpwd){
-		UserDAO ud=new UserDAO();
-		ud.changeUserPassword(u,newpwd);
 	}
 	
 	//inserisce un record nella tabella MailChange con username, email e codice
@@ -164,17 +127,6 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//elimino il record corrispondente all'username dalla tabella ToConfirmAccount e aggiungo le info alla tabella user
-	public void accountConfirm(String u){
-		ToConfirmAccountDAO tcad=new ToConfirmAccountDAO();
-		String[] pe=tcad.deleteConfirmedAccount(u);
-		if(pe!=null){
-			UserDAO ud=new UserDAO();
-			ud.addUser(u,pe[0],pe[1]);
-		}
-		
-	}
-	
 	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
 	public void listCreate(ListName list){
 		ListNameDAO ld=new ListNameDAO();
@@ -197,64 +149,34 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	// verifica che non sia già presente nella lista quell'user e prende l'id della lista dalla tabella List e aggiunge un record alla tabella UserList corrispondente all'id
-	public boolean userListAdd(String nome,String owner,String user){
+	//verifica che non sia già presente nella lista quell'user e in caso negativo lo inserisce nella lista
+	public void userListAdd(ListName list,String user){
 		ListNameDAO ld=new ListNameDAO();
-		Integer id=ld.getIdList(nome,owner);//restituisce l'id della lista
-		boolean esito=false;
-		if(id!=null){
-			UserListDAO lud=new UserListDAO();
-			lud.addUserToId(id,user);
-			esito=true;
+		ListName dbList=ld.getByNameOwner(list);
+		Integer Id=dbList.getId();
+		UserListDAO uld=new UserListDAO();
+		UserList u=uld.get(Id,user);
+		if(u==null){
+			UserList newUser=new UserList(Id,user);
+			uld.save(newUser);
+		}else{
+			//throw //l'utente e` gia` nella lista
 		}
-		return esito;
 	}
 	
 	//verifica che sia presente la lista per quell'user e prende l'id della lista dalla tabella List e elimina un record dalla tabella UserList corrispondente all'id
-	public boolean userListRemove(String nome,String owner,String user){
+	public void userListRemove(ListName list,String user){
 		ListNameDAO ld=new ListNameDAO();
-		Integer id=ld.getIdList(nome,owner);//restituisce l'id della lista
-		boolean esito=false;
-		if(id!=null){
-			UserListDAO lud=new UserListDAO();
-			lud.deleteUserToId(id,user);//elimina record
-			esito=true;
-		}
-		return esito;
-	}
-	
-	//verifica che non sia già presente quell'user per quell'owner aggiunge un record alla tabella Blacklist
-	public void blacklistAdd(String owner,String user){
-		BlacklistDAO bd=new BlacklistDAO();
-		bd.addUserToBlacklist(owner,user);
+		ListName dbList=ld.getByNameOwner(list);
+		Integer Id=dbList.getId();
 		UserListDAO uld=new UserListDAO();
-		uld.checkAndRemoveBlacklistedUsers(owner, user);
-	}
-	
-	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
-	public void blacklistRemove(String owner,String user){
-		BlacklistDAO bd=new BlacklistDAO();
-		bd.removeUserFromBlacklist(owner,user);
-	}
-	
-	//restituisce un vector di oggetti call
-	public List<Call> getCalls(String u){
-		CallDAO cd=new CallDAO();
-		return cd.getCalls(u);
-	}
-	
-	//GetStats usa GetCalls e calcola le statistiche
-	
-	// aggiunge una chiamata alla tabella Call
-	public void addCall(String c,String r,int d,Timestamp sd,int bt,int br){
-		CallDAO cd=new CallDAO();
-		cd.addCall(c,r,d,sd,bt,br);
-	}
-	
-	// elimina tutti i record della tabella ToConfirmAccount
-	public void deleteUnconfirmedAccount(){
-		ToConfirmAccountDAO tcd= new ToConfirmAccountDAO();
-		tcd.deleteUnconfirmedAccount();//elimina tutti i record della tabella a mezzanotte
+		UserList u=uld.get(Id,user);
+		if(u!=null){
+			UserList newUser=new UserList(Id,user);
+			uld.delete(newUser);
+		}else{
+			//throw //l'utente non e` presente nella lista
+		}
 	}
 	
 	//aggiorna la tabella degli utenti online con l'utente non loggato

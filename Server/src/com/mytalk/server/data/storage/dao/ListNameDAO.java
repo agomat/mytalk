@@ -67,11 +67,10 @@ public class ListNameDAO{
 	}
 	
 	//interroga il db e restituisce le liste dell'utente
-	public List<ListName> getUserLists(User us){
+	public List<ListName> getUserLists(String username){
 		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
-		String username=us.getUsername();
 		SQLQuery query=session.createSQLQuery("select * from ListNames where owner='"+username+"'");
 		query=query.addEntity(ListName.class);
 		List<ListName> list=(List<ListName>)query.list();

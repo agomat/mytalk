@@ -28,59 +28,31 @@ import com.mytalk.server.data.model.*;
 
 
 public interface IDataAccess{
-			public boolean authenticateClient(String u, String p);
-			
 			public boolean checkUserByIp(String ip);
 			
 			public boolean checkUserByName(String name);
-			
-			public void createAccount(String u,String p,String e);
-			
-			public void deleteAccount(String u);
-			
+		
 			public void login(OnlineUser user);
 			
-			public List<ListName> userLists(User us);
+			public List<ListName> userLists(String user);
 		
-			public List<UserList> getUserListsDetails(String u);
-			
-			public List<User> getUserBlacklist(String u);
-			
-			public List<User> getAllUsers();
+			public List<User> getListUsers(ListName list);
 			
 			public List<User> getOnlineUsers();
 			
 			public void logout(OnlineUser user);
 			
-			public void passwordRetriever(String u, String newpwd);
-			
-			public void confirmChangePassword(String u);
-
-			public void changePassword(String u, String newpwd);
-			
 			public void updateEmail(MailChange newMail);
 			
 			public void confirmUpdateEmail(MailChange newMail);
-			
-			public void accountConfirm(String u);
 			
 			public void listCreate(ListName list);
 			
 			public void listDelete(ListName list);
 		
-			public boolean userListAdd(String nome,String owner,String user);
+			public void userListAdd(ListName list,String user);
 					
-			public boolean userListRemove(String nome,String owner,String user);
-			
-			public void blacklistAdd(String owner,String user);
-			
-			public void blacklistRemove(String owner,String user);
-			
-			public List<Call> getCalls(String u);
-			
-			public void addCall(String c,String r,int d,Timestamp sd,int bt,int br);
-			
-			public void deleteUnconfirmedAccount();
+			public void userListRemove(ListName list,String user);
 			
 			public void loginAsAnonymous(OnlineUser user);
 }

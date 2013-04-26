@@ -30,17 +30,17 @@ import com.mytalk.server.data.model.*;
 public interface IDataAccess{
 			public boolean authenticateClient(String u, String p);
 			
-			public boolean checkUserByIp(String s);
+			public boolean checkUserByIp(String ip);
 			
-			public boolean checkUserByName(String s);
+			public boolean checkUserByName(String name);
 			
 			public void createAccount(String u,String p,String e);
 			
 			public void deleteAccount(String u);
 			
-			public void login(String u,String p,String ip);
+			public void login(OnlineUser user);
 			
-			public List<ListName> getUserLists(String u);
+			public List<ListName> userLists(User us);
 		
 			public List<UserList> getUserListsDetails(String u);
 			
@@ -50,7 +50,7 @@ public interface IDataAccess{
 			
 			public List<User> getOnlineUsers();
 			
-			public void logout(String u);
+			public void logout(OnlineUser user);
 			
 			public void passwordRetriever(String u, String newpwd);
 			
@@ -58,15 +58,15 @@ public interface IDataAccess{
 
 			public void changePassword(String u, String newpwd);
 			
-			public void updateEmail(String u,String e,String code);
+			public void updateEmail(MailChange newMail);
 			
-			public boolean confirmUpdateEmail(String u,String code);
+			public void confirmUpdateEmail(MailChange newMail);
 			
 			public void accountConfirm(String u);
 			
-			public void listCreate(String nome,String owner);
+			public void listCreate(ListName list);
 			
-			public void listDelete(String nome,String owner);
+			public void listDelete(ListName list);
 		
 			public boolean userListAdd(String nome,String owner,String user);
 					
@@ -82,7 +82,5 @@ public interface IDataAccess{
 			
 			public void deleteUnconfirmedAccount();
 			
-			public void loginAsAnonymous(String ip);
-			
-			public void logoutAsAnonymous(String ip);
+			public void loginAsAnonymous(OnlineUser user);
 }

@@ -23,6 +23,7 @@ package com.mytalk.server.data.storage.dao;
 import com.mytalk.server.data.model.*;
 import org.hibernate.*;
 import com.mytalk.server.data.persistence.HibernateUtil;
+import java.util.List;
 
 public class ListNameDAO{
 	
@@ -65,59 +66,32 @@ public class ListNameDAO{
 		return list;
 	}
 	
-	//interroga il db e restituisce le liste degli utenti
-	public List<ListName> returnListUser(String username){
-		List<ListName> x=session.createSQLQuery("select * from ListNames where owner=:owner").addEntity(ListName.class)
-				.setParameter("owner", username)
-				.list();
-		t.commit();
-		session.close();		
-		return x;
-	}
-	
-	// verifica che non sia già presente la lista per quell'user aggiunge un record alla tabella List con nome e owner
-	public void addRecordToListName(String name, String owner){
-		List<ListName> l=session.createSQLQuery("select * from ListNames where owner=:owner && name=:name")
-				.addEntity(ListName.class)
-				.setParameter("owner", owner)
-				.setParameter("name", name)
-				.list();
-		if(l.isEmpty()){
-			ListName ln=new ListName(name,owner);
-			session.save(ln);
-		}	
-		t.commit();
-		session.close();	
-	}
-	
-	// verifica che sia presente la lista per quell'user rimuove un record dalla tabella List che corrisponde a nome user e owner
-	public void deleteRecordFromListName(String name,String owner){
-		List<ListName> l=session.createSQLQuery("select * from ListNames where owner=:owner && name=:name")
-				.addEntity(ListName.class)
-				.setParameter("owner", owner)
-				.setParameter("name", name)
-				.list();
-		if(!(l.isEmpty())){
-			session.delete(l.get(0));	
-		}
+	//interroga il db e restituisce le liste dell'utente
+	public List<ListName> getUserLists(User us){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		String username=us.getUsername();
+		SQLQuery query=session.createSQLQuery("select * from ListNames where owner='"+username+"'");
+		query=query.addEntity(ListName.class);
+		List<ListName> list=(List<ListName>)query.list();
 		t.commit();
 		session.close();
+		return list;
 	}
 	
-	
-	// verifica che sia già presente nella lista quell'user e prende l'id della lista dalla tabella List
-	public Integer getIdList(String name, String owner){
-		Integer id=null;
-		List<ListName> l=session.createSQLQuery("select * from ListNames where owner=:owner && name=:name")
-				.addEntity(ListName.class)
-				.setParameter("owner", owner)
-				.setParameter("name", name)
-				.list();
-		if(!(l.isEmpty())){
-			id=l.get(0).getId();
-		}	
+	//get di una lista sapendo nome e proprietario
+	public ListName getByNameOwner(ListName listObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		String name=listObj.getName();
+		String owner=listObj.getOwner();
+		SQLQuery query=session.createSQLQuery("select * from ListNames where owner='"+owner+"' && name='"+name+"'");
+		query=query.addEntity(ListName.class);
+		ListName list=(ListName)query.uniqueResult();
 		t.commit();
-		session.close();	
-		return id;
+		session.close();
+		return list;
 	}
 }

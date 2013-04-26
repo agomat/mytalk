@@ -20,8 +20,10 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
+
 import org.hibernate.*;
 import com.mytalk.server.data.persistence.HibernateUtil;
+import java.util.List;
 
 public class OnlineUserDAO{
 
@@ -64,69 +66,33 @@ public class OnlineUserDAO{
 		return online;
 	}
 	
-	//verifica la presenza dell'ip nella tabella Online
-	public boolean checkIPIsOnline(String s){
-		boolean b=false;
-		OnlineUser o=(OnlineUser) session.get(OnlineUser.class,s);
-		t.commit();
-		session.close();
-		if(o!=null){
-			b=true;
-		}
-		return b;
-	}
-	
-	//verifica la presenza dell'username nella tabella OnlineUsers
-	public boolean nameIsOnline(String s){
-		boolean b=false;
-		List<OnlineUser> l=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE username=:s").addEntity(OnlineUser.class).setParameter("s",s).list();
-		if(l.size()>0){
-			b=true;
+	//ritorna l'ip dell'user con username passato
+	public String getUserIp(String name){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		SQLQuery query=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE username='"+name+"'");
+		query=query.addEntity(OnlineUser.class);
+		OnlineUser user=(OnlineUser)query.uniqueResult();
+		String ip=null;
+		if(user!=null){
+			ip=user.getIp();
 		}
 		t.commit();
 		session.close();
-		return b;
+		return ip;
 	}
 	
-	public void login(String u, String ip){
-		OnlineUser o=new OnlineUser(u,ip);
-		session.update(o);
-		t.commit();
-		session.close();
-	}
-	
-	public void logout(String s){
-		List<OnlineUser> l=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE username=:s").addEntity(OnlineUser.class).setParameter("s", s).list();
-		if(l.size()>0){
-			session.delete(l.get(0));
-		}
-		t.commit();
-		session.close();
-	}
 	
 	public List<User> getOnlineUsers(){
-		List<User> l=session.createSQLQuery("SELECT * FROM Users WHERE username IS NOT NULL AND username IN (SELECT username FROM OnlineUsers)").addEntity(User.class).list();
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		SQLQuery query=session.createSQLQuery("SELECT * FROM Users WHERE username IS NOT NULL AND username IN (SELECT username FROM OnlineUsers)");
+		query=query.addEntity(User.class);
+		List<User> list=(List<User>)query.list();
 		t.commit();
 		session.close();
-		return l;
-	}
-	
-	public void loginAnonymous(String ip){
-		OnlineUser oc=(OnlineUser) session.get(OnlineUser.class, ip);
-		if(oc==null){
-			OnlineUser o=new OnlineUser(null,ip);
-			session.save(o);
-		}	
-		t.commit();
-		session.close();
-	}
-	
-	public void logoutAnonymous(String ip){
-		List<OnlineUser> l=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE ip=:ip").addEntity(OnlineUser.class).setParameter("ip", ip).list();
-		if(l.size()>0){
-			session.delete(l.get(0));
-		}
-		t.commit();
-		session.close();
+		return list;
 	}
 }

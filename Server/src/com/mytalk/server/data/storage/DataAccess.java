@@ -40,15 +40,25 @@ public class DataAccess implements IDataAccess{
 	//RefuseCall viene fatto dalla logic
 	 
 	//verifica la presenza dell'ip nella tabella OnlineUser
-	public boolean checkUserByIp(String s){	
+	public boolean checkUserByIp(String ip){	
 		OnlineUserDAO od=new OnlineUserDAO();
-		return od.checkIPIsOnline(s);
+		boolean online=false;
+		OnlineUser user=od.get(ip);
+		if(user!=null){
+			online=true;
+		}
+		return online;
 	}
 	
 	//verifica la presenza dell'username nella tabella OnlineUser
-	public boolean checkUserByName(String s){		
+	public boolean checkUserByName(String name){		
 		OnlineUserDAO od=new OnlineUserDAO();
-		return od.nameIsOnline(s);
+		String ip=od.getUserIp(name);
+		boolean online=false;
+		if(ip!=null){
+			online=true;
+		}
+		return online; 
 	}
 	
 	// inserisce i dati nella tabella ToConfirmAccount
@@ -64,15 +74,15 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// aggiunge un record sulla tabella OnlineUser
-	public void login(String u,String p, String ip){
+	public void login(OnlineUser user){
 		OnlineUserDAO od=new OnlineUserDAO();
-		od.login(u,ip);
+		od.update(user);//assume che il client era prima loggato come anonimo per poi fare l'update
 	}
 	
-	//interroga il db e restituisce le liste degli utenti
-	public List<ListName> getUserLists(String u){
+	//interroga il db e restituisce le liste dell'utente
+	public List<ListName> userLists(User user){
 		ListNameDAO ld=new ListNameDAO();
-		return ld.returnListUser(u); // restituisce vector di list
+		return ld.getUserLists(user);
 	}
 	
 	//interroga il db e restituisce le liste degli utenti
@@ -100,9 +110,9 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//elimina dalla tabella OnlineUser il record corrispondente all'username u
-	public void logout(String u){
+	public void logout(OnlineUser user){
 		OnlineUserDAO od=new OnlineUserDAO();
-		od.logout(u);
+		od.delete(user);//assume che l'utente sia stato loggato per inviare questo pacchetto, ergo non fa controlli
 	}
 	
 	//inserisco un record nella tabella ForgottenPassword con username e newpwd
@@ -165,16 +175,26 @@ public class DataAccess implements IDataAccess{
 		
 	}
 	
-	// verifica che non sia già presente la lista per quell'user aggiunge un record alla tabella List con nome e owner
-	public void listCreate(String nome,String owner){
+	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
+	public void listCreate(ListName list){
 		ListNameDAO ld=new ListNameDAO();
-		ld.addRecordToListName(nome,owner);
+		ListName listFound=ld.getByNameOwner(list);
+		if (listFound==null){
+			ld.save(list);
+		}else{
+			//throw //la lista esiste già con lo stesso nome
+		}
 	}
 	
-	// verifica che sia presente la lista per quell'user rimuove un record dalla tabella List che corrisponde a nome user e owner
-	public void listDelete(String nome,String owner){
+	// verifica che sia presente la lista per quell'user e in caso positivo rimuove il record
+	public void listDelete(ListName list){
 		ListNameDAO ld=new ListNameDAO();
-		ld.deleteRecordFromListName(nome,owner);
+		ListName listFound=ld.getByNameOwner(list);
+		if (listFound!=null){
+			ld.delete(list);
+		}else{
+			//throw //la lista non esiste
+		}
 	}
 	
 	// verifica che non sia già presente nella lista quell'user e prende l'id della lista dalla tabella List e aggiunge un record alla tabella UserList corrispondente all'id
@@ -238,14 +258,8 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//aggiorna la tabella degli utenti online con l'utente non loggato
-	public void loginAsAnonymous(String ip){
+	public void loginAsAnonymous(OnlineUser user){
 		OnlineUserDAO ou=new OnlineUserDAO();
-		ou.loginAnonymous(ip);
-	}
-	
-	//aggiorna la tabella degli utenti online disautenticando l'utente non loggato
-	public void logoutAsAnonymous(String ip){
-		OnlineUserDAO ou=new OnlineUserDAO();
-		ou.logoutAnonymous(ip);
+		ou.save(user);
 	}
 }

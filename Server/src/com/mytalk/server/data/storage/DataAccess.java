@@ -21,6 +21,7 @@ Date
 package com.mytalk.server.data.storage;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.storage.dao.*;
@@ -71,7 +72,7 @@ public class DataAccess implements IDataAccess{
 		int listId=list.getId();
 		List<UserList> associations=ld.getUsersInList(listId);
 		UserDAO ud=new UserDAO();
-		List<User> users;
+		List<User> users=new ArrayList<User>();
 		for(int i=0; i<associations.size();i++){
 			String username=associations.get(i).getUsername();
 			User u=ud.get(username);
@@ -84,7 +85,7 @@ public class DataAccess implements IDataAccess{
 	public List<User> getOnlineUsers(){
 		OnlineUserDAO od=new OnlineUserDAO();
 		List<OnlineUser> list=od.getOnlineUsers();
-		List<User> users;
+		List<User> users=new ArrayList<User>();
 		UserDAO ud=new UserDAO();
 		String username=null;
 		for(int i=0;i<list.size();i++){
@@ -183,5 +184,155 @@ public class DataAccess implements IDataAccess{
 	public void loginAsAnonymous(OnlineUser user){
 		OnlineUserDAO ou=new OnlineUserDAO();
 		ou.save(user);
+	}
+	
+	//restituisce un vettore di user che identifica la blacklist
+	public List<User> getUserBlacklist(String u){
+		List<User> listOfUser=new ArrayList<User>();
+		Blacklist b=null;
+		BlacklistDAO bd=new BlacklistDAO();
+		UserDAO ud=new UserDAO();
+		List<Blacklist> blacklistList=bd.getUserBlacklist(u);
+		for(int i=0;i<blacklistList.size();i++){
+			b=blacklistList.get(i);
+			listOfUser.add(ud.get(b.getUsername()));
+		}
+		return listOfUser; // restituisce una lista di user
+	}
+	
+	//inserisco un record nella tabella ForgottenPassword con username e newpwd
+	public void passwordRetriever(ForgottenPassword forgottenPasswordObj){
+		ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
+		ForgottenPassword forgottenPasswordEntity=(ForgottenPassword)fpd.get(forgottenPasswordObj.getUsername());
+		if(forgottenPasswordEntity!=null){
+			fpd.update(forgottenPasswordObj);
+		}
+		else{
+			fpd.save(forgottenPasswordObj);
+		}
+	}
+	
+	//ogni volta controllo se ci sono già Forgottenpassword nella tabella di quel username
+	public void confirmChangePassword(ForgottenPassword forgottenPasswordObj){ 
+		ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
+		UserDAO ud=new UserDAO();
+		User userObj=new User(forgottenPasswordObj.getUsername(),forgottenPasswordObj.getNewpwd(),"null");
+		ForgottenPassword forgottenPasswordEntity=(ForgottenPassword)fpd.get(forgottenPasswordObj.getUsername());
+		if(forgottenPasswordEntity!=null){
+			fpd.delete(forgottenPasswordObj);	
+			ud.update(userObj);
+		}
+		else{
+			System.out.println("Impossibile confermare password!!!");
+		}	
+	}
+	
+	//aggiunge un record alla blacklist
+	public void blacklistAdd(Blacklist b){
+		boolean check=false;
+		Blacklist blacklistObj=null;
+		String blacklistUsername=null;
+		BlacklistDAO bd=new BlacklistDAO();
+		List<Blacklist> blacklistList=bd.getUserBlacklist(b.getOwner());
+		for(int i=0;i<blacklistList.size();i++){
+			blacklistObj=blacklistList.get(i);
+			blacklistUsername=blacklistObj.getUsername();
+			if(blacklistUsername.contains(b.getUsername())){
+				check=true;
+			}
+		}
+		if(!check){
+			bd.save(b);
+		}
+		else{
+			System.out.println("Impossibile aggiungere poiché il campo è già presente");
+		}
+	}
+		
+	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
+	public void blacklistRemove(Blacklist b){
+		boolean check=false;
+		Blacklist blacklistObj=null;
+		String blacklistUsername=null;
+		BlacklistDAO bd=new BlacklistDAO();
+		List<Blacklist> blacklistList=bd.getUserBlacklist(b.getOwner());
+		for(int i=0;i<blacklistList.size();i++){
+			blacklistObj=blacklistList.get(i);
+			blacklistUsername=blacklistObj.getUsername();
+			if(blacklistUsername.contains(b.getUsername())){
+				check=true;
+			}
+		}
+		if(check){
+			bd.delete(b);
+		}
+		else{
+			System.out.println("Impossibile eliminare poiché il campo non è presente");
+		}
+	}
+		
+	//restituisce un vector di oggetti call
+	public List<Call> getCalls(String primaryKey){
+		CallDAO cd=new CallDAO();
+		return cd.getAllUserCalls(primaryKey);
+	}
+	
+	// aggiunge una chiamata alla tabella Call(nessun controllo poiché non ci sarà mai una chiamata uguale)
+	public void addCall(Call callObj){
+		CallDAO cd=new CallDAO();
+		cd.save(callObj);
+	}
+	
+	//verifica dati autenticazione
+	public boolean authenticateClient(User userObj){
+		boolean esito=false;
+		UserDAO ud=new UserDAO();
+		User userEntity=ud.get(userObj.getUsername());
+		String pwdUserEntity=userEntity.getPassword();
+		String pwdUserObj=userObj.getPassword();
+		if(userEntity!=null && pwdUserEntity.contains(pwdUserObj)){
+			esito=true;
+		}
+		return esito;
+	}
+	
+	// cancella un record dalla tabella User con il metodo delete di hibernate
+	public void deleteAccount(User userObj){
+		UserDAO ud=new UserDAO();
+		ud.delete(userObj);
+	}
+	
+	//restituisce un vettore di user che identifica tutti gli utenti
+	public List<User> getAllUsers(){
+		UserDAO ud=new UserDAO();
+		return ud.getAllUsers();
+	}
+	
+	//cambia il valore della pwd sulla tabella User
+	public void changePassword(User userObj){
+		UserDAO ud=new UserDAO();
+		
+		ud.update(userObj);
+	}
+	
+	//elimino il record corrispondente all'username dalla tabella ToConfirmAccount e 
+	//aggiungo le info alla tabella user
+	public void accountConfirm(ToConfirmAccount toConfirmAccountObj){
+		ToConfirmAccountDAO tcad=new ToConfirmAccountDAO();
+		UserDAO ud=new UserDAO();
+		ToConfirmAccount toConfirmAccountEntity=tcad.get(toConfirmAccountObj.getUsername());
+		if(toConfirmAccountEntity!=null){
+			tcad.delete(toConfirmAccountObj);		
+			ud.save(new User(toConfirmAccountEntity.getUsername(),toConfirmAccountEntity.getPassword(),toConfirmAccountEntity.getEmail()));
+		}	
+		else {
+			System.out.println("Account da confermare non presente");
+		}
+	}
+	
+	// elimina tutti i record della tabella ToConfirmAccount
+	public void deleteUnconfirmedAccount(){
+		ToConfirmAccountDAO tcd= new ToConfirmAccountDAO();
+		tcd.deleteAll();//elimina tutti i record della tabella 
 	}
 }

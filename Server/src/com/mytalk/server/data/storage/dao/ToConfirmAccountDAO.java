@@ -47,6 +47,16 @@ public class ToConfirmAccountDAO{
 		session.close();
 	}
 	
+	public ToConfirmAccount get(String primaryKey){
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction t = session.beginTransaction();
+		ToConfirmAccount accountEntity =(ToConfirmAccount) session.get(ToConfirmAccount.class,primaryKey);
+		t.commit();
+		session.close();
+		return accountEntity;
+	}
+	
 	public void delete(ToConfirmAccount toConfirmAccountObj){
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -54,24 +64,18 @@ public class ToConfirmAccountDAO{
 		session.delete(toConfirmAccountObj);
 		t.commit();
 		session.close();
-	}
+	}	
 	
-	public ToConfirmAccount get(String primaryKey){
+	// elimina tutti i record della tabella ToConfirmAccount
+	public void deleteAll(){
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
-		ToConfirmAccount account = session.get(primaryKey);
-		t.commit();
-		session.close();
-	}
-	
-	
-	
-	// elimina tutti i record della tabella ToConfirmAccount
-	public void deleteUnconfirmedAccount(){
-		List<ToConfirmAccount> ltca= session.createSQLQuery("SELECT * FROM ToConfirmAccounts").addEntity(ToConfirmAccount.class).list();
-		for(int i=0;i<ltca.size();i++){
-			session.delete(ltca.get(i));
+		SQLQuery query=session.createSQLQuery("SELECT * FROM ToConfirmAccounts");
+		query=query.addEntity(ToConfirmAccount.class);
+		List<ToConfirmAccount> listToConfirmAccount=query.list();
+		for(int i=0;i<listToConfirmAccount.size();i++){
+			session.delete(listToConfirmAccount.get(i));
 		}
 		t.commit();
 		session.close();

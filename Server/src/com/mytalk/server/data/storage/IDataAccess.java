@@ -55,4 +55,30 @@ public interface IDataAccess{
 			public void userListRemove(ListName list,String user);
 			
 			public void loginAsAnonymous(OnlineUser user);
+			
+			public List<User> getUserBlacklist(String u);
+			
+			public void passwordRetriever(ForgottenPassword forgottenPasswordObj);
+			
+			public void confirmChangePassword(ForgottenPassword forgottenPasswordObj);
+			
+			public void blacklistAdd(Blacklist b);
+			
+			public void blacklistRemove(Blacklist b);
+			
+			public List<Call> getCalls(String u);
+			
+			public void addCall(Call call);
+			
+			public boolean authenticateClient(User userObj);
+			
+			public void deleteAccount(User userObj);
+			
+			public List<User> getAllUsers();
+			
+			public void changePassword(User userObj);
+			
+			public void accountConfirm(ToConfirmAccount toConfirmAccountObj);
+			
+			public void deleteUnconfirmedAccount();
 }

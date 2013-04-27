@@ -19,69 +19,74 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
+import com.mytalk.server.data.persistence.HibernateUtil;
+
 import java.util.*;
 
-public class UserDAO extends GenericDAO {
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+public class UserDAO {
 	public UserDAO(){}
 	
-	//crea un UserDao e fa una select sul DB per verificare presenza username e password e restituisce TRUE o FALSE	
-	public boolean checkAuthenticationData(String u,String p){		
-		boolean esito=false;
-		List<User> l=session.createSQLQuery("SELECT * FROM Users WHERE username=:u && password=:p").addEntity(User.class).setParameter("u", u).setParameter("p", p).list();	
-		if(!l.isEmpty()){
-			esito=true;
-		}	
+	//Aggiunge un oggetto User ricevuto in input
+	public void save(User userObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.save(userObj);
 		t.commit();
-		session.close();	
-		return esito;
+		session.close();
 	}
-	
-	// cancella un record dalla tabella User con il metodo delete di hibernate
-	public void deleteAccount(String u){
-		User u1=(User)session.get(User.class, u);
-		if(u1!=null){
-			session.delete(u1);
-		}
 		
-		t.commit();
-		session.close();
-	}
-	
-	//restituisce un vettore di user che identifica tutti gli utenti
-	public List<User> giveListUser(){
-		List<User> l=session.createSQLQuery("SELECT * FROM Users").addEntity(User.class).list();
-		t.commit();
-		session.close();
-		return l;
-	}
-	
-	//cambio il valore della password 
-	public void changeUserPassword(String user, String pwd){
-		User u1=(User) session.get(User.class,user);
-		if(u1!=null){
-			u1.setPassword(pwd);
-		}			
-		t.commit();
-		session.close();
-	}
-	
-	//aggiunge un User alla tabella Users
-	public void addUser(String user, String pwd, String email){
-		User u=(User)session.get(User.class,user);
-		if(u==null){
-			User u1=new User(user,pwd,email);
-			session.save(u1);
-		}						
-		t.commit();
-		session.close();
-	}
-	
-	public void changeUserMail(String user, String email){
-		User u1=(User) session.get(User.class, user);
-		if(u1!=null){
-			u1.setEmail(email);
-			session.update(u1);		
+	public void update(User userObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		User userEntity=(User) session.get(User.class,userObj.getUsername());
+		if(userObj.getPassword().contains("null")){
+			userObj.setPassword(userEntity.getPassword());
 		}
+		if(userObj.getEmail().contains("null")){
+			userObj.setEmail(userEntity.getEmail());
+		}
+		session.update(userObj);
+		t.commit();
+		session.close();
+	}	
+	
+	//Ottenere un oggetto di tipo Blacklist
+	public User get(String primaryKey){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		User userEntity=(User) session.get(User.class,primaryKey);
+		t.commit();
+		session.close();
+		return userEntity;
+	}
+	
+	//Restituire tutti gli oggetti di tipo User
+	public List<User> getAllUsers(){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		SQLQuery query=session.createSQLQuery("SELECT * FROM Users");
+		query=query.addEntity(User.class);
+		List<User> listUsers=query.list();
+		t.commit();
+		session.close();
+		return listUsers;
+	}
+	
+	//Cancella un oggetto Blacklist passato in input
+	public void delete(User userObj){
+		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		session.delete(userObj);
 		t.commit();
 		session.close();
 	}

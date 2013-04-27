@@ -50,9 +50,6 @@ public class BlacklistDAO {
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		Blacklist blacklistEntity=(Blacklist)session.get(Blacklist.class, blacklistObj.getOwner());
-		if(blacklistObj.getUsername()==null){
-			blacklistObj.setUsername(blacklistEntity.getUsername());
-		}
 		session.update(blacklistObj);
 		t.commit();
 		session.close();
@@ -69,7 +66,7 @@ public class BlacklistDAO {
 		return blacklistObj;
 	}
 	
-	public List<Blacklist> getUsernameByOwner(String primaryKey){
+	public List<Blacklist> getUserBlacklist(String primaryKey){
 		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();

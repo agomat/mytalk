@@ -25,72 +25,63 @@ import org.hibernate.*;
 import com.mytalk.server.data.persistence.HibernateUtil;
 import java.util.List;
 
-public class ListNameDAO{
+public class ListNameDAO extends GenericDAO{
 	
 	public ListNameDAO() {}
 	
 	public void save(ListName listObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.save(listObj);
 		t.commit();
-		session.close();
-	}
-	
-	public void delete(ListName listObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
-		Transaction t=session.beginTransaction();
-		session.delete(listObj);
-		t.commit();
-		session.close();
 	}
 	
 	public void update(ListName listObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
+		ListName listEntity=this.get(listObj.getId());
+		if(listObj.getOwner().contains("null")){
+			listObj.setOwner(listEntity.getOwner());
+		}
+		if(listObj.getName().contains("null")){
+			listObj.setName(listEntity.getName());
+		}
 		session.update(listObj);
 		t.commit();
-		session.close();
 	}
 	
-	public ListName get(String primaryKey){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
+	public ListName get(int primaryKey){
 		Transaction t=session.beginTransaction();
 		ListName list=(ListName)session.get(ListName.class, primaryKey);
 		t.commit();
-		session.close();
 		return list;
 	}
 	
 	//interroga il db e restituisce le liste dell'utente
 	public List<ListName> getUserLists(String username){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
-		SQLQuery query=session.createSQLQuery("select * from ListNames where owner='"+username+"'");
+		List<ListName> list=null;
+		SQLQuery query=session.createSQLQuery("SELECT * FROM ListNames WHERE owner='"+username+"'");
 		query=query.addEntity(ListName.class);
-		List<ListName> list=(List<ListName>)query.list();
+		list=(List<ListName>)query.list();
 		t.commit();
-		session.close();
 		return list;
 	}
 	
 	//get di una lista sapendo nome e proprietario
 	public ListName getByNameOwner(ListName listObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		String name=listObj.getName();
 		String owner=listObj.getOwner();
-		SQLQuery query=session.createSQLQuery("select * from ListNames where owner='"+owner+"' && name='"+name+"'");
+		ListName list=null;
+		SQLQuery query=session.createSQLQuery("SELECT * FROM ListNames WHERE owner='"+owner+"' && name='"+name+"'");
 		query=query.addEntity(ListName.class);
-		ListName list=(ListName)query.uniqueResult();
+		list=(ListName)query.uniqueResult();
 		t.commit();
-		session.close();
 		return list;
+	}
+	
+	public void delete(ListName listObj){
+		Transaction t=session.beginTransaction();
+		session.delete(listObj);
+		t.commit();
 	}
 }

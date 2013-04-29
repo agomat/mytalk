@@ -27,60 +27,66 @@ import org.hibernate.*;
 
 import com.mytalk.server.data.persistence.HibernateUtil;
 
-public class CallDAO{
+public class CallDAO extends GenericDAO{
 
 	public CallDAO(){}
 	
 	//Aggiunge un oggetto Call ricevuto in input
-		public void save(Call callObj){
-			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
-			Transaction t=session.beginTransaction();
-			session.save(callObj);
-			t.commit();
-			session.close();
+	public void save(Call callObj){
+		Transaction t=session.beginTransaction();
+		session.save(callObj);
+		t.commit();
+	}
+	
+	//Aggiorna un oggetto Call passato in input (SERVE?????)
+	public void update(Call callObj){
+		Transaction t=session.beginTransaction();
+		Call callEntity=this.get(callObj.getId());
+		if(callObj.getCaller().contains("null")){
+			callObj.setCaller(callEntity.getCaller());
 		}
+		if(callObj.getReceiver().contains("null")){
+			callObj.setReceiver(callEntity.getReceiver());
+		}
+		if(callObj.getByteReceived()==0){
+			callObj.setByteReceived(callEntity.getByteReceived());
+		}
+		if(callObj.getByteSent()==0){
+			callObj.setByteSent(callEntity.getByteSent());
+		}
+		if(callObj.getDuration()==0){
+			callObj.setDuration(callEntity.getDuration());
+		}
+		if(callObj.getStartdate()==null){
+			callObj.setStartdate(callEntity.getStartdate());
+		}
+		session.update(callObj);
+		t.commit();
+		session.close();
+	}
+	
+	//Ottenere un oggetto di tipo Call
+	public Call get(int primaryKey){
+		Transaction t=session.beginTransaction();
+		Call callObj=(Call) session.get(Call.class,primaryKey);
+		t.commit();
+		return callObj;
+	}
 		
-		//Aggiorna un oggetto Call passato in input (SERVE?????)
-		public void update(Call callObj){
-			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
-			Transaction t=session.beginTransaction();
-			session.update(callObj);
-			t.commit();
-			session.close();
-		}
+	public List<Call> getAllUserCalls(String primaryKey){
+		Transaction t=session.beginTransaction();
+		List<Call> listOfUserCalls=null;
+		SQLQuery query=session.createSQLQuery("SELECT * FROM Calls WHERE caller='"+primaryKey+"' OR receiver='"+primaryKey+"'");
+		query=query.addEntity(Call.class);
+		listOfUserCalls=query.list();
+		t.commit();
+		return listOfUserCalls;
+	}
 		
-		//Ottenere un oggetto di tipo Call
-		public Call get(String primaryKey){
-			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
-			Transaction t=session.beginTransaction();
-			Call callObj=(Call) session.get(Call.class,primaryKey);
-			t.commit();
-			session.close();
-			return callObj;
-		}
-		
-		public List<Call> getAllUserCalls(String primaryKey){
-			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
-			Transaction t=session.beginTransaction();
-			SQLQuery query=session.createSQLQuery("SELECT * FROM Calls WHERE caller='"+primaryKey+"' OR receiver='"+primaryKey+"'");
-			query=query.addEntity(Call.class);
-			List<Call> listOfUserCalls=query.list();
-			t.commit();
-			session.close();
-			return listOfUserCalls;
-		}
-		
-		//Cancella un oggetto Call passato in input
-		public void delete(Call callObj){
-			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
-			Transaction t=session.beginTransaction();
-			session.delete(callObj);
-			t.commit();
-			session.close();
-		}
+	//Cancella un oggetto Call passato in input
+	public void delete(Call callObj){
+		Transaction t=session.beginTransaction();
+		session.delete(callObj);
+		t.commit();
+	}
 }

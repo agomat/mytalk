@@ -25,13 +25,11 @@ import com.mytalk.server.data.persistence.HibernateUtil;
 import org.hibernate.*;
 import java.util.*;
 
-public class ToConfirmAccountDAO{
+public class ToConfirmAccountDAO extends GenericDAO{
 	public ToConfirmAccountDAO(){}
 	//save update delete get
 	
 	public void save(ToConfirmAccount toConfirmAccountObj){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		session.save(toConfirmAccountObj);
 		t.commit();
@@ -39,37 +37,33 @@ public class ToConfirmAccountDAO{
 	}
 	
 	public void update(ToConfirmAccount toConfirmAccountObj){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
+		ToConfirmAccount toConfirmAccountEntity=this.get(toConfirmAccountObj.getUsername());
+		if(toConfirmAccountObj.getPassword().contains("null")){
+			toConfirmAccountObj.setPassword(toConfirmAccountEntity.getPassword());
+		}
+		if(toConfirmAccountObj.getEmail().contains("null")){
+			toConfirmAccountObj.setEmail(toConfirmAccountEntity.getEmail());
+		}
 		session.update(toConfirmAccountObj);
 		t.commit();
-		session.close();
 	}
 	
 	public ToConfirmAccount get(String primaryKey){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		ToConfirmAccount accountEntity =(ToConfirmAccount) session.get(ToConfirmAccount.class,primaryKey);
 		t.commit();
-		session.close();
 		return accountEntity;
 	}
 	
 	public void delete(ToConfirmAccount toConfirmAccountObj){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		session.delete(toConfirmAccountObj);
 		t.commit();
-		session.close();
 	}	
 	
 	// elimina tutti i record della tabella ToConfirmAccount
 	public void deleteAll(){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		SQLQuery query=session.createSQLQuery("SELECT * FROM ToConfirmAccounts");
 		query=query.addEntity(ToConfirmAccount.class);
@@ -78,7 +72,6 @@ public class ToConfirmAccountDAO{
 			session.delete(listToConfirmAccount.get(i));
 		}
 		t.commit();
-		session.close();
 	}
 	
 }

@@ -28,71 +28,43 @@ import com.mytalk.server.data.persistence.HibernateUtil;
 import java.util.List;
 
 
-public class UserListDAO{
+public class UserListDAO extends GenericDAO{
 	
 	public UserListDAO(){}
 	
 	public void save(UserList userlistObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.save(userlistObj);
 		t.commit();
-		session.close();
 	}
 	
 	public void delete(UserList userlistObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.delete(userlistObj);
 		t.commit();
-		session.close();
 	}
 	
 	public void update(UserList userlistObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.update(userlistObj);
 		t.commit();
-		session.close();
 	}
 
 	public UserList get(int primaryKeyId,String primaryKeyUser){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		UserList user=new UserList(primaryKeyId,primaryKeyUser);
 		UserList dbUser=(UserList)session.get(UserList.class, user);
 		t.commit();
-		session.close();
 		return dbUser;
 	}
 	
 	//resituisce le associazioni utenti/lista
 	public List<UserList> getUsersInList(int id){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		SQLQuery query=session.createSQLQuery("SELECT * FROM UserLists WHERE idList='"+id+"'");
 		query=query.addEntity(UserList.class);
 		List<UserList> list=(List<UserList>)query.list();
 		t.commit();
-		session.close();
 		return list;
 	}
-	/*
-	//cerca ed elimina gli user che stanno andando in blacklist
-	public void checkAndRemoveBlacklistedUsers(String owner,String user){
-		List<UserList> ul=session.createSQLQuery("SELECT * FROM UserLists WHERE username=:user")
-				.addEntity(UserList.class)
-				.setParameter("user", user).list();
-		for(int i=0;i<ul.size();i++){
-			session.delete(ul.get(i));
-		}
-		t.commit();
-		session.close();
-	}
-	*/
 }

@@ -28,24 +28,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class UserDAO {
+public class UserDAO extends GenericDAO{
 	public UserDAO(){}
 	
 	//Aggiunge un oggetto User ricevuto in input
 	public void save(User userObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.save(userObj);
 		t.commit();
-		session.close();
 	}
 		
 	public void update(User userObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
-		User userEntity=(User) session.get(User.class,userObj.getUsername());
+		User userEntity=this.get(userObj.getUsername());
 		if(userObj.getPassword().contains("null")){
 			userObj.setPassword(userEntity.getPassword());
 		}
@@ -54,40 +49,31 @@ public class UserDAO {
 		}
 		session.update(userObj);
 		t.commit();
-		session.close();
 	}	
 	
 	//Ottenere un oggetto di tipo Blacklist
 	public User get(String primaryKey){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		User userEntity=(User) session.get(User.class,primaryKey);
 		t.commit();
-		session.close();
 		return userEntity;
 	}
 	
 	//Restituire tutti gli oggetti di tipo User
 	public List<User> getAllUsers(){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
+		List<User> listUsers=null;
 		SQLQuery query=session.createSQLQuery("SELECT * FROM Users");
 		query=query.addEntity(User.class);
-		List<User> listUsers=query.list();
+		listUsers=query.list();
 		t.commit();
-		session.close();
 		return listUsers;
 	}
 	
 	//Cancella un oggetto Blacklist passato in input
 	public void delete(User userObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.delete(userObj);
 		t.commit();
-		session.close();
 	}
 }

@@ -30,63 +30,50 @@ import org.hibernate.*;
 
 import com.mytalk.server.data.persistence.HibernateUtil;
 
-public class BlacklistDAO {
+public class BlacklistDAO extends GenericDAO{
 	
 	public BlacklistDAO(){}
 	
 	//Aggiunge un oggetto Blacklist ricevuto in input
 	public void save(Blacklist blacklistObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.save(blacklistObj);
 		t.commit();
-		session.close();
 	}
 	
 	//Aggiorna un oggetto Blacklist passato in input
 	public void update(Blacklist blacklistObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
-		Blacklist blacklistEntity=(Blacklist)session.get(Blacklist.class, blacklistObj.getOwner());
+		Blacklist blacklistEntity=this.get(blacklistObj.getOwner());
+		if(blacklistObj.getUsername().contains("null")){
+			blacklistObj.setUsername(blacklistEntity.getUsername());
+		}
 		session.update(blacklistObj);
 		t.commit();
-		session.close();
 	}
 	
 	//Ottenere un oggetto di tipo Blacklist
 	public Blacklist get(String primaryKey){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		Blacklist blacklistObj=(Blacklist) session.get(Blacklist.class,primaryKey);
 		t.commit();
-		session.close();
 		return blacklistObj;
 	}
 	
 	public List<Blacklist> getUserBlacklist(String primaryKey){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
-
 		SQLQuery query=session.createSQLQuery("SELECT * FROM Blacklists WHERE owner='"+primaryKey+"'");
+		List<Blacklist> ownerBlacklist=null;
 		query=query.addEntity(Blacklist.class);
-
-		List<Blacklist> ownerBlacklist=query.list();		
+		ownerBlacklist=query.list();		
 		t.commit();
-		session.close();
 		return ownerBlacklist;
 	}
 	
 	//Cancella un oggetto Blacklist passato in input
 	public void delete(Blacklist blacklistObj){
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
 		Transaction t=session.beginTransaction();
 		session.delete(blacklistObj);
 		t.commit();
-		session.close();
 	}
 }

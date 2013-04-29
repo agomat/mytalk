@@ -21,7 +21,6 @@ Date
 
 package com.mytalk.server.data.storage;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.mytalk.server.data.model.*;
@@ -30,53 +29,51 @@ import com.mytalk.server.data.model.*;
 public interface IDataAccess{
 			public boolean checkUserByIp(String ip);
 			
-			public boolean checkUserByName(String name);
+			public boolean checkUserByName(String name, User authenticate);
 		
 			public void login(OnlineUser user);
 			
-			public List<ListName> userLists(String user);
+			public List<ListName> userLists(String user, User authenticate);
 		
-			public List<User> getListUsers(ListName list);
+			public List<User> getListUsers(ListName list, User authenticate);
 			
-			public List<User> getOnlineUsers();
+			public List<User> getOnlineUsers(User authenticate);
 			
-			public void logout(OnlineUser user);
+			public void logout(OnlineUser user, User authenticate);
 			
-			public void updateEmail(MailChange newMail);
+			public void updateEmail(MailChange newMail, User authenticate);
 			
-			public void confirmUpdateEmail(MailChange newMail);
+			public void confirmUpdateEmail(MailChange newMail, User authenticate);
 			
-			public void listCreate(ListName list);
+			public void listCreate(ListName list, User authenticate);
 			
-			public void listDelete(ListName list);
+			public void listDelete(ListName list, User authenticate);
 		
-			public void userListAdd(ListName list,String user);
+			public void userListAdd(ListName list,String user, User authenticate);
 					
-			public void userListRemove(ListName list,String user);
+			public void userListRemove(ListName list,String user, User authenticate);
 			
 			public void loginAsAnonymous(OnlineUser user);
 			
-			public List<User> getUserBlacklist(String u);
+			public List<User> getUserBlacklist(String u, User authenticate);
 			
-			public void passwordRetriever(ForgottenPassword forgottenPasswordObj);
+			public void passwordRetriever(ForgottenPassword forgottenPasswordObj, User authenticate);
 			
-			public void confirmChangePassword(ForgottenPassword forgottenPasswordObj);
+			public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate);
 			
-			public void blacklistAdd(Blacklist b);
+			public void blacklistAdd(Blacklist b, User authenticate);
 			
-			public void blacklistRemove(Blacklist b);
+			public void blacklistRemove(Blacklist b, User authenticate);
 			
-			public List<Call> getCalls(String u);
+			public List<Call> getCalls(String u, User authenticate);
 			
-			public void addCall(Call call);
-			
-			public boolean authenticateClient(User userObj);
+			public void addCall(Call call, User authenticate);
 			
 			public void deleteAccount(User userObj);
 			
-			public List<User> getAllUsers();
+			public List<User> getAllUsers(User authenticate);
 			
-			public void changePassword(User userObj);
+			public void changePassword(User userObj, User authenticate);
 			
 			public void accountConfirm(ToConfirmAccount toConfirmAccountObj);
 			

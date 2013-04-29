@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.storage.dao.*;
+import com.mytalk.server.exceptions.*;
 
 
 public class DataAccess implements IDataAccess{
@@ -57,7 +58,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//verifica la presenza dell'username nella tabella OnlineUser
-	public boolean checkUserByName(String name, User authenticate){
+	public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -70,7 +71,7 @@ public class DataAccess implements IDataAccess{
 			return online;
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
@@ -82,7 +83,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//interroga il db e restituisce le liste dell'utente
-	public List<ListName> userLists(String user, User authenticate){
+	public List<ListName> userLists(String user, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -91,12 +92,12 @@ public class DataAccess implements IDataAccess{
 			return list;
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//interroga il db e restituisce gli utenti di una lista
-	public List<User> getListUsers(ListName list, User authenticate){
+	public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			UserListDAO ld=new UserListDAO();
@@ -113,12 +114,12 @@ public class DataAccess implements IDataAccess{
 			return users;
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//restituisce una lista di user che identifica tutti gli utenti OnlineUser
-	public List<User> getOnlineUsers(User authenticate){
+	public List<User> getOnlineUsers(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -135,12 +136,12 @@ public class DataAccess implements IDataAccess{
 			return users;
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//elimina dalla tabella OnlineUser il record corrispondente
-	public void logout(OnlineUser user, User authenticate){
+	public void logout(OnlineUser user, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -148,12 +149,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//inserisce un record nella tabella MailChange con username, email e codice
-	public void updateEmail(MailChange newMail, User authenticate){
+	public void updateEmail(MailChange newMail, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			MailChangeDAO mcd=new MailChangeDAO();
@@ -165,12 +166,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//se il codice è giusto cancella il record da mailchange e aggiorna lo username con la nuova mail
-	public void confirmUpdateEmail(MailChange newMail, User authenticate){
+	public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			MailChangeDAO mcd=new MailChangeDAO();
@@ -188,12 +189,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
-	public void listCreate(ListName list, User authenticate){
+	public void listCreate(ListName list, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -206,12 +207,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	// verifica che sia presente la lista per quell'user e in caso positivo rimuove il record
-	public void listDelete(ListName list, User authenticate){
+	public void listDelete(ListName list, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -224,12 +225,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//verifica che non sia già presente nella lista quell'user e in caso negativo lo inserisce nella lista
-	public void userListAdd(ListName list,String user, User authenticate){
+	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -246,12 +247,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//verifica che sia presente la lista per quell'user e prende l'id della lista dalla tabella List e elimina un record dalla tabella UserList corrispondente all'id
-	public void userListRemove(ListName list,String user, User authenticate){
+	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -268,7 +269,7 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
@@ -280,7 +281,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//restituisce un vettore di user che identifica la blacklist
-	public List<User> getUserBlacklist(String u, User authenticate){
+	public List<User> getUserBlacklist(String u, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			List<User> listOfUser=new ArrayList<User>();
@@ -296,12 +297,12 @@ public class DataAccess implements IDataAccess{
 			return listOfUser; // restituisce una lista di user
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//inserisco un record nella tabella ForgottenPassword con username e newpwd
-	public void passwordRetriever(ForgottenPassword forgottenPasswordObj, User authenticate){
+	public void passwordRetriever(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
@@ -315,12 +316,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//ogni volta controllo se ci sono già Forgottenpassword nella tabella di quel username
-	public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate){ 
+	public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail{ 
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
@@ -337,12 +338,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//aggiunge un record alla blacklist
-	public void blacklistAdd(Blacklist b, User authenticate){
+	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			boolean check=false;
@@ -366,12 +367,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 		
 	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
-	public void blacklistRemove(Blacklist b, User authenticate){
+	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			boolean check=false;
@@ -395,12 +396,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 		
 	//restituisce un vector di oggetti call
-	public List<Call> getCalls(String primaryKey, User authenticate){
+	public List<Call> getCalls(String primaryKey, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			CallDAO cd=new CallDAO();
@@ -409,12 +410,12 @@ public class DataAccess implements IDataAccess{
 			return calls;
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	// aggiunge una chiamata alla tabella Call(nessun controllo poiché non ci sarà mai una chiamata uguale)
-	public void addCall(Call callObj, User authenticate){
+	public void addCall(Call callObj, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			CallDAO cd=new CallDAO();
@@ -422,13 +423,13 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	
 	// cancella un record dalla tabella User con il metodo delete di hibernate
-	public void deleteAccount(User userObj){
+	public void deleteAccount(User userObj) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(userObj);
 		if(authenticated==true){
 			UserDAO ud=new UserDAO();
@@ -436,12 +437,12 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//restituisce un vettore di user che identifica tutti gli utenti
-	public List<User> getAllUsers(User authenticate){
+	public List<User> getAllUsers(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			UserDAO ud=new UserDAO();
@@ -450,12 +451,12 @@ public class DataAccess implements IDataAccess{
 			return users;
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	
 	//cambia il valore della pwd sulla tabella User
-	public void changePassword(User userObj, User authenticate){
+	public void changePassword(User userObj, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			UserDAO ud=new UserDAO();
@@ -463,7 +464,7 @@ public class DataAccess implements IDataAccess{
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
-			//throw
+			throw new AuthenticationFail();
 		}
 	}
 	

@@ -31,7 +31,7 @@ public class DataAccess implements IDataAccess{
 	
 	
 	public DataAccess(){}
-	 
+	
 	//verifica dati autenticazione
 	private boolean authenticateClient(User userObj){
 		boolean esito=false;
@@ -171,20 +171,20 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//se il codice è giusto cancella il record da mailchange e aggiorna lo username con la nuova mail
-	public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail{
+	public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail,WrongMailCode{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			MailChangeDAO mcd=new MailChangeDAO();
 			MailChange mailToChange=mcd.get(newMail.getUsername());//assume che esista già un record in MailChange con quel username
 			String savedCode=mailToChange.getCode();
 			String passedCode=newMail.getCode();
-			if(savedCode==passedCode){
+			if(savedCode.equals(passedCode)){
 				mcd.delete(mailToChange);
 				User updatedUser=new User(mailToChange.getUsername(),null,mailToChange.getNewmail());//non sono sicuro del campo null se me lo modifica facendo update o se lascia il campo originario
 				UserDAO ud=new UserDAO();
 				ud.update(updatedUser);
 			}else{
-				//throw //il codice passato è sbagliato, non faccio niente e lo notifico con una eccezione
+				throw new WrongMailCode(); //il codice passato è sbagliato, non faccio niente e lo notifico con una eccezione
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -194,7 +194,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
-	public void listCreate(ListName list, User authenticate) throws AuthenticationFail{
+	public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -202,7 +202,7 @@ public class DataAccess implements IDataAccess{
 			if (listFound==null){
 				ld.save(list);
 			}else{
-				//throw //la lista esiste già con lo stesso nome
+				throw new ListAlreadyExists(); //la lista esiste già con lo stesso nome
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -212,7 +212,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// verifica che sia presente la lista per quell'user e in caso positivo rimuove il record
-	public void listDelete(ListName list, User authenticate) throws AuthenticationFail{
+	public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -220,7 +220,7 @@ public class DataAccess implements IDataAccess{
 			if (listFound!=null){
 				ld.delete(list);
 			}else{
-				//throw //la lista non esiste
+				throw new ListNotExisting(); //la lista non esiste
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -230,7 +230,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//verifica che non sia già presente nella lista quell'user e in caso negativo lo inserisce nella lista
-	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail{
+	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -242,7 +242,7 @@ public class DataAccess implements IDataAccess{
 				UserList newUser=new UserList(Id,user);
 				uld.save(newUser);
 			}else{
-				//throw //l'utente e` gia` nella lista
+				throw new UserAlreadyListed(); //l'utente e` gia` nella lista
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -252,7 +252,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//verifica che sia presente la lista per quell'user e prende l'id della lista dalla tabella List e elimina un record dalla tabella UserList corrispondente all'id
-	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail{
+	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ListNameDAO ld=new ListNameDAO();
@@ -264,7 +264,7 @@ public class DataAccess implements IDataAccess{
 				UserList newUser=new UserList(Id,user);
 				uld.delete(newUser);
 			}else{
-				//throw //l'utente non e` presente nella lista
+				throw new UserNotListed(); //l'utente non e` presente nella lista
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -321,7 +321,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//ogni volta controllo se ci sono già Forgottenpassword nella tabella di quel username
-	public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail{ 
+	public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail,PasswordNotForgotten{ 
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			ForgottenPasswordDAO fpd=new ForgottenPasswordDAO();
@@ -333,7 +333,7 @@ public class DataAccess implements IDataAccess{
 				ud.update(userObj);
 			}
 			else{
-				System.out.println("Impossibile confermare password!!!");
+				throw new PasswordNotForgotten();
 			}	
 			GenericDAO.closeSession();
 		}else{
@@ -343,7 +343,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//aggiunge un record alla blacklist
-	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail{
+	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			boolean check=false;
@@ -362,7 +362,7 @@ public class DataAccess implements IDataAccess{
 				bd.save(b);
 			}
 			else{
-				System.out.println("Impossibile aggiungere poiché il campo è già presente");
+				throw new UserAlreadyBlacklisted();
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -372,7 +372,7 @@ public class DataAccess implements IDataAccess{
 	}
 		
 	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
-	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail{
+	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			boolean check=false;
@@ -391,7 +391,7 @@ public class DataAccess implements IDataAccess{
 				bd.delete(b);
 			}
 			else{
-				System.out.println("Impossibile eliminare poiché il campo non è presente");
+				throw new UserNotBlacklisted();
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -470,7 +470,7 @@ public class DataAccess implements IDataAccess{
 	
 	//elimino il record corrispondente all'username dalla tabella ToConfirmAccount e 
 	//aggiungo le info alla tabella user
-	public void accountConfirm(ToConfirmAccount toConfirmAccountObj){
+	public void accountConfirm(ToConfirmAccount toConfirmAccountObj)throws AccountNotToConfirm{
 		ToConfirmAccountDAO tcad=new ToConfirmAccountDAO();
 		UserDAO ud=new UserDAO();
 		ToConfirmAccount toConfirmAccountEntity=tcad.get(toConfirmAccountObj.getUsername());
@@ -479,7 +479,7 @@ public class DataAccess implements IDataAccess{
 			ud.save(new User(toConfirmAccountEntity.getUsername(),toConfirmAccountEntity.getPassword(),toConfirmAccountEntity.getEmail()));
 		}	
 		else {
-			System.out.println("Account da confermare non presente");
+			throw new AccountNotToConfirm();
 		}
 		GenericDAO.closeSession();
 	}

@@ -24,7 +24,7 @@ package com.mytalk.server.data.storage;
 import java.util.List;
 
 import com.mytalk.server.data.model.*;
-import com.mytalk.server.exceptions.AuthenticationFail;
+import com.mytalk.server.exceptions.*;
 
 
 public interface IDataAccess{
@@ -44,15 +44,15 @@ public interface IDataAccess{
 			
 			public void updateEmail(MailChange newMail, User authenticate) throws AuthenticationFail;
 			
-			public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail;
+			public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail,WrongMailCode;
 			
-			public void listCreate(ListName list, User authenticate) throws AuthenticationFail;
+			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists;
 			
-			public void listDelete(ListName list, User authenticate) throws AuthenticationFail;
+			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting;
 		
-			public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail;
+			public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed;
 					
-			public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail;
+			public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed;
 			
 			public void loginAsAnonymous(OnlineUser user);
 			
@@ -60,11 +60,11 @@ public interface IDataAccess{
 			
 			public void passwordRetriever(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail;
 			
-			public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail;
+			public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail,PasswordNotForgotten;
 			
-			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail;
+			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted;
 			
-			public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail;
+			public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted;
 			
 			public List<Call> getCalls(String u, User authenticate) throws AuthenticationFail;
 			
@@ -76,7 +76,7 @@ public interface IDataAccess{
 			
 			public void changePassword(User userObj, User authenticate) throws AuthenticationFail;
 			
-			public void accountConfirm(ToConfirmAccount toConfirmAccountObj);
+			public void accountConfirm(ToConfirmAccount toConfirmAccountObj)throws AccountNotToConfirm;
 			
 			public void deleteUnconfirmedAccount();
 }

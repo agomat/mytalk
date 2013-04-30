@@ -10,7 +10,7 @@
 Date
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-04-12 | NT        | [+] Creazione classe e metodi   
+* 0.1	  |	2013-04-18 | NT        | [+] Creazione classe e metodi   
 *
 * This software is distributed under GNU/GPL 2.0.
 *

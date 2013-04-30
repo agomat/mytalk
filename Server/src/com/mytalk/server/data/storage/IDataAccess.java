@@ -44,7 +44,7 @@ public interface IDataAccess{
 			
 			public void updateEmail(MailChange newMail, User authenticate) throws AuthenticationFail;
 			
-			public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail,WrongMailCode;
+			public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail,WrongMailCode,ConfirmationMailFail;
 			
 			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists;
 			

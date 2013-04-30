@@ -5,9 +5,7 @@
 * Date: 2013-04-15
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-17 | NM        | [+] Creazione classe e definizione metodi  
 *
@@ -19,13 +17,8 @@
 
 package com.mytalk.server.data.storage.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
 import com.mytalk.server.data.model.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
-
 
 public class ForgottenPasswordDAO extends GenericDAO{
 
@@ -43,7 +36,7 @@ public class ForgottenPasswordDAO extends GenericDAO{
 	public void update(ForgottenPassword forgottenPasswordObj){
 		Transaction t=session.beginTransaction();
 		ForgottenPassword forgottenPasswordEntity=this.get(forgottenPasswordObj.getUsername());
-		if(forgottenPasswordEntity.getNewpwd().equals("null")){
+		if(forgottenPasswordEntity.getNewpwd()==null){
 			forgottenPasswordObj.setNewpwd(forgottenPasswordEntity.getNewpwd());
 		}
 		session.update(forgottenPasswordObj);

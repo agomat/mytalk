@@ -5,9 +5,7 @@
 * Date: 2013-04-12
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-12 | NM        | [+] Creazione classe    
 *

@@ -5,9 +5,7 @@
 * Date: 2013-04-15
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-15 | NM        | [+] Creazione classe e definizione metodi  
 *
@@ -22,7 +20,6 @@ package com.mytalk.server.data.storage.dao;
 import com.mytalk.server.data.model.*;
 
 import org.hibernate.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
 import java.util.List;
 
 public class OnlineUserDAO extends GenericDAO{

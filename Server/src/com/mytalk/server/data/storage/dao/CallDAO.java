@@ -5,9 +5,7 @@
 * Date: 2013-04-15
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-16 | NM        | [+] Creazione classe e definizione metodi  
 *
@@ -22,10 +20,7 @@ package com.mytalk.server.data.storage.dao;
 import com.mytalk.server.data.model.*;
 
 import java.util.*;
-import java.sql.Timestamp;
 import org.hibernate.*;
-
-import com.mytalk.server.data.persistence.HibernateUtil;
 
 public class CallDAO extends GenericDAO{
 
@@ -42,10 +37,10 @@ public class CallDAO extends GenericDAO{
 	public void update(Call callObj){
 		Transaction t=session.beginTransaction();
 		Call callEntity=this.get(callObj.getId());
-		if(callObj.getCaller().equals("null")){
+		if(callObj.getCaller()==null){
 			callObj.setCaller(callEntity.getCaller());
 		}
-		if(callObj.getReceiver().equals("null")){
+		if(callObj.getReceiver()==null){
 			callObj.setReceiver(callEntity.getReceiver());
 		}
 		if(callObj.getByteReceived()==0){

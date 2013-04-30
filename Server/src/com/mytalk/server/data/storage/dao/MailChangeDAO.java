@@ -5,9 +5,7 @@
 * Date: 2013-04-15
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-16 | NM        | [+] Creazione classe e definizione metodi  
 *
@@ -21,7 +19,6 @@ package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
 import org.hibernate.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
 
 public class MailChangeDAO extends GenericDAO{
 	
@@ -36,10 +33,10 @@ public class MailChangeDAO extends GenericDAO{
 	public void update(MailChange mailObj){
 		Transaction t=session.beginTransaction();
 		MailChange mailEntity=this.get(mailObj.getUsername());
-		if(mailObj.getNewmail().equals("null")){
+		if(mailObj.getNewmail()==null){
 			mailObj.setNewmail(mailEntity.getNewmail());
 		}
-		if(mailObj.getCode().equals("null")){
+		if(mailObj.getCode()==null){
 			mailObj.setCode(mailEntity.getCode());
 		}
 		session.update(mailObj);

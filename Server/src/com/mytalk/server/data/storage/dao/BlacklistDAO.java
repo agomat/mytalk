@@ -5,9 +5,7 @@
 * Date: 2013-04-16
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-16 | MF        | [+] Creazione classe e definizione metodi  
 *
@@ -20,14 +18,8 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
-
 import java.util.*;
-import java.io.Serializable;
-
 import org.hibernate.*;
-
-import com.mytalk.server.data.persistence.HibernateUtil;
 
 public class BlacklistDAO extends GenericDAO{
 	
@@ -44,7 +36,7 @@ public class BlacklistDAO extends GenericDAO{
 	public void update(Blacklist blacklistObj){
 		Transaction t=session.beginTransaction();
 		Blacklist blacklistEntity=this.get(blacklistObj.getOwner());
-		if(blacklistObj.getUsername().equals("null")){
+		if(blacklistObj.getUsername()==null){
 			blacklistObj.setUsername(blacklistEntity.getUsername());
 		}
 		session.update(blacklistObj);

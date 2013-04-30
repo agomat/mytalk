@@ -30,7 +30,6 @@ import java.util.*;
 public class UserDAOTest {
 
 	private SessionFactory session=HibernateUtil.getSessionFactory();
-	private UserDAO dao=new UserDAO();
 	private int numberUser = 5;
 		
 	@Before
@@ -51,7 +50,24 @@ public class UserDAOTest {
 		t.commit();
 		s.close();
 	}
-			
+	
+	@Test
+	public void hibernateTest(){
+		Session s = session.openSession();
+		Transaction t = s.beginTransaction();
+		User u = new User("User0", null, "changed");
+		s.update(u);
+		t.commit();
+		
+		t = s.beginTransaction();
+		u = (User) s.get(User.class, "User0");
+		if(u.getEmail()=="changed")
+			assertEquals("Ha cambiato anche i campi null", u.getPassword(), "User0");
+		else
+			fail("Non ha cambiato la mail");
+	}
+	
+	/*		
 	@Test
 	public void checkPassword(){
 		//Check della password corretta
@@ -110,5 +126,5 @@ public class UserDAOTest {
 	@Test
 	public void checkAdd(){
 		//Controlla che un utente
-	}
+	}*/
 }

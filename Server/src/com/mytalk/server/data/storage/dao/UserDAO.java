@@ -5,9 +5,7 @@
 * Date: 2013-04-12
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-15 | MF        | [+] Creazione classe e definizione metodi  
 *
@@ -20,13 +18,8 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
-
 import java.util.*;
-
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class UserDAO extends GenericDAO{
@@ -42,10 +35,10 @@ public class UserDAO extends GenericDAO{
 	public void update(User userObj){
 		Transaction t=session.beginTransaction();
 		User userEntity=this.get(userObj.getUsername());
-		if(userObj.getPassword().equals("null")){
+		if(userObj.getPassword()==null){
 			userObj.setPassword(userEntity.getPassword());
 		}
-		if(userObj.getEmail().equals("null")){
+		if(userObj.getEmail()==null){
 			userObj.setEmail(userEntity.getEmail());
 		}
 		session.update(userObj);

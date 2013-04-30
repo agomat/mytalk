@@ -5,9 +5,7 @@
 * Date: 2013-04-11
 *
 * Diary:
-*
-*
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-15 | NT        | [+] Creato classe e metodi  
 *
@@ -21,7 +19,6 @@ package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
 import org.hibernate.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
 import java.util.List;
 
 public class ListNameDAO extends GenericDAO{
@@ -37,10 +34,10 @@ public class ListNameDAO extends GenericDAO{
 	public void update(ListName listObj){
 		Transaction t=session.beginTransaction();
 		ListName listEntity=this.get(listObj.getId());
-		if(listObj.getOwner().equals("null")){
+		if(listObj.getOwner()==null){
 			listObj.setOwner(listEntity.getOwner());
 		}
-		if(listObj.getName().equals("null")){
+		if(listObj.getName()==null){
 			listObj.setName(listEntity.getName());
 		}
 		session.update(listObj);

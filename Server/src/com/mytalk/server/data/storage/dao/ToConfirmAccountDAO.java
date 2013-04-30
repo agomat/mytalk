@@ -5,9 +5,7 @@
 * Date: 2013-04-16
 *
 * Diary:
-*
-* 
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-16 | MF        | [+] Creazione classe e definizione metodi  
 *
@@ -20,7 +18,6 @@
 package com.mytalk.server.data.storage.dao;
 
 import com.mytalk.server.data.model.*;
-import com.mytalk.server.data.persistence.HibernateUtil;
 import org.hibernate.*;
 import java.util.*;
 
@@ -38,10 +35,10 @@ public class ToConfirmAccountDAO extends GenericDAO{
 	public void update(ToConfirmAccount toConfirmAccountObj){
 		Transaction t = session.beginTransaction();
 		ToConfirmAccount toConfirmAccountEntity=this.get(toConfirmAccountObj.getUsername());
-		if(toConfirmAccountObj.getPassword().equals("null")){
+		if(toConfirmAccountObj.getPassword()==null){
 			toConfirmAccountObj.setPassword(toConfirmAccountEntity.getPassword());
 		}
-		if(toConfirmAccountObj.getEmail().equals("null")){
+		if(toConfirmAccountObj.getEmail()==null){
 			toConfirmAccountObj.setEmail(toConfirmAccountEntity.getEmail());
 		}
 		session.update(toConfirmAccountObj);

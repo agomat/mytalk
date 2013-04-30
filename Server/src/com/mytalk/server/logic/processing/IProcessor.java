@@ -1,5 +1,5 @@
 /**
-* Filename: iProcessor.java
+* Filename: IProcessor.java
 * Package: com.mytalk.server.logic.shared
 * Author: Nicolò Toso
 * Date: 2013-04-29
@@ -19,6 +19,6 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
-public interface iProcessor {
+public interface IProcessor {
 
 }

@@ -1,5 +1,5 @@
 /**
-* Filename: authentication.java
+* Filename: Authentication.java
 * Package: com.mytalk.server.logic.shared
 * Author: Nicolò Toso
 * Date: 2013-04-29
@@ -19,11 +19,11 @@ Date
 */
 package com.mytalk.server.logic.shared;
 
-class authentication{
+class Authentication{
 	public String username;
 	public String password;
 	
-	public authentication(String a, String b)
+	public Authentication(String a, String b)
 	{
 		username=a;
 		password=b;

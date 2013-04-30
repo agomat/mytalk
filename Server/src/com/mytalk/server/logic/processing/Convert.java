@@ -1,5 +1,5 @@
 /**
-* Filename: convert.java
+* Filename: Convert.java
 * Package: com.mytalk.server.logic.shared
 * Author: Nicolò Toso
 * Date: 2013-04-29
@@ -22,20 +22,20 @@ package com.mytalk.server.logic.processing;
 import com.google.gson.*;
 import com.mytalk.server.logic.shared.*;
 
-public class convert {
+public class Convert {
 	
 	Gson gson=new Gson();
 	
-	public convert(){}
+	public Convert(){}
 	
 	//JSON -> Java
-	public ARI JsonToJava(String stringJson){
+	public ARI convertJsonToJava(String stringJson){
 		ARI user =gson.fromJson(stringJson, ARI.class);
 		return user;
 	}
 	
 	//Java->JSON
-	public String JavaToJson(ARI create){
+	public String convertJavaToJson(ARI create){
 	String user = gson.toJson(create);
 	return user;
 	}

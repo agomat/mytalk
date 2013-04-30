@@ -1,5 +1,5 @@
 /**
-* Filename: givePack.java
+* Filename: ListPack.java
 * Package: com.mytalk.server.logic.shared
 * Author: Nicolò Toso
 * Date: 2013-04-23
@@ -23,12 +23,11 @@ import java.util.List;
 
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class givePack {
+public class ListPack {
 	
-	private WrapperCall wc;
+	private WrapperUserList wul;
 	
-	public givePack(List<Call> c){
-		wc=new WrapperCall(c);
+	public ListPack(List<UserList> c){
+		wul=new WrapperUserList(c);
 	}
 }
-

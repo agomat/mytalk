@@ -17,6 +17,16 @@
 
 package com.mytalk.server.logic.processing.requestProcessor.comunication;
 
+import com.mytalk.server.logic.shared.ARI;
+
 public class NotRegisteredCall {
 	public NotRegisteredCall(){}
+	
+	public void manage(ARI ari){
+		String i=ari.getInfo();
+		//conversione dell'info --> Pack
+		// conversione ModelClient 2 ModelServer
+		
+		//com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(uc.getUsername(),null,null);
+	}
 }

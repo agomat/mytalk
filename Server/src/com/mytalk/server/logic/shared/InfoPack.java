@@ -1,5 +1,5 @@
 /**
-* Filename: worldPack.java
+* Filename: InfoPack.java
 * Package: com.mytalk.server.logic.shared
 * Author: Nicolò Toso
 * Date: 2013-04-23
@@ -10,7 +10,7 @@
 Date
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-04-23 | NT        | [+] Creazione classe e costruttore
+* 0.1	  |	2013-04-23 | NT        | [+] Creazione classe e costruttore   
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -19,17 +19,13 @@ Date
 */
 
 package com.mytalk.server.logic.shared;
-import java.util.List;
-
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class worldPack {
+public class InfoPack {
 	
-	private WrapperUserList wul;
-	private WrapperUser wu;
+	private AdditionalData ad;
 	
-	public worldPack(List<UserList> ul, List<User> u){
-		wul=new WrapperUserList(ul);
-		wu=new WrapperUser(u);
+	public InfoPack(String p, String em, String c, String sd, String u, String s){
+		ad=new AdditionalData(p,em,c,sd,u,s);
 	}
 }

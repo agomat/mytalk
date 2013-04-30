@@ -1,5 +1,5 @@
 /**
-* Filename: update.java
+* Filename: WorldPack.java
 * Package: com.mytalk.server.logic.shared
 * Author: Nicolò Toso
 * Date: 2013-04-23
@@ -17,16 +17,19 @@ Date
 * Software licensed to:
 * - Zucchetti SRL
 */
+
 package com.mytalk.server.logic.shared;
 import java.util.List;
 
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class update{
+public class WorldPack {
 	
+	private WrapperUserList wul;
 	private WrapperUser wu;
 	
-	public update(List<User> c){
-		wu=new WrapperUser(c);
+	public WorldPack(List<UserList> ul, List<User> u){
+		wul=new WrapperUserList(ul);
+		wu=new WrapperUser(u);
 	}
 }

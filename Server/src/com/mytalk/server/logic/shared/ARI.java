@@ -23,12 +23,12 @@ import java.io.Serializable;
 
 public class ARI implements Serializable{
 	private String req;
-	private authentication auth;
+	private Authentication auth;
 	private String info;
 	
 	public ARI(){}
 	
-	public ARI(authentication a, String r, String i){
+	public ARI(Authentication a, String r, String i){
 		auth=a;
 		req=r;
 		info=i;
@@ -40,10 +40,10 @@ public class ARI implements Serializable{
 	public String getInfo(){
 		return info;
 	}
-	public void setAuth(authentication a){
+	public void setAuth(Authentication a){
 		auth=a;
 	}
-	public authentication getAuth(){
+	public Authentication getAuth(){
 		return auth;
 	}
 	public void setReq(String r){

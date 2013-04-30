@@ -36,10 +36,10 @@ public class MailChangeDAO extends GenericDAO{
 	public void update(MailChange mailObj){
 		Transaction t=session.beginTransaction();
 		MailChange mailEntity=this.get(mailObj.getUsername());
-		if(mailObj.getNewmail().contains("null")){
+		if(mailObj.getNewmail().equals("null")){
 			mailObj.setNewmail(mailEntity.getNewmail());
 		}
-		if(mailObj.getCode().contains("null")){
+		if(mailObj.getCode().equals("null")){
 			mailObj.setCode(mailEntity.getCode());
 		}
 		session.update(mailObj);

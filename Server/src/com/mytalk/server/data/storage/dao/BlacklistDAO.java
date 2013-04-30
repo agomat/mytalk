@@ -6,8 +6,7 @@
 *
 * Diary:
 *
-* Version |
-Date
+*
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-16 | MF        | [+] Creazione classe e definizione metodi  
@@ -45,7 +44,7 @@ public class BlacklistDAO extends GenericDAO{
 	public void update(Blacklist blacklistObj){
 		Transaction t=session.beginTransaction();
 		Blacklist blacklistEntity=this.get(blacklistObj.getOwner());
-		if(blacklistObj.getUsername().contains("null")){
+		if(blacklistObj.getUsername().equals("null")){
 			blacklistObj.setUsername(blacklistEntity.getUsername());
 		}
 		session.update(blacklistObj);

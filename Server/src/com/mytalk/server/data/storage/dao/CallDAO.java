@@ -42,10 +42,10 @@ public class CallDAO extends GenericDAO{
 	public void update(Call callObj){
 		Transaction t=session.beginTransaction();
 		Call callEntity=this.get(callObj.getId());
-		if(callObj.getCaller().contains("null")){
+		if(callObj.getCaller().equals("null")){
 			callObj.setCaller(callEntity.getCaller());
 		}
-		if(callObj.getReceiver().contains("null")){
+		if(callObj.getReceiver().equals("null")){
 			callObj.setReceiver(callEntity.getReceiver());
 		}
 		if(callObj.getByteReceived()==0){

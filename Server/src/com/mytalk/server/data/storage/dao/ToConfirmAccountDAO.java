@@ -6,8 +6,7 @@
 *
 * Diary:
 *
-* Version |
-Date
+* 
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-16 | MF        | [+] Creazione classe e definizione metodi  
@@ -39,10 +38,10 @@ public class ToConfirmAccountDAO extends GenericDAO{
 	public void update(ToConfirmAccount toConfirmAccountObj){
 		Transaction t = session.beginTransaction();
 		ToConfirmAccount toConfirmAccountEntity=this.get(toConfirmAccountObj.getUsername());
-		if(toConfirmAccountObj.getPassword().contains("null")){
+		if(toConfirmAccountObj.getPassword().equals("null")){
 			toConfirmAccountObj.setPassword(toConfirmAccountEntity.getPassword());
 		}
-		if(toConfirmAccountObj.getEmail().contains("null")){
+		if(toConfirmAccountObj.getEmail().equals("null")){
 			toConfirmAccountObj.setEmail(toConfirmAccountEntity.getEmail());
 		}
 		session.update(toConfirmAccountObj);

@@ -6,6 +6,7 @@
 *
 * Diary:
 *
+*
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-15 | MF        | [+] Creazione classe e definizione metodi  
@@ -41,10 +42,10 @@ public class UserDAO extends GenericDAO{
 	public void update(User userObj){
 		Transaction t=session.beginTransaction();
 		User userEntity=this.get(userObj.getUsername());
-		if(userObj.getPassword().contains("null")){
+		if(userObj.getPassword().equals("null")){
 			userObj.setPassword(userEntity.getPassword());
 		}
-		if(userObj.getEmail().contains("null")){
+		if(userObj.getEmail().equals("null")){
 			userObj.setEmail(userEntity.getEmail());
 		}
 		session.update(userObj);

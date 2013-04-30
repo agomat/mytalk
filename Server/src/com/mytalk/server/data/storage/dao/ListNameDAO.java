@@ -6,8 +6,7 @@
 *
 * Diary:
 *
-* Version |
-Date
+*
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-15 | NT        | [+] Creato classe e metodi  
@@ -38,10 +37,10 @@ public class ListNameDAO extends GenericDAO{
 	public void update(ListName listObj){
 		Transaction t=session.beginTransaction();
 		ListName listEntity=this.get(listObj.getId());
-		if(listObj.getOwner().contains("null")){
+		if(listObj.getOwner().equals("null")){
 			listObj.setOwner(listEntity.getOwner());
 		}
-		if(listObj.getName().contains("null")){
+		if(listObj.getName().equals("null")){
 			listObj.setName(listEntity.getName());
 		}
 		session.update(listObj);

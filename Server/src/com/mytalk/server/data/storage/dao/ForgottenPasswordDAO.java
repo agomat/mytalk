@@ -43,7 +43,7 @@ public class ForgottenPasswordDAO extends GenericDAO{
 	public void update(ForgottenPassword forgottenPasswordObj){
 		Transaction t=session.beginTransaction();
 		ForgottenPassword forgottenPasswordEntity=this.get(forgottenPasswordObj.getUsername());
-		if(forgottenPasswordEntity.getNewpwd().contains("null")){
+		if(forgottenPasswordEntity.getNewpwd().equals("null")){
 			forgottenPasswordObj.setNewpwd(forgottenPasswordEntity.getNewpwd());
 		}
 		session.update(forgottenPasswordObj);

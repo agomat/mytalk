@@ -15,7 +15,7 @@
 * - Zucchetti SRL
 */
 
-package com.mytalk.server.logic.processing;
+package com.mytalk.server.logic.processing.requestProcessor;
 
 import com.mytalk.server.logic.shared.ARI;
 

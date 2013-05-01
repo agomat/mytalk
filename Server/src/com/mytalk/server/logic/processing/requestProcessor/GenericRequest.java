@@ -18,8 +18,11 @@
 package com.mytalk.server.logic.processing.requestProcessor;
 
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.data.storage.*;
 
 public abstract class GenericRequest {
+	
+	protected static IDataAccess da=new DataAccess();
 	
 	public GenericRequest(){};
 	

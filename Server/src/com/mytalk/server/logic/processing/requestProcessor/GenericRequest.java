@@ -19,10 +19,13 @@ package com.mytalk.server.logic.processing.requestProcessor;
 
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.data.storage.*;
+import com.mytalk.server.logic.processing.Convert;
 
 public abstract class GenericRequest {
 	
 	protected static IDataAccess da=new DataAccess();
+	
+	protected static Convert conv=new Convert();
 	
 	public GenericRequest(){};
 	

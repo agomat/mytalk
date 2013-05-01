@@ -1,5 +1,5 @@
 /**
-* Filename: WrapperCall.java
+* Filename: WrapperUser.java
 * Package: com.mytalk.server.logic.shared.modelclient
 * Author: Nicolò Toso
 * Date: 2013-04-18
@@ -18,24 +18,24 @@ Date
 * - Zucchetti SRL
 */
 
-package com.mytalk.server.logic.shared.modelclient;
+package com.mytalk.server.logic.shared.modelClient;
 
 import java.util.List;
 
-public class WrapperCall{
+public class WrapperUser{
 	
-	private List<Call> list;
+	private List<User> list;
 	
-	public WrapperCall(){}
+	public WrapperUser(){}
 	
-	public WrapperCall(List<Call> c){
+	public WrapperUser(List<User> c){
 		list=c;
 	}
 	
-	public List<Call> getList(){
+	public List<User> getList(){
 		return list;
 	}
-	public void setList(List<Call> c){
+	public void setList(List<User> c){
 		list=c;
 	}
 }

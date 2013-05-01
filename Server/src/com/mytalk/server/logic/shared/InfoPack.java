@@ -19,7 +19,7 @@ Date
 */
 
 package com.mytalk.server.logic.shared;
-import com.mytalk.server.logic.shared.modelclient.*;
+import com.mytalk.server.logic.shared.modelClient.*;
 
 public class InfoPack extends Information{
 	
@@ -27,5 +27,8 @@ public class InfoPack extends Information{
 	
 	public InfoPack(String p, String em, String c, String sd, String u, String s){
 		ad=new AdditionalData(p,em,c,sd,u,s);
+	}
+	public AdditionalData getAdditional(){
+		return ad;
 	}
 }

@@ -18,7 +18,7 @@ Date
 * - Zucchetti SRL
 */
 
-package com.mytalk.server.logic.shared.modelclient;
+package com.mytalk.server.logic.shared.modelClient;
 
 public class User{
 	private String username;

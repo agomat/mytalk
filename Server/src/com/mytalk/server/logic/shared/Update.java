@@ -20,7 +20,7 @@ Date
 package com.mytalk.server.logic.shared;
 import java.util.List;
 
-import com.mytalk.server.logic.shared.modelclient.*;
+import com.mytalk.server.logic.shared.modelClient.*;
 
 public class Update extends Information{
 	

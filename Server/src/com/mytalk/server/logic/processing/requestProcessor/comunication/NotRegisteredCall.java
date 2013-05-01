@@ -30,3 +30,4 @@ public class NotRegisteredCall {
 		//com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(uc.getUsername(),null,null);
 	}
 }
+ 

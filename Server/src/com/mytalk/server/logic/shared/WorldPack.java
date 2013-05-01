@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class WorldPack {
+public class WorldPack extends Information{
 	
 	private WrapperUserList wul;
 	private WrapperUser wu;

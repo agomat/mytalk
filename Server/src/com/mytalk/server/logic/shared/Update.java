@@ -22,7 +22,7 @@ import java.util.List;
 
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class Update{
+public class Update extends Information{
 	
 	private WrapperUser wu;
 	

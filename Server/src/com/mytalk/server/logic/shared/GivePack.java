@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class GivePack {
+public class GivePack extends Information{
 	
 	private WrapperCall wc;
 	

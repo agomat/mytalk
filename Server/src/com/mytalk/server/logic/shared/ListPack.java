@@ -23,9 +23,11 @@ import java.util.List;
 
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class ListPack {
+public class ListPack extends Information{
 	
 	private WrapperUserList wul;
+	
+	public ListPack(){}
 	
 	public ListPack(List<UserList> c){
 		wul=new WrapperUserList(c);

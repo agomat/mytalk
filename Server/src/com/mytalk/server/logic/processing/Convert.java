@@ -34,6 +34,12 @@ public class Convert {
 		return user;
 	}
 	
+	//JSON -> Java per i pack
+	public Information convertJsonToJava(String stringJson,Class info){	
+		Information infoEntity=gson.fromJson(stringJson,info);
+		return infoEntity;
+	}
+	
 	//Java->JSON
 	public String convertJavaToJson(ARI create){
 	String user = gson.toJson(create);

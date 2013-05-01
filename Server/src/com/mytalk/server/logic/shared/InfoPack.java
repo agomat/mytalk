@@ -21,7 +21,7 @@ Date
 package com.mytalk.server.logic.shared;
 import com.mytalk.server.logic.shared.modelclient.*;
 
-public class InfoPack {
+public class InfoPack extends Information{
 	
 	private AdditionalData ad;
 	

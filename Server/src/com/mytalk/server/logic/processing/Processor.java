@@ -21,6 +21,8 @@ package com.mytalk.server.logic.processing;
 
 import com.mytalk.server.logic.shared.*;
 import com.mytalk.server.logic.processing.requestProcessor.*;
+import com.mytalk.server.logic.processing.requestProcessor.list.*;
+import com.mytalk.server.logic.processing.requestProcessor.stats.*;
 
 import java.util.*;
 
@@ -50,7 +52,7 @@ public class Processor {
 		
 		hm.put("ListUserAdd",new ListUserAdd());
 		hm.put("ListUserRemove",new ListUserRemove());
-		hm.put("BlacklistAdd",new BlacklistAdd());
+		hm.put("BlacklistAdd",new BlackListAdd());
 		hm.put("BlackListRemove",new BlackListRemove());
 		hm.put("GetCalls",new GetCalls());
 		hm.put("GetGlobalStats",new GetGlobalStats());

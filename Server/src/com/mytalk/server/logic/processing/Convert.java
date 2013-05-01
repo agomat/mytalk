@@ -30,8 +30,8 @@ public class Convert {
 	
 	//JSON -> Java
 	public ARI convertJsonToJava(String stringJson){
-		ARI user =gson.fromJson(stringJson, ARI.class);
-		return user;
+		ARI object =gson.fromJson(stringJson, ARI.class);
+		return object;
 	}
 	
 	//JSON -> Java per i pack
@@ -42,7 +42,12 @@ public class Convert {
 	
 	//Java->JSON
 	public String convertJavaToJson(ARI create){
-	String user = gson.toJson(create);
-	return user;
+	String string = gson.toJson(create);
+	return string;
+	}
+	
+	public String convertJavaToJson(Information info){
+		String string = gson.toJson(info);
+		return string;
 	}
 }

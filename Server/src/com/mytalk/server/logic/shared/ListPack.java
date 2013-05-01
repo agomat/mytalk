@@ -32,4 +32,12 @@ public class ListPack extends Information{
 	public ListPack(List<UserList> c){
 		wul=new WrapperUserList(c);
 	}
+	
+	public WrapperUserList getWrapperUserList(){
+		return wul;
+	}
+	
+	public void setWrapperUserList(WrapperUserList wulEntity){
+		wul=wulEntity;
+	}
 }

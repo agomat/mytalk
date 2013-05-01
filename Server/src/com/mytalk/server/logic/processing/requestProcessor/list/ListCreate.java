@@ -6,7 +6,7 @@ import com.mytalk.server.logic.shared.ARI;
 public class ListCreate extends GenericRequest {
 
 	@Override
-	public void manage(ARI pack) {
+	public ARI manage(ARI pack) {
 		// TODO Auto-generated method stub
 
 	}

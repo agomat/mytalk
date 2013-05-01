@@ -23,6 +23,6 @@ public abstract class GenericRequest {
 	
 	public GenericRequest(){};
 	
-	public abstract void manage(ARI pack);
+	public abstract ARI manage(ARI pack);
 
 }

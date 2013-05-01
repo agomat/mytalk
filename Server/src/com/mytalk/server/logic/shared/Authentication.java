@@ -19,7 +19,7 @@ Date
 */
 package com.mytalk.server.logic.shared;
 
-class Authentication{
+public class Authentication{
 	public String username;
 	public String password;
 	

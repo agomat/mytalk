@@ -70,6 +70,17 @@ public class UserDAO extends GenericDAO{
 		return listUsers;
 	}
 	
+	//restituisce gli oggetti User corrispondenti agli User Offline
+	public List<User> getOfflineUsers(){
+		Transaction t=session.beginTransaction();
+		List<User> listUsers=null;
+		SQLQuery query=session.createSQLQuery("SELECT * FROM Users WHERE username NOT IN (SELECT username FROM OnlineUsers WHERE username IS NOT NULL)");
+		query=query.addEntity(User.class);
+		listUsers=query.list();
+		t.commit();
+		return listUsers;
+	}
+	
 	//Cancella un oggetto Blacklist passato in input
 	public void delete(User userObj){
 		Transaction t=session.beginTransaction();

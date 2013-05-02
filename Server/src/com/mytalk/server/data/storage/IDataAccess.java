@@ -40,6 +40,8 @@ public interface IDataAccess{
 			
 			public List<User> getOnlineUsers(User authenticate) throws AuthenticationFail;
 			
+			public List<User> getOfflineUsers(User authenticate) throws AuthenticationFail;
+			
 			public void logout(OnlineUser user, User authenticate) throws AuthenticationFail;
 			
 			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists;
@@ -52,6 +54,8 @@ public interface IDataAccess{
 			
 			public void loginAsAnonymous(OnlineUser user);
 			
+			public void createAccount(User toCreate) throws UsernameAlreadyExisting;
+			
 			public List<User> getUserBlacklist(String u, User authenticate) throws AuthenticationFail;
 			
 			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted;
@@ -63,7 +67,5 @@ public interface IDataAccess{
 			public void addCall(Call call, User authenticate) throws AuthenticationFail;
 			
 			public void deleteAccount(User userObj) throws AuthenticationFail;
-			
-			public List<User> getAllUsers(User authenticate) throws AuthenticationFail;
 			
 }

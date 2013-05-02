@@ -75,6 +75,19 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
+	//crea un account nel database
+	public void createAccount(User toCreate) throws UsernameAlreadyExisting{
+		UserDAO ud=new UserDAO();
+		User existant=ud.get(toCreate.getName());
+		if(existant==null){
+			ud.save(toCreate);
+			GenericDAO.closeSession();
+		}else{
+			GenericDAO.closeSession();
+			throw new UsernameAlreadyExisting();
+		}
+	}
+	
 	// aggiunge un record sulla tabella OnlineUser
 	public void login(OnlineUser user){
 		OnlineUserDAO od=new OnlineUserDAO();
@@ -132,6 +145,19 @@ public class DataAccess implements IDataAccess{
 				User u=ud.get(username);
 				users.add(u);
 			}
+			GenericDAO.closeSession();
+			return users;
+		}else{
+			GenericDAO.closeSession();
+			throw new AuthenticationFail();
+		}
+	}
+	
+	public List<User> getOfflineUsers(User authenticate) throws AuthenticationFail{
+		boolean authenticated=authenticateClient(authenticate);
+		if(authenticated==true){
+			UserDAO ud=new UserDAO();
+			List<User> users=ud.getOfflineUsers();
 			GenericDAO.closeSession();
 			return users;
 		}else{
@@ -354,20 +380,6 @@ public class DataAccess implements IDataAccess{
 			UserDAO ud=new UserDAO();
 			ud.delete(userObj);
 			GenericDAO.closeSession();
-		}else{
-			GenericDAO.closeSession();
-			throw new AuthenticationFail();
-		}
-	}
-	
-	//restituisce un vettore di user che identifica tutti gli utenti
-	public List<User> getAllUsers(User authenticate) throws AuthenticationFail{
-		boolean authenticated=authenticateClient(authenticate);
-		if(authenticated==true){
-			UserDAO ud=new UserDAO();
-			List<User> users=ud.getAllUsers();
-			GenericDAO.closeSession();
-			return users;
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();

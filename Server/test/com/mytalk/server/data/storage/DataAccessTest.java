@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.Before;
+import java.lang.reflect.*;
 
 import com.mytalk.server.data.persistence.HibernateUtil;
-import java.sql.Timestamp;
 import org.hibernate.*;
 
 import com.mytalk.server.data.storage.dao.*;
@@ -68,7 +68,18 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkAutentication() {
-		
+		UserDAO ud=new UserDAO();
+		User u=ud.get("user0");
+		Class[] args1 = new Class[1];
+		args1[0] = User.class;
+		try{
+			Method method = DataAccess.class.getDeclaredMethod("authenticateClient",args1);
+			method.setAccessible(true);
+			boolean result=(boolean)method.invoke(dataAccess, u);
+			assertTrue("autenticazione non riuscita, le password non coincidono",result);
+		}catch(NoSuchMethodException exc){}
+		catch(InvocationTargetException exc){}
+		catch(IllegalAccessException exc){}
 	}
 
 }

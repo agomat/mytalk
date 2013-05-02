@@ -27,9 +27,11 @@ public class WorldPack extends Information{
 	
 	private WrapperUserList wul;
 	private WrapperUser wu;
+	private PersonalData pd;
 	
-	public WorldPack(List<UserList> ul, List<User> u){
+	public WorldPack(List<UserList> ul, List<User> u,PersonalData pdEntity){
 		wul=new WrapperUserList(ul);
 		wu=new WrapperUser(u);
+		pd=pdEntity;
 	}
 }

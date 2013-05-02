@@ -1,8 +1,8 @@
 /**
-* Filename: User.java
+* Filename: PersonalData.java
 * Package: com.mytalk.server.logic.shared.modelclient
 * Author: Nicolò Toso
-* Date: 2013-04-11
+* Date: 2013-04-18
 *
 * Diary:
 *
@@ -10,7 +10,7 @@
 Date
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-04-11 | NT        | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-04-12 | NT        | [+] Creazione classe e metodi   
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -20,20 +20,23 @@ Date
 
 package com.mytalk.server.logic.shared.modelClient;
 
-public class User{
+public class PersonalData{
+		
 	private String username;
+	private String password;
 	private String name;
 	private String surname;
-	private boolean status;
+	private String email;
 	private String ip;
 
-	public User (){}
+	public PersonalData(){}
 	
-	public User(String us,String n,String sn, boolean s,String i){
+	public PersonalData(String us, String pwd, String mail, String n, String s,String i){
 		username=us;
+		password=pwd;
+		email=mail;
 		name=n;
-		surname=sn;
-		status=s;
+		surname=s;
 		ip=i;
 	}
 	
@@ -43,6 +46,14 @@ public class User{
 	
 	public void setUsername(String u){
 		username=u;
+	}
+	
+	public String getPassword(){
+		return password;
+	}
+	
+	public void setPassword(String p){
+		password=p;
 	}
 	
 	public String getName(){
@@ -57,15 +68,23 @@ public class User{
 		return surname;
 	}
 	
-	public void setSurname(String sn){
-		surname=sn;
+	public void setSurname(String s){
+		surname=s;
 	}
 	
-	public boolean getStatus(){
-		return status;
+	public String getEmail(){
+		return email;
 	}
 	
-	public void setStatus(boolean p){
-		status=p;
+	public void setEmail(String e){
+		email=e;
+	}
+	
+	public String getIp(){
+		return ip;
+	}
+	
+	public void setIp(String i){
+		ip=i;
 	}
 }

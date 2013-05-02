@@ -66,5 +66,4 @@ public interface IDataAccess{
 			
 			public List<User> getAllUsers(User authenticate) throws AuthenticationFail;
 			
-			public void changePassword(User userObj, User authenticate) throws AuthenticationFail;
 }

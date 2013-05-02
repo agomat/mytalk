@@ -69,17 +69,21 @@ public class DataAccessTest {
 	@Test
 	public void checkAutentication() {
 		UserDAO ud=new UserDAO();
-		User u=ud.get("user0");
+		User u1=ud.get("user0");
 		Class[] args1 = new Class[1];
 		args1[0] = User.class;
+		User u2=ud.get("user1");
+		u2.setPassword("password");
 		try{
 			Method method = DataAccess.class.getDeclaredMethod("authenticateClient",args1);
 			method.setAccessible(true);
-			boolean result=(boolean)method.invoke(dataAccess, u);
-			assertTrue("autenticazione non riuscita, le password non coincidono",result);
-		}catch(NoSuchMethodException exc){}
-		catch(InvocationTargetException exc){}
-		catch(IllegalAccessException exc){}
+			boolean result1=(boolean)method.invoke(dataAccess, u1);
+			assertTrue("autenticazione non riuscita, le password non coincidono",result1);
+			boolean result2=(boolean)method.invoke(dataAccess, u2);
+			assertTrue("autenticazione non riuscita, le password non coincidono",result2);
+		}catch(NoSuchMethodException exc){fail("NoSuchMethodException");}
+		catch(InvocationTargetException exc){fail("InvocationTargetException");}
+		catch(IllegalAccessException exc){fail("IllegalAccessException");}
 	}
 
 }

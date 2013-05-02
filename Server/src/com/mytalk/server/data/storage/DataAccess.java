@@ -39,7 +39,7 @@ public class DataAccess implements IDataAccess{
 		User userEntity=ud.get(userObj.getUsername());
 		String pwdUserEntity=userEntity.getPassword();
 		String pwdUserObj=userObj.getPassword();
-		if(userEntity!=null && pwdUserEntity.contains(pwdUserObj)){
+		if(userEntity!=null && pwdUserEntity.equals(pwdUserObj)){
 			esito=true;
 		}
 		return esito;
@@ -299,7 +299,7 @@ public class DataAccess implements IDataAccess{
 			for(int i=0;i<blacklistList.size();i++){
 				blacklistObj=blacklistList.get(i);
 				blacklistUsername=blacklistObj.getUsername();
-				if(blacklistUsername.contains(b.getUsername())){
+				if(blacklistUsername.equals(b.getUsername())){
 					check=true;
 				}
 			}
@@ -328,7 +328,7 @@ public class DataAccess implements IDataAccess{
 			for(int i=0;i<blacklistList.size();i++){
 				blacklistObj=blacklistList.get(i);
 				blacklistUsername=blacklistObj.getUsername();
-				if(blacklistUsername.contains(b.getUsername())){
+				if(blacklistUsername.equals(b.getUsername())){
 					check=true;
 				}
 			}

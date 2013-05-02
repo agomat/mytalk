@@ -29,7 +29,6 @@ import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.GiveCallPack;
 import com.mytalk.server.logic.shared.modelClient.Call;
 import com.mytalk.server.logic.shared.modelClient.WrapperCall;
-import java.sql.Timestamp;
 
 public class AddCall extends GenericRequest {
 
@@ -38,7 +37,7 @@ public class AddCall extends GenericRequest {
 		ARI response=null;
 		//creo oggetto necessario per l'autenticazione
 		Authentication auth=ari.getAuth();
-		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null);
+		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null);
 		String infoRequest=ari.getInfo();
 		GiveCallPack pack=(GiveCallPack)conv.convertJsonToJava(infoRequest, GiveCallPack.class);
 		WrapperCall wrapperCall=pack.getWrapperCall();//ottengo WrapperCall
@@ -48,7 +47,7 @@ public class AddCall extends GenericRequest {
 		String caller=null;
 		String receiver=null;
 		int duration=0;
-		Timestamp startdate=null;
+		String startdate=null;
 		int byteR=0;
 		int byteS=0;
 		try{

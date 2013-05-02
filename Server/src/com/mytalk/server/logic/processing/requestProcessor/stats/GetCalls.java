@@ -37,7 +37,7 @@ public class GetCalls extends GenericRequest {
 		ARI response=null;
 		//creo oggetto necessario per l'autenticazione
 		Authentication auth=ari.getAuth();
-		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null);
+		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null);
 		List<com.mytalk.server.data.model.Call> listOfCall=null;
 		com.mytalk.server.data.model.Call callServer=null;
 		List<Call> listCallClient=new ArrayList<Call>();

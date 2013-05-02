@@ -25,6 +25,9 @@ import java.util.List;
 public class WrapperCall{
 	
 	private List<Call> list;
+	private int totalByteSent=0;
+	private int totalByteReceived=0;
+	private int totalDuration=0;
 	
 	public WrapperCall(){}
 	
@@ -37,5 +40,29 @@ public class WrapperCall{
 	}
 	public void setList(List<Call> c){
 		list=c;
+	}
+	
+	public int getTotalByteSent(){
+		return totalByteSent;
+	}
+	
+	public void increaseTotalByteSent(int increase){
+		totalByteSent=totalByteSent+increase;
+	}
+	
+	public int getTotalByteReceived(){
+		return totalByteReceived;
+	}
+	
+	public void increaseTotalByteReceived(int increase){
+		totalByteReceived=totalByteReceived+increase;
+	}
+	
+	public int getTotalDuration(){
+		return totalDuration;
+	}
+	
+	public void increaseTotalDuration(int increase){
+		totalDuration=totalDuration+increase;
 	}
 }

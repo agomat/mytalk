@@ -22,12 +22,16 @@ package com.mytalk.server.logic.shared.modelClient;
 
 public class User{
 	private String username;
+	private String name;
+	private String surname;
 	private boolean status;
 
 	public User (){}
 	
-	public User(String us, boolean s){
+	public User(String us,String n,String sn, boolean s){
 		username=us;
+		name=n;
+		surname=sn;
 		status=s;
 	}
 	
@@ -37,6 +41,22 @@ public class User{
 	
 	public void setUsername(String u){
 		username=u;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String n){
+		name=n;
+	}
+	
+	public String getSurname(){
+		return surname;
+	}
+	
+	public void setSurname(String sn){
+		surname=sn;
 	}
 	
 	public boolean getStatus(){

@@ -41,12 +41,6 @@ public class Processor {
 		hm.put("Login",new Login());
 		hm.put("Logout",new Logout());
 		
-		hm.put("PasswordRetriever",new PasswordRetriever());
-		hm.put("ConfirmChangePassword",new ConfirmChangePassword());
-		hm.put("ChangePassword",new ChangePassword());
-		hm.put("UpdateEmail",new UpdateEmail());
-		hm.put("ConfirmUpdateEmail",new ConfirmUpdateEmail());
-		hm.put("AccountConfirm",new AccountConfirm());
 		hm.put("ListCreate",new ListCreate());
 		hm.put("ListDelete",new ListDelete());
 		
@@ -55,7 +49,6 @@ public class Processor {
 		hm.put("BlacklistAdd",new BlackListAdd());
 		hm.put("BlackListRemove",new BlackListRemove());
 		hm.put("GetCalls",new GetCalls());
-		hm.put("GetGlobalStats",new GetGlobalStats());
 		hm.put("AddCall",new AddCall());
 	}
 		

@@ -20,7 +20,6 @@ package com.mytalk.server.logic.processing.requestProcessor.list;
 import java.util.List;
 import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.exceptions.UserAlreadyListed;
-import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.requestProcessor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -34,7 +33,7 @@ public class ListUserAdd extends GenericRequest{
 		ARI response=null;
 		//creo oggetto necessario per l'autenticazione
 		Authentication auth=ari.getAuth();
-		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null);
+		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null);
 		//ottengo la stringa di info
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);

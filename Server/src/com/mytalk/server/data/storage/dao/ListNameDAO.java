@@ -33,7 +33,7 @@ public class ListNameDAO extends GenericDAO{
 	
 	public void update(ListName listObj){
 		Transaction t=session.beginTransaction();
-		ListName listEntity=this.get(listObj.getId());
+		ListName listEntity=(ListName)session.get(ListName.class, listObj.getId());
 		if(listObj.getOwner()==null){
 			listObj.setOwner(listEntity.getOwner());
 		}

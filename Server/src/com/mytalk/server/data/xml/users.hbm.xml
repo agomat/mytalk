@@ -5,6 +5,8 @@
 		<class name="com.mytalk.server.data.model.User" table="Users">
 			<id name="username" column="username" type="string"></id>
 			<property name="email" column="email" type="string"></property>
+			<property name="name" column="name" type="string"></property>
+			<property name="surname" column="surname" type="string"></property>
 			<property name="password" column="password" type="string"></property>
 		</class>
 	</hibernate-mapping> 

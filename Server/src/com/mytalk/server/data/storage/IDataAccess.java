@@ -42,10 +42,6 @@ public interface IDataAccess{
 			
 			public void logout(OnlineUser user, User authenticate) throws AuthenticationFail;
 			
-			public void updateEmail(MailChange newMail, User authenticate) throws AuthenticationFail;
-			
-			public void confirmUpdateEmail(MailChange newMail, User authenticate) throws AuthenticationFail,WrongMailCode,ConfirmationMailFail;
-			
 			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists;
 			
 			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting;
@@ -57,10 +53,6 @@ public interface IDataAccess{
 			public void loginAsAnonymous(OnlineUser user);
 			
 			public List<User> getUserBlacklist(String u, User authenticate) throws AuthenticationFail;
-			
-			public void passwordRetriever(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail;
-			
-			public void confirmChangePassword(ForgottenPassword forgottenPasswordObj, User authenticate) throws AuthenticationFail,PasswordNotForgotten;
 			
 			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted;
 			
@@ -75,8 +67,4 @@ public interface IDataAccess{
 			public List<User> getAllUsers(User authenticate) throws AuthenticationFail;
 			
 			public void changePassword(User userObj, User authenticate) throws AuthenticationFail;
-			
-			public void accountConfirm(ToConfirmAccount toConfirmAccountObj)throws AccountNotToConfirm;
-			
-			public void deleteUnconfirmedAccount();
 }

@@ -35,7 +35,7 @@ public class BlacklistDAO extends GenericDAO{
 	//Aggiorna un oggetto Blacklist passato in input
 	public void update(Blacklist blacklistObj){
 		Transaction t=session.beginTransaction();
-		Blacklist blacklistEntity=this.get(blacklistObj.getOwner());
+		Blacklist blacklistEntity=(Blacklist) session.get(Blacklist.class,blacklistObj);
 		if(blacklistObj.getUsername()==null){
 			blacklistObj.setUsername(blacklistEntity.getUsername());
 		}
@@ -44,9 +44,10 @@ public class BlacklistDAO extends GenericDAO{
 	}
 	
 	//Ottenere un oggetto di tipo Blacklist
-	public Blacklist get(String primaryKey){
+	public Blacklist get(String primaryKeyOwner, String primaryKeyUser ){
 		Transaction t=session.beginTransaction();
-		Blacklist blacklistObj=(Blacklist) session.get(Blacklist.class,primaryKey);
+		Blacklist blacklistEntity = new Blacklist(primaryKeyOwner, primaryKeyUser);
+		Blacklist blacklistObj=(Blacklist) session.get(Blacklist.class,blacklistEntity);
 		t.commit();
 		return blacklistObj;
 	}

@@ -7,7 +7,7 @@
 			<property name="caller" column="caller" type="string"></property>
 			<property name="receiver" column="receiver" type="string"></property>
 			<property name="duration" column="duration" type="integer"></property>
-			<property name="startdate" column="startdate" type="timestamp"></property>
+			<property name="startdate" column="startdate" type="string"></property>
 			<property name="byteSent" column="byteSent" type="integer"></property>
 			<property name="byteReceived" column="byteReceived" type="integer"></property>
 		</class>

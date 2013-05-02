@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS Users
 (
   username varchar(20)  NOT NULL,
   password varchar(16)  NOT NULL,
-  email varchar(50)  NOT NULL,
+  name varchar(50) NOT NULL,
+  surname varchar(50) NOT NULL,
+  email varchar(100)  NOT NULL,
   PRIMARY KEY (username)
 ) ENGINE=InnoDB;
 
@@ -25,30 +27,13 @@ CREATE TABLE IF NOT EXISTS Calls
         caller		VARCHAR(20)	,
         receiver	VARCHAR(20)	,
         duration	INTEGER(10)	NOT NULL,
-        startdate	TIMESTAMP NOT NULL,
+        startdate	VARCHAR(10) 	NOT NULL,
         byteSent	INTEGER(10)	NOT NULL,
         byteReceived	INTEGER(10)	NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (caller) REFERENCES Users(username) ON DELETE SET NULL,
         FOREIGN KEY (receiver) REFERENCES Users(username) ON DELETE SET NULL
 )ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS MailChanges
-(
-        username	VARCHAR(20)	NOT NULL,
-        newmail		VARCHAR(50)	NOT NULL,
-        code 		VARCHAR(6)	NOT NULL,
-        PRIMARY KEY (username),
-        FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
-)ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS ForgottenPasswords
-(
-	username varchar(20)  NOT NULL,
-	newpwd	 varchar(16)  NOT NULL,
-  PRIMARY KEY (username),
-  FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
-) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS ListNames
 (
@@ -74,13 +59,6 @@ CREATE TABLE IF NOT EXISTS OnlineUsers
 	username	 varchar(20),
   PRIMARY KEY (ip),
   FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS ToConfirmAccounts (
-  username varchar(20)  NOT NULL,
-  password varchar(16)  NOT NULL,
-  email varchar(50)  NOT NULL,
-  PRIMARY KEY (username)
 ) ENGINE=InnoDB;
 
 

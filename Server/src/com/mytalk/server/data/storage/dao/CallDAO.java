@@ -36,7 +36,7 @@ public class CallDAO extends GenericDAO{
 	//Aggiorna un oggetto Call passato in input (SERVE?????)
 	public void update(Call callObj){
 		Transaction t=session.beginTransaction();
-		Call callEntity=this.get(callObj.getId());
+		Call callEntity=(Call) session.get(Call.class, callObj.getId());
 		if(callObj.getCaller()==null){
 			callObj.setCaller(callEntity.getCaller());
 		}

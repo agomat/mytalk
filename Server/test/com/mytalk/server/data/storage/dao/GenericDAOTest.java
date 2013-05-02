@@ -46,7 +46,7 @@ public class GenericDAOTest extends GenericDAO{
 			fail("La sessione non viene chiusa correttamente quando chiamo il metodo closeSession()");
 		}
 		
-		userDAO = new UserDAO();
+		CallDAO callDAO = new CallDAO();
 		if(session==null){
 			fail("La sessione viene persa quando creo un nuovo DAO con la sessione chiusa");
 		}else if(!session.isOpen()){

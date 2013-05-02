@@ -34,7 +34,13 @@ public class UserDAO extends GenericDAO{
 		
 	public void update(User userObj){
 		Transaction t=session.beginTransaction();
-		User userEntity=this.get(userObj.getUsername());
+		User userEntity=(User) session.get(User.class, userObj.getUsername());
+		if(userObj.getName()==null){
+			userObj.setName(userEntity.getName());
+		}
+		if(userObj.getSurname()==null){
+			userObj.setSurname(userEntity.getSurname());
+		}
 		if(userObj.getPassword()==null){
 			userObj.setPassword(userEntity.getPassword());
 		}

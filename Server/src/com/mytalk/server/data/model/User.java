@@ -23,14 +23,18 @@ package com.mytalk.server.data.model;
 public class User{
 	private String username;
 	private String password;
+	private String name;
+	private String surname;
 	private String email;
 
 	public User (){}
 	
-	public User(String us, String pwd, String mail){
+	public User(String us, String pwd, String mail, String n, String s){
 		username=us;
 		password=pwd;
 		email=mail;
+		name=n;
+		surname=s;
 	}
 	
 	public String getUsername(){
@@ -47,6 +51,22 @@ public class User{
 	
 	public void setPassword(String p){
 		password=p;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String n){
+		name=n;
+	}
+	
+	public String getSurname(){
+		return surname;
+	}
+	
+	public void setSurname(String s){
+		surname=s;
 	}
 	
 	public String getEmail(){

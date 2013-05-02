@@ -11,12 +11,9 @@
 		
 		<mapping resource="com/mytalk/server/data/xml/blacklists.hbm.xml"/> 
 		<mapping resource="com/mytalk/server/data/xml/calls.hbm.xml"/> 
-		<mapping resource="com/mytalk/server/data/xml/mail_changes.hbm.xml"/> 
-		<mapping resource="com/mytalk/server/data/xml/forgotten_passwords.hbm.xml"/> 
 		<mapping resource="com/mytalk/server/data/xml/list_names.hbm.xml"/> 
 		<mapping resource="com/mytalk/server/data/xml/user_lists.hbm.xml"/> 
-		<mapping resource="com/mytalk/server/data/xml/online_users.hbm.xml"/> 
-		<mapping resource="com/mytalk/server/data/xml/to_confirm_accounts.hbm.xml"/> 
+		<mapping resource="com/mytalk/server/data/xml/online_users.hbm.xml"/>  
 		<mapping resource="com/mytalk/server/data/xml/users.hbm.xml"/> 
 	</session-factory> 
 </hibernate-configuration>

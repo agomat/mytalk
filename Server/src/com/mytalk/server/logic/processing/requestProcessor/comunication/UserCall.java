@@ -1,5 +1,5 @@
 /**
-* Filename: RefuseCall.java
+* Filename: UserCall.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.comunication
 * Author: 
 * Date:
@@ -15,28 +15,26 @@
 * - Zucchetti SRL
 */
 
-
 package com.mytalk.server.logic.processing.requestProcessor.comunication;
 
 import com.mytalk.server.logic.processing.requestProcessor.*;
 import com.mytalk.server.data.model.*;
 import com.mytalk.server.logic.shared.*;
-import com.mytalk.server.exceptions.*;
 
-public class RefuseCall extends GenericRequest{
-
-	public RefuseCall(){}
+public class UserCall extends GenericRequest{
+	public UserCall(){}
 	
 	public ARI manage(ARI ari){
 		String i=ari.getInfo();
 		ARI a=null;
 		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
-		boolean result=da.checkUserByIp(x.getMyIp());
+		boolean result=da.checkUserByIp(x.getSpeakerIp());
 		if(result)
-			a=new ARI(ari.getAuth(), "Successful", null);
+			a=new ARI(ari.getAuth(),"Successful",null);
 		else
-			a=new ARI(ari.getAuth(), "Unsuccessful", null);
+			a=new ARI(ari.getAuth(),"Unsuccessful",null);
 		return a;
+		//da sistemare col controllo se true o false
 	}
 }
-
+ 

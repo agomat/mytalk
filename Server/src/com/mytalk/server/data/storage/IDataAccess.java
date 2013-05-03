@@ -32,9 +32,9 @@ public interface IDataAccess{
 			
 			public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail;
 		
-			public void login(OnlineUser user, User authenticate)throws AuthenticationFail;
+			public void login(OnlineUser user, User authenticate)throws AuthenticationFail,UsernameNotExisting;
 			
-			public List<ListName> userLists(String user, User authenticate) throws AuthenticationFail;
+			public List<ListName> userLists(User authenticate) throws AuthenticationFail;
 		
 			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail;
 			
@@ -42,7 +42,7 @@ public interface IDataAccess{
 			
 			public List<User> getOfflineUsers(User authenticate) throws AuthenticationFail;
 			
-			public void logout(OnlineUser user, User authenticate) throws AuthenticationFail;
+			public void logout(OnlineUser user);
 			
 			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists;
 			

@@ -37,6 +37,9 @@ public class DataAccess implements IDataAccess{
 		boolean esito=false;
 		UserDAO ud=new UserDAO();
 		User userEntity=ud.get(userObj.getUsername());
+		if(userEntity==null){
+			return esito;
+		}
 		String pwdUserEntity=userEntity.getPassword();
 		String pwdUserObj=userObj.getPassword();
 		if(userEntity!=null && pwdUserEntity.equals(pwdUserObj)){
@@ -89,9 +92,12 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// aggiunge un record sulla tabella OnlineUser
-	public void login(OnlineUser user, User authenticate) throws AuthenticationFail{
+	public void login(OnlineUser user, User authenticate) throws AuthenticationFail, UsernameNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			if(authenticate.getUsername()!=user.getUsername()){
+				throw new UsernameNotExisting();
+			}
 			OnlineUserDAO od=new OnlineUserDAO();
 			od.update(user);//assume che il client era prima loggato come anonimo per poi fare l'update
 			GenericDAO.closeSession();
@@ -102,9 +108,10 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//interroga il db e restituisce le liste dell'utente
-	public List<ListName> userLists(String user, User authenticate) throws AuthenticationFail{
+	public List<ListName> userLists(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			String user=authenticate.getUsername();
 			ListNameDAO ld=new ListNameDAO();
 			List<ListName> list=ld.getUserLists(user);
 			GenericDAO.closeSession();
@@ -173,16 +180,10 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//elimina dalla tabella OnlineUser il record corrispondente
-	public void logout(OnlineUser user, User authenticate) throws AuthenticationFail{
-		boolean authenticated=authenticateClient(authenticate);
-		if(authenticated==true){
-			OnlineUserDAO od=new OnlineUserDAO();
-			od.delete(user);//assume che l'utente sia stato loggato per inviare questo pacchetto, ergo non fa controlli
-			GenericDAO.closeSession();
-		}else{
-			GenericDAO.closeSession();
-			throw new AuthenticationFail();
-		}
+	public void logout(OnlineUser user){
+		OnlineUserDAO od=new OnlineUserDAO();
+		od.delete(user);//assume che l'utente sia stato loggato per inviare questo pacchetto, ergo non fa controlli
+		GenericDAO.closeSession();
 	}
 	
 	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record

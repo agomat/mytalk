@@ -24,32 +24,39 @@ import com.mytalk.server.logic.processing.requestProcessor.*;
 import com.mytalk.server.logic.processing.requestProcessor.list.*;
 import com.mytalk.server.logic.processing.requestProcessor.stats.*;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import java.util.*;
 
 public class Processor {
 	//classe che riceve e manda il JSON alla Comunication
 	//comunica la richiesta alla GenericRequest
-	Map<String, GenericRequest> hm;
+	Map<String, String> hm;
 	
 	public Processor(){
-		hm = new HashMap<String, GenericRequest>();
-		hm.put("NotRegisteredCall",new NotRegisteredCall());
-		hm.put("RegisteredCall",new RegisteredCall());
-		hm.put("RefuseCall",new RefuseCall());
-		hm.put("CreateAccount",new CreateAccount());
-		hm.put("DeleteAccount",new DeleteAccount());
-		hm.put("Login",new Login());
-		hm.put("Logout",new Logout());
+		hm = new HashMap<String, String>();
 		
-		hm.put("ListCreate",new ListCreate());
-		hm.put("ListDelete",new ListDelete());
+		// hm.put("richiesta","com.mytalk.server.logic.processing.requestProcessor.pack.richiesta")
 		
-		hm.put("ListUserAdd",new ListUserAdd());
-		hm.put("ListUserRemove",new ListUserRemove());
-		hm.put("BlacklistAdd",new BlackListAdd());
-		hm.put("BlackListRemove",new BlackListRemove());
-		hm.put("GetCalls",new GetCalls());
-		hm.put("AddCall",new AddCall());
+		hm.put("UserCall","com.mytalk.server.logic.processing.requestProcessor.comunication.UserCall");
+		hm.put("RefuseCall","com.mytalk.server.logic.processing.requestProcessor.comunication.RefuseCall");
+		
+		/*hm.put("CreateAccount",);
+		hm.put("DeleteAccount",);
+		hm.put("Login",);
+		hm.put("Logout",);
+		
+		hm.put("ListCreate",);
+		hm.put("ListDelete",);
+		hm.put("ListUserAdd",);
+		hm.put("ListUserRemove",);
+		hm.put("BlacklistAdd",);
+		hm.put("BlackListRemove",);
+		
+		hm.put("GetCalls",);
+		hm.put("AddCall",);*/
 	}
 		
 	//metodo che riceve JSON, ottiene la conversione in ARI e manda la Stringa "richiesta", controllando tipo
@@ -57,8 +64,34 @@ public class Processor {
 		Convert c=new Convert();
 		ARI pack=c.convertJsonToJava(json);
 		String request=pack.getReq();
-		GenericRequest r= hm.get(request);
-		r.manage(pack);
+		ARI response=null;
+		try{
+			String r= hm.get(request);
+			Class<?> cl=Class.forName(r);
+			Object obj=cl.newInstance();
+			Method m= cl.getDeclaredMethod("manage", ARI.class);
+			response=(ARI)m.invoke(obj, pack);	
+		}catch(ClassNotFoundException cnfe){
+			
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication

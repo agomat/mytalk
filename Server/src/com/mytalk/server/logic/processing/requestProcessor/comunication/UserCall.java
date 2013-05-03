@@ -34,7 +34,6 @@ public class UserCall extends GenericRequest{
 		else
 			a=new ARI(ari.getAuth(),"UnsuccessfulUserCall",null);
 		return a;
-		//da sistemare col controllo se true o false
 	}
 }
  

@@ -36,7 +36,7 @@ public class CreateAccount extends GenericRequest{
 		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
 		try{
 			da.createAccount(u);
-			a=new ARI(ari.getAuth(), "Successful", null);
+			a=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
 		}catch(UsernameAlreadyExisting uae){
 			a=new ARI(null, "UsernameAlreadyExisting", null);
 		}

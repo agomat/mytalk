@@ -30,9 +30,9 @@ public class UserCall extends GenericRequest{
 		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
 		boolean result=da.checkUserByIp(x.getSpeakerIp());
 		if(result)
-			a=new ARI(ari.getAuth(),"Successful",null);
+			a=new ARI(ari.getAuth(),"SuccessfulUserCall",null);
 		else
-			a=new ARI(ari.getAuth(),"Unsuccessful",null);
+			a=new ARI(ari.getAuth(),"UnsuccessfulUserCall",null);
 		return a;
 		//da sistemare col controllo se true o false
 	}

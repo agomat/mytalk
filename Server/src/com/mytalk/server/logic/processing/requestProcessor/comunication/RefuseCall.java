@@ -33,9 +33,9 @@ public class RefuseCall extends GenericRequest{
 		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
 		boolean result=da.checkUserByIp(x.getMyIp());
 		if(result)
-			a=new ARI(ari.getAuth(), "Successful", null);
+			a=new ARI(ari.getAuth(), "SuccessfulRefuseCall", null);
 		else
-			a=new ARI(ari.getAuth(), "Unsuccessful", null);
+			a=new ARI(ari.getAuth(), "UnsuccessfulRefuseCall", null);
 		return a;
 	}
 }

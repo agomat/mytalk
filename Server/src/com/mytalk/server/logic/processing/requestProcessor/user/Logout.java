@@ -38,7 +38,7 @@ public class Logout extends GenericRequest{
 		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
 		try{
 			da.logout(o,u);
-			a=new ARI(null, "Successful", null);
+			a=new ARI(null, "SuccessfulLogout", null);
 		} catch(AuthenticationFail af){
 			a=new ARI(null, "AuthenticationFail", null);
 		}

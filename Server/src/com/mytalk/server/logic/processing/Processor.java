@@ -92,8 +92,30 @@ public class Processor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		up(response);
 	}
 	
 	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication
-	public void up(){}
+	public void up(ARI response){
+		
+		/*
+		 * 1) controllare se è una chiamata o no
+			- in caso di chiamata: UserCall
+				- successful, mettere indirizzo IP destinatario e SDP
+				- unsuccessful, mettere indirizzo IP chiamante
+			- altrimenti mettere indirizzo IP chiamante
+			
+			2) RefuseCall da C2->C1: manda indirizzo IP del chiamante al server, così quest'ultimo sa chi avvertire
+			   AcceptCall da C2->C1: manda al server 
+			   							- il suo indirizzo IP (C2) così C1 sa l'IP a cui dovrà chiamare
+			   							- l'indirizzo IP di C1 così il server sa a chi mandare la conferma
+			   							- suo SDP 
+			   							
+			3) N.B.: durante UserCall e AcceptCall, C1 e C2 devono trasmettersi l'SDP in modo tale che la chiamata vada a buon fine
+			
+			4) convertire da ARI-JSON
+			 
+		*/
+	}
 }

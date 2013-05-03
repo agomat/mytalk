@@ -32,7 +32,7 @@ public interface IDataAccess{
 			
 			public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail;
 		
-			public void login(OnlineUser user);
+			public void login(OnlineUser user, User authenticate)throws AuthenticationFail;
 			
 			public List<ListName> userLists(String user, User authenticate) throws AuthenticationFail;
 		

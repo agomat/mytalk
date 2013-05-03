@@ -89,10 +89,16 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// aggiunge un record sulla tabella OnlineUser
-	public void login(OnlineUser user){
-		OnlineUserDAO od=new OnlineUserDAO();
-		od.update(user);//assume che il client era prima loggato come anonimo per poi fare l'update
-		GenericDAO.closeSession();
+	public void login(OnlineUser user, User authenticate) throws AuthenticationFail{
+		boolean authenticated=authenticateClient(authenticate);
+		if(authenticated==true){
+			OnlineUserDAO od=new OnlineUserDAO();
+			od.update(user);//assume che il client era prima loggato come anonimo per poi fare l'update
+			GenericDAO.closeSession();
+		}else{
+			GenericDAO.closeSession();
+			throw new AuthenticationFail();
+		}
 	}
 	
 	//interroga il db e restituisce le liste dell'utente

@@ -29,4 +29,12 @@ public class Update extends Information{
 	public Update(List<User> c){
 		wu=new WrapperUser(c);
 	}
+	
+	public WrapperUser getWrapperUser(){
+		return wu;
+	}
+	
+	public void setWrapperUser(WrapperUser wuser){
+		wu=wuser;
+	}
 }

@@ -34,4 +34,28 @@ public class WorldPack extends Information{
 		wu=new WrapperUser(u);
 		pd=pdEntity;
 	}
+	
+	public WrapperUserList getWrapperUserList(){
+		return wul;
+	}
+	
+	public void setWrapperUserList(WrapperUserList wulist){
+		wul=wulist;
+	}
+	
+	public WrapperUser getWrapperUser(){
+		return wu;
+	}
+	
+	public void setWrapperUser(WrapperUser wuser){
+		wu=wuser;
+	}
+	
+	public PersonalData getPersonalData(){
+		return pd;
+	}
+	
+	public void setPersonalData(PersonalData personalData){
+		pd=personalData;
+	}
 }

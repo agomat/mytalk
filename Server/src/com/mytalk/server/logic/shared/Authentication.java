@@ -20,24 +20,33 @@ Date
 package com.mytalk.server.logic.shared;
 
 public class Authentication{
-	public String username;
-	public String password;
+	private String username;
+	private String password;
+	private String ip;
 	
-	public Authentication(String a, String b)
+	public Authentication(String user, String pwd,String i)
 	{
-		username=a;
-		password=b;
+		username=user;
+		password=pwd;
+		ip=i;
 	}
-	public void setUser(String r){
-		username=r;
+	public void setUser(String u){
+		username=u;
 	}
 	public String getUser(){
 		return username;
 	}
-	public void setPwd(String r){
-		password=r;
+	public void setPwd(String p){
+		password=p;
 	}
 	public String getPwd(){
 		return password;
+	}
+	
+	public void setIp(String i){
+		ip=i;
+	}
+	public String getIp(){
+		return ip;
 	}
 }

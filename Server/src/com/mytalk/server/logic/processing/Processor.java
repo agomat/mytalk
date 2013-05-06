@@ -99,11 +99,13 @@ public class Processor {
 	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication
 	public String up(ARI response){// ARI(Authentication,String,String)
 			
-		if(UnsuccessfulRefuseCall || UnsuccessfulAcceptCall){
-			
+		if(response.getReq().equals("UnsuccessfulRefuseCall") || response.getReq().equals("UnsuccessfulAcceptCall"){
+			//che cosa far ritornare??
 		}
 		else{
-			metodoComunication(response.getAuth().getIp(),response);
+			Convert c=new Convert();
+			String new_pack=c.convertJavaToJson(response); //conversione pacchetto ARI completo da mandare
+			metodoComunication(response.getAuth().getIp(),new_pack);
 		}
 	}
 }

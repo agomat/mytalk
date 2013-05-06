@@ -29,6 +29,8 @@ public class Call{
 	private int byteSent;
 	private int byteReceived;
 
+	public Call(){}
+	
 	public Call(String call, String rece, int time, String date, int bs, int br){
 		caller=call;
 		receiver=rece;

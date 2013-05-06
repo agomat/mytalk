@@ -15,7 +15,7 @@
  * - Zucchetti SRL
  */
 
-package com.mytalk.server.data.storage;
+package com.mytalk.server;
 
 import static org.junit.Assert.*;
 
@@ -33,6 +33,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.mytalk.server.data.persistence.HibernateUtil;
+import com.mytalk.server.data.storage.DataAccessTest;
 
 
 public class EnvironmentSetter {

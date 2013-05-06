@@ -25,6 +25,7 @@ import org.junit.Before;
 import java.lang.reflect.*;
 import java.util.List;
 
+import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.data.persistence.HibernateUtil;
 import org.hibernate.*;
 
@@ -35,16 +36,6 @@ public class DataAccessTest {
 	
 	EnvironmentSetter envSetter=new EnvironmentSetter();
 	IDataAccess dataAccess= new DataAccess();
-		
-	public void executeQuery(String q){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction t = session.beginTransaction();
-		Query query = session.createSQLQuery(q);
-		query.executeUpdate();
-		t.commit();
-		session.close();
-	}
 	
 	@Before
 	public void setTestEnvironment(){

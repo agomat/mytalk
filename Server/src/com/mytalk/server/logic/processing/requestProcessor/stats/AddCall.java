@@ -66,10 +66,10 @@ public class AddCall extends GenericRequest {
 				byteS=callClient.getByteSent();
 				callServer=new com.mytalk.server.data.model.Call(caller,receiver,duration,startdate,byteR,byteS);
 				da.addCall(callServer,userAuth);
-				response=new ARI(null,"SuccesfulAddCall",null);
+				response=new ARI(null,"SuccessfulAddCall",null);
 			}
 		}catch(AuthenticationFail af){
-			response=new ARI(null,"UnsuccesfulAddCall",null);
+			response=new ARI(null,"AuthenticationFail",null);
 		}
 		return response;
 	}

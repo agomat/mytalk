@@ -45,23 +45,31 @@ public class GetCalls extends GenericRequest {
 		String speaker=null;
 		GiveCallPack giveCallPack=null;
 		String infoResponse=null;
+		WrapperCall wrapperCall=new WrapperCall(listCallClient);
 		try{
-			listOfCall=da.getCalls(auth.getUser(),userAuth);//ottengo una lista di chiamate
+			listOfCall=da.getCalls(auth.getUser(),userAuth);//ottengo una lista di chiamateServer
 			for(int i=0;i<listOfCall.size();i++){
 				callServer=listOfCall.get(i); // ottengo una chiamata formato modelServer
 				if(callServer.getCaller().equals(userAuth.getUsername())){ //verifico chi è il chiamante
 					caller=true;
 					speaker=callServer.getReceiver();
 					listCallClient.add(new Call(speaker,callServer.getByteSent(),callServer.getByteReceived(),callServer.getDuration(),callServer.getStartdate(),caller));
+					//incremento contatori statistiche globali
+					wrapperCall.increaseTotalByteSent(callServer.getByteSent());
+					wrapperCall.increaseTotalByteReceived(callServer.getByteReceived());
+					wrapperCall.increaseTotalDuration(callServer.getDuration());
 				}
 				else{
 					caller=false;
 					speaker=callServer.getCaller();
 					listCallClient.add(new Call(speaker,callServer.getByteReceived(),callServer.getByteSent(),callServer.getDuration(),callServer.getStartdate(),caller));
+					//incremento contatori statistiche globali invertendo byteReceived con byteSent
+					wrapperCall.increaseTotalByteSent(callServer.getByteReceived());
+					wrapperCall.increaseTotalByteReceived(callServer.getByteSent());
+					wrapperCall.increaseTotalDuration(callServer.getDuration());
 				}			
 			}
-
-			giveCallPack=new GiveCallPack(listCallClient);
+			giveCallPack=new GiveCallPack(wrapperCall);
 			infoResponse=conv.convertJavaToJson(giveCallPack);
 			response=new ARI(null,"GiveCalls",infoResponse);
 		}catch(AuthenticationFail af){

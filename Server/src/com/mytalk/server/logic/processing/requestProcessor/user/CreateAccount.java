@@ -30,18 +30,18 @@ public class CreateAccount extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		String i=ari.getInfo();
-		ARI a=null;
+		ARI response=null;
 		WorldPack x=(WorldPack)conv.convertJsonToJava(i, WorldPack.class);
 		PersonalData p=x.getPersonalData();
 		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
 		try{
 			da.createAccount(u);
-			a=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
+			response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
 		}catch(UsernameAlreadyExisting uae){
-			a=new ARI(null, "UsernameAlreadyExisting", null);
+			response=new ARI(null, "UsernameAlreadyExisting", null);
 		}
 		
-		return a;
+		return response;
 	}
 
 }

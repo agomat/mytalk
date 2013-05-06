@@ -30,16 +30,16 @@ public class DeleteAccount extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		String i=ari.getInfo();
-		ARI a=null;
+		ARI response=null;
 		WorldPack x=(WorldPack)conv.convertJsonToJava(i, WorldPack.class);
 		PersonalData p=x.getPersonalData();
 		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
 		try{
 			da.deleteAccount(u);
-			a=new ARI(ari.getAuth(), "SuccessfulDeleteAccount", null);
+			response=new ARI(ari.getAuth(), "SuccessfulDeleteAccount", null);
 		}catch(AuthenticationFail af){
-			a=new ARI(null, "AuthenticationFail", null);
+			response=new ARI(null, "AuthenticationFail", null);
 		}
-		return a;
+		return response;
 	}
 }

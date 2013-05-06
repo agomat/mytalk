@@ -27,8 +27,8 @@ public class GiveCallPack extends Information{
 	
 	private WrapperCall wc;
 	
-	public GiveCallPack(List<Call> c){
-		wc=new WrapperCall(c);
+	public GiveCallPack(WrapperCall c){
+		wc=c;
 	}
 	
 	public WrapperCall getWrapperCall(){

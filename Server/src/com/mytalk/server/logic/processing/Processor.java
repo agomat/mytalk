@@ -97,21 +97,29 @@ public class Processor {
 	}
 	
 	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication
-	public void up(ARI response){
-		
+	public String up(ARI response){// ARI(Authentication,String,String)
+		if(response.getReq().equals("SuccessfulUserCall")){
+			metodoComunication(response.getAuth().getIp(),response);
+		}
+		if(response.getReq().equals("UnsuccessfulUserCall")){
+			metodoComunication(response.getAuth().getIp(),response);
+		}
 		/*
 		 * 1) controllare se è una chiamata o no
 			- in caso di chiamata: UserCall
-				- successful, mettere indirizzo IP destinatario e SDP
-				- unsuccessful, mettere indirizzo IP chiamante
+				- successful, ARI(Authentication(null,null,receiverIp),"SuccessfulUserCall",ConnectionPack)
+				- unsuccessful, ARI(Authentication(null,null,callerIp),"UnsuccessfulUserCall",ConnectionPack)
 			- altrimenti mettere indirizzo IP chiamante
+				- ARI(Authentication(null,null,callerIp),richiesta,null o pack)
 			
-			2) RefuseCall da C2->C1: manda indirizzo IP del chiamante al server, così quest'ultimo sa chi avvertire
-			   AcceptCall da C2->C1: manda al server 
+			2) RefuseCall da C2->C1: ARI(Authentication(null,null,callerIp),"RefuseCall",ConnectionPack)
+			   AcceptCall da C2->C1: ARI(Authentication(null,null,callerIp),"AcceptCall",ConnectionPack)
 			   							- il suo indirizzo IP (C2) così C1 sa l'IP a cui dovrà chiamare
 			   							- l'indirizzo IP di C1 così il server sa a chi mandare la conferma
 			   							- suo SDP 
-			   							
+			
+			 3) RefuseCall nel server verifica che l'IP del chiamante sia ancora online:
+			  		-in caso positivo manda un ARI(Authentication(null,null,callerIp),"RefuseCall",ConnectionPack)
 			3) N.B.: durante UserCall e AcceptCall, C1 e C2 devono trasmettersi l'SDP in modo tale che la chiamata vada a buon fine
 			
 			4) convertire da ARI-JSON

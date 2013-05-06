@@ -20,11 +20,13 @@ package com.mytalk.server.logic.processing.requestProcessor.stats;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.data.storage.DataAccess;
 import com.mytalk.server.data.storage.DataAccessTest;
 import com.mytalk.server.data.storage.IDataAccess;
@@ -38,14 +40,20 @@ import com.mytalk.server.logic.shared.modelClient.Call;
 import com.mytalk.server.logic.shared.modelClient.WrapperCall;
 
 public class AddCallTest {
+	
+	EnvironmentSetter envSetter=new EnvironmentSetter();
+	
+	@Before
+	public void setTestEnvironment(){
+		envSetter.cleanDB();
+		envSetter.initDB();
+	}
 
 	/**
 	 * Test method for {@link com.mytalk.server.logic.processing.requestProcessor.stats.AddCall#manage(com.mytalk.server.logic.shared.ARI)}.
 	 */
 	@Test
 	public void testManage() {
-		DataAccessTest dat=new DataAccessTest();
-		dat.setTestEnvironment();
 		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
 		Authentication authWrongTest=new Authentication("user1","user2","1.1.1.1");
 		Call call1=new Call("user2",100,100,1000,"2013-05-03 13.37:58",true);

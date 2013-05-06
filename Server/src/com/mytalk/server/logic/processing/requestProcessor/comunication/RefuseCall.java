@@ -19,9 +19,7 @@
 package com.mytalk.server.logic.processing.requestProcessor.comunication;
 
 import com.mytalk.server.logic.processing.requestProcessor.*;
-import com.mytalk.server.data.model.*;
 import com.mytalk.server.logic.shared.*;
-import com.mytalk.server.exceptions.*;
 
 public class RefuseCall extends GenericRequest{
 
@@ -31,11 +29,15 @@ public class RefuseCall extends GenericRequest{
 		String i=ari.getInfo();
 		ARI a=null;
 		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
+		String new_ConnectionPack=conv.convertJavaToJson(x);
 		boolean result=da.checkUserByIp(x.getMyIp());
-		if(result)
-			a=new ARI(ari.getAuth(), "SuccessfulRefuseCall", null);
-		else
+		if(result){
+			Authentication new_auth=new Authentication(null, null, x.getMyIp());
+			a=new ARI(new_auth, "SuccessfulRefuseCall", new_ConnectionPack);
+		}
+		else{
 			a=new ARI(ari.getAuth(), "UnsuccessfulRefuseCall", null);
+		}
 		return a;
 	}
 }

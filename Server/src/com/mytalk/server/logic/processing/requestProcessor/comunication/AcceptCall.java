@@ -1,5 +1,5 @@
 /**
-* Filename: UserCall.java
+* Filename: AcceptCall.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.comunication
 * Author: 
 * Date:
@@ -15,30 +15,29 @@
 * - Zucchetti SRL
 */
 
+
 package com.mytalk.server.logic.processing.requestProcessor.comunication;
 
 import com.mytalk.server.logic.processing.requestProcessor.*;
-import com.mytalk.server.data.model.*;
 import com.mytalk.server.logic.shared.*;
 
-public class UserCall extends GenericRequest{
-	public UserCall(){}
+public class AcceptCall extends GenericRequest{
+	
+public AcceptCall(){}
 	
 	public ARI manage(ARI ari){
 		String i=ari.getInfo();
 		ARI a=null;
 		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
 		String new_ConnectionPack=conv.convertJavaToJson(x);
-		boolean result=da.checkUserByIp(x.getSpeakerIp());
+		boolean result=da.checkUserByIp(x.getMyIp());
 		if(result){
-			Authentication new_auth=new Authentication(null, null, x.getSpeakerIp());
-			a=new ARI(new_auth,"SuccessfulUserCall",new_ConnectionPack);
+			Authentication new_auth=new Authentication(null, null, x.getMyIp());
+			a=new ARI(new_auth, "SuccessfulAcceptCall", new_ConnectionPack);
 		}
 		else{
-			Authentication new_auth=new Authentication(null, null, x.getMyIp());
-			a=new ARI(new_auth,"UnsuccessfulUserCall",new_ConnectionPack);
+			a=new ARI(ari.getAuth(), "UnsuccessfulAcceptCall", null);
 		}
 		return a;
 	}
 }
- 

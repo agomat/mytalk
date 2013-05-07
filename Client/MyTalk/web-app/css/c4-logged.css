@@ -1,0 +1,185 @@
+#logged_content{
+	border: 1px solid #909090;
+	border-radius: 5px;
+	height: 700px;
+	width:100%;
+} 
+
+#logged_content a{
+	text-decoration: none;
+	color:#666;
+}
+
+#logged_content ul, #logged_content li{
+	margin:0;
+	padding: 0;
+}
+
+#liste{
+	width:30%;
+	height:100%;
+	float:left;
+}
+
+#utenti{
+	width:70%;
+	height:100%;
+	float:right;
+}
+
+#liste .header, #liste .content{
+	border-right: 3px double #909090;
+	width:99.9%;
+}
+
+.header{
+	height: 14.9%;
+	border-bottom: 1px solid #909090;
+}
+
+.header h5{
+	padding: 10px 5px 10px 10px;
+	font-size: 2em;
+}
+
+#liste .header h5{
+	text-align: center;
+	font-variant: small-caps;
+}
+
+#current_online{
+	padding-left: 15%;
+	font-variant: small-caps;
+}
+
+#liste .header a, #list_button a{
+	display: inline-block;
+	font-size: 1.2em;
+	padding: 11px 5px 0 5px;
+	text-align:center;
+	height: 27px;
+}
+
+#liste .header a{
+	margin:2px 12% 0 12%;
+	width: 75%;	
+}
+
+#list_button{
+	margin-left: 10px;
+}
+
+#list_button a{
+	width: 80px;
+}
+
+#search_bar{
+	float:right;
+	font-size: 1.5em;
+	height:20px;
+	margin-right: 20px;
+	width: 50%;
+	border-radius: 40px;
+	padding:10px 37px 10px 20px;
+	background: #fff url("img/search.png") right 15px center no-repeat; 
+}
+
+.content{
+	height:85%;
+	overflow-y: auto;
+}
+
+.content a{
+	display:block;
+	cursor: pointer;
+}
+
+#liste .content li{
+	border-bottom: 1px solid #909090;
+}
+
+#liste .content a{
+	width:80%;
+	font-size: 1.2em;
+	height: 2em;
+	padding: 3px 10px;
+	margin: 5px 0 5px 5%;
+	border:1px solid #fff;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#liste .content a:hover{
+	border-color: #888;
+}
+
+#liste .content a:active{
+	border-color: #aaa !important;
+	box-shadow: 1px 1px 0 0 #00ba00 inset;
+}
+
+#liste .content .list_name{
+	margin-top: 0.5em;
+}
+
+#liste .content .online_user{
+	float:right;
+	clear: both;
+	text-align: center;
+}
+
+#blacklist{
+	background: url("img/Pdelete_user.png") left 10px center no-repeat;
+}
+#blacklist div{
+	padding-left:26px;
+}
+
+
+#utenti .content  ul li{
+	margin-left: 3px;
+	padding: 5px 10px;
+	overflow: hidden;
+}
+
+#utenti .content>ul>li:nth-child(odd){
+	background-color: #f5f5f5;
+}
+
+#utenti .content ul li>ul>li, #utenti .content ul li img, #utenti .content ul li>div{
+	display:inline-block;
+}
+
+#utenti .content ul li>ul{
+	float: right;
+}
+
+#utenti .content ul li>div{
+	padding: 0 25px;
+	text-align: center;
+	font-size: 1.2em;
+	
+}
+
+#utenti .content ul li>div>div{
+	font-size: 1.7em;
+}
+
+#utenti .content ul li>ul li a{
+	height: 40px;
+	width: 40px;
+	border:1px solid #aaa;
+	border-radius: 40px;
+	cursor: pointer;
+	background-color: #fff;
+	box-shadow: 1px 1px 0 0 #00ba00 ;
+}
+
+#utenti .content ul li>ul li a:active{
+	box-shadow: none;
+}
+
+.call_user{background: url("img/phone.png") center center no-repeat;}
+.add_user{background: url("img/add_user.png") center center no-repeat;}
+.blacklist_user{background: url("img/Gdelete_user.png") center center no-repeat;}
+.remove_user{background: url("img/delete.png") center center no-repeat;}

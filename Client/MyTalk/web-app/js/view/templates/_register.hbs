@@ -1,0 +1,58 @@
+
+    <div id="notlogged_content">
+
+      <div id="video_container">
+        <div id="video_frame">
+          <h5>Video</h5>
+          <p>Video Tutorial Video Tutorial Video Tutorial Video Tutorial Video Tutorial</p>
+          <video id="video_tutorial" poster="img/video_placeholder.png">
+            <source src="video_test.mp4" type="video/mp4" />
+            Il tuo browser non supporta il video in html5
+          </video>
+        </div>
+      </div>
+
+      <div id="divider"></div>
+
+      <div id="signup_container">
+        <div id="signup">
+          <h5>Registrati ora!</h5>
+          <p>Registrarsi &egrave; gratuito e ti permette di chiamare gli altri utenti che gi&agrave; utilizzano MyTalk.</p>
+          {{#view MyTalk.RegisterFormView}}
+            <fieldset>
+              <legend hidden>Registrazione</legend>
+              <ul>
+              <li>
+                  <label for="name" hidden>Nome</label>
+                  {{view MyTalk.RegisterName valueBinding='view.name' }}
+                </li>
+                <li>
+                  <label for="surname" hidden>Cognome</label>
+                  {{view MyTalk.RegisterSurname valueBinding='view.surname' }}
+                </li>
+                <li>
+                  <label for="username" hidden>Username</label>
+                  {{view MyTalk.RegisterUsername valueBinding='view.username' }}
+                </li>
+                <li>
+                  <label for="email" hidden>Email</label>
+                  {{view MyTalk.RegisterEmail valueBinding='view.email' }}
+                </li>
+                <li>
+                  <label for="password" hidden>Password</label>
+                  {{view MyTalk.RegisterPassword valueBinding='view.password' }}
+                </li>
+                <li>
+                  <label for="password_conf" hidden>Conferma la password</label>
+                  {{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}
+                </li>
+                <li>
+                  <button type="submit"class="common_button" id="button_signup">Registrati</button>
+                </li>
+              </ul>
+            </fieldset>
+          {{/view}}
+        </div>
+      </div>
+    </div>
+ 

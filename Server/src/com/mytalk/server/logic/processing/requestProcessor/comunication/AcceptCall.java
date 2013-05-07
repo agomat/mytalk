@@ -1,13 +1,13 @@
 /**
 * Filename: AcceptCall.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.comunication
-* Author: 
-* Date:
+* Author: Nicolò Toso
+* Date: 2013-05-02
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *

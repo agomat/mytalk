@@ -99,7 +99,7 @@ public class Processor {
 	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication
 	public String up(ARI response){// ARI(Authentication,String,String)
 			
-		if(response.getReq().equals("UnsuccessfulRefuseCall") || response.getReq().equals("UnsuccessfulAcceptCall"){
+		if(response.getReq().equals("UnsuccessfulRefuseCall") || response.getReq().equals("UnsuccessfulAcceptCall")){
 			//che cosa far ritornare??
 		}
 		else{

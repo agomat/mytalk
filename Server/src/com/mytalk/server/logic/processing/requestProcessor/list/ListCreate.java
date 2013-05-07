@@ -1,3 +1,20 @@
+/**
+* Filename: ListCreate.java
+* Package: com.mytalk.server.logic.processing.requestProcessor.list
+* Author: Michael Ferronato
+* Date: 2013-05-01 
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013-05-01 |  MF       | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
 package com.mytalk.server.logic.processing.requestProcessor.list;
 
 import java.util.List;
@@ -5,6 +22,7 @@ import java.util.List;
 import com.mytalk.server.data.model.ListName;
 import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.exceptions.ListAlreadyExists;
+import com.mytalk.server.exceptions.ListNotCorresponding;
 import com.mytalk.server.logic.processing.requestProcessor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -37,6 +55,8 @@ public class ListCreate extends GenericRequest {
 			response=new ARI(null,"UnsuccessfulListCreate",infoRequest);
 		}catch(AuthenticationFail af){
 			response=new ARI(null,"AuthenticationFail",null);
+		} catch (ListNotCorresponding e) {
+			response=new ARI(null,"ListNotCorresponding",null);
 		}
 		return response;
 	}

@@ -31,7 +31,7 @@ public class PersonalData{
 
 	public PersonalData(){}
 	
-	public PersonalData(String us, String pwd, String mail, String n, String s,String i){
+	public PersonalData(String us, String pwd, String n, String s,String mail, String i){
 		username=us;
 		password=pwd;
 		email=mail;

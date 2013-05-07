@@ -1,13 +1,13 @@
 /**
 * Filename: CreateAccount.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.user
-* Author: 
-* Date:
+* Author: Nicolò Toso
+* Date: 2013-05-02
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -33,7 +33,7 @@ public class CreateAccount extends GenericRequest{
 		ARI response=null;
 		WorldPack x=(WorldPack)conv.convertJsonToJava(i, WorldPack.class);
 		PersonalData p=x.getPersonalData();
-		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
+		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname());
 		try{
 			da.createAccount(u);
 			response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);

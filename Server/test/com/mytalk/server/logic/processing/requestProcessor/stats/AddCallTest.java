@@ -54,6 +54,7 @@ public class AddCallTest {
 	 */
 	@Test
 	public void testManage() {
+		
 		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
 		Authentication authWrongTest=new Authentication("user1","user2","1.1.1.1");
 		Call call1=new Call("user2",100,100,1000,"2013-05-03 13.37:58",true);

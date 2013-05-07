@@ -43,6 +43,12 @@ public class Login extends GenericRequest{
 				response=new ARI(null, "AuthenticationFail", null);
 			} catch (UsernameNotCorresponding e) {
 				response= new ARI(null, "UsernameNotExisting",null);
+			} catch (IpNotLogged e) {
+				response= new ARI(null, "IpNotLogged",null);
+			} catch (UserAlreadyLogged e) {
+				response= new ARI(null, "UserAlreadyLogged",null);
+			} catch (IpAlreadyLogged e) {
+				response= new ARI(null, "IpAlreadyLogged",null);
 			}
 			
 			return response;

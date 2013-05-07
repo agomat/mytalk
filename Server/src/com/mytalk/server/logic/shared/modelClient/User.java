@@ -24,16 +24,16 @@ public class User{
 	private String username;
 	private String name;
 	private String surname;
-	private boolean status;
+	private boolean online;
 	private String ip;
 
 	public User (){}
 	
-	public User(String us,String n,String sn, boolean s,String i){
+	public User(String us,String n,String sn, boolean o,String i){
 		username=us;
 		name=n;
 		surname=sn;
-		status=s;
+		online=o;
 		ip=i;
 	}
 	
@@ -61,11 +61,11 @@ public class User{
 		surname=sn;
 	}
 	
-	public boolean getStatus(){
-		return status;
+	public boolean getOnline(){
+		return online;
 	}
 	
-	public void setStatus(boolean p){
-		status=p;
+	public void setStatus(boolean o){
+		online=o;
 	}
 }

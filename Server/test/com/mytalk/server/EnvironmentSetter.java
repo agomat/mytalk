@@ -58,7 +58,7 @@ public class EnvironmentSetter {
 	}
 	
 	private static String readFile(String path) throws IOException {
-		URL url = DataAccessTest.class.getResource(path);
+		URL url = EnvironmentSetter.class.getResource(path);
 		File file = new File(url.getPath());
 		FileInputStream stream = new FileInputStream(file);
 		try {

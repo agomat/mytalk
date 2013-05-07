@@ -75,4 +75,29 @@ public class OnlineUserDAO extends GenericDAO{
 		t.commit();
 		return list;
 	}
+	
+	//metodo di utilità per sapere se un ip è già connesso
+	public boolean checkIpConnected(String ip){
+		boolean result=false;
+		OnlineUser newUser=get(ip);
+		if(newUser!=null){
+			result=true;
+		}
+		return result;
+	}
+	
+	//metodo di utilità per sapere se un username è già connesso
+	public boolean checkUsernameConnected(String username){
+		Transaction t=session.beginTransaction();
+		boolean result=false;
+		OnlineUser user=null;
+		SQLQuery query=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE username='"+username+"'");
+		query=query.addEntity(OnlineUser.class);
+		user=(OnlineUser)query.uniqueResult();
+		if(user!=null){
+			result=true;
+		}
+		t.commit();
+		return result;
+	}
 }

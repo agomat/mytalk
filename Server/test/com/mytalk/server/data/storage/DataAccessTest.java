@@ -26,10 +26,9 @@ import java.lang.reflect.*;
 import java.util.List;
 
 import com.mytalk.server.EnvironmentSetter;
-import com.mytalk.server.data.persistence.HibernateUtil;
-import org.hibernate.*;
 
 import com.mytalk.server.data.model.*;
+import com.mytalk.server.data.storage.dao.*;
 import com.mytalk.server.exceptions.*;
 
 public class DataAccessTest {
@@ -97,37 +96,90 @@ public class DataAccessTest {
 		
 	}
 	
-	@Test(expected = UsernameAlreadyExisting.class)
-	public void checkCreateAccount() throws UsernameAlreadyExisting{
-		User testUser1=new User("user10","user10","user10@mytalk.com","user10","user10");
-		User testUser2=new User("user0","user0","user0@mytalk.com","user0","user0");
+	@Test
+	public void checkCreateAccount(){
+		User testUser=new User("user10","user10","user10@mytalk.com","user10","user10");
 		
 		//test creazione di un nuovo utente
-		dataAccess.createAccount(testUser1);
-//devo testare se l'ha creato?
-		
-		//test creazione di un utente avente un username già usato
-		dataAccess.createAccount(testUser2);
-
+		try{
+			dataAccess.createAccount(testUser);
+			UserDAO ud=new UserDAO();
+			String testUsername=testUser.getUsername();
+			User createdUser=ud.get(testUsername);
+			if(createdUser==null){
+				fail("L'utente non è stato creato");
+			}
+			if(!testUser.equals(createdUser)){
+				fail("I campi dati degli utenti non sono stati creati correttamente");
+			}
+		}catch(UsernameAlreadyExisting exc){
+			fail("è stato creato un utente con un username già esistente");
+		}
 	}
 	
-	@Test(expected = UsernameNotExisting.class)
-	public void checkLogin()throws AuthenticationFail,UsernameNotExisting{
+	@Test(expected = UsernameAlreadyExisting.class)
+	public void checkCreateAccountFail() throws UsernameAlreadyExisting{
+		User testUser=new User("user0","user0","user0@mytalk.com","user0","user0");
+		//test creazione di un utente avente un username già usato
+		dataAccess.createAccount(testUser);
+	}
+	
+	@Test
+	public void checkLoginNotAuthenticated()throws AuthenticationFail{
+		User toAuth=new User("user4","user4",null,null,null);
+		OnlineUser onUserTest=new OnlineUser("user4","111.111.111.1");
+		
+		//testo il metodo con un OnlineUser avente ip autenticato come anonimo e username non autenticato nel sistema
+		try{
+			dataAccess.login(onUserTest, toAuth);
+		}catch(UsernameNotCorresponding exc){
+			fail("non è stata trovata la corrispondenza tra username autenticato e username da autenticare (ecc:UsernameNotExisting)");
+		}catch(IpNotLogged exc){
+			fail("non è stato trovato l'utente come autenticato anonimo (ecc:UserNotLogged)");
+		}catch(UserAlreadyLogged exc){
+			fail("è stato trovato l'utente come già autenticato nel sistema (ecc:UserAlreadyLogged)");
+		}catch(IpAlreadyLogged exc){
+			fail("è stato trovato l'ip come già autenticato nel sistema (ecc:IpAlreadyLogged)");
+		}
+		OnlineUserDAO od=new OnlineUserDAO();
+		OnlineUser userToCheck=od.get(onUserTest.getIp());
+		if(onUserTest.equals(userToCheck)==false){
+			fail("non è stato autenticato l'utente valido");
+		}
+	}
+	
+	@Test(expected=UserAlreadyLogged.class)
+	public void checkLoginAuthenticatedUsername()throws AuthenticationFail,UserAlreadyLogged, IpNotLogged, IpAlreadyLogged, UsernameNotCorresponding{
 		User toAuth=new User("user0","user0",null,null,null);
-//assume che il client era prima loggato come anonimo per poi fare l'update
-		OnlineUser onUserTest1=new OnlineUser("111.111.111.1","user9");
-		OnlineUser onUserTest2=new OnlineUser("111.111.111.0","user0");
-		OnlineUser onUserTest3=new OnlineUser("111.111.111.2","random");
+		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.2");
+		//testo il metodo con un OnlineUser avente username già autenticato con un altro ip
+		dataAccess.login(onUserTest, toAuth);
+	}
+	
+	@Test(expected=IpAlreadyLogged.class)
+	public void checkLoginAuthenticatedIp()throws AuthenticationFail,IpAlreadyLogged, IpNotLogged, UserAlreadyLogged, UsernameNotCorresponding{
+		User toAuth=new User("user5","user5",null,null,null);
+		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.1");
+		//testo il metodo con un OnlineUser avente ip già autenticato con un username
+		dataAccess.login(onUserTest, toAuth);
+	}
+
+	@Test(expected = IpNotLogged.class)
+	public void checkLoginFailIp()throws AuthenticationFail,IpNotLogged, UserAlreadyLogged, IpAlreadyLogged, UsernameNotCorresponding{
+		User toAuth=new User("user0","user0",null,null,null);
+		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.111");
 		
-		//testo il metodo con un OnlineUser avente username esistente nel db e non loggato
-		dataAccess.login(onUserTest1, toAuth);
-//devo testare se l'ha aggiornato?
-		//testo il metodo con un OnlineUser avente username esistente nel db e già loggato
-		dataAccess.login(onUserTest2, toAuth);
-//devo testare se l'ha aggiornato?
-		//testo il metodo con un OnlineUser avente username non esistente nel db
-		dataAccess.login(onUserTest3, toAuth);
+		//testo il metodo con un OnlineUser avente un ip non autenticato come anonimo
+		dataAccess.login(onUserTest, toAuth);
+	}
+	
+	@Test(expected = UsernameNotCorresponding.class)
+	public void checkLoginFailNotCorresponding()throws AuthenticationFail,UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged{
+		User toAuth=new User("user0","user0",null,null,null);
+		OnlineUser onUserTest=new OnlineUser("random","111.111.111.2");
 		
+		//testo il metodo con un OnlineUser avente username da autenticare non corrispondente al campo dell'oggetto da autenticare
+		dataAccess.login(onUserTest, toAuth);
 	}
 	
 	@Test
@@ -148,6 +200,101 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkLogout(){
+		OnlineUser testUser=new OnlineUser(null,"123.123.123.3");
 		
+		//test con un utente autenticato nel sistema
+		try{
+			dataAccess.logout(testUser);
+		}catch(LogoutException exc){
+			fail("non è stato trovato l'utente da de-autenticare come autenticato");
+		}
+	}
+	
+	@Test(expected=LogoutException.class)
+	public void checkLogoutFail()throws LogoutException{
+		OnlineUser testUser=new OnlineUser(null,"123.123.123.123");
+		
+		//test con un utente non autenticato nel sistema
+		dataAccess.logout(testUser);
+	}
+	
+	 @Test
+	 public void checkGetListUsers()throws AuthenticationFail{
+		 User toAuth=new User("user1","user1",null,null,null);
+		 ListName list=new ListName();
+		 list.setId(2);
+		 
+		 //test con una lista di proprietà dell'utente autenticato
+		 try{
+			 List<User> listResult=dataAccess.getListUsers(list, toAuth);
+			 if(listResult.size()!=4){
+				 fail("la lista ritornata dal metodo è sbagliata");
+			 }
+		 }catch(ListNotCorresponding exc){
+			 fail("la lista non risulta corrispondente all'utente anche se lo è");
+		 }
+	 }
+	 
+	 @Test(expected=ListNotCorresponding.class)
+	 public void checkGetListUsersFail()throws AuthenticationFail, ListNotCorresponding{
+		 User toAuth=new User("user1","user1",null,null,null);
+		 ListName list=new ListName();
+		 list.setId(3);
+		 
+		 //test con una lista di proprietà di un altro utente
+		 List<User> listResult=dataAccess.getListUsers(list, toAuth);
+	 }
+	
+	@Test
+	public void checkGetOnlineUsers()throws AuthenticationFail{
+		User toAuth=new User("user1","user1",null,null,null);
+		List<User> onlines=dataAccess.getOnlineUsers(toAuth);
+		if(onlines.size()!=4){
+			fail("il numero di utenti autenticati non corrisponde quello effettivo");
+		}
+	}
+	
+	@Test
+	public void checkGetOfflineUsers()throws AuthenticationFail{
+		User toAuth=new User("user1","user1",null,null,null);
+		List<User> offlines=dataAccess.getOfflineUsers(toAuth);
+		if(offlines.size()!=6){
+			fail("il numero di utenti non autenticati non corrisponde quello effettivo");
+		}
+	}
+	
+	@Test
+	public void checkListCreate()throws AuthenticationFail{
+		User toAuth=new User("user1","user1",null,null,null);
+		ListName newList=new ListName("office","user1");
+		//testo la creazione della lista
+		try{
+			dataAccess.listCreate(newList, toAuth);
+			ListNameDAO ld=new ListNameDAO();
+			ListName checkList=ld.getByNameOwner(newList);
+			if(checkList==null){
+				fail("la lista non è stata creata correttamente");
+			}
+		}catch(ListAlreadyExists exc){
+			fail("la lista risulta come già esistente");
+		}catch(ListNotCorresponding exc){
+			fail("la lista risulta non valida nella corrispondenza autenticato-proprietario");
+		}
+	}
+	
+	@Test(expected=ListAlreadyExists.class)
+	public void checkListCreateFail()throws AuthenticationFail, ListAlreadyExists, ListNotCorresponding{
+		User toAuth=new User("user1","user1",null,null,null);
+		ListName newList=new ListName("friends","user1");
+		//test con una lista già presente per l'utente
+		dataAccess.listCreate(newList, toAuth);
+	}
+	
+	@Test(expected=ListNotCorresponding.class)
+	public void checkListCreateFailCorresponding()throws AuthenticationFail, ListAlreadyExists, ListNotCorresponding{
+		User toAuth=new User("user1","user1",null,null,null);
+		ListName newList=new ListName("office","user2");
+		//test con una lista di un altro utente rispetto all'autenticato
+		dataAccess.listCreate(newList, toAuth);
 	}
 }

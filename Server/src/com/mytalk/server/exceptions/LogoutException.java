@@ -1,5 +1,5 @@
 /**
-* Filename: UserAlreadyExisting.java
+* Filename: LogoutException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolò Mazzucato
 * Date: 2013-04-29
@@ -15,8 +15,9 @@
 * - Zucchetti SRL
 */
 
+
 package com.mytalk.server.exceptions;
 
-public class UsernameAlreadyExisting extends StorageException {
+public class LogoutException extends StorageException {
 
 }

@@ -92,15 +92,37 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// aggiunge un record sulla tabella OnlineUser
-	public void login(OnlineUser user, User authenticate) throws AuthenticationFail, UsernameNotExisting{
+	public void login(OnlineUser user, User authenticate) throws AuthenticationFail, UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
-			if(authenticate.getUsername()!=user.getUsername()){
-				throw new UsernameNotExisting();
+			if(authenticate.getUsername()!=user.getUsername()){ //username di authenticate e di user non corrispondenti
+				throw new UsernameNotCorresponding();
 			}
 			OnlineUserDAO od=new OnlineUserDAO();
-			od.update(user);//assume che il client era prima loggato come anonimo per poi fare l'update
-			GenericDAO.closeSession();
+			String userIp=user.getIp();
+			String userName=user.getUsername();
+			boolean connected=od.checkIpConnected(userIp);
+			boolean userConnected=od.checkUsernameConnected(userName);
+			if(connected){		//ip già connesso
+				if(!userConnected){	//username già connesso
+					OnlineUser newOnline=od.get(userIp);
+					if(newOnline.getUsername()!=null){		//ip già in uso da un user
+						GenericDAO.closeSession();
+						throw new IpAlreadyLogged();
+					}else{
+						newOnline.setUsername(userName);
+						od.update(newOnline);
+						GenericDAO.closeSession();
+					}
+				}else{
+					GenericDAO.closeSession();
+					throw new UserAlreadyLogged();
+				}
+			}else{
+				GenericDAO.closeSession();
+				throw new IpNotLogged();
+			}
+			
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -123,21 +145,28 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//interroga il db e restituisce gli utenti di una lista
-	public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail{
+	public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, ListNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			UserListDAO ld=new UserListDAO();
 			int listId=list.getId();
-			List<UserList> associations=ld.getUsersInList(listId);
-			UserDAO ud=new UserDAO();
-			List<User> users=new ArrayList<User>();
-			for(int i=0; i<associations.size();i++){
-				String username=associations.get(i).getUsername();
-				User u=ud.get(username);
-				users.add(u);
+			ListNameDAO lnd=new ListNameDAO();
+			ListName listCheck=lnd.get(listId);
+			if(listCheck.getOwner().equals(authenticate.getUsername())){ //controllo che la lista sia effettivamente dell'utente
+				List<UserList> associations=ld.getUsersInList(listId);
+				UserDAO ud=new UserDAO();
+				List<User> users=new ArrayList<User>();
+				for(int i=0; i<associations.size();i++){
+					String username=associations.get(i).getUsername();
+					User u=ud.get(username);
+					users.add(u);
+				}
+				GenericDAO.closeSession();
+				return users;
+			}else{
+				GenericDAO.closeSession();
+				throw new ListNotCorresponding();
 			}
-			GenericDAO.closeSession();
-			return users;
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -180,24 +209,36 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//elimina dalla tabella OnlineUser il record corrispondente
-	public void logout(OnlineUser user){
+	public void logout(OnlineUser user)throws LogoutException{
 		OnlineUserDAO od=new OnlineUserDAO();
-		od.delete(user);//assume che l'utente sia stato loggato per inviare questo pacchetto, ergo non fa controlli
+		String ip=user.getIp();
+		user=od.get(ip);
+		if(user!=null){
+			od.delete(user);
+		}else{
+			GenericDAO.closeSession();
+			throw new LogoutException();
+		}
 		GenericDAO.closeSession();
 	}
 	
 	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
-	public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists{
+	public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,ListNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			if(authenticate.getUsername()!=list.getOwner()){
+				GenericDAO.closeSession();
+				throw new ListNotCorresponding();
+			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName listFound=ld.getByNameOwner(list);
 			if (listFound==null){
 				ld.save(list);
+				GenericDAO.closeSession();
 			}else{
+				GenericDAO.closeSession();
 				throw new ListAlreadyExists(); //la lista esiste già con lo stesso nome
 			}
-			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();

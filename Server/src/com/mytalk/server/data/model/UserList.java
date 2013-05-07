@@ -45,4 +45,29 @@ public class UserList implements Serializable{
 	public void setUsername(String s){
 		username=s;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		UserList other = (UserList) obj;
+		if (idList != other.idList) {
+			return false;
+		}
+		if (username == null) {
+			if (other.username != null) {
+				return false;
+			}
+		} else if (!username.equals(other.username)) {
+			return false;
+		}
+		return true;
+	}
 }

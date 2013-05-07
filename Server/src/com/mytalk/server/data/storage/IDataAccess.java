@@ -32,19 +32,19 @@ public interface IDataAccess{
 			
 			public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail;
 		
-			public void login(OnlineUser user, User authenticate)throws AuthenticationFail,UsernameNotExisting;
+			public void login(OnlineUser user, User authenticate)throws AuthenticationFail,UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged;
 			
 			public List<ListName> userLists(User authenticate) throws AuthenticationFail;
 		
-			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail;
+			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, ListNotCorresponding;
 			
 			public List<User> getOnlineUsers(User authenticate) throws AuthenticationFail;
 			
 			public List<User> getOfflineUsers(User authenticate) throws AuthenticationFail;
 			
-			public void logout(OnlineUser user);
+			public void logout(OnlineUser user) throws LogoutException;
 			
-			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists;
+			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,ListNotCorresponding;
 			
 			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting;
 		

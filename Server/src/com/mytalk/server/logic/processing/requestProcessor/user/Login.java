@@ -41,7 +41,7 @@ public class Login extends GenericRequest{
 				response=new ARI(ari.getAuth(), "SuccessfulLogin", null);
 			} catch(AuthenticationFail af){
 				response=new ARI(null, "AuthenticationFail", null);
-			} catch (UsernameNotExisting e) {
+			} catch (UsernameNotCorresponding e) {
 				response= new ARI(null, "UsernameNotExisting",null);
 			}
 			

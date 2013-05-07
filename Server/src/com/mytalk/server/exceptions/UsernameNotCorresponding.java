@@ -1,5 +1,5 @@
 /**
-* Filename: UserAlreadyExisting.java
+* Filename: UsernameNotCorresponding.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolò Mazzucato
 * Date: 2013-04-29
@@ -17,6 +17,6 @@
 
 package com.mytalk.server.exceptions;
 
-public class UsernameAlreadyExisting extends StorageException {
+public class UsernameNotCorresponding extends Throwable {
 
 }

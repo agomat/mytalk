@@ -95,7 +95,10 @@ public class DataAccess implements IDataAccess{
 	public void login(OnlineUser user, User authenticate) throws AuthenticationFail, UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
-			if(authenticate.getUsername()!=user.getUsername()){ //username di authenticate e di user non corrispondenti
+			String onlineUsername=user.getUsername();
+			String authUsername=authenticate.getUsername();
+			if(!onlineUsername.equals(authUsername)){ //username di authenticate e di user non corrispondenti
+				GenericDAO.closeSession();
 				throw new UsernameNotCorresponding();
 			}
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -145,7 +148,7 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//interroga il db e restituisce gli utenti di una lista
-	public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, ListNotCorresponding{
+	public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			UserListDAO ld=new UserListDAO();
@@ -165,7 +168,7 @@ public class DataAccess implements IDataAccess{
 				return users;
 			}else{
 				GenericDAO.closeSession();
-				throw new ListNotCorresponding();
+				throw new UsernameNotCorresponding();
 			}
 		}else{
 			GenericDAO.closeSession();
@@ -223,12 +226,14 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
-	public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,ListNotCorresponding{
+	public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
-			if(authenticate.getUsername()!=list.getOwner()){
+			String authUsername=authenticate.getUsername();
+			String listUsername=list.getOwner();
+			if(!listUsername.equals(authUsername)){
 				GenericDAO.closeSession();
-				throw new ListNotCorresponding();
+				throw new UsernameNotCorresponding();
 			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName listFound=ld.getByNameOwner(list);
@@ -246,17 +251,24 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	// verifica che sia presente la lista per quell'user e in caso positivo rimuove il record
-	public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting{
+	public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting,UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			String authUsername=authenticate.getUsername();
+			String listUsername=list.getOwner();
+			if(!listUsername.equals(authUsername)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName listFound=ld.getByNameOwner(list);
 			if (listFound!=null){
-				ld.delete(list);
+				ld.delete(listFound);
+				GenericDAO.closeSession();
 			}else{
+				GenericDAO.closeSession();
 				throw new ListNotExisting(); //la lista non esiste
 			}
-			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -264,21 +276,38 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//verifica che non sia già presente nella lista quell'user e in caso negativo lo inserisce nella lista
-	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed{
+	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			UserDAO ud=new UserDAO();
+			User toCheck=ud.get(user);
+			String username=authenticate.getUsername();
+			if(toCheck==null || user.equals(username)){
+				GenericDAO.closeSession();
+				throw new UserNotExisting();
+			}
+			String owner=list.getOwner();
+			if(!owner.equals(username)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName dbList=ld.getByNameOwner(list);
+			if(dbList==null){
+				GenericDAO.closeSession();
+				throw new ListNotExisting();
+			}
 			Integer Id=dbList.getId();
 			UserListDAO uld=new UserListDAO();
 			UserList u=uld.get(Id,user);
 			if(u==null){
 				UserList newUser=new UserList(Id,user);
 				uld.save(newUser);
+				GenericDAO.closeSession();
 			}else{
+				GenericDAO.closeSession();
 				throw new UserAlreadyListed(); //l'utente e` gia` nella lista
 			}
-			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -286,21 +315,37 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//verifica che sia presente la lista per quell'user e prende l'id della lista dalla tabella List e elimina un record dalla tabella UserList corrispondente all'id
-	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed{
+	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed,UserNotExisting, UsernameNotCorresponding, ListNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			UserDAO ud=new UserDAO();
+			User toCheck=ud.get(user);
+			String username=authenticate.getUsername();
+			if(toCheck==null || user.equals(username)){
+				GenericDAO.closeSession();
+				throw new UserNotExisting();
+			}
+			String owner=list.getOwner();
+			if(!owner.equals(username)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName dbList=ld.getByNameOwner(list);
+			if(dbList==null){
+				GenericDAO.closeSession();
+				throw new ListNotExisting();
+			}
 			Integer Id=dbList.getId();
 			UserListDAO uld=new UserListDAO();
 			UserList u=uld.get(Id,user);
 			if(u!=null){
-				UserList newUser=new UserList(Id,user);
-				uld.delete(newUser);
+				uld.delete(u);
+				GenericDAO.closeSession();
 			}else{
+				GenericDAO.closeSession();
 				throw new UserNotListed(); //l'utente non e` presente nella lista
 			}
-			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -308,21 +353,33 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//aggiorna la tabella degli utenti online con l'utente non loggato
-	public void loginAsAnonymous(OnlineUser user){
+	public void loginAsAnonymous(OnlineUser user)throws IpAlreadyLogged{
 		OnlineUserDAO ou=new OnlineUserDAO();
-		ou.save(user);
+		String ip=user.getIp();
+		String username=user.getUsername();
+		if(username!=null){
+			user.setUsername(null);
+		}
+		boolean checkIp=ou.checkIpConnected(ip);
+		if(!checkIp){
+			ou.save(user);
+		}else{
+			GenericDAO.closeSession();
+			throw new IpAlreadyLogged();
+		}
 		GenericDAO.closeSession();
 	}
 	
 	//restituisce un vettore di user che identifica la blacklist
-	public List<User> getUserBlacklist(String u, User authenticate) throws AuthenticationFail{
+	public List<User> getUserBlacklist(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			List<User> listOfUser=new ArrayList<User>();
 			Blacklist b=null;
 			BlacklistDAO bd=new BlacklistDAO();
 			UserDAO ud=new UserDAO();
-			List<Blacklist> blacklistList=bd.getUserBlacklist(u);
+			String username=authenticate.getUsername();
+			List<Blacklist> blacklistList=bd.getUserBlacklist(username);
 			for(int i=0;i<blacklistList.size();i++){
 				b=blacklistList.get(i);
 				listOfUser.add(ud.get(b.getUsername()));
@@ -336,26 +393,29 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//aggiunge un record alla blacklist
-	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted{
+	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
-			boolean check=false;
-			Blacklist blacklistObj=null;
-			String blacklistUsername=null;
+			String owner=b.getOwner();
+			String username=authenticate.getUsername();
+			String toBlacklist=b.getUsername();
+			UserDAO ud=new UserDAO();
+			User u=ud.get(toBlacklist);
+			if(u==null || username.equals(toBlacklist)){
+				GenericDAO.closeSession();
+				throw new UserNotExisting();
+			}
+			if(!owner.equals(username)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
 			BlacklistDAO bd=new BlacklistDAO();
-			List<Blacklist> blacklistList=bd.getUserBlacklist(b.getOwner());
-			for(int i=0;i<blacklistList.size();i++){
-				blacklistObj=blacklistList.get(i);
-				blacklistUsername=blacklistObj.getUsername();
-				if(blacklistUsername.equals(b.getUsername())){
-					check=true;
-				}
-			}
-			if(!check){
-				bd.save(b);
-			}
-			else{
+			Blacklist checkUser=bd.get(owner, toBlacklist);
+			if(checkUser!=null){
+				GenericDAO.closeSession();
 				throw new UserAlreadyBlacklisted();
+			}else{
+				bd.save(b);
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -365,26 +425,23 @@ public class DataAccess implements IDataAccess{
 	}
 		
 	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
-	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted{
+	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted, UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
-			boolean check=false;
-			Blacklist blacklistObj=null;
-			String blacklistUsername=null;
+			String owner=b.getOwner();
+			String username=authenticate.getUsername();
+			String toBlacklist=b.getUsername();
+			if(!owner.equals(username)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
 			BlacklistDAO bd=new BlacklistDAO();
-			List<Blacklist> blacklistList=bd.getUserBlacklist(b.getOwner());
-			for(int i=0;i<blacklistList.size();i++){
-				blacklistObj=blacklistList.get(i);
-				blacklistUsername=blacklistObj.getUsername();
-				if(blacklistUsername.equals(b.getUsername())){
-					check=true;
-				}
-			}
-			if(check){
-				bd.delete(b);
-			}
-			else{
+			Blacklist checkUser=bd.get(owner, toBlacklist);
+			if(checkUser==null){
+				GenericDAO.closeSession();
 				throw new UserNotBlacklisted();
+			}else{
+				bd.delete(checkUser);
 			}
 			GenericDAO.closeSession();
 		}else{
@@ -394,11 +451,12 @@ public class DataAccess implements IDataAccess{
 	}
 		
 	//restituisce un vector di oggetti call
-	public List<Call> getCalls(String primaryKey, User authenticate) throws AuthenticationFail{
+	public List<Call> getCalls(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			String username=authenticate.getUsername();
 			CallDAO cd=new CallDAO();
-			List<Call> calls=cd.getAllUserCalls(primaryKey);
+			List<Call> calls=cd.getAllUserCalls(username);
 			GenericDAO.closeSession();
 			return calls;
 		}else{
@@ -426,7 +484,8 @@ public class DataAccess implements IDataAccess{
 		boolean authenticated=authenticateClient(userObj);
 		if(authenticated==true){
 			UserDAO ud=new UserDAO();
-			ud.delete(userObj);
+			User u=ud.get(userObj.getUsername());
+			ud.delete(u);
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
@@ -435,11 +494,19 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	//cambia il valore della pwd sulla tabella User
-	public void changePassword(User userObj, User authenticate) throws AuthenticationFail{
+	public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
+			String usernameAuth=authenticate.getUsername();
+			String usernameNew=userObj.getUsername();
+			if(!usernameAuth.equals(usernameNew)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
 			UserDAO ud=new UserDAO();
-			ud.update(userObj);
+			User u=ud.get(usernameNew);
+			u.setPassword(userObj.getPassword());
+			ud.update(u);
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();

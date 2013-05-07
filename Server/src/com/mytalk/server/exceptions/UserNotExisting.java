@@ -1,5 +1,5 @@
 /**
-* Filename: listNotCorresponding.java
+* Filename: UserNotExisting.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolò Mazzucato
 * Date: 2013-04-29
@@ -17,6 +17,6 @@
 
 package com.mytalk.server.exceptions;
 
-public class ListNotCorresponding extends StorageException {
+public class UserNotExisting extends StorageException {
 
 }

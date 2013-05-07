@@ -36,7 +36,7 @@ public interface IDataAccess{
 			
 			public List<ListName> userLists(User authenticate) throws AuthenticationFail;
 		
-			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, ListNotCorresponding;
+			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, UsernameNotCorresponding;
 			
 			public List<User> getOnlineUsers(User authenticate) throws AuthenticationFail;
 			
@@ -44,28 +44,29 @@ public interface IDataAccess{
 			
 			public void logout(OnlineUser user) throws LogoutException;
 			
-			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,ListNotCorresponding;
+			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,UsernameNotCorresponding;
 			
-			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting;
+			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting,UsernameNotCorresponding;
 		
-			public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed;
+			public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed,UserNotExisting,UsernameNotCorresponding,ListNotExisting;
 					
-			public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed;
+			public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed,UserNotExisting, UsernameNotCorresponding, ListNotExisting;
 			
-			public void loginAsAnonymous(OnlineUser user);
+			public void loginAsAnonymous(OnlineUser user) throws IpAlreadyLogged;
 			
 			public void createAccount(User toCreate) throws UsernameAlreadyExisting;
 			
-			public List<User> getUserBlacklist(String u, User authenticate) throws AuthenticationFail;
+			public List<User> getUserBlacklist(User authenticate) throws AuthenticationFail;
 			
-			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted;
+			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted,UsernameNotCorresponding,UserNotExisting;
 			
-			public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted;
+			public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted,UsernameNotCorresponding;
 			
-			public List<Call> getCalls(String u, User authenticate) throws AuthenticationFail;
+			public List<Call> getCalls(User authenticate) throws AuthenticationFail;
 			
 			public void addCall(Call call, User authenticate) throws AuthenticationFail;
 			
 			public void deleteAccount(User userObj) throws AuthenticationFail;
 			
+			public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding;
 }

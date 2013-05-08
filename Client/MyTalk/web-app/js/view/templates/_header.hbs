@@ -1,13 +1,10 @@
-<div style="overflow:hidden;"> <!-- TODO togliere regola inline -->
-	<div id="logo" style="float:left"> <!-- TODO togliere regola inline -->
-	      <h1>MyTalk</h1>
-	      <h2>La videochiamata ovunque tu vuoi!</h2>
-	</div>
-
-	{{#if isAuthenticated}}
-    	{{ partial dashboard }}
-	{{else}}
-		{{ partial login }}
-	{{/if}}
-
+<div id="logo">
+  <h1>MyTalk</h1>
+  <h2>La videochiamata ovunque tu vuoi!</h2>
 </div>
+
+{{#if isAuthenticated}}
+  {{ partial dashboard }}
+{{else}}
+  {{ partial login }}
+{{/if}}

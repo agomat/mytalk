@@ -20,12 +20,6 @@ loadTemplates = function(files) {
     });
 }
 
-setTimeout(function(){ // Sistemare immediatamente
-    $.getScript('graphics_js/animation-c2.js');
-    $('#menu_area').css('display','block');
-    $.getScript('graphics_js/animation-c4.js');
-},2000);
-
 
 
 // posto e nome file non adeguato
@@ -38,3 +32,17 @@ if (typeof jQuery !== 'undefined') {
         });
     })(jQuery);
 }
+
+
+loadTemplates([
+  'index.hbs',
+  'content.hbs',
+  'lists.hbs',
+  'lists_t.hbs',
+  '_header.hbs',
+  '_dashboard.hbs',
+  '_login.hbs',
+  '_register.hbs',
+  '_description.hbs',
+  '_callip.hbs'
+]);

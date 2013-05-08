@@ -2,18 +2,7 @@ MyTalk = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
-loadTemplates([
-  'index.hbs',
-  'content.hbs',
-  'lists.hbs',
-  'lists_t.hbs',
-  '_header.hbs',
-  '_dashboard.hbs',
-  '_login.hbs',
-  '_register.hbs',
-  '_description.hbs',
-  '_callip.hbs'
-]);
+
 
 //
 //
@@ -21,7 +10,7 @@ loadTemplates([
 // @Stefano Campese: spostare le viste (e le componeti in file di viste dento a /view)
 //
 //
-
+/*
 Ember.TextField.reopen({ // e per cosa serve?
   attributeBindings: ['name'],
   attributeBindings: ['id'],
@@ -30,7 +19,7 @@ Ember.TextField.reopen({ // e per cosa serve?
 Ember.TextField.reopen({ // e per cosa serve?
   attributeBindings: ["required"],
   required: true
-})
+})*/
 
 MyTalk.IndexView = Ember.View.extend({
   templateName: "index",
@@ -203,3 +192,4 @@ MyTalk.ListView = Ember.View.extend({
     templateName: "list",
     name: "list"
 });
+

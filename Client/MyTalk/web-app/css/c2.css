@@ -39,7 +39,7 @@
 }
 
 #arrow { 
-	transform:rotate(7deg); 
+	-moz-transform:rotate(180deg); 
 	-webkit-transform:rotate(180deg); 
 	width:0; 
 	height:0; 

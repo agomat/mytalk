@@ -2,6 +2,9 @@
 head.js("js/loadTemplates.js");
 head.js("js/app.js");
 
+// bootstrap StateManager
+head.js("js/statemanager/StateManager.js");
+
 // bootstrap Storage
 head.js("js/model/storage/IPAddressProxy.js");
 head.js("js/model/storage/RequestManager.js");
@@ -33,5 +36,3 @@ head.js("js/controller/Controller.js");
 // bootstrap RTCAdapter
 head.js("js/controller/communicator/PeerConnection.js");
 
-// bootstrap StateManager
-head.js("js/statemanager/StateManager.js");

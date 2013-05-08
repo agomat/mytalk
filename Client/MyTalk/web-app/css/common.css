@@ -47,7 +47,8 @@ input:focus::-webkit-input-placeholder{
   margin-bottom: 20px;
   padding: 10px 20px;
   border-bottom: dotted 1px #ccc;
-  border-radius: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   background: #fff url("../img/stripes.png") repeat;
   box-shadow: 0 1px 6px 0px #00a200;
 }

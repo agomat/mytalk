@@ -15,8 +15,65 @@
     <script type="text/javascript" src="js/libs/handlebars-1.0.0-rc.3.js"></script>
     <script type="text/javascript" src="js/libs/ember-1.0.0-rc.2.js"></script> 
     <script type="text/javascript" src="js/libs/ember-data.js"></script>
-    <script type="text/javascript" src="js/libs/head.min.js"></script>
-    <script type="text/javascript" src="js/load.js"></script>
+
+    <!-- bootstrap application -->
+    <script src="js/app.js"></script>
+
+    <!-- bootstrap views -->
+    <script src="js/view/ContentView.js"></script>
+    <script src="js/view/IndexView.js"></script>
+    <script src="js/view/ListsView.js"></script>
+    <script src="js/view/LoginFormView.js"></script>
+    <script src="js/view/LoginView.js"></script>
+    <script src="js/view/RegisterFormView.js"></script>
+    <script src="js/view/RegisterPassword.js"></script>
+    <script src="js/view/IPCall.js"></script>
+    <script src="js/view/ListView.js"></script>
+    <script src="js/view/Login.js"></script>
+    <script src="js/view/RegisterConfirmPassword.js"></script>
+    <script src="js/view/Register.js"></script>
+    <script src="js/view/RegisterSurname.js"></script>
+    <script src="js/view/Header.js"></script>
+    <script src="js/view/IPFormView.js"></script>
+    <script src="js/view/LoginEmail.js"></script>
+    <script src="js/view/LoginPassword.js"></script>
+    <script src="js/view/RegisterEmail.js"></script>
+    <script src="js/view/RegisterName.js"></script>
+    <script src="js/view/RegisterUsername.js"></script>
+
+    <!-- bootstrap StateManager -->
+    <script src="js/statemanager/StateManager.js"></script>
+
+    <!-- bootstrap Storage -->
+    <script src="js/model/storage/IPAddressProxy.js"></script>
+    <script src="js/model/storage/RequestManager.js"></script>
+    <script src="js/model/storage/WebSocketConnection.js"></script>
+    <script src="js/model/storage/WebSocketHandler.js"></script>
+    <script src="js/model/storage/SocketAdapter.js"></script>
+
+    <!-- bootstrap DS.Store -->
+    <script src="js/store/Store.js"></script>
+
+    <!-- bootstrap DS.Model -->
+    <script src="js/model/modelstruct/ARI.js"></script>
+    <script src="js/model/modelstruct/Authentication.js"></script>
+    <script src="js/model/modelstruct/PersonalData.js"></script>
+    <script src="js/model/modelstruct/WUser.js"></script>
+    <script src="js/model/modelstruct/User.js"></script>
+    <script src="js/model/modelstruct/Call.js"></script>
+    <script src="js/model/modelstruct/List.js"></script>
+    <script src="js/model/modelstruct/WList.js"></script>
+    <script src="js/model/modelstruct/WCall.js"></script>
+
+    <!-- bootstrap Router -->
+    <script src="js/router/Router.js"></script>
+
+    <!-- bootstrap controllers -->
+    <script src="js/controller/Controller.js"></script>
+
+    <!-- bootstrap RTCAdapter -->
+    <script src="js/controller/communicator/PeerConnection.js"></script> 
+
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="index">
@@ -216,5 +273,6 @@
         </fieldset>
       {{/view}}
     </script>
+    <script type="text/javascript" src="js_graphics/animation-c2.js"></script>
   </body>
 </html>

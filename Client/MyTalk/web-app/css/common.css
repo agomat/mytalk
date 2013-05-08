@@ -9,7 +9,7 @@ html, body{
 body{
   max-width: 1200px;
   width: 95%;
-  margin: 20px auto;
+  margin: 10px auto;
   border: dotted 1px #ccc;
   border-radius: 15px;
   padding: 0;
@@ -45,7 +45,7 @@ input:focus::-webkit-input-placeholder{
   display: block;
   min-height: 180px;
   margin-bottom: 20px;
-  padding: 10px 0;
+  padding: 10px 20px;
   border-bottom: dotted 1px #ccc;
   border-radius: 15px;
   background: #fff url("../img/stripes.png") repeat;

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>MyTalk | La videochiamata ovunque tu vuoi!</title>
+<title>MyTalk</title>
   <link rel="stylesheet" type="text/css"  href="font/roboto.css" media="screen" />
   <link rel="stylesheet" type="text/css"  href="css/common.css" media="screen" />
   <link rel="stylesheet" type="text/css"  href="css/c1.css" media="screen" />
@@ -11,14 +11,226 @@
   <link rel="stylesheet" type="text/css"  href="css/c4.css" media="screen"/> 
   <link rel="stylesheet" type="text/css"  href="css/c4-logged.css" media="screen" />
  
-  <script src="js/libs/jquery-1.9.1.js"></script>
-  <script src="js/libs/handlebars-1.0.0-rc.3.js"></script>
-  <script src="js/libs/ember-1.0.0-rc.2.js"></script> 
-  <script src="js/libs/ember-data.js"></script>
-  <script src="js/libs/head.min.js"></script>
-  <script src="js/load.js"></script>
+  <script type="text/javascript" src="js/libs/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="js/libs/handlebars-1.0.0-rc.3.js"></script>
+  <script type="text/javascript" src="js/libs/ember-1.0.0-rc.2.js"></script> 
+  <script type="text/javascript" src="js/libs/ember-data.js"></script>
+  <script type="text/javascript" src="js/libs/head.min.js"></script>
+  <script type="text/javascript" src="js/load.js"></script>
 </head>
 <body>
+  <script type="text/x-handlebars" data-template-name="index">
+{{ outlet }}
+</script>
 
+<script type="text/x-handlebars" data-template-name="content">
+{{ partial header }}
+{{ partial description }}
+{{ partial register }}
+</script>
+
+<script type="text/x-handlebars" data-template-name="lists">
+ {{ partial header }}
+<div id="logged_content" class="scroll_content">
+{{outlet lists_t}}
+</div>
+
+
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="lists_t">
+<div id="liste">
+        <div class="header">
+          <h5>Le Tue Liste</h5>
+          <a href="#" class="common_button">Crea una Nuova Lista</a>
+        </div>
+        <div class="content">
+          <ul>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
+            <li><a id="blacklist"><div class="list_name">Blacklist</div></a></li>
+          </ul>
+        </div>
+</div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_header">
+<div id="logo">
+  <h1>MyTalk</h1>
+  <h2>La videochiamata ovunque tu vuoi!</h2>
+</div>
+
+{{#if isAuthenticated}}
+  {{ partial dashboard }}
+{{else}}
+  {{ partial login }}
+{{/if}}
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="_dashboard">
+<div id="menu_container">
+  {{ partial callip }}
+  <div id="menu_label"><div>Il tuo nome</div></div>
+  <div id="menu_area">
+    <div id="arrow"></div>
+    <div id="menu_content">
+    <div id="auth_content">
+    <h2>Sei connesso come:</h2>
+    <ul>
+      <li>Il tuo nome</li>
+      <li>email@dominio.com</li>
+      </ul>
+    <ul class="separator">
+      <li><img src="img/settings.png"/> <a href="#"> Modifica Profilo </a></li>
+      <li><img src="img/stats.png"/> <a href="#"> Statistiche sulle chiamate </a></li>
+    </ul>
+    <ul class="separator">
+      <li><img src="img/door_out.png"/> <a href="#">Esci</a></li>
+    </ul>
+  </div>
+  </div>
+  </div> 
+</div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_login">
+
+<div id="menu_container">
+  <div id="menu_label"><div>Accedi</div><img id="img_door" src="img/open_door.png"/></div>
+  <div id="menu_area" >
+    <div id="arrow"></div>
+     <div id="menu_content">
+        {{#view MyTalk.LoginFormView }}   
+          <fieldset>
+            <legend hidden>Loggati</legend>
+              <ul>
+               <li>
+                  <label for="email" hidden>Email</label>
+                   {{view MyTalk.LoginEmail valueBinding='view.email'}}
+                 
+               </li>
+               <li>
+                  <label for="password" hidden>Password</label>
+                  {{view MyTalk.LoginPassword valueBinding='view.password' }}
+                 
+                </li>
+              </ul>
+             
+              <button type="submit" id="button_login" class="common_button" >Accedi</button>
+              
+          </fieldset>
+        {{/view}}
+        
+      </div>
+  </div> 
+</div>
+ 
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="_register">
+
+    <div id="notlogged_content">
+
+      <div id="video_container">
+        <div id="video_frame">
+          <h5>Video</h5>
+          <p>Video Tutorial Video Tutorial Video Tutorial Video Tutorial Video Tutorial</p>
+          <video id="video_tutorial" poster="img/video_placeholder.png">
+            <source src="video_test.mp4" type="video/mp4" />
+            Il tuo browser non supporta il video in html5
+          </video>
+        </div>
+      </div>
+
+      <div id="divider"></div>
+
+      <div id="signup_container">
+        <div id="signup">
+          <h5>Registrati ora!</h5>
+          <p>Registrarsi &egrave; gratuito e ti permette di chiamare gli altri utenti che gi&agrave; utilizzano MyTalk.</p>
+          {{#view MyTalk.RegisterFormView}}
+            <fieldset>
+              <legend hidden>Registrazione</legend>
+              <ul>
+              <li>
+                  <label for="name" hidden>Nome</label>
+                  {{view MyTalk.RegisterName valueBinding='view.name' }}
+                </li>
+                <li>
+                  <label for="surname" hidden>Cognome</label>
+                  {{view MyTalk.RegisterSurname valueBinding='view.surname' }}
+                </li>
+                <li>
+                  <label for="username" hidden>Username</label>
+                  {{view MyTalk.RegisterUsername valueBinding='view.username' }}
+                </li>
+                <li>
+                  <label for="email" hidden>Email</label>
+                  {{view MyTalk.RegisterEmail valueBinding='view.email' }}
+                </li>
+                <li>
+                  <label for="password" hidden>Password</label>
+                  {{view MyTalk.RegisterPassword valueBinding='view.password' }}
+                </li>
+                <li>
+                  <label for="password_conf" hidden>Conferma la password</label>
+                  {{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}
+                </li>
+                <li>
+                  <button type="submit"class="common_button" id="button_signup">Registrati</button>
+                </li>
+              </ul>
+            </fieldset>
+          {{/view}}
+        </div>
+      </div>
+    </div>
+ 
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="_description">
+<div id="ip_container">
+  <div id="ip_call">
+    <h3> Chiama i tuoi amici </h3>
+    <p>
+      Lorem Ipsum &egrave; considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assembl&ograve; per preparare un testo campione. 
+    </p>
+    {{ partial callip }}
+  </div>
+  <div id="ip_yours">
+    <h3>Il tuo indirizzo IP</h3>
+    <p>
+      Lorem Ipsum &egrave; considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assembl&ograve; per preparare un testo campione. 
+    </p>
+    <h4 id="ip_address">192.168.168.168:19</h4>
+  </div>
+</div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_callip">
+{{#view MyTalk.IPFormView}}
+          <fieldset>
+            
+            <legend hidden>Chiama inserendo l'indirizzo IP</legend>
+            	<label for="ip_call_text" hidden>Indirizzo IP</label> 
+            	{{view MyTalk.IPCall valueBinding='view.ip_call'}}
+            	<button id="ip_call_button" class="common_button" type="submit"><div></div>Chiama</button>
+          
+          </fieldset>
+{{/view}}
+</script>
+
+<script type="text/javascript" src="js_graphics/animation-c2.js"> </script>
 </body>
 </html>

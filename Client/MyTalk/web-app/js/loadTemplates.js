@@ -33,7 +33,7 @@ if (typeof jQuery !== 'undefined') {
     })(jQuery);
 }
 
-
+/*
 loadTemplates([
   'index.hbs',
   'content.hbs',
@@ -46,3 +46,4 @@ loadTemplates([
   '_description.hbs',
   '_callip.hbs'
 ]);
+*/

@@ -1,0 +1,62 @@
+#content {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    padding: 10px;
+    border: solid 1px #ccc;
+    border-radius: 15px;
+    overflow: hidden;
+}
+#videosContainer {
+    display: block;
+    width: 100%;
+    min-height: 500px;
+    margin: auto;
+    padding: 0;
+}
+
+#remoteVideo {
+    display: block;
+    margin: 0;
+    padding: 0;
+    float: left;
+    height:100%;
+}
+
+#localVideo {
+    height:100%;
+    padding: 0;
+    display: block;
+    margin: 0;
+}
+
+#remote {
+    margin: 0;
+    padding: 2px;
+    width: 600px;
+    height: 450px;
+    float: left;
+    display: block;
+}
+
+#local {
+    margin: 0;
+    padding: 2px;
+    width: 300px;
+    height: 250px;
+    display: block;
+}
+
+#call {
+    float: left;
+}
+
+#callButton {
+    width: 6em;
+    height: 2.5em;
+}
+
+#send {
+    width: 4em;
+    height: 2em;
+}

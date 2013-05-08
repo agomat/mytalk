@@ -1,0 +1,76 @@
+#notlogged_content{
+  display: block;
+  padding: 5px;
+  margin: 30px auto;
+  overflow: hidden;
+  position: relative;
+  font-size: 1.3em;
+}
+
+#notlogged_content ul {
+  margin: 0;
+  padding: 0;
+}
+
+#notlogged_content ul li {
+  list-style-type: none;
+}
+
+#notlogged_content h5{
+  font-size: 2.1em;
+  text-align: center;
+}
+
+#video_frame, #signup{
+  width: 90%;
+  margin:20px 5%;
+}
+
+#video_container {
+  width: 49%;
+  height: 100%;
+  float: left;
+}
+
+#video_container video{
+  width:100%;
+  cursor: pointer;
+  opacity: 0.7;
+  border:1px solid #888;
+}
+
+#video_container video:hover{ opacity: 1;}
+
+#divider {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  bottom: 0%;
+  border-left: 1px solid #00E200;
+}
+
+#signup_container{
+  width: 49%;
+  height: 100%;
+  float: right;
+}
+
+#signup li{
+  display: block;
+  width: 80%;
+  margin:0 auto;
+}
+
+#signup input{
+  width: 96%;
+  height:25px;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+#signup button{
+  width:90%;
+  height:45px;
+  margin:10px 5%;
+  font-size: 1.3em;
+}

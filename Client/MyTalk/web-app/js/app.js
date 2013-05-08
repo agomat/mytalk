@@ -6,7 +6,7 @@ loadTemplates([
   'index.hbs',
   'content.hbs',
   'lists.hbs',
-  //'lists_t',
+  'lists_t.hbs',
   '_header.hbs',
   '_dashboard.hbs',
   '_login.hbs',

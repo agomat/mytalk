@@ -1,0 +1,101 @@
+body{
+	margin-top: 50px;
+}
+
+#logged_content{
+	border: 1px solid #909090;
+	border-radius: 4px;
+} 
+
+#logged_content ul, #logged_content li{
+	margin: 0;
+	padding: 0;
+}
+
+#logged_content li{
+	list-style-type: none;
+}
+
+#liste ul, #utenti ul{
+	overflow-y: scroll;
+}
+
+#liste ul, #liste_header{
+	width:30%;	
+	float:left;
+	clear: left;
+}
+
+#liste ul, #utenti ul{
+	height:430px;
+}
+
+#liste_header, #search_container{
+	height: 70px;
+	border-bottom: 1px solid #909090;
+}
+
+#liste_header{
+	border-right: 1px solid #909090;
+}
+
+#liste_header h5{
+	font-size: 1.6em;
+	text-align: center;
+	margin:5px 0;
+	font-variant: small-caps;
+}
+
+#liste_header button{
+	margin:0 20%;
+	padding:5px 10% 0 10%;
+	width:60%;
+	height: 35px;
+	font-size: 1.5em;
+	text-align: left;
+}
+
+#liste_header button div{
+	float: left;
+	margin-right: 10%;
+	padding-bottom: 5px;
+	width: 25px;
+	height: 25px;
+	background: url('img/list-add.png') top no-repeat;
+}
+
+#liste li{
+	cursor: pointer;
+	padding:10px;
+	outline: 1px solid #909090;
+}
+
+#liste li:hover{
+	background-color: #adff8a;
+}
+
+#liste #selected{
+	cursor: default !important;
+	color: rgba(0,0,0,0.6);
+	font-weight: bold;
+	background: #adff8a -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.79, rgba(55,170,55,1)),
+		color-stop(0.15, rgba(65,230,55,1))
+	) !important;
+}
+
+
+#utenti ul{
+	width: 70%;
+}
+
+#utenti li{
+	height: 40px;
+}
+
+#utenti li:nth-child(odd){
+	background-color: #f6f6f6;
+}

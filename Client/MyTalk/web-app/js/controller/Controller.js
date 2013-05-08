@@ -1,6 +1,6 @@
-MyTalk.LoggedController = Ember.Controller.extend({});
+MyTalk.DashboardController = Ember.Controller.extend({});
 
-MyTalk.IndexController=Ember.ObjectController.extend({
+MyTalk.IndexController = Ember.ObjectController.extend({
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
   isAuthenticated: function () {

@@ -1,4 +1,4 @@
-MyTalk.Header = Ember.View.extend({
+MyTalk.HeaderView = Ember.View.extend({
   templateName: "header",
   name: "header"
 });

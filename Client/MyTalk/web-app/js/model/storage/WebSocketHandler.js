@@ -49,7 +49,7 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
       type = MyTalk.WUser,
       adapter = store.adapterForType(type);
 
-      if(cc.count==0){
+      if(cc.count==0) {
        adapter.load(store, type, obj);
       }
       // liste

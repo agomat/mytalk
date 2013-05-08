@@ -44,7 +44,6 @@ head.js("js/model/modelstruct/WUser.js");
 head.js("js/model/modelstruct/User.js");
 head.js("js/model/modelstruct/Call.js");
 head.js("js/model/modelstruct/List.js");
-
 head.js("js/model/modelstruct/WList.js");
 head.js("js/model/modelstruct/WCall.js");
 

@@ -82,13 +82,12 @@ public class DataAccess implements IDataAccess{
 	public void createAccount(User toCreate) throws UsernameAlreadyExisting{
 		UserDAO ud=new UserDAO();
 		User existant=ud.get(toCreate.getName());
-		if(existant==null){
-			ud.save(toCreate);
-			GenericDAO.closeSession();
-		}else{
+		if(existant!=null){
 			GenericDAO.closeSession();
 			throw new UsernameAlreadyExisting();
 		}
+		ud.save(toCreate);
+		GenericDAO.closeSession();
 	}
 	
 	// aggiunge un record sulla tabella OnlineUser
@@ -106,26 +105,22 @@ public class DataAccess implements IDataAccess{
 			String userName=user.getUsername();
 			boolean connected=od.checkIpConnected(userIp);
 			boolean userConnected=od.checkUsernameConnected(userName);
-			if(connected){		//ip già connesso
-				if(!userConnected){	//username già connesso
-					OnlineUser newOnline=od.get(userIp);
-					if(newOnline.getUsername()!=null){		//ip già in uso da un user
-						GenericDAO.closeSession();
-						throw new IpAlreadyLogged();
-					}else{
-						newOnline.setUsername(userName);
-						od.update(newOnline);
-						GenericDAO.closeSession();
-					}
-				}else{
-					GenericDAO.closeSession();
-					throw new UserAlreadyLogged();
-				}
-			}else{
+			if(!connected){		//ip già connesso
 				GenericDAO.closeSession();
 				throw new IpNotLogged();
 			}
-			
+			if(userConnected){	//username già connesso
+				GenericDAO.closeSession();
+				throw new UserAlreadyLogged();
+			}
+			OnlineUser newOnline=od.get(userIp);
+			if(newOnline.getUsername()!=null){		//ip già in uso da un user
+				GenericDAO.closeSession();
+				throw new IpAlreadyLogged();
+			}
+			newOnline.setUsername(userName);
+			od.update(newOnline);
+			GenericDAO.closeSession();	
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -155,21 +150,20 @@ public class DataAccess implements IDataAccess{
 			int listId=list.getId();
 			ListNameDAO lnd=new ListNameDAO();
 			ListName listCheck=lnd.get(listId);
-			if(listCheck.getOwner().equals(authenticate.getUsername())){ //controllo che la lista sia effettivamente dell'utente
-				List<UserList> associations=ld.getUsersInList(listId);
-				UserDAO ud=new UserDAO();
-				List<User> users=new ArrayList<User>();
-				for(int i=0; i<associations.size();i++){
-					String username=associations.get(i).getUsername();
-					User u=ud.get(username);
-					users.add(u);
-				}
-				GenericDAO.closeSession();
-				return users;
-			}else{
+			if(!listCheck.getOwner().equals(authenticate.getUsername())){ //controllo che la lista sia effettivamente dell'utente
 				GenericDAO.closeSession();
 				throw new UsernameNotCorresponding();
 			}
+			List<UserList> associations=ld.getUsersInList(listId);
+			UserDAO ud=new UserDAO();
+			List<User> users=new ArrayList<User>();
+			for(int i=0; i<associations.size();i++){
+				String username=associations.get(i).getUsername();
+				User u=ud.get(username);
+				users.add(u);
+			}
+			GenericDAO.closeSession();
+			return users;
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -216,12 +210,11 @@ public class DataAccess implements IDataAccess{
 		OnlineUserDAO od=new OnlineUserDAO();
 		String ip=user.getIp();
 		user=od.get(ip);
-		if(user!=null){
-			od.delete(user);
-		}else{
+		if(user==null){
 			GenericDAO.closeSession();
 			throw new LogoutException();
 		}
+		od.delete(user);
 		GenericDAO.closeSession();
 	}
 	
@@ -237,13 +230,12 @@ public class DataAccess implements IDataAccess{
 			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName listFound=ld.getByNameOwner(list);
-			if (listFound==null){
-				ld.save(list);
-				GenericDAO.closeSession();
-			}else{
+			if (listFound!=null){
 				GenericDAO.closeSession();
 				throw new ListAlreadyExists(); //la lista esiste già con lo stesso nome
 			}
+			ld.save(list);
+			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -262,13 +254,12 @@ public class DataAccess implements IDataAccess{
 			}
 			ListNameDAO ld=new ListNameDAO();
 			ListName listFound=ld.getByNameOwner(list);
-			if (listFound!=null){
-				ld.delete(listFound);
-				GenericDAO.closeSession();
-			}else{
+			if (listFound==null){
 				GenericDAO.closeSession();
 				throw new ListNotExisting(); //la lista non esiste
 			}
+			ld.delete(listFound);
+			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -300,14 +291,13 @@ public class DataAccess implements IDataAccess{
 			Integer Id=dbList.getId();
 			UserListDAO uld=new UserListDAO();
 			UserList u=uld.get(Id,user);
-			if(u==null){
-				UserList newUser=new UserList(Id,user);
-				uld.save(newUser);
-				GenericDAO.closeSession();
-			}else{
+			if(u!=null){
 				GenericDAO.closeSession();
 				throw new UserAlreadyListed(); //l'utente e` gia` nella lista
 			}
+			UserList newUser=new UserList(Id,user);
+			uld.save(newUser);
+			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -339,13 +329,13 @@ public class DataAccess implements IDataAccess{
 			Integer Id=dbList.getId();
 			UserListDAO uld=new UserListDAO();
 			UserList u=uld.get(Id,user);
-			if(u!=null){
-				uld.delete(u);
-				GenericDAO.closeSession();
-			}else{
+			if(u==null){
 				GenericDAO.closeSession();
 				throw new UserNotListed(); //l'utente non e` presente nella lista
+				
 			}
+			uld.delete(u);
+			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
@@ -361,12 +351,11 @@ public class DataAccess implements IDataAccess{
 			user.setUsername(null);
 		}
 		boolean checkIp=ou.checkIpConnected(ip);
-		if(!checkIp){
-			ou.save(user);
-		}else{
+		if(checkIp){
 			GenericDAO.closeSession();
 			throw new IpAlreadyLogged();
 		}
+		ou.save(user);
 		GenericDAO.closeSession();
 	}
 	
@@ -414,9 +403,8 @@ public class DataAccess implements IDataAccess{
 			if(checkUser!=null){
 				GenericDAO.closeSession();
 				throw new UserAlreadyBlacklisted();
-			}else{
-				bd.save(b);
 			}
+			bd.save(b);
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
@@ -440,9 +428,8 @@ public class DataAccess implements IDataAccess{
 			if(checkUser==null){
 				GenericDAO.closeSession();
 				throw new UserNotBlacklisted();
-			}else{
-				bd.delete(checkUser);
 			}
+			bd.delete(checkUser);
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();
@@ -507,6 +494,37 @@ public class DataAccess implements IDataAccess{
 			User u=ud.get(usernameNew);
 			u.setPassword(userObj.getPassword());
 			ud.update(u);
+			GenericDAO.closeSession();
+		}else{
+			GenericDAO.closeSession();
+			throw new AuthenticationFail();
+		}
+	}
+	
+	//cambia il nome di una lista utente
+	public void renameList(ListName list, String name, User authenticate) throws AuthenticationFail,UsernameNotCorresponding,ListNotExisting,ListAlreadyExists{
+		boolean authenticated=authenticateClient(authenticate);
+		if(authenticated==true){
+			String usernameAuth=authenticate.getUsername();
+			String usernameList=list.getOwner();
+			if(!usernameAuth.equals(usernameList)){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
+			ListNameDAO ld=new ListNameDAO();
+			ListName checkList=ld.getByNameOwner(list);
+			if(checkList==null){
+				GenericDAO.closeSession();
+				throw new ListNotExisting();
+			}
+			ListName newList=new ListName(name,usernameList);
+			ListName checkName=ld.getByNameOwner(newList);
+			if(checkName!=null){
+				GenericDAO.closeSession();
+				throw new ListAlreadyExists();
+			}
+			checkList.setName(name);
+			ld.update(checkList);
 			GenericDAO.closeSession();
 		}else{
 			GenericDAO.closeSession();

@@ -44,6 +44,8 @@ public interface IDataAccess{
 			
 			public void logout(OnlineUser user) throws LogoutException;
 			
+			public void renameList(ListName list, String name, User authenticate) throws AuthenticationFail, UsernameNotCorresponding,ListNotExisting,ListAlreadyExists;
+			
 			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,UsernameNotCorresponding;
 			
 			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting,UsernameNotCorresponding;

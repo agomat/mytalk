@@ -1,7 +1,6 @@
-#menu_container{ /*Parte da modificare nell'assemblamento*/
+#menu_container{
 	float:right;
-	margin:50px;
-    position: relative;
+  position: relative;
 }
 
 #menu_label{
@@ -27,14 +26,13 @@
 #menu_label img{
 	display: block;
 	padding-right:8px;
+  float: left;
 }
 
-
 #menu_area{
-	clear:both;
     display:none;
     position: absolute;
-    top: 60px;
+    top: 48px;
     right: 5px;
 }
 
@@ -55,11 +53,11 @@
 #menu_content {
 	width:240px;
 	display:block; 
-	background:#fff; 
 	border:2px solid #00c200;  
 	border-radius:10px;
 	box-shadow: 2px 2px 3px #9e9e9e;
 	padding: 15px;
+  background: #fff url("../img/stripes_reverse.png") repeat;
 }
 
 #menu_container fieldset{

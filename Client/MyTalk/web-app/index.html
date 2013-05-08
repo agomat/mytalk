@@ -58,8 +58,8 @@
           </div>
       </div>
     </script>
-
     <script type="text/x-handlebars" data-template-name="_header">
+      <div id="header">
       <div id="logo">
         <h1>MyTalk</h1>
         <h2>La videochiamata ovunque tu vuoi!</h2>
@@ -70,8 +70,8 @@
       {{else}}
         {{ partial login }}
       {{/if}}
+      </div>
     </script>
-
     <script type="text/x-handlebars" data-template-name="_dashboard">
       <div id="menu_container">
         {{ partial callip }}
@@ -105,7 +105,7 @@
       <div id="menu_container">
         <div id="menu_label">
           <div>Accedi</div>
-          <img id="img_door" src="img/open_door.png"/>
+          <img src="img/open_door.png"/>
         </div>
         <div id="menu_area" >
           <div id="arrow"></div>
@@ -113,7 +113,7 @@
             {{#view MyTalk.LoginFormView }}   
               <fieldset>
                 <legend hidden>Loggati</legend>
-                  <ul>
+                <ul>
                   <li>
                     <label for="email" hidden>Email</label>
                     {{view MyTalk.LoginEmail valueBinding='view.email'}}

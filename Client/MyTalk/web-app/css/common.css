@@ -12,7 +12,8 @@ body{
   margin: 20px auto;
   border: dotted 1px #ccc;
   border-radius: 15px;
-  padding: 10px;
+  padding: 0;
+  box-shadow: 1px 1px 3px #00a200;
 }
 
 h1,h2,h3,h4,h5,h6{ 
@@ -40,6 +41,16 @@ input:focus::-webkit-input-placeholder{
   color:#eee;
 }
 
+#header {
+  display: block;
+  min-height: 180px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: dotted 1px #ccc;
+  border-radius: 15px;
+  background: #fff url("../img/stripes.png") repeat;
+  box-shadow: 1px 1px 1px #00a200;
+}
 
 .common_button{
   cursor: pointer;

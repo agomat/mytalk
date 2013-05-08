@@ -1,6 +1,8 @@
 #logo{/* Da modificare durante l'assemblamento*/
 	width: 350px;
 	text-align: center;
+  float: left;
+  display: block;
 }
 
 #logo h1{

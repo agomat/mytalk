@@ -60,19 +60,18 @@
     </script>
     <script type="text/x-handlebars" data-template-name="_header">
       <div id="header">
-      <div id="logo">
-        <h1>MyTalk</h1>
-        <h2>La videochiamata ovunque tu vuoi!</h2>
-      </div>
+        <div id="logo">
+          <h1>MyTalk</h1>
+          <h2>La videochiamata ovunque tu vuoi!</h2>
+        </div>
 
-      {{#if isAuthenticated}}
-        {{ partial dashboard }}
-      {{else}}
-        {{ partial login }}
-      {{/if}}
+        {{#if isAuthenticated}}
+          {{ partial dashboard }}
+        {{else}}
+          {{ partial login }}
+        {{/if}}
       </div>
     </script>
-
     <script type="text/x-handlebars" data-template-name="_dashboard">
       <div id="menu_container">
         {{ partial callip }}
@@ -99,19 +98,7 @@
           </div>
         </div> 
       </div>
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="_header">
-      <div id="logo">
-        <h1>MyTalk</h1>
-        <h2>La videochiamata ovunque tu vuoi!</h2>
-      </div>
-
-      {{#if isAuthenticated}}
-        {{ partial dashboard }}
-      {{else}}
-        {{ partial login }}
-      {{/if}}
+      <script type="text/javascript" src="js_graphics/animation-c2.js"></script>
     </script>
 
     <script type="text/x-handlebars" data-template-name="_login">
@@ -142,6 +129,7 @@
           </div>
         </div> 
       </div>
+      <script type="text/javascript" src="js_graphics/animation-c2.js"></script>
     </script>
 
     <script type="text/x-handlebars" data-template-name="_register">
@@ -217,7 +205,6 @@
           <h4 id="ip_address">192.168.168.168:19</h4>
         </div>
       </div>
-      <script type="text/javascript" src="js_graphics/animation-c2.js"></script>
     </script>
 
     <script type="text/x-handlebars" data-template-name="_callip">

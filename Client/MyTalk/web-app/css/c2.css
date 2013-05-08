@@ -1,16 +1,19 @@
 #menu_container{
 	float:right;
-  position: relative;
+  	position: relative;
+  	background: white;
+	margin-top: 10px;
+	border: 1px dotted #ccc;
+	border-radius: 5px;
+}
+#menu_container:hover{
+	box-shadow: 0 0 5px 1px #ccc
 }
 
 #menu_label{
 	float:right;
 	cursor: pointer;
 	padding:5px;
-}
-
-#menu_label:hover div{
-	text-decoration: underline;
 }
 
 #menu_label div{

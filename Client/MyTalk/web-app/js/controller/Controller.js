@@ -9,7 +9,7 @@ MyTalk.IndexController=Ember.ObjectController.extend({
   login:function(email,pass) {
 		MyTalk.Authentication.createRecord({id:1,username:email,password:pass}).get('transaction').commit();
     // se autenticato:
-    var credentials = {} // TODO vedere se spostare create record in login statemanager
+    var credentials = {}; // TODO vedere se spostare create record in login statemanager
     MyTalk.StateManager.send("login", credentials);	
 	},
   register:function(name,surname,username,email,password,password_conf){

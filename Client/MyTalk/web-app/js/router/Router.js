@@ -80,7 +80,7 @@ MyTalk.ListsRoute = Ember.Route.extend({
         //Render header into header outlet
 
         this.render('lists');
-        this.render('lists_t',{
+       /* this.render('lists_t',{
          
         }); 
        /* this.render('header',{
@@ -100,9 +100,6 @@ MyTalk.ListsRoute = Ember.Route.extend({
             //controller:this.controllerFor('somethingElse', MyTalk.WUser.find())
         });*/
         //controller is SpacesController
-        this.render('spaces',{
-            outlet:'spaces',
-            into:'logged'
-        });
+     
     }
 });

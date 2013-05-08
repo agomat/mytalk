@@ -1,5 +1,4 @@
 // bootstrap application
-head.js("js/loadTemplates.js");
 head.js("js/app.js");
 
 // bootstrap StateManager

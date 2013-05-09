@@ -11,6 +11,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
     isCaller: false,
     optsDataChann: {optional: [{RtpDataChannels: true}]},
     dataChannel: undefined,
+    user: undefined,
     
     createSignalingChannel: function() {
     var ws;
@@ -62,30 +63,25 @@ MyTalk.PeerConnection = Ember.Object.extend({
             
             var signal = JSON.parse(evt.data);
             if (signal.sdp)
-                context.pc.setRemoteDescription(new RTCSessionDescription(signal.sdp));
+                context.pc.setRemoteDescription(new context.RTCSessionDescription(signal.sdp));
             else if(signal.candidate)
-                context.pc.addIceCandidate(new RTCIceCandidate(signal.candidate));
+                context.pc.addIceCandidate(new context.RTCIceCandidate(signal.candidate));
         };
         
         if (navigator.mozGetUserMedia) {
             console.log("This appears to be Firefox");
+            document.getElementById('chat').style.display = 'none';
 
             this.webrtcDetectedBrowser = "firefox";
 
-            // The RTCPeerConnection object.
             this.RTCPeerConnection = mozRTCPeerConnection;
 
-            // The RTCSessionDescription object.
             this.RTCSessionDescription = mozRTCSessionDescription;
 
-            // The RTCIceCandidate object.
             this.RTCIceCandidate = mozRTCIceCandidate;
 
-            // Get UserMedia (only difference is the prefix).
-            // Code from Adam Barth.
             this.getUserMedia = navigator.mozGetUserMedia.bind(navigator);
 
-            // Attach a media stream to an element.
             this.attachMediaStream = function(element, stream) {
                 console.log("Attaching media stream");
                 element.mozSrcObject = stream;
@@ -98,7 +94,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
                 to.play();
             };
 
-            // Fake get{Video,Audio}Tracks
             MediaStream.prototype.getVideoTracks = function() {
                 return [];
             };
@@ -113,6 +108,10 @@ MyTalk.PeerConnection = Ember.Object.extend({
             this.webrtcDetectedBrowser = "chrome";
 
             this.RTCPeerConnection = webkitRTCPeerConnection;
+            
+            this.RTCSessionDescription = RTCSessionDescription;
+
+            this.RTCIceCandidate = RTCIceCandidate;
 
             this.getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
 
@@ -151,7 +150,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
             }
         } 
         else {
-            console.log("Browser does not appear to be WebRTC-capable");
+            console.error("Il tuo browser sembra non supportare WebRTC.");
         }
     },
     
@@ -163,7 +162,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
             var selfView = document.getElementById('local');
             //selfView.src = URL.createObjectURL(stream);
             context.attachMediaStream(selfView,stream);
-            selfView.play();
             peerConn.addStream(stream);
 
             if(isCaller)
@@ -179,7 +177,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
             } 
         }
         function onError(e) {
-            console.log('Could not get access to local media stream.\n' + e);
+            console.error('Non e\' stato possibile ottenere accesso agli stream audio e video.\n' + e);
         }
         this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
     },
@@ -188,14 +186,16 @@ MyTalk.PeerConnection = Ember.Object.extend({
         this.isCaller = bool;
         this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
         var signChann = this.signalingChannel;
-	this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {reliable: false});
-	this.setChannelEvents(this.dataChannel, "user "+window.location.search.split('=')[1]);
-        
+        this.user = "user "+window.location.search.split('=')[1];
+        if(this.webrtcDetectedBrowser === "chrome") {
+          this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {reliable: false});
+          this.setChannelEvents(this.dataChannel, this.user);
+        }        
         var context = this;
         
         // invia iceCandidate all'altro peer
         this.pc.onicecandidate = function(evt) {
-            console.log('send candidate');
+            console.debug('send candidate');
             signChann.send(JSON.stringify({ "candidate": evt.candidate }));
         };
 
@@ -204,7 +204,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
             var remoteView = document.getElementById('remote');
             context.attachMediaStream(remoteView,evt.stream);
             //remoteView.src = URL.createObjectURL(evt.stream);
-            remoteView.play();
         };
         
         this.pc.onremovestream = function(evt) {
@@ -216,12 +215,14 @@ MyTalk.PeerConnection = Ember.Object.extend({
     },
 
     setChannelEvents: function(channel, user) {
+        
         channel.onmessage = function (event) {
-            console.debug(user, 'received a message:', event.data);
+            var msg = JSON.parse(event.data);
+            $('#textArea').append(msg.user+': '+msg.message+'<br/>');
         };
 
         channel.onopen = function () {
-            channel.send('first text message over RTP data ports');
+            console.debug('RTCDataChannel connected.');
         };
         channel.onclose = function (e) {
             console.error(e);
@@ -229,6 +230,12 @@ MyTalk.PeerConnection = Ember.Object.extend({
         channel.onerror = function (e) {
             console.error(e);
         };
+    },
+    
+    send: function(message) {
+        var msg = JSON.stringify({"user" : this.user, "message" : message});
+        this.dataChannel.send(msg);
+        $('#textArea').append(this.user+': '+message+'<br/>');
     }
         
 });

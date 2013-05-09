@@ -1,7 +1,7 @@
 #notlogged_content{
   display: block;
   padding: 5px;
-  margin: 30px auto;
+  margin: 50px auto 0 auto;
   overflow: hidden;
   position: relative;
   font-size: 1.3em;
@@ -17,7 +17,7 @@
 }
 
 #notlogged_content h5{
-  font-size: 2.1em;
+  font-size: 1.5em;
   text-align: center;
 }
 
@@ -69,8 +69,8 @@
 }
 
 #signup button{
-  width:90%;
+  width:50%;
   height:45px;
-  margin:10px 5%;
+  margin:10px 1% 10px 49%;
   font-size: 1.3em;
 }

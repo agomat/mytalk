@@ -87,12 +87,19 @@
       {{ partial register }}
     </script>
 
+   
+
     <script type="text/x-handlebars" data-template-name="lists">
+      {{outlet}}
+    </script>
+    
+    <script type="text/x-handlebars" data-template-name="listscontent">
       {{ partial header }}
       <div id="logged_content" class="scroll_content">
-      {{outlet lists_t}}
+      {{partial lists_t}}
       </div>
     </script>
+
 
     <script type="text/x-handlebars" data-template-name="lists_t">
       <div id="liste">

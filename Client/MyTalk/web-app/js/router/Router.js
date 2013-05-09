@@ -16,10 +16,10 @@ MyTalk.IndexRoute = Ember.Route.extend({
 MyTalk.ListsRoute = Ember.Route.extend({
   renderTemplate: function(controller, model) {
     this.render('lists');
-    this.render('lists_t'); 
-    this.render('spaces',{
+    this.render('listscontent'); 
+    /*this.render('spaces',{
       outlet:'spaces',
       into:'logged'
-    });
+    });*/
   }
 });

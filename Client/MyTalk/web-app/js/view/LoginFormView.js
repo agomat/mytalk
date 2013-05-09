@@ -14,3 +14,13 @@ MyTalk.LoginFormView = Ember.View.extend({
     this.get('controller').login(email, password);
   }
 });
+
+Ember.TextField.reopen({
+  attributeBindings: ['name'],
+  attributeBindings: ['id'],
+});
+
+Ember.TextField.reopen({
+  attributeBindings: ["required"],
+  required: true
+})

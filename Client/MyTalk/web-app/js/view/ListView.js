@@ -1,4 +1,4 @@
 MyTalk.ListView = Ember.View.extend({
-  templateName: "list",
+  templateName: "lists",
   name: "list"
 });

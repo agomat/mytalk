@@ -19,3 +19,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   	console.log('controller ipCAll: '+ip)
   }
 });
+
+MyTalk.ListsController = Ember.ArrayController.extend({
+  sortProperties: ['name']
+});

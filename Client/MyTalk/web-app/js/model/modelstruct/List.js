@@ -15,7 +15,3 @@ MyTalk.List = DS.Model.extend({
   
 });
 
-MyTalk.List.FIXTURES = [{
-  id: 1,
-  name: "prova"
-}];

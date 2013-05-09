@@ -1,12 +1,21 @@
 MyTalk.Router.map(function(match) {
   this.route("index", {path:'/'});
-  this.route("lists");/*, function() {
-    this.resource('list', { path: ':list_id' });
-  });*/
-  this.resource('list', { path: ':list_id' });
+  this.route("listr");
+  this.resource("lists", function() {
+    this.resource('list', {path: ':list_id' });
+  });/*
+  this.route("lists");
+  this.resource('list', { path: ':list_id' });*/
+});
+
+MyTalk.ListrRoute=Ember.Route.extend({
+   redirect: function() {
+    this.transitionTo('lists');
+  }
 });
 
 MyTalk.IndexRoute = Ember.Route.extend({
+ 
   model: function() {
     return MyTalk.WUser.find();
   },
@@ -17,6 +26,7 @@ MyTalk.IndexRoute = Ember.Route.extend({
 });
 
 MyTalk.ListsRoute = Ember.Route.extend({
+ 
   model: function() {
     return MyTalk.List.find();
   },

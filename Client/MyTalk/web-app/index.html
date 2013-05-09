@@ -88,7 +88,6 @@
     </script>
 
    
-
     <script type="text/x-handlebars" data-template-name="lists">
       {{outlet}}
     </script>
@@ -96,12 +95,12 @@
     <script type="text/x-handlebars" data-template-name="listscontent">
       {{ partial header }}
       <div id="logged_content" class="scroll_content">
-      {{partial lists_t}}
+      {{partial listst}}
       </div>
     </script>
 
 
-    <script type="text/x-handlebars" data-template-name="lists_t">
+    <script type="text/x-handlebars" data-template-name="_listst">
       <div id="liste">
         <div class="header">
           <h5>Le Tue Liste</h5>
@@ -264,7 +263,7 @@
         <div id="ip_yours">
           <h3>Il tuo indirizzo IP</h3>
           <p>
-            Fatti chiamare dai tuoi amici! Fornisci loro questo indirizzo IP. Sarai repereribile da qualsiasi utente che conosca il tuo IP e che voglia chiamarti senza dover necessariamente registrarsi al sistema!
+            Fornisci ai tuoi amici questo indirizzo IP. Sarai repereribile da qualsiasi utente che conosca il tuo IP senza dover necessariamente registrarsi al sistema!
           </p>
           <h4 id="ip_address">192.168.168.168:19</h4>
         </div>

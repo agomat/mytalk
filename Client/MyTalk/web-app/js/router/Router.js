@@ -1,6 +1,9 @@
 MyTalk.Router.map(function(match) {
   this.route("index", {path:'/'});
   this.route("lists");
+    /*, function() {
+    this.resource('list', { path: ':list_id' });
+  });*/
 });
 
 MyTalk.IndexRoute = Ember.Route.extend({

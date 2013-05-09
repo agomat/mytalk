@@ -20,7 +20,3 @@ Ember.TextField.reopen({
   attributeBindings: ['id'],
 });
 
-Ember.TextField.reopen({
-  attributeBindings: ["required"],
-  required: true
-})

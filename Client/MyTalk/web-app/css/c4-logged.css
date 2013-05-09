@@ -81,7 +81,7 @@
 	width: 50%;
 	border-radius: 40px;
 	padding:10px 37px 10px 20px;
-	background: #fff url("img/search.png") right 15px center no-repeat; 
+	background: #fff url("../img/search.png") right 15px center no-repeat; 
 }
 
 .content{
@@ -129,7 +129,7 @@
 }
 
 #blacklist{
-	background: url("img/Pdelete_user.png") left 10px center no-repeat;
+	background: url("../img/Pdelete_user.png") left 10px center no-repeat;
 }
 #blacklist div{
 	padding-left:26px;
@@ -179,7 +179,7 @@
 	box-shadow: none;
 }
 
-.call_user{background: url("img/phone.png") center center no-repeat;}
-.add_user{background: url("img/add_user.png") center center no-repeat;}
-.blacklist_user{background: url("img/Gdelete_user.png") center center no-repeat;}
-.remove_user{background: url("img/delete.png") center center no-repeat;}
+.call_user{background: url("../img/phone.png") center center no-repeat;}
+.add_user{background: url("../img/add_user.png") center center no-repeat;}
+.blacklist_user{background: url("../img/Gdelete_user.png") center center no-repeat;}
+.remove_user{background: url("../img/delete.png") center center no-repeat;}

@@ -38,25 +38,26 @@ public class Processor {
 	public Processor(){
 		hm = new HashMap<String, String>();
 		
-		// hm.put("richiesta","com.mytalk.server.logic.processing.requestProcessor.pack.richiesta")
-		
-		hm.put("UserCall","com.mytalk.server.logic.processing.requestProcessor.comunication.UserCall");
+		hm.put("AcceptCall","com.mytalk.server.logic.processing.requestProcessor.comunication.AcceptCall");
 		hm.put("RefuseCall","com.mytalk.server.logic.processing.requestProcessor.comunication.RefuseCall");
+		hm.put("UserCall","com.mytalk.server.logic.processing.requestProcessor.comunication.UserCall");
 		
-		/*hm.put("CreateAccount",);
-		hm.put("DeleteAccount",);
-		hm.put("Login",);
-		hm.put("Logout",);
+		hm.put("CreateAccount","com.mytalk.server.logic.processing.requestProcessor.user.CreateAccount");
+		hm.put("DeleteAccount","com.mytalk.server.logic.processing.requestProcessor.user.DeleteAccount");
+		hm.put("Login","com.mytalk.server.logic.processing.requestProcessor.user.Login");
+		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.requestProcessor.user.LoginAsAnonymous");
+		hm.put("Logout","com.mytalk.server.logic.processing.requestProcessor.user.Logout");
 		
-		hm.put("ListCreate",);
-		hm.put("ListDelete",);
-		hm.put("ListUserAdd",);
-		hm.put("ListUserRemove",);
-		hm.put("BlacklistAdd",);
-		hm.put("BlackListRemove",);
+		hm.put("BlackListAdd","com.mytalk.server.logic.processing.requestProcessor.list.BlackListAdd");
+		hm.put("BlackListRemove","com.mytalk.server.logic.processing.requestProcessor.list.BlackListRemove");
+		hm.put("ListCreate","com.mytalk.server.logic.processing.requestProcessor.list.ListCreate");
+		hm.put("ListDelete","com.mytalk.server.logic.processing.requestProcessor.list.ListDelete");
+		hm.put("ListUserAdd","com.mytalk.server.logic.processing.requestProcessor.list.ListUserAdd");
+		hm.put("ListUserRemove","com.mytalk.server.logic.processing.requestProcessor.list.ListUserRemove");
 		
-		hm.put("GetCalls",);
-		hm.put("AddCall",);*/
+		hm.put("AddCall","com.mytalk.server.logic.processing.requestProcessor.stats.AddCall");
+		hm.put("GetCalls","com.mytalk.server.logic.processing.requestProcessor.stats.GetCalls");
+
 	}
 		
 	//metodo che riceve JSON, ottiene la conversione in ARI e manda la Stringa "richiesta", controllando tipo
@@ -97,12 +98,8 @@ public class Processor {
 	}
 	
 	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication
-	public String up(ARI response){// ARI(Authentication,String,String)
-			
-		if(response.getReq().equals("UnsuccessfulRefuseCall") || response.getReq().equals("UnsuccessfulAcceptCall")){
-			//che cosa far ritornare??
-		}
-		else{
+	public void up(ARI response){			
+		if(!response.getReq().equals("UnsuccessfulRefuseCall")){
 			Convert c=new Convert();
 			String new_pack=c.convertJavaToJson(response); //conversione pacchetto ARI completo da mandare
 			metodoComunication(response.getAuth().getIp(),new_pack);

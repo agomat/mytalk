@@ -21,15 +21,16 @@ Date
 package com.mytalk.server.logic.shared.modelClient;
 
 public class User{
+	//private Integer id;
 	private String username;
-	private String name;
-	private String surname;
 	private boolean online;
+	private String name;
+	private String surname;	
 	private String ip;
 
 	public User (){}
 	
-	public User(String us,String n,String sn, boolean o,String i){
+	public User(String us, boolean o,String n,String sn,String i){
 		username=us;
 		name=n;
 		surname=sn;

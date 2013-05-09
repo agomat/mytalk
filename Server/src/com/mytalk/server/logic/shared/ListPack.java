@@ -29,8 +29,8 @@ public class ListPack extends Information{
 	
 	public ListPack(){}
 	
-	public ListPack(List<UserList> c){
-		wul=new WrapperUserList(c);
+	public ListPack(WrapperUserList c){
+		wul=c;
 	}
 	
 	public WrapperUserList getWrapperUserList(){

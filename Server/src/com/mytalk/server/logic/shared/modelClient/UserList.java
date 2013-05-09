@@ -24,14 +24,16 @@ import java.util.List;
 
 public class UserList{
 	
+	private Integer id;
 	private String name;
-	private List<String> list;
+	private List<User> list;
 	
 	public UserList(){}
 	
-	public UserList(List<String> c, String n){
+	public UserList( Integer i,String n,List<User> c){
 		list=c;
 		name=n;
+		id=i;
 	}
 	
 	public String getName(){
@@ -41,10 +43,10 @@ public class UserList{
 		name=c;
 	}
 	
-	public List<String> getList(){
+	public List<User> getList(){
 		return list;
 	}
-	public void setList(List<String> c){
+	public void setList(List<User> c){
 		list=c;
 	}
 }

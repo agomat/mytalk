@@ -25,6 +25,7 @@ import java.util.List;
 public class WrapperUser{
 	
 	private List<User> list;
+	private static Integer id=0;
 	
 	public WrapperUser(){}
 	

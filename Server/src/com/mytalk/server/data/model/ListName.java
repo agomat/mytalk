@@ -27,8 +27,8 @@ public class ListName{
 
 	public ListName(){}
 	
-	public ListName(String us, String o){
-		name=us;
+	public ListName(String n, String o){
+		name=n;
 		owner=o;
 	}
 	public int getId(){

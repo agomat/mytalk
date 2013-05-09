@@ -26,17 +26,25 @@ public class AcceptCall extends GenericRequest{
 public AcceptCall(){}
 	
 	public ARI manage(ARI ari){
-		String i=ari.getInfo();
+		String infoRequest=ari.getInfo();
 		ARI a=null;
-		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
-		String new_ConnectionPack=conv.convertJavaToJson(x);
-		boolean result=da.checkUserByIp(x.getMyIp());
-		if(result){
-			Authentication new_auth=new Authentication(null, null, x.getMyIp());
-			a=new ARI(new_auth, "SuccessfulAcceptCall", new_ConnectionPack);
+		Authentication auth=null;
+		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
+		boolean check=this.checkConnectionPackWellFormed(pack);
+		if(!check){
+			auth=new Authentication(null,null,pack.getMyIp());// potrebbe cambiare
+			a=new ARI(auth,"CorruptedConnectionPack",null);
 		}
-		else{
-			a=new ARI(ari.getAuth(), "UnsuccessfulAcceptCall", null);
+		else {
+			boolean result=da.checkUserByIp(pack.getSpeakerIp());
+			if(result){
+				auth=new Authentication(null, null, pack.getSpeakerIp());
+				a=new ARI(auth, "SuccessfulAcceptCall",infoRequest);
+			}
+			else{
+				auth=new Authentication(null,null, pack.getMyIp());
+				a=new ARI(auth, "UnsuccessfulAcceptCall", null);
+			}
 		}
 		return a;
 	}

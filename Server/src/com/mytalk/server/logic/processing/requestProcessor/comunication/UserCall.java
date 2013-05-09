@@ -25,18 +25,25 @@ public class UserCall extends GenericRequest{
 	public UserCall(){}
 	
 	public ARI manage(ARI ari){
-		String i=ari.getInfo();
+		String infoRequest=ari.getInfo();
 		ARI a=null;
-		ConnectionPack x=(ConnectionPack)conv.convertJsonToJava(i, ConnectionPack.class);
-		String new_ConnectionPack=conv.convertJavaToJson(x);
-		boolean result=da.checkUserByIp(x.getSpeakerIp());
-		if(result){
-			Authentication new_auth=new Authentication(null, null, x.getSpeakerIp());
-			a=new ARI(new_auth,"SuccessfulUserCall",new_ConnectionPack);
+		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
+		Authentication auth=null;
+		boolean check=this.checkConnectionPackWellFormed(pack);
+		if(!check){
+			auth=new Authentication(null,null,pack.getMyIp());// potrebbe cambiare
+			a=new ARI(auth,"CorruptedConnectionPack",null);
 		}
-		else{
-			Authentication new_auth=new Authentication(null, null, x.getMyIp());
-			a=new ARI(new_auth,"UnsuccessfulUserCall",new_ConnectionPack);
+		else {
+			boolean result=da.checkUserByIp(pack.getSpeakerIp());
+			if(result){
+				auth=new Authentication(null, null,pack.getSpeakerIp());
+				a=new ARI(auth,"SuccessfulUserCall",infoRequest);
+			}
+			else{
+				auth=new Authentication(null, null, pack.getMyIp());
+				a=new ARI(auth,"UnsuccessfulUserCall",null);
+			}
 		}
 		return a;
 	}

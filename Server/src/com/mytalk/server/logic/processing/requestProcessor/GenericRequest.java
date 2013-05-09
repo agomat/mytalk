@@ -17,7 +17,12 @@
 
 package com.mytalk.server.logic.processing.requestProcessor;
 
-import com.mytalk.server.logic.shared.ARI;
+import java.util.List;
+
+import com.mytalk.server.logic.shared.*;
+import com.mytalk.server.logic.shared.modelClient.UserList;
+import com.mytalk.server.logic.shared.modelClient.WrapperUserList;
+
 import com.mytalk.server.data.storage.*;
 import com.mytalk.server.logic.processing.Convert;
 
@@ -30,5 +35,38 @@ public abstract class GenericRequest {
 	public GenericRequest(){};
 	
 	public abstract ARI manage(ARI pack);
+	
+	public boolean checkAuthenticationWellFormed(Authentication auth){
+		boolean check=false;
+		if(auth!=null && auth.getUser()!=null && auth.getPwd()!=null){
+			check=true;
+		}
+		return check;
+	}
+	
+	public boolean checkConnectionPackWellFormed(ConnectionPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null){
+			check=true;
+		}
+		return check;
+	}
 
+	public boolean checkListPackWellFormed(ListPack pack){
+		boolean check=false;
+		WrapperUserList wl=pack.getWrapperUserList();
+		List<UserList> listUserList=wl.getList();
+		if(pack!=null && wl!=null && listUserList!=null){
+			for(int i=0;i<listUserList.size();i++){
+				if(listUserList.get(i).getList()!=null){
+					check=true;
+				}
+				else{
+					return false;
+				}
+			}
+			
+		}
+		return check;
+	}
 }

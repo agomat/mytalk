@@ -14,3 +14,8 @@ MyTalk.List = DS.Model.extend({
   }.property('name')
   
 });
+
+MyTalk.List.FIXTURES = [{
+  id: 1,
+  name: "prova"
+}];

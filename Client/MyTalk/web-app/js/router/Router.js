@@ -3,7 +3,7 @@ MyTalk.Router.map(function(match) {
   this.route("lists");/*, function() {
     this.resource('list', { path: ':list_id' });
   });*/
-  this.route('list', { path: ':list_id' });
+  this.resource('list', { path: ':list_id' });
 });
 
 MyTalk.IndexRoute = Ember.Route.extend({
@@ -18,7 +18,7 @@ MyTalk.IndexRoute = Ember.Route.extend({
 
 MyTalk.ListsRoute = Ember.Route.extend({
   model: function() {
-    return MyTalk.WList.find();
+    return MyTalk.List.find();
   },
 
   renderTemplate: function(controller, model) {
@@ -30,6 +30,7 @@ MyTalk.ListsRoute = Ember.Route.extend({
     });*/
   }
 });
+
 /*
 MyTalk.ListRoute = Ember.Route.extend({
   model: function() {

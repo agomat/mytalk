@@ -96,17 +96,21 @@
       {{ partial header }}
       <div id="logged_content" class="scroll_content">
       {{partial listst}}
+      
       </div>
     </script>
 
 
     <script type="text/x-handlebars" data-template-name="_listst">
+      
       <div id="liste">
         <div class="header">
           <h5>Le Tue Liste</h5>
+
             <a href="#" class="common_button">Crea una Nuova Lista</a>
           </div>
           <div class="content">
+        
             <ul>
               <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
               <li><a><div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista generale</div></a></li>
@@ -124,7 +128,7 @@
     </script>
 <script type="text/x-handlebars" data-template-name="list">
 
-
+<span>{{ id }}</span>
 
 </script>
 

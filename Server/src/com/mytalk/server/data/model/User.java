@@ -21,7 +21,7 @@ Date
 package com.mytalk.server.data.model;
 
 public class User{
-	
+	private int id=0;
 	private String username;
 	private String password;
 	private String name;
@@ -36,6 +36,14 @@ public class User{
 		email=mail;
 		name=n;
 		surname=s;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int n){
+		id=n;
 	}
 	
 	public String getUsername(){

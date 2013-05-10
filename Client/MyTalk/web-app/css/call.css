@@ -12,12 +12,11 @@
 #remote{
     margin: auto 0; 
     width: 100%;
-    border: 1px solid #999; /*DA RIMUOVERE*/
     margin-bottom: 20px;
+    border: 1px dotted #ddd;
 }
 
 #local{
-    border: 1px solid #999; /*DA RIMUOVERE*/
     position: absolute;
     width:10%;
 }
@@ -75,11 +74,13 @@
  #chat ul li{
     color:#555;
     clear: both;
-    max-width: 80%;
+    max-width: 60%;
     margin: 5px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 1.2em;
     list-style-type: none;
+    min-width: 15%;
+    font-size: 1.2em;
  }
 
 #chat form{
@@ -108,14 +109,14 @@
     margin: 2.5px 0 0 3%;
 }
 
-.send_message{
+.sent_message{
     float:right;
-    background-color: #bfff00;
-    border: 1px solid #298a08;
+    background-color: rgba(100,210,40,0.5);
+    border: 1px solid #009000;
 }
 
-.recive_message{
+.received_message{
     float: left;
-    background-color: #81DAF5;
-    border: 1px solid #0404B4;
+    background-color: rgba(50,155,255,0.5);
+    border: 1px solid #000090;
 }

@@ -218,7 +218,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         
         channel.onmessage = function (event) {
             var msg = JSON.parse(event.data);
-            $('#textArea').append(msg.user+': '+msg.message+'<br/>');
+            $('#messages').append('<li class="received_message">'+msg.message+'</li>');
         };
 
         channel.onopen = function () {
@@ -233,9 +233,10 @@ MyTalk.PeerConnection = Ember.Object.extend({
     },
     
     send: function(message) {
-        var msg = JSON.stringify({"user" : this.user, "message" : message});
+        console.debug(message);
+        var msg = JSON.stringify({"message" : message});
         this.dataChannel.send(msg);
-        $('#textArea').append(this.user+': '+message+'<br/>');
+        $('#messages').append('<li class="sent_message">'+message+'</li>');
     }
         
 });

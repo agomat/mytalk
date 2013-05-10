@@ -29,7 +29,9 @@
     <script src="js/view/RegisterFormView.js"></script>
     <script src="js/view/RegisterPassword.js"></script>
     <script src="js/view/IPCall.js"></script>
-    <script src="js/view/ListView.js"></script>
+    <script src="js/view/UlistView.js"></script> 
+    <script src="js/view/ListHeaderView.js"></script> 
+    <script src="js/view/ListContentView.js"></script>
     <script src="js/view/LoginView.js"></script>
     <script src="js/view/RegisterConfirmPassword.js"></script>
     <script src="js/view/RegisterView.js"></script>
@@ -43,7 +45,7 @@
     <script src="js/view/RegisterUsername.js"></script>
 
     <!-- bootstrap StateManager -->
-    <script src="js/statemanager/StateManager.js"></script>
+    <!--<script src="js/statemanager/StateManager.js"></script>-->
 
     <!-- bootstrap Storage -->
     <script src="js/model/storage/IPAddressProxy.js"></script>
@@ -59,7 +61,7 @@
     <script src="js/model/modelstruct/ARI.js"></script>
     <script src="js/model/modelstruct/Authentication.js"></script>
     <script src="js/model/modelstruct/PersonalData.js"></script>
-    <script src="js/model/modelstruct/WUser.js"></script>
+    
     <script src="js/model/modelstruct/User.js"></script>
     <script src="js/model/modelstruct/Call.js"></script>
     <script src="js/model/modelstruct/List.js"></script>
@@ -89,16 +91,17 @@
 
    
     <script type="text/x-handlebars" data-template-name="lists">
-      {{outlet}}
+      {{ partial header }}
+        <div id="logged_content" class="scroll_content">
+          {{partial "listst"}} 
+          <div id="utenti">
+            {{outlet}}
+          </div>
+        </div>
     </script>
     
     <script type="text/x-handlebars" data-template-name="listscontent">
-      {{ partial header }}
-      <div id="logged_content" class="scroll_content">
-      {{partial listst}}
-      {{render list}}
       
-      </div>
     </script>
 
 
@@ -109,31 +112,99 @@
         <div class="header">
           <h5>Le Tue Liste</h5>
 
-          <a href="#" class="common_button">Crea una Nuova Lista</a>
+          <a href="#" class="common_button"{{action "createList"}}>Crea una Nuova Lista</a>
           </div>
           <div class="content">
-        
+          
             <ul>
-            {{#each list in controller}}
-             <li>{{#linkTo "list" list }} {{ list.id }}
-              <div class="online_user"><div>online</div>15/1000</div><div class="list_name">Lista {{name}} n {{id}}</div>
-              {{/linkTo}}
+            {{#each ulist in controller}}
+            {{#if ulist.generalList}}
+              <li>{{#linkTo "ulist" ulist}} 
+             
+               <div class="online_user"><div>online</div>15/1000</div><div class="list_name">{{ulist.name}} n {{ ulist.id }}</div>{{/linkTo}}
+              </li>
+            {{/if}}
+            {{/each}}
+
+            {{#each ulist in controller}}
+            {{#if ulist.blackList}}
+
+             <li>{{#linkTo "ulist" ulist}} 
+             
+               <div class="online_user"><div>online</div>15/1000</div><div class="list_name">{{ulist.name}} n {{ ulist.id }}</div>{{/linkTo}}
+             {{/if}} 
              </li>
              {{/each}}
+            
+            {{#each ulist in controller}}
+            {{#if ulist.otherList}}
+
+             <li>{{#linkTo "ulist" ulist}} 
+             
+               <div class="online_user"><div>online</div>15/1000</div><div class="list_name">{{ulist.name}} n {{ ulist.id }}</div>{{/linkTo}}
+             {{/if}} 
+             </li>
+             {{/each}}
+
+
               <li><a id="blacklist"><div class="list_name">Blacklist</div></a></li>
             </ul>
           </div>
       </div>
+      
     </script>
 
-<script type="text/x-handlebars" data-template-name="list">
-<h2>List <span>{{ id }}</span></h2>
-         
 
+<script type="text/x-handlebars" data-template-name="lists/index">
+  <h2>Seleziona Una lista</h2>
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="ulist">
+  <div class="header">
+    <h5>Current List: {{name}}<span id="current_online">Online: 15/50000</span></h5>
+          <div id="list_option">
+            <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
+            <div id="list_button">
+              <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
+              <a href="#" class="common_button"{{action "renameList"}}>Rinomina</a>
+            </div>
+          </div>
+  </div>
+        <div class="content">
+          {{render "listcontent" listcontent}}
+        </div>
+    
 
 
 </script>
 
+
+<script type="text/x-handlebars" data-template-name="listheader">
+
+        
+        
+</script>
+
+<script type="text/x-handlebars" data-template-name="listcontent">
+
+<ul>
+            <li>
+              <img src="img/avatar.png" alt="nome cognome utente"/>
+              <div>
+                <div>Nome Cognome</div>
+                username
+              </div>
+              <ul>
+                <li><a class="call_user" href="#"></a></li>
+                <li><a class="add_user" href="#"></a></li>
+                <li><a class="blacklist_user" href="#"></a></li>
+                <li><a class="remove_user" href="#"></a></li>
+              </ul>
+            </li>
+          
+</ul>
+</script>
 
     <script type="text/x-handlebars" data-template-name="_header">
       <div id="header">

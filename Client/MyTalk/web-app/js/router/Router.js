@@ -2,7 +2,7 @@ MyTalk.Router.map(function(match) {
   this.route("index", {path:'/'});
   this.route("listr");
   this.resource("lists", function() {
-    this.resource('list', {path: ':list_id' });
+    this.resource('ulist', {path: ':ulist_id' });
   });/*
   this.route("lists");
   this.resource('list', { path: ':list_id' });*/
@@ -16,8 +16,8 @@ MyTalk.ListrRoute=Ember.Route.extend({
 
 MyTalk.IndexRoute = Ember.Route.extend({
  
-  model: function() {
-    return MyTalk.WUser.find();
+ model: function() {
+    return MyTalk.List.find();
   },
   renderTemplate: function(controller, model) { 
     this.render('index'); 
@@ -26,24 +26,31 @@ MyTalk.IndexRoute = Ember.Route.extend({
 });
 
 MyTalk.ListsRoute = Ember.Route.extend({
- 
+
   model: function() {
     return MyTalk.List.find();
   },
-
+ /*setupController: function() {
+    this.controllerFor('ulist').set('model', MyTalk.List.find());
+  },*/
   renderTemplate: function(controller, model) {
     this.render('lists');
-    this.render('listscontent'); 
+    //this.render('listscontent'); 
     /*this.render('spaces',{
       outlet:'spaces',
       into:'logged'
     });*/
   }
 });
-
-/*
-MyTalk.ListRoute = Ember.Route.extend({
+MyTalk.Listst = Ember.Route.extend({
   model: function() {
-    return MyTalk.WList.find();
+    return MyTalk.List.find();
   }
-});*/
+});
+
+
+MyTalk.UlistRoute = Ember.Route.extend({
+  model: function() {
+    return MyTalk.List.find();
+  }
+});

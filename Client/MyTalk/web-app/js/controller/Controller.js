@@ -21,5 +21,26 @@ MyTalk.IndexController = Ember.ObjectController.extend({
 });
 
 MyTalk.ListsController = Ember.ArrayController.extend({
-  sortProperties: ['name']
+  sortProperties: ['name'],
+
+  createList:function(){
+
+    alert();
+  },
+
+  
+
+});
+
+MyTalk.UlistController=Ember.Controller.extend({
+deleteList:function(){
+    alert();
+
+  },
+
+  renameList:function(){
+
+    alert();
+  }
+
 });

@@ -1,4 +1,4 @@
 MyTalk.Store = DS.Store.extend({
   revision: 12,
-  adapter: DS.SocketAdapter.create({})
+  adapter: 'DS.FixtureAdapter'
 });

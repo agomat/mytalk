@@ -1,79 +1,121 @@
-#content {
-    width: 80%;
-    height: 100%;
-    margin: auto;
+#call_content {
     padding: 10px;
-    border: solid 1px #ccc;
-    border-radius: 15px;
     overflow: hidden;
-}
-#videosContainer {
-    display: block;
-    width: 100%;
     min-height: 500px;
-    margin: auto;
-    padding: 0;
 }
 
-#remoteVideo {
-    display: block;
-    margin: 0;
-    padding: 0;
-    float: left;
+#comunicazione{
     height: 100%;
+    width:63%;
 }
 
-#localVideo {
-    height: 100%;
+#remote{
+    margin: auto 0; 
+    width: 100%;
+    border: 1px solid #999; /*DA RIMUOVERE*/
+    margin-bottom: 20px;
+}
+
+#local{
+    border: 1px solid #999; /*DA RIMUOVERE*/
+    position: absolute;
+    width:10%;
+}
+
+#comunicazione a{
+    display: block;
+    float:left;
+    margin-left: 20px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.2em;
+    width: 100px;
+    padding: 8px 0;
+}
+
+#comunicazione ul{
+    font-size: 1.1em;
     padding: 0;
-    display: block;
-    margin: 0;
+    margin:0 0 0 200px;
 }
 
-#remote {
+#comunicazione ul li{
+    padding: 2px 0;
     margin: 0;
-    padding: 2px;
-    width: 600px;
-    height: 450px;
+}
+#comunicazione ul li:before{
+    color: #009200;;    
+}
+
+#comunicazione ul li span{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding-right: 5px;
+    width: 150px;
+
+}
+
+
+#chat{
+    float:right;
+    width:35%;
+    border: 1px solid #999;
+    border-radius: 15px;
+    height: 520px;
+}
+
+ #chat ul{
+    height: 78%;
+    margin: 10px 0 10px 0;
+    padding: 0;
+    overflow-y: auto;
+ }
+
+ #chat ul li{
+    color:#555;
+    clear: both;
+    max-width: 80%;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    list-style-type: none;
+ }
+
+#chat form{
+    border-top: 1px solid #999;
+    padding-top:10px;
+}
+
+#chat textarea{
+    font-family: 'RobotoRegular';
+    font-size: 1.1em;
+    float:left;
+    resize:none;
+    border:1px solid #999;
+    height: 60px;
+    width:73%;
+    margin-left:10px;
+    padding: 5px;
+    border-radius: 2px;
+}
+
+#chat button{
+    padding: 0!important;
+    font-size:1.1em;
+    height: 65px;
+    width: 15%;
+    margin: 2.5px 0 0 3%;
+}
+
+.send_message{
+    float:right;
+    background-color: #bfff00;
+    border: 1px solid #298a08;
+}
+
+.recive_message{
     float: left;
-    display: block;
-}
-
-#local {
-    margin: 0;
-    padding: 2px;
-    width: 300px;
-    height: 250px;
-    display: block;
-}
-
-#call {
-    height: 200px;
-    float: left;
-}
-
-#callButton {
-    width: 6em;
-    height: 2.5em;
-}
-
-#chat {
-    height: 200px;
-    float: right;
-}
-
-#textArea {
-    margin: 5px 0;
-    height: 155px;
-    border: dotted 2px #ccc;
-    overflow: auto;
-}
-
-#type {
-    height: 1.5em;
-}
-
-#send {
-    width: 4em;
-    height: 2em;
+    background-color: #81DAF5;
+    border: 1px solid #0404B4;
 }

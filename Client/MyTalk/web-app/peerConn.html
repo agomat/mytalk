@@ -57,24 +57,44 @@
     </script>
   </head>
   <body onload="javascript:createPeerConnection()">
-    <div id="content">
-      <div id="videosContainer">
-        <div id="remoteVideo">
-          <h2>Remote video</h2>
-          <video id="remote" autoplay>Your browser does not support the video tag</video>
-        </div>
-        <div id="localVideo">
-          <h2>Local video</h2>
-          <video id="local" autoplay muted>Your browser does not support the video tag</video>
-        </div>
-      </div>
+    <div id="call_content" class="scroll_content">
+      
       <div id="chat">
-        <div id="textArea" class="scroll_content"></div>
-        <input type="text" id="type" />
-        <button id="send" class="common_button" onclick="javascript:Send()">Send</button>
+        <ul>
+          <li class="recive_message">Messaggio Messaggio</li>
+          <li class="send_message">Messaggio</li>
+          <li class="recive_message">Messaggio Messaggio Messaggio</li>
+          <li class="send_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse libero ipsum, elementum cursus lobortis vel, fringilla at magna. Fusce accumsan sagittis fermentum. </li>
+
+          <li class="send_message">Messaggio Messaggio</li>
+          <li class="recive_message">Messaggio</li>
+          <li class="recive_message">Messaggio Messaggio Messaggio</li>
+          <li class="recive_message">Messaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio Messaggio</li>
+
+          <li class="recive_message">Messaggio Messaggio</li>
+          <li class="send_message">Messaggio</li>
+          <li class="recive_message">Messaggio Messaggio Messaggio</li>
+          <li class="send_message">Messaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio MessaggioMessaggio Messaggio Messaggio</li>
+        </ul>
+        <form action="javascript:Send()">
+          <fieldset>
+            <legend hidden>Scrivi un messaggio</legend>
+            <label for="text_input" hidden>Scrivi un messaggio</label> <textarea name="text_input" id="text_input" placeholder="Scrivi un messaggio"></textarea>
+            <button type="submit" class="common_button"> Invia</button>
+          </fieldset>
+        </form>
       </div>
-      <div id="call">
-        <button id="callButton" class="common_button" onclick="javascript:Call()">Call!</button>
+      <div id="comunicazione">
+          <video id="local" autoplay muted></video>
+          <video id="remote" autoplay></video>
+          <a href="#" class="hangup_button"><img alt="" src="img/phone_hangup.png" />Riaggancia</a>
+          <ul id="stats"> 
+            <li><span>Tempo trascorso:</span>3299329849038242</li>
+            <li><span>Byte ricevuti:</span>3299329849038242</li>
+            <li><span>Byte trasmessi:</span>3299329849038242</li>
+          </ul>
+
+
       </div>
     </div>
     <script type="text/javascript">
@@ -83,11 +103,12 @@
       };
       
       function Send() {
-        var input = document.getElementById('type');
+        var input = document.getElementById('text_input');
         var message = input.value;
         PeerConnection.send(message);
         input.value = "";
       };
     </script>
   </body>
-  </html>
+</html>
+

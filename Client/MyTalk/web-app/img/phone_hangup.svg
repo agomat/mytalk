@@ -19,10 +19,10 @@
    enable-background="new 0 0 74.089 99.818"
    xml:space="preserve"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="phone.svg"><metadata
+   sodipodi:docname="phone_hangup.svg"><metadata
    id="metadata10"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
    id="defs8" /><sodipodi:namedview
    pagecolor="#ffffff"
    bordercolor="#666666"
@@ -46,14 +46,20 @@
 
 
 <g
-   id="g2984"><path
+   id="g2984"
+   style="fill:#ffffff"
+   transform="matrix(-0.46101082,-0.88739451,0.88739451,-0.46101082,9.7535732,105.92411)"
+   inkscape:export-xdpi="50.95816"
+   inkscape:export-ydpi="50.95816"
+   inkscape:export-filename="/home/armando/BinaryLab/Codice/Client/MyTalk/web-app/img/phone_hangup.png"><path
      inkscape:export-ydpi="22.499994"
      inkscape:export-xdpi="22.499994"
      inkscape:export-filename="/home/armando/Dropbox/Ingegneria del Software/MYTALK_VIEW/Componente 3/img/path3484_1_.png"
      style="fill:#ffffff"
      inkscape:connector-curvature="0"
-     d="m 52.543176,0.091 c 0,0 21.827,0.287 21.544,20.059 -0.284,19.773 -4.253,37.255 -10.773,46.998 -6.519,9.744 -23.242,35.248 -42.236,32.67 0,0 -9.355,-2.007 -16.44,-6.593 l 22.96,-18.054 c 0,0 6.803,4.299 11.055,-1.433 4.253,-5.73 17.575,-32.381 17.575,-32.381 0,0 3.685,-8.598 -4.536,-12.323 l 0.851,-28.943 z"
-     id="path3480_1_" /><path
+     d="m 52.543176,0.091 c 0,0 20.724179,4.6314162 19.774461,24.382622 C 71.503335,41.408594 66.604212,53.4195 61.07723,64.444817 55.550247,75.470135 48.839732,84.744557 35.726111,94.558783 21.96381,104.85848 11.723176,97.811 4.638176,93.225 l 22.96,-18.054 c 0,0 6.803,4.299 11.055,-1.433 4.253,-5.73 17.575,-32.381 17.575,-32.381 0,0 3.685,-8.598 -4.536,-12.323 z"
+     id="path3480_1_"
+     sodipodi:nodetypes="cssscccccc" /><path
      inkscape:export-ydpi="22.499994"
      inkscape:export-xdpi="22.499994"
      inkscape:export-filename="/home/armando/Dropbox/Ingegneria del Software/MYTALK_VIEW/Componente 3/img/path3484_1_.png"

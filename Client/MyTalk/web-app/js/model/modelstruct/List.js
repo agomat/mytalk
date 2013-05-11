@@ -1,20 +1,20 @@
 MyTalk.List = DS.Model.extend({
   name: DS.attr('string'),
-  list: DS.hasMany('MyTalk.User'),
+  users: DS.hasMany('MyTalk.Users'),
   
   getObject: function() { // di dubbia utilità
-    return this.get('list');
+    return this.get('users');
   },
 
-  blackList: function() { // valutarne l'utilità
+  blackList: function() {
   return this.get('name') === 'blacklist';
   }.property('name'),
 
-  generalList: function() { // valutarne l'utilità
+  generalList: function() {
   return this.get('name') === 'generale';
   }.property('name'),
 
-  otherList: function() { // valutarne l'utilità
+  otherList: function() {
   if(this.get('name') != 'generale' && this.get('name') != 'blacklist'){
     return true;
   }
@@ -25,23 +25,3 @@ MyTalk.List = DS.Model.extend({
 
   
 });
-
-MyTalk.List.FIXTURES = [{
-  id: 1,
-  name: "generale"
-}, {
-  id: 2,
-  name: "cacca"
-}, {
-  id: 3,
-  name: "blacklist"
-}, {
-  id: 4,
-  name: "amici"
-}, {
-  id: 5,
-  name: "parenti"
-}, {
-  id: 6,
-  name: "prostiute"
-}];

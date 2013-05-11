@@ -43,27 +43,44 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
       var store = DS.get('defaultStore'),
       obj = {
         id: 0,
-        list: [{ id: 0, username:'user_1',online:true,nome:'Nome',cognome:'Cognome',ip:'192.168.1.1', user:0 },
-               { id: 1, username:'user_2',online:true,nome:'Nome',cognome:'Cognome',ip:'192.168.1.1', user:0 }]
+        list: [{ id: 0, username:'user_1',online:true,nome:'Nome1',cognome:'Cognome1',ip:'192.168.1.1' },
+               { id: 1, username:'user_2',online:true,nome:'Nome2',cognome:'Cognome2',ip:'192.168.1.2' },
+               { id: 2, username:'user_3',online:true,nome:'Nome3',cognome:'Cognome3',ip:'192.168.1.3' },
+               { id: 3, username:'user_4',online:false,nome:'Nome4',cognome:'Cognome4',ip:'192.168.1.4' },
+               { id: 4, username:'user_5',online:true,nome:'Nome5',cognome:'Cognome5',ip:'192.168.1.5' },
+               { id: 5, username:'user_6',online:true,nome:'Nome6',cognome:'Cognome6',ip:'192.168.1.6' },
+               { id: 6, username:'user_7',online:false,nome:'Nome7',cognome:'Cognome7',ip:'192.168.1.7' },
+               { id: 7, username:'user_8',online:true,nome:'Nome8',cognome:'Cognome8',ip:'192.168.1.8' },
+               { id: 8, username:'user_9',online:true,nome:'Nome9',cognome:'Cognome9',ip:'192.168.1.9' }]
       },
       type = MyTalk.WUser,
       adapter = store.adapterForType(type);
 
+      obj = ' { "list" : {"id" : 1, "name" : "Nome", "user" : [1,2] }, "users": [{ "id":1, "username": "user1", "list": 1 },{ "id":2, "username":"user2", "list" : 1}] } ';
+
+      obj = JSON.parse(obj);
+
+
+
       if(cc.count==0) {
-       adapter.load(store, type, obj);
+       cc.count=4;
+       console.log("ok");
+       store.load( MyTalk.List, obj);
+       //adapter.load(store, type, obj);
       }
       // liste
 
       
       obj = {
         id: 0,
-        list: [{ id:0, name:'NOME',list: [{ username:'user_2',online:false,nome:'Nome',cognome:'Cognome',ip:'192.168.1.1', user:0 }] },
-               ]
+        list: [ { id:0, name:'NomeLista1', list: [1,3] },
+                { id:1, name:'NomeLista2', list: [5,4] },
+              ]
       },
       type = MyTalk.WList,
       adapter = store.adapterForType(type);
 
-      if(cc.count==9) {
+      if(cc.count==0) {
        cc.count=4;
        adapter.load(store, type, obj);
       }

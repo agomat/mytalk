@@ -27,7 +27,12 @@ class ChatService {
 
                 println "Inside onRequest GET for path ${req.pathInfo}"
                 if( req.pathInfo.indexOf("/all") > 0 ) {
-                    // aggiungi utente guest
+                    // aggiungi utente guest //
+
+                    // mi salvo il suo evento
+                    req.session[ req.getParameter("ip") ] = event
+
+
                     User u = new User()
                     u.setIP ( req.getParameter("ip") )
                     //req.setAttribute("user",u)
@@ -46,6 +51,8 @@ class ChatService {
                 println "Inside onRequest POST"
                 def temp = req.reader.readLine().trim() //modifiche per max
                 def ARI = JSON.parse( temp )
+                 
+
                 if (req.pathInfo == "/chat/all")
                 {
                     // messaggi proveniente da utenti guest (non ancora autenticati)
@@ -167,6 +174,8 @@ class ChatService {
     }
 
 }
+
+
 
 
 

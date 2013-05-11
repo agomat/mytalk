@@ -40,6 +40,14 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   
   findAll: function (store, type) { 
     console.log("findAll");  
+
+    var obj = ' { "list" : {"id" : 1, "name" : "Nome", "users" : [1,2] }, "users": [{ "id":1, "username": "user1", "list": 1 },{ "id":2, "username":"user2", "list" : 1}] } ';
+
+    obj = JSON.parse(obj);
+    //DS.get('defaultStore').load( MyTalk.List, obj);
+    var adapter = store.adapterForType(type);
+    adapter.load(store,type,obj);
+
   },
 
   createRecord: function(store, type, record) {
@@ -58,24 +66,6 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   }
 });
 
-
-DS.SocketAdapter.map('MyTalk.User', {
-  primaryKey: 'username',
-  //username: DS.attr('string'),
-});
-
-DS.SocketAdapter.map('MyTalk.WUser', {
-  list: {embedded: 'always'}
-});
-
-DS.SocketAdapter.map('MyTalk.WList', {
-  list: {embedded: 'always'}
-});
-
-DS.SocketAdapter.map('MyTalk.List', {
-  list: {embedded: 'always'}
-});
-
-DS.SocketAdapter.map('MyTalk.WCall', {
-  list: {embedded: 'always'}
-});
+DS.SocketAdapter.configure('MyTalk.Users',
+    { sideloadAs: 'users' }
+);

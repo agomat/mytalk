@@ -62,8 +62,9 @@
     <script src="js/model/modelstruct/Authentication.js"></script>
     <script src="js/model/modelstruct/PersonalData.js"></script>
     
+     <script src="js/model/modelstruct/User.js"></script>
     <script src="js/model/modelstruct/List.js"></script>
-    <script src="js/model/modelstruct/Users.js"></script>
+   
     <script src="js/model/modelstruct/Call.js"></script>
     <script src="js/model/modelstruct/WCall.js"></script>
 
@@ -136,7 +137,7 @@
              {{/each}}
             
             {{#each ulist in controller}}
-            {{#if ulist.otherList}}
+            {{#if ulist.customList}}
 
              <li>{{#linkTo "ulist" ulist}} 
              

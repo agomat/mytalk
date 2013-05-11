@@ -65,7 +65,3 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     
   }
 });
-
-DS.SocketAdapter.configure('MyTalk.Users',
-    { sideloadAs: 'users' }
-);

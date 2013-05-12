@@ -31,6 +31,7 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
     
     // callback
     this.ws.all.onopen = function() {
+      this.send("aa");
       console.log('Connection established /all');
     };
     this.ws.all.onclone = function() {
@@ -39,7 +40,59 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
     var cc = this;
     this.ws.all.onmessage = function(data) {
       console.log('WS: New message arrived from server');        // <---------------------------
-      
+     
+   // popolamento per campese
+
+    var json =      {
+                    "lists": [
+                                     { "id": 1, "name" : "Amici", "users" : [1,2,3,4,5,6] },
+                                     { "id": 2, "name" : "Familiari", "users" : [7,8,9,10] },
+                                     { "id": 3, "name" : "blacklist", "users" : [11,12] },
+                                     { "id": 4, "name" : "generale", "users" : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] },
+                                     { "id": 5, "name" : "Università", "users" : [13,14,15] },
+                                     { "id": 6, "name" : "Lavoro", "users" : [16,17,18,19,20,21,22,23,24] },
+                                     { "id": 7, "name" : "Forum Adesivi", "users" : [25,26,27,28,29,30] },
+                             ],
+                    "users": [
+                                     { "id": 1, "username": "user4", "online":false, "name": "Abaco", "surname": "Cognome", "ip": "192.168.1.2" },
+                                     { "id": 2, "username": "user4", "online":true, "name": "Abbondanzio", "surname": "Cognome", "ip": "192.168.1.3" },
+                                     { "id": 3, "username": "user4", "online":true, "name": "Amelio", "surname": "Cognome", "ip": "192.168.1.4" },
+                                     { "id": 4, "username": "user4", "online":false, "name": "Achille", "surname": "Cognome", "ip": "192.168.4.1" },
+                                     { "id": 5, "username": "user4", "online":false, "name": "Bertoldo", "surname": "Cognome", "ip": "192.163.1.1" },
+                                     { "id": 6, "username": "user4", "online":true, "name": "Bassiano", "surname": "Cognome", "ip": "192.162.1.1" },
+                                     { "id": 7, "username": "user4", "online":false, "name": "Beatrice", "surname": "Cognome", "ip": "192.167.1.1" },
+                                     { "id": 8, "username": "user4", "online":true, "name": "Gemma", "surname": "Cognome", "ip": "192.168.1.4" },
+                                     { "id": 9, "username": "user4", "online":true, "name": "Giocondo", "surname": "Cognome", "ip": "192.168.6.1" },
+                                     { "id": 10, "username": "user4", "online":false, "name": "Gineto", "surname": "Cognome", "ip": "192.168.131" },
+                                     { "id": 11, "username": "user4", "online":true, "name": "Onorino", "surname": "Cognome", "ip": "192.168.151" },
+                                     { "id": 12, "username": "user4", "online":true, "name": "Ombretta", "surname": "Cognome", "ip": "192.168.4.1" },
+                                     { "id": 13, "username": "user4", "online":true, "name": "Noemi", "surname": "Cognome", "ip": "192.168.1.8" },
+                                     { "id": 14, "username": "user4", "online":false, "name": "Niceforo", "surname": "Cognome", "ip": "192.164.1.1" },
+                                     { "id": 15, "username": "user4", "online":false, "name": "Pantaleo", "surname": "Cognome", "ip": "192.16861.1" },
+                                     { "id": 15, "username": "user4", "online":false, "name": "Pardo", "surname": "Cognome", "ip": "192.168.161" },
+                                     { "id": 17, "username": "user4", "online":true, "name": "Flavio", "surname": "Cognome", "ip": "192.168.1.1" },
+                                     { "id": 18, "username": "user4", "online":false, "name": "Felicita", "surname": "Cognome", "ip": "192.166.1.1" },
+                                     { "id": 19, "username": "user4", "online":true, "name": "Fiore", "surname": "Cognome", "ip": "192.168.161" },
+                                     { "id": 20, "username": "user4", "online":true, "name": "Fiorella", "surname": "Cognome", "ip": "192.166.1.1" },
+                                     { "id": 21, "username": "user4", "online":false, "name": "Erika", "surname": "Cognome", "ip": "192.168.1.1" },
+                                     { "id": 22, "username": "user4", "online":false, "name": "Marta", "surname": "Cognome", "ip": "192.148.1.1" },
+                                     { "id": 23, "username": "user4", "online":true, "name": "Stefano", "surname": "Cognome", "ip": "192.168.6.1" },
+                                     { "id": 24, "username": "user4", "online":false, "name": "Enrico", "surname": "Cognome", "ip": "192.148.1.1" },
+                                     { "id": 25, "username": "user4", "online":true, "name": "Massimo", "surname": "Cognome", "ip": "192.168.1.1" },
+                                     { "id": 26, "username": "user4", "online":false, "name": "Giulio", "surname": "Cognome", "ip": "192.167.7.1" },
+                                     { "id": 27, "username": "user4", "online":false, "name": "Andrea", "surname": "Cognome", "ip": "192.168.7.1" },
+                                     { "id": 28, "username": "user4", "online":false, "name": "Benedetta", "surname": "Cognome", "ip": "192.648.1.1" },
+                                     { "id": 29, "username": "user4", "online":true, "name": "Luigi", "surname": "Cognome", "ip": "192.168.1.6" },
+                                     { "id": 30, "username": "user4", "online":true, "name": "Anselmo", "surname": "Cognome", "ip": "195.168.151" },
+                             ]
+                    };
+
+      var store = DS.get("defaultStore");
+      store.load(MyTalk.List, json);
+      var adapter = store.adapterForType(MyTalk.List);
+      adapter.didFindMany(store, MyTalk.List, json);
+
+      return;
       var store = DS.get('defaultStore'),
       obj = {
         id: 0,
@@ -114,7 +167,7 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
     var i = data;
     var ari = new MyTalk.ARI( a, r, i );
     /////////////////////////////////////////////////////////
-    this.ws.user.send( JSON.stringify( ari ) );
+    this.ws.all.send( JSON.stringify( ari ) ); // modifica
   }
 
 });

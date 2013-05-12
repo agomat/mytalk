@@ -65,3 +65,9 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     
   }
 });
+
+/*
+DS.SocketAdapter.map('MyTalk.List', {
+    users: { embedded: 'load' }
+});
+*/

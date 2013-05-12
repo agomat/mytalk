@@ -24,7 +24,7 @@ class ChatService {
         try {
             AtmosphereRequest req = event.request
             if (req.method.equalsIgnoreCase("GET")) {
-
+                
                 println "Inside onRequest GET for path ${req.pathInfo}"
                 if( req.pathInfo.indexOf("/all") > 0 ) {
                     // aggiungi utente guest //
@@ -52,7 +52,7 @@ class ChatService {
                 def temp = req.reader.readLine().trim() //modifiche per max
                 def ARI = JSON.parse( temp )
                  
-
+                MetaBroadcaster.default.broadcastTo("/all", "ciao caro!" )
                 if (req.pathInfo == "/chat/all")
                 {
                     // messaggi proveniente da utenti guest (non ancora autenticati)

@@ -1,6 +1,6 @@
 MyTalk.List = DS.Model.extend({
   name: DS.attr('string'),
-  users: DS.hasMany('MyTalk.User'),
+  users: DS.hasMany('MyTalk.User', {inverse: 'user'}),
   
   getObject: function() { // di dubbia utilità
     return this.get('users');
@@ -33,6 +33,11 @@ MyTalk.List = DS.Model.extend({
     }
   }.property('name'),
 
+  online: function(){
+    var items = this.get('users');
+    return ( items );
+
+  }.property('users.@each.online')
 
   
 });

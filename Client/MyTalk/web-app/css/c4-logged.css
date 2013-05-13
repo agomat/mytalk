@@ -175,7 +175,7 @@
 	box-shadow: none;
 }
 
-.call_user{background: url("../img/phone.png") center center no-repeat;}
+.call_user{background: url("../img/phone_green.png") center center no-repeat;}
 .add_user{background: url("../img/add_user.png") center center no-repeat;}
 .blacklist_user{background: url("../img/Gdelete_user.png") center center no-repeat;}
 .remove_user{background: url("../img/delete.png") center center no-repeat;}

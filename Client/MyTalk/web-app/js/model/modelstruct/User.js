@@ -1,6 +1,6 @@
 MyTalk.User = DS.Model.extend({
   username: DS.attr('string'),
-  lists: DS.belongsTo('MyTalk.List'),
+  lists: DS.hasMany('MyTalk.List'),
   name: DS.attr('string'),
   surname: DS.attr('string'),
   MD5email: DS.attr('string'),

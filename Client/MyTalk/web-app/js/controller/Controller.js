@@ -70,7 +70,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   deleteUser:function(user){
 
     alert(user);
-    var c=location.hash.split('/')[2];
+    var c = location.hash.split('/')[2];
     alert(c);
   }
 });

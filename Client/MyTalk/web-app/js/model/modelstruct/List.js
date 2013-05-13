@@ -7,7 +7,7 @@ MyTalk.List = DS.Model.extend({
   },
 
   blackList: function() {
-    if (this.get('name') === 'blacklist') {
+    if (this.get('name') === 'Blacklist') {
       return true;
     }
     else {
@@ -16,7 +16,7 @@ MyTalk.List = DS.Model.extend({
   }.property('name'),
 
   generalList: function() {
-    if (this.get('name') === 'generale') {
+    if (this.get('name') === 'Tutti i contatti') {
       return true;
     }
     else {
@@ -25,7 +25,7 @@ MyTalk.List = DS.Model.extend({
   }.property('name'),
 
   customList: function() {
-    if(this.get('name') != 'generale' && this.get('name') != 'blacklist' && this.get('name') != null) {
+    if(this.get('name') != 'Tutti i contatti' && this.get('name') != 'Blacklist' && this.get('name') != null) {
       return true;
     }
     else {
@@ -43,8 +43,13 @@ MyTalk.List = DS.Model.extend({
   }.property('users.@each.online'),
 
   total: function(){
-    return this.get('users').get('length');
-  }.property('users'),
+    var users = this.get('users');
+    var sum = 0;
+    users.forEach(function(user){
+      sum += 1;
+    });
+    return sum;
+  }.property('users.@each.name'),
   
 });
 

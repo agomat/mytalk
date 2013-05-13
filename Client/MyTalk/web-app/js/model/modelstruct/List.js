@@ -34,10 +34,13 @@ MyTalk.List = DS.Model.extend({
   }.property('name'),
 
   online: function(){
-    var items = this.get('users');
-    return ( items );
-
-  }.property('users.@each.online')
+    var users = this.get("users");
+    var sum = 0;
+    users.forEach(function(user){
+      sum += user.get("online");
+    });
+    return sum;
+  }.property("users.@each.online")
 
   
 });

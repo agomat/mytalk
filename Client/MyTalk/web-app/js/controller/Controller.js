@@ -44,3 +44,19 @@ deleteList:function(){
   }
 
 });
+
+MyTalk.ListsController = Em.ArrayController.extend({
+    newUser: function(currentList) {
+        currentList.get('users').createRecord(
+          {username:'New User from List', online: true}
+          );
+    }
+});
+    
+MyTalk.UsersController = Em.ArrayController.extend({
+    new: function() {
+    this.content.createRecord({
+        username: 'New User from List',
+        online: true
+    })}
+});

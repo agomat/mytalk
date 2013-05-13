@@ -29,7 +29,8 @@
     <script src="js/view/RegisterFormView.js"></script>
     <script src="js/view/RegisterPassword.js"></script>
     <script src="js/view/IPCall.js"></script>
-    <script src="js/view/UlistView.js"></script> 
+    <script src="js/view/UlistView.js"></script>
+    <script src="js/view/UsersView.js"></script> 
     <script src="js/view/ListHeaderView.js"></script> 
     <script src="js/view/ListContentView.js"></script>
     <script src="js/view/LoginView.js"></script>
@@ -179,15 +180,15 @@
 
 </script>
 
-
-<script type="text/x-handlebars" data-template-name="listheader">
-
-        
-        
+<script type="text/x-handlebars" data-template-name="users">
+    {{#each user in controller}}
+        -> {{ user.username }} <br />
+    {{/each}}
+    <a href="#" {{ action new }}> Click to add a user</a><font style="color:green"></font><br />
 </script>
 
 <script type="text/x-handlebars" data-template-name="listcontent">
-
+        {{ render "users" list.users }}
 <ul>
             <li>
               <img src="img/avatar.png" alt="nome cognome utente"/>

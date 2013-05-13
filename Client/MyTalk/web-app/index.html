@@ -122,33 +122,33 @@
             {{#if ulist.generalList}}
               <li>{{#linkTo "ulist" ulist}} 
              
-               <div class="online_user"><div>online</div>15/1000</div><div class="list_name">{{ulist.name}} id: {{ ulist.id }}</div>{{/linkTo}}
+               <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div><div class="list_name">{{ulist.name}} </div>{{/linkTo}}
               </li>
             {{/if}}
             {{/each}}
-
-            {{#each ulist in controller}}
-            {{#if ulist.blackList}}
-
-             <li>{{#linkTo "ulist" ulist}} 
-             
-               <div class="online_user"><div>online</div>15/1000</div><div class="list_name">{{ulist.name}} n {{ ulist.id }}</div>{{/linkTo}}
-             {{/if}} 
-             </li>
-             {{/each}}
             
             {{#each ulist in controller}}
             {{#if ulist.customList}}
 
              <li>{{#linkTo "ulist" ulist}} 
              
-               <div class="online_user"><div>online</div>15/1000</div><div class="list_name">{{ulist.name}} n {{ ulist.id }}</div>{{/linkTo}}
-             {{/if}} 
+               <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div><div class="list_name">{{ulist.name}} x</div>{{/linkTo}}
+             
              </li>
+             {{/if}} 
              {{/each}}
 
+            {{#each ulist in controller}}
+            {{#if ulist.blackList}}
 
-              <li><a id="blacklist"><div class="list_name">Blacklist</div></a></li>
+             <li>{{#linkTo "ulist" ulist}} 
+             
+               <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div><div class="list_name">{{ulist.name}} (spostare id su li)</div>{{/linkTo}}
+             
+             </li>
+             {{/if}} 
+             {{/each}}
+
             </ul>
           </div>
       </div>
@@ -163,12 +163,12 @@
 
 <script type="text/x-handlebars" data-template-name="ulist">
   <div class="header">
-    <h5>Current List: {{ name }}<span id="current_online">Online: 15/50000</span></h5>
+    <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
           <div id="list_option">
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
             <div id="list_button">
               <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
-              <a href="#" class="common_button"{{action "renameList" }}>Rinomina</a>
+              <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
             </div>
           </div>
   </div>
@@ -189,6 +189,14 @@
 
 <script type="text/x-handlebars" data-template-name="listcontent">
         
+            <ul> <!-- FARE !!!!! -->
+            {{#each listcontent }}
+                        X
+            {{/each}}
+
+            </ul>
+
+
 <ul>
             <li>
               <img src="img/avatar.png" alt="nome cognome utente"/>

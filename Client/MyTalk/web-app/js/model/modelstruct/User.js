@@ -1,6 +1,6 @@
 MyTalk.User = DS.Model.extend({
   username: DS.attr('string'),
-  user: DS.belongsTo('MyTalk.List'),
+  lists: DS.belongsTo('MyTalk.List'),
   name: DS.attr('string'),
   surname: DS.attr('string'),
   ip: DS.attr('string'),
@@ -11,3 +11,5 @@ MyTalk.User = DS.Model.extend({
   } 
   
 });
+
+

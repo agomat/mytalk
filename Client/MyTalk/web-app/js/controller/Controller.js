@@ -67,9 +67,11 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     this.controllerFor('users').set('model', MyTalk.User.find());
   } , 
 
-  deleteUser:function(){
+  deleteUser:function(user){
 
-    alert(this);
+    alert(user);
+    var c=location.hash.split('/')[2];
+    alert(c);
   }
 });
 

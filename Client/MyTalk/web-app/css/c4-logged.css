@@ -48,7 +48,8 @@
 }
 
 #current_online{
-	padding-left: 15%;
+	margin-right: 2%;
+	float: right;
 	font-variant: small-caps;
 }
 
@@ -125,13 +126,19 @@
 }
 
 #blacklist{
-	background: url("../img/Pdelete_user.png") left 10px center no-repeat;
+	background: url("../img/Pdelete_user.png") left 25px center no-repeat;
 }
 #blacklist div{
 	padding-left:26px;
 }
-
-
+/*
+#allcontacs{
+	background: url("../img/allcontacts.png") left 25px center no-repeat;
+}
+#allcontacs div{
+	padding-left:26px;
+}
+*/
 #utenti .content  ul li{
 	margin-left: 3px;
 	padding: 5px 10px;
@@ -152,7 +159,6 @@
 
 #utenti .content ul li>div{
 	padding: 0 25px;
-	text-align: center;
 	font-size: 1.2em;
 	
 }

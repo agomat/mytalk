@@ -39,13 +39,12 @@ MyTalk.ListsController = Ember.ArrayController.extend({
 
 
 MyTalk.UlistController = Ember.ObjectController.extend({
-deleteList:function(){
+  sortProperties: ['name'],
+  deleteList:function(){
     alert();
-
   },
 
   renameList:function(){
-
     alert();
   },
 

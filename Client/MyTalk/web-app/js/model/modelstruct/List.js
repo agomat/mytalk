@@ -25,7 +25,7 @@ MyTalk.List = DS.Model.extend({
   }.property('name'),
 
   customList: function() {
-    if(this.get('name') != 'generale' && this.get('name') != 'blacklist') {
+    if(this.get('name') != 'generale' && this.get('name') != 'blacklist' && this.get('name') != null) {
       return true;
     }
     else {
@@ -44,7 +44,7 @@ MyTalk.List = DS.Model.extend({
 
   total: function(){
     return this.get('users').get('length');
-  }.property('users')
+  }.property('users'),
   
 });
 

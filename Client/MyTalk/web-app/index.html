@@ -116,38 +116,38 @@
           <a href="#" class="common_button"{{action "createList"}}>Crea una Nuova Lista</a>
           </div>
           <div class="content">
-          
             <ul>
-            {{#each ulist in controller}}
-            {{#if ulist.generalList}}
-              <li>{{#linkTo "ulist" ulist}} 
-             
-               <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div><div class="list_name">{{ulist.name}} </div>{{/linkTo}}
-              </li>
-            {{/if}}
-            {{/each}}
-            
-            {{#each ulist in controller}}
-            {{#if ulist.customList}}
 
-             <li>{{#linkTo "ulist" ulist}} 
-             
-               <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div><div class="list_name">{{ulist.name}} x</div>{{/linkTo}}
-             
-             </li>
-             {{/if}} 
-             {{/each}}
+              {{#each ulist in controller}}
+                {{#if ulist.generalList}}
+                  <li>
+                   {{#linkTo "ulist" ulist}} 
+                   <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
+                   <div class="list_name">{{ulist.name}} </div>{{/linkTo}}
+                  </li>
+                {{/if}}
+              {{/each}}
+              
+              {{#each ulist in controller}}
+                {{#if ulist.customList}}
+                 <li>
+                   {{#linkTo "ulist" ulist}} 
+                   <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
+                   <div class="list_name">{{ulist.name}}</div>{{/linkTo}}
+                 </li>
+                {{/if}} 
+              {{/each}}
 
-            {{#each ulist in controller}}
-            {{#if ulist.blackList}}
-
-             <li>{{#linkTo "ulist" ulist}} 
-             
-               <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div><div class="list_name">{{ulist.name}} (spostare id su li)</div>{{/linkTo}}
-             
-             </li>
-             {{/if}} 
-             {{/each}}
+              {{#each ulist in controller}}
+                {{#if ulist.blackList}}
+                 <li>
+                   {{#linkTo "ulist" ulist}} 
+                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
+                    <div class="list_name">{{ulist.name}} (spostare id su li)</div>
+                   {{/linkTo}}
+                 </li>
+                {{/if}} 
+              {{/each}}
 
             </ul>
           </div>

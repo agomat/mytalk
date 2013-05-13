@@ -63,14 +63,17 @@ public class BlackListAddTest {
 		
 		ARI ariResponse=blackListAdd.manage(ari);
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlacklistAdd",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());	
 		
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("User già in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklisted",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 	
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListAdd",packString);
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Autenticazione assente ma viene aggiunto lo stesso","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
 		User user12=new User("user12",false,"user12","user12","123.123.123.12");
 		listUser.remove(0);
@@ -79,6 +82,7 @@ public class BlackListAddTest {
 		ari=new ARI(auth,"BlackListAdd",new_packString);
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Username non esiste ma viene aggiunto lo stesso","UserNotExisting",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
 		listUserList.get(0).setList(null);
 		new_packString=conv.convertJavaToJson(pack);

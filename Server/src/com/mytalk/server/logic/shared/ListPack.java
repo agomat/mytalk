@@ -25,19 +25,18 @@ import com.mytalk.server.logic.shared.modelClient.*;
 
 public class ListPack extends Information{
 	
-	private WrapperUserList wul;
+	private List<UserList> list;
 	
 	public ListPack(){}
 	
-	public ListPack(WrapperUserList c){
-		wul=c;
+	public ListPack(List<UserList> l){
+		list=l;
 	}
 	
-	public WrapperUserList getWrapperUserList(){
-		return wul;
+	public List<UserList> getList(){
+		return list;
 	}
-	
-	public void setWrapperUserList(WrapperUserList wulEntity){
-		wul=wulEntity;
+	public void setList(List<UserList> l){
+		list=l;
 	}
 }

@@ -25,37 +25,27 @@ import com.mytalk.server.logic.shared.modelClient.*;
 
 public class WorldPack extends Information{
 	
-	private WrapperUserList wul;
-	private WrapperUser wu;
-	private PersonalData pd;
+	private WorldPackList worldPackList;
+	private WorldPackPersonalData worldPackPersonalData;
 	
-	public WorldPack(List<UserList> ul, List<User> u,PersonalData pdEntity){
-		wul=new WrapperUserList(ul);
-		wu=new WrapperUser(u);
-		pd=pdEntity;
+	public WorldPack(WorldPackList wpl,WorldPackPersonalData wppd){
+		worldPackList=wpl;
+		worldPackPersonalData=wppd;
 	}
 	
-	public WrapperUserList getWrapperUserList(){
-		return wul;
+	public void setWorldPackList(WorldPackList wpl){
+		worldPackList=wpl;
 	}
 	
-	public void setWrapperUserList(WrapperUserList wulist){
-		wul=wulist;
+	public WorldPackList getWorldPackList(){
+		return worldPackList;
 	}
 	
-	public WrapperUser getWrapperUser(){
-		return wu;
+	public void setWorldPackPersonalData(WorldPackPersonalData wppd){
+		worldPackPersonalData=wppd;
 	}
 	
-	public void setWrapperUser(WrapperUser wuser){
-		wu=wuser;
-	}
-	
-	public PersonalData getPersonalData(){
-		return pd;
-	}
-	
-	public void setPersonalData(PersonalData personalData){
-		pd=personalData;
+	public WorldPackPersonalData getWorldPackPersonalData(){
+		return worldPackPersonalData;
 	}
 }

@@ -7,32 +7,38 @@ MyTalk.IndexController = Ember.ObjectController.extend({
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
   login:function(email,pass) {
-		MyTalk.Authentication.createRecord({id:1,username:email,password:pass}).get('transaction').commit();
+    MyTalk.Authentication.createRecord({id:1,username:email,password:pass}).get('transaction').commit();
     // se autenticato:
     var credentials = {}; // TODO vedere se spostare create record in login statemanager
-    MyTalk.StateManager.send("login", credentials);	
-	},
+    MyTalk.StateManager.send("login", credentials); 
+  },
   register:function(name,surname,username,email,password,password_conf){
-  	console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password +" "+ password_conf);
-	},
+    console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password +" "+ password_conf);
+  },
   ipCall:function(ip) {
-  	console.log('controller ipCAll: '+ip)
+    console.log('controller ipCAll: '+ip)
   }
 });
 
 MyTalk.ListsController = Ember.ArrayController.extend({
   sortProperties: ['name'],
-
+  
   createList:function(){
 
     alert();
   },
+   newUser: function(currentList) {
+        currentList.get('users').createRecord(
+          {username:'New User from List', online: true}
+          );
+    },
 
   
 
 });
 
-MyTalk.UlistController=Ember.Controller.extend({
+
+MyTalk.UlistController = Ember.ObjectController.extend({
 deleteList:function(){
     alert();
 
@@ -41,22 +47,21 @@ deleteList:function(){
   renameList:function(){
 
     alert();
-  }
+  },
+
+ setupController: function() {
+    this.controllerFor('ulist').set('model', MyTalk.List.find());
+  }  
 
 });
+ 
 
-MyTalk.ListsController = Em.ArrayController.extend({
-    newUser: function(currentList) {
-        currentList.get('users').createRecord(
-          {username:'New User from List', online: true}
-          );
-    }
-});
     
-MyTalk.UsersController = Em.ArrayController.extend({
+MyTalk.UsersController = Ember.ArrayController.extend({
     new: function() {
     this.content.createRecord({
         username: 'New User from List',
         online: true
     })}
 });
+

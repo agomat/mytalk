@@ -30,9 +30,7 @@ MyTalk.ListsRoute = Ember.Route.extend({
   model: function() {
     return MyTalk.List.find();
   },
- /*setupController: function() {
-    this.controllerFor('ulist').set('model', MyTalk.List.find());
-  },*/
+ 
   renderTemplate: function(controller, model) {
     this.render('lists');
     //this.render('listscontent'); 
@@ -42,15 +40,7 @@ MyTalk.ListsRoute = Ember.Route.extend({
     });*/
   }
 });
-MyTalk.Listst = Ember.Route.extend({
-  model: function() {
-    return MyTalk.List.find();
-  }
-});
 
 
-MyTalk.UlistRoute = Ember.Route.extend({
-  model: function() {
-    return MyTalk.List.find();
-  }
-});
+
+

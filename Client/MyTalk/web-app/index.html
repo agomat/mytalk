@@ -163,12 +163,12 @@
 
 <script type="text/x-handlebars" data-template-name="ulist">
   <div class="header">
-    <h5>Current List: {{name}}<span id="current_online">Online: 15/50000</span></h5>
+    <h5>Current List: {{ name }}<span id="current_online">Online: 15/50000</span></h5>
           <div id="list_option">
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
             <div id="list_button">
               <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
-              <a href="#" class="common_button"{{action "renameList"}}>Rinomina</a>
+              <a href="#" class="common_button"{{action "renameList" }}>Rinomina</a>
             </div>
           </div>
   </div>
@@ -188,7 +188,7 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="listcontent">
-        {{ render "users" list.users }}
+        
 <ul>
             <li>
               <img src="img/avatar.png" alt="nome cognome utente"/>

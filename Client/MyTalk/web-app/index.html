@@ -39,14 +39,14 @@
     <script src="js/view/RegisterSurname.js"></script>
     <script src="js/view/HeaderView.js"></script>
     <script src="js/view/IPFormView.js"></script>
-    <script src="js/view/LoginEmail.js"></script>
+    <script src="js/view/LoginUsername.js"></script>
     <script src="js/view/LoginPassword.js"></script>
     <script src="js/view/RegisterEmail.js"></script>
     <script src="js/view/RegisterName.js"></script>
     <script src="js/view/RegisterUsername.js"></script>
 
     <!-- bootstrap StateManager -->
-    <!--<script src="js/statemanager/StateManager.js"></script>-->
+    <script src="js/statemanager/StateManager.js"></script>
 
     <!-- bootstrap Storage -->
     <script src="js/model/storage/IPAddressProxy.js"></script>
@@ -171,49 +171,40 @@
               <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
             </div>
           </div>
-  </div>
-        <div class="content">
-          {{render "listcontent" listcontent}}
-        </div>
+  </div><div class="content">
+          {{ render "users" users }}
+        
     
-
+</div>
 
 </script>
 
 <script type="text/x-handlebars" data-template-name="users">
+    
+   <ul id="userlist"> 
     {{#each user in controller}}
-        -> {{ user.username }} <br />
-    {{/each}}
-    <a href="#" {{ action new }}> Click to add a user</a><font style="color:green"></font><br />
-</script>
+         
+   
 
-<script type="text/x-handlebars" data-template-name="listcontent">
-        
-            <ul> <!-- FARE !!!!! -->
-            {{#each listcontent }}
-                        X
-            {{/each}}
-
-            </ul>
-
-
-<ul>
             <li>
               <img src="img/avatar.png" alt="nome cognome utente"/>
               <div>
-                <div>Nome Cognome</div>
-                username
+                <div>{{ user.name }} {{ user.surname }} </div>
+                {{ user.username }}
               </div>
               <ul>
                 <li><a class="call_user" href="#"></a></li>
                 <li><a class="add_user" href="#"></a></li>
                 <li><a class="blacklist_user" href="#"></a></li>
-                <li><a class="remove_user" href="#"></a></li>
+                <li><a class="remove_user" href="#" {{action "deleteUser" }}></a></li>
               </ul>
             </li>
+             
           
-</ul>
+
+{{/each}}</ul>
 </script>
+<!--<a href="#" {{ action new }}> Click to add a user</a><font style="color:green"></font><br />-->
 
     <script type="text/x-handlebars" data-template-name="_header">
       <div id="header">
@@ -272,7 +263,7 @@
                 <ul>
                   <li>
                     <label for="email" hidden>Email</label>
-                    {{view MyTalk.LoginEmail valueBinding='view.email'}}
+                    {{view MyTalk.LoginUsername valueBinding='view.username'}}
                   </li>
                   <li>
                     <label for="password" hidden>Password</label>

@@ -6,8 +6,8 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
-  login:function(email,pass) {
-    MyTalk.Authentication.createRecord({id:1,username:email,password:pass}).get('transaction').commit();
+  login:function(user,pass) {
+    MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
     // se autenticato:
     var credentials = {}; // TODO vedere se spostare create record in login statemanager
     MyTalk.StateManager.send("login", credentials); 
@@ -62,6 +62,14 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     this.content.createRecord({
         username: 'New User from List',
         online: true
-    })}
+    })},
+    setupController: function() {
+    this.controllerFor('users').set('model', MyTalk.User.find());
+  } , 
+
+  deleteUser:function(){
+
+    alert(this);
+  }
 });
 

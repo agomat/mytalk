@@ -9,9 +9,9 @@ MyTalk.LoginFormView = Ember.View.extend({
 
   submit: function(event) {
     event.preventDefault();
-    var email = this.get('email');
+    var username = this.get('username');
     var password = this.get('password');
-    this.get('controller').login(email, password);
+    this.get('controller').login(username, password);
   }
 });
 

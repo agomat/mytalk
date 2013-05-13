@@ -138,7 +138,7 @@
 	overflow: hidden;
 }
 
-#utenti .content>ul>li:nth-child(odd){
+#userlist>li:nth-child(odd){
 	background-color: #f5f5f5;
 }
 

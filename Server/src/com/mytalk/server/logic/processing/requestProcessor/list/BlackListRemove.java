@@ -65,13 +65,13 @@ public class BlackListRemove extends GenericRequest {
 					da.blacklistRemove(blacklist,userAuth);
 				}
 				//se arrivo qua è andato a buon fine
-				response=new ARI(null,"SuccessfulBlacklistRemove",infoRequest);
+				response=new ARI(auth,"SuccessfulBlacklistRemove",infoRequest);
 			}catch(UserNotBlacklisted unb){
-				response=new ARI(null,"UnsuccessfulBlacklistRemove",infoRequest);
+				response=new ARI(auth,"UserNotBlacklisted",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(auth,"AuthenticationFail",null);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(auth,"UsernameNotCorresponding",null);
 			}
 		}
 		

@@ -22,7 +22,7 @@ package com.mytalk.server.logic.shared.modelClient;
 
 public class Call{
 	
-	private String speaker;
+	private String speaker; //id dell'user
 	private int byteSent;
 	private int byteReceived;
 	private int duration;

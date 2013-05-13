@@ -26,7 +26,7 @@ public class UserList{
 	
 	private Integer id;
 	private String name;
-	private List<User> list;
+	private List<User> list; //List<Integer>
 	
 	public UserList(){}
 	

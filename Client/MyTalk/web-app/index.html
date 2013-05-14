@@ -185,7 +185,7 @@
    
 
             <li>
-              <img src="https://www.gravatar.com/avatar/699b1b3f9c23e21f13b2ac9467942b01.png?s=48&d=identicon" title="{{ user.name }} {{ user.surname }}" alt="{{ user.name }} {{ user.surname }}"/>
+              <img width="48" height="48" src="http://www.gravatar.com/avatar/{{ user.avatarTiny }}?s=48&d=identicon" title="{{ user.name }} {{ user.surname }}" alt="{{ user.name }} {{ user.surname }}"/>
               <div>
                 <div>{{ user.name }} {{ user.surname }}</div>
                 {{ user.username }}
@@ -210,7 +210,7 @@
           <h1>MyTalk</h1>
           <h2>La videochiamata come piace a te!</h2>
         </div>
-
+          {{ isAuthenticated }}
         {{#if isAuthenticated}}
           {{ partial dashboard }}
         {{else}}

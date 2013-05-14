@@ -3,7 +3,7 @@ MyTalk.User = DS.Model.extend({
   lists: DS.hasMany('MyTalk.List'),
   name: DS.attr('string'),
   surname: DS.attr('string'),
-  MD5email: DS.attr('string'),
+  md5: DS.attr('string'),
   ip: DS.attr('string'),
   online: DS.attr('boolean'),
   
@@ -11,9 +11,13 @@ MyTalk.User = DS.Model.extend({
     return { username:this.get('username'), password:this.get('online') };
   },
  
-  gravatar: function() {
-    return '' + this.get('MD5email');
-  }.property('MD5email')
+  avatarTiny: function() {
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=identicon';
+  }.property('md5'),
+
+  avatarBig: function() {
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=identicon';
+  }.property('md5')
 
 });
 

@@ -80,7 +80,7 @@
 	font-size: 1.5em;
 	height:20px;
 	margin-right: 20px;
-	width: 50%;
+	width: 45%;
 	border-radius: 40px;
 	padding:10px 37px 10px 20px;
 	background: #fff url("../img/search.png") right 15px center no-repeat; 
@@ -127,20 +127,6 @@
 	text-align: center;
 }
 
-#blacklist{
-	background: url("../img/Pdelete_user.png") left 25px center no-repeat;
-}
-#blacklist div{
-	padding-left:26px;
-}
-
-.allcontacs{
-	background: url("../img/allcontacts.png") left 25px center no-repeat;
-}
-.allcontacs div{
-	padding-left:26px;
-}
-
 #utenti .content  ul li{
 	margin-left: 3px;
 	padding: 5px 10px;
@@ -161,12 +147,17 @@
 
 #utenti .content ul li>div{
 	padding: 0 25px;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	
 }
 
 #utenti .content ul li>div>div{
 	font-size: 1.7em;
+}
+
+#utenti .content ul li>ul li{
+	padding-right: 8px;
+	padding-left: 4px;
 }
 
 #utenti .content ul li>ul li a{

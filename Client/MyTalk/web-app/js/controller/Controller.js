@@ -1,4 +1,8 @@
-MyTalk.DashboardController = Ember.Controller.extend({});
+MyTalk.DashboardController = Ember.Controller.extend({
+ setupController: function() {
+    this.controllerFor('dashboard').set('model', MyTalk.PersonalData.find());
+  }
+});
 
 MyTalk.IndexController = Ember.ObjectController.extend({
   /*appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),

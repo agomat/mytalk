@@ -170,7 +170,7 @@
       <ul id="userlist"> 
         {{#each user in controller}}
           <li>
-            <img width="48" height="48" {{bindAttr src="user.avatarTiny"}} />
+            <img {{bindAttr src="user.avatarTiny"}} />
             <div>
               <div>{{ user.name }} {{ user.surname }}</div>
                 {{ user.username }}
@@ -202,7 +202,7 @@
     <script type="text/x-handlebars" data-template-name="_dashboard">  
       <div id="menu_container">
         <div id="menu_label">
-          <div>Il tuo nome</div>
+          <img src=""><div>{{ name }}</div>
         </div>
         <div id="menu_area">
           <div id="arrow"></div>

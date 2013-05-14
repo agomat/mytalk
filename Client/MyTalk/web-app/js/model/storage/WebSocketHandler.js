@@ -93,9 +93,18 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
         store.load(MyTalk.List, json);
         var adapter = store.adapterForType(MyTalk.List);
         adapter.didFindMany(store, MyTalk.List, json);
+
+        json = {
+                  "personal_datas": [{ id:1, "username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}] 
+               };
+
+        //store.load(MyTalk.PersonalData, json);
+        //adapter = store.adapterForType(MyTalk.PersonalData);
+        //adapter.didFindMany(store, MyTalk.PersonalData, json);        
+
         $("input[name=username]").val("aaaaaaa");
-        $("input[name=username]").val("aaaaaaa");
-        $("form").first().submit();
+        $("input[name=password]").val("aaaaaaa");
+        //$("form").first().submit();
       }, 1000);
 
 

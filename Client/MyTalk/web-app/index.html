@@ -138,8 +138,8 @@
 
               {{#each ulist in controller}}
                 {{#if ulist.blackList}}
-                 <li>
-                   {{#linkTo "ulist" ulist class="blacklist"}} 
+                 <li id="blacklist">
+                   {{#linkTo "ulist" ulist class=""}} 
                     <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                     <div class="list_name">{{ulist.name}}</div>
                    {{/linkTo}}

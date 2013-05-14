@@ -29,7 +29,7 @@ MyTalk.ListsController = Ember.ArrayController.extend({
   }.property('appState'),
   createList:function(){
 
-    alert();
+    prompt("Digita il nome della nuova lista: ","Scrivi qui il nome della lista");
   },
    newUser: function(currentList) {
         currentList.get('users').createRecord(
@@ -44,8 +44,26 @@ MyTalk.ListsController = Ember.ArrayController.extend({
 
 MyTalk.UlistController = Ember.ObjectController.extend({
   sortProperties: ['name'],
-  deleteList:function(){
-    alert();
+  deleteList:function(id){
+    l=this.get('content').get('name');
+    var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
+      if(r==true){
+      
+        nextList=MyTalk.List.find();
+        context=this.get('target.router');
+    
+        this.get('content').deleteRecord();
+        //this.get('store').commit();
+
+        nextList.forEach( function(t){
+    
+          if(t.get('name')!='null'){
+        
+            context.replaceWith('ulist', t);
+          }
+        });
+      } 
+    
   },
 
   renameList:function(){
@@ -72,9 +90,47 @@ MyTalk.UsersController = Ember.ArrayController.extend({
 
   deleteUser:function(user){
 
-    alert(user);
-    var c = location.hash.split('/')[2];
-    alert(c);
+    n=MyTalk.User.find(user).get('name');
+    n=n+" ";
+    n=n+MyTalk.User.find(user).get('surname');
+    
+    var r=confirm("Sei sicuro di eliminare l'utente " + n +" dalla lista ?");
+    if(r==true){
+      var c = location.hash.split('/')[2];
+      var list = MyTalk.List.find(c).get('users');
+      list.removeObject( MyTalk.User.find(user) );
+    }
+  },
+  
+  UserToBlacklist:function(user){
+
+    n=MyTalk.User.find(user).get('name');
+    n=n+" ";
+    n=n+MyTalk.User.find(user).get('surname');
+    
+    var r=confirm("Sei sicuro di mettere l'utente " + n +" nella Blacklist ?");
+   
+    if(r==true){
+      
+      var c = location.hash.split('/')[2];
+      var list = MyTalk.List.find(c).get('users');
+      list.removeObject( MyTalk.User.find(user) );
+      
+      blackList = MyTalk.List.find();
+      blackList.forEach( function(t){
+    
+        if(t.get('name')=='Blacklist'){
+        
+          MyTalk.List.find(t.get('id')).get('users').addObject(MyTalk.User.find(user));
+        
+        }
+      });
+    } 
+
+     
   }
+
+
+  
 });
 

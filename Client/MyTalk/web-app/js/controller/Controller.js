@@ -27,11 +27,31 @@ MyTalk.ListsController = Ember.ArrayController.extend({
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
+  
   createList:function(){
 
-    prompt("Digita il nome della nuova lista: ","Scrivi qui il nome della lista");
+    var r = prompt("Digita il nome della nuova lista: ","Scrivi qui il nome della lista");
+    newList=this.get('content');
+    var id = parseInt(this.get('content').get('lastObject').get('id'))+1;
+    newList.forEach( function(t){
+    
+      if(t.get('name')!=r){
+        
+        if(t.get('id')== (id-1)){
+          MyTalk.List.createRecord({id: id,name:r,});
+        }
+      }
+      else{
+
+        alert("Esiste già una lista con questo nome, cambialo.");
+      }
+    });
+    
+    
+    
   },
-   newUser: function(currentList) {
+   
+  newUser: function(currentList) {
         currentList.get('users').createRecord(
           {username:'New User from List', online: true}
           );

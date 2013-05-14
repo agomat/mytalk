@@ -18,5 +18,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/WebSocket"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Java-Websocket"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

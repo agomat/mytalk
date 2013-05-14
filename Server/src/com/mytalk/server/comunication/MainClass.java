@@ -21,8 +21,15 @@ package com.mytalk.server.comunication;
 public class MainClass {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Receiver receiver=new Receiver();
+		Thread receiverThread= new Thread(receiver);
+		Sender sender=new Sender();
+		Thread senderThread=new Thread(sender);
+		Dispatcher dispatcher=new Dispatcher();
+		Thread dispatcherThread=new Thread(dispatcher);
+		receiverThread.start();
+		senderThread.start();
+		dispatcherThread.start();
 	}
 
 }

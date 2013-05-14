@@ -21,9 +21,20 @@ package com.mytalk.server.comunication;
 import java.util.Vector;
 
 public class Buffer {
+	
+	private Buffer(){
+		bufferIncoming=new Vector<String>();
+		bufferOutgoing=new Vector<String>();
+	}
 
-	Vector<String> bufferIncoming;
-	Vector<String> bufferOutgoing;
+	private Vector<String> bufferIncoming;
+	private Vector<String> bufferOutgoing;
+	
+	private static final Buffer instance = new Buffer();
+	
+	public static Buffer getInstance() {
+        return instance;
+    }
 	
 	public void insertIncoming(String packet){
 		synchronized(bufferIncoming){

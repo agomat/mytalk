@@ -20,45 +20,39 @@ package com.mytalk.server.comunication;
 
 import java.util.Vector;
 
-public class Buffer {
+public abstract class Buffer {
 	
-	private Buffer(){
-		bufferIncoming=new Vector<String>();
-		bufferOutgoing=new Vector<String>();
+	private Vector<Runnable> consumers;
+	
+	protected Vector<Object> buffer;
+	
+	public Buffer(){
+		buffer=new Vector<Object>();
 	}
-
-	private Vector<String> bufferIncoming;
-	private Vector<String> bufferOutgoing;
 	
-	private static final Buffer instance = new Buffer();
-	
-	public static Buffer getInstance() {
-        return instance;
-    }
-	
-	public void insertIncoming(String packet){
-		synchronized(bufferIncoming){
-			bufferIncoming.add(packet);
+	public synchronized void waitConsumers(){
+		for(int i=0;i<consumers.size();i++){
+			consumers.get(i).wait();
 		}
 	}
 	
-	public String getIncoming(){
-		synchronized(bufferIncoming){
-			int lastIndex=bufferIncoming.size();
-			return bufferIncoming.remove(lastIndex);
+	public synchronized void notifyConsumers(){
+		for(int i=0;i<consumers.size();i++){
+			consumers.get(i).notify();
 		}
 	}
 	
-	public void insertOutgoing(String packet){
-		synchronized(bufferOutgoing){
-			bufferOutgoing.add(packet);
-		}
+	public synchronized void registerConsumer(Runnable thread){
+		consumers.add(thread);
 	}
 	
-	public String getOutgoing(){
-		synchronized(bufferOutgoing){
-			int lastIndex=bufferOutgoing.size();
-			return bufferOutgoing.remove(lastIndex);
-		}
+	public synchronized void push(Object obj){
+		buffer.add(obj);
+	}
+	
+	public synchronized Object pop(){
+		int lastIndex=buffer.size();
+		Object obj=buffer.remove(lastIndex);
+		return obj;
 	}
 }

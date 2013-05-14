@@ -1,5 +1,5 @@
 /**
-* Filename: Initializer.java
+* Filename: MainClass.java
 * Package: com.mytalk.server.comunication
 * Author: Nicolò Mazzucato
 * Date: 2013-05-14
@@ -18,9 +18,11 @@
 
 package com.mytalk.server.comunication;
 
-public class Initializer {
+public class MainClass {
 
-	public static void main(String args[]){
-		
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
 	}
+
 }

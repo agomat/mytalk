@@ -26,20 +26,28 @@ public class Buffer {
 	Vector<String> bufferOutgoing;
 	
 	public void insertIncoming(String packet){
-		bufferIncoming.add(packet);
+		synchronized(bufferIncoming){
+			bufferIncoming.add(packet);
+		}
 	}
 	
 	public String getIncoming(){
-		int lastIndex=bufferIncoming.size();
-		return bufferIncoming.remove(lastIndex);
+		synchronized(bufferIncoming){
+			int lastIndex=bufferIncoming.size();
+			return bufferIncoming.remove(lastIndex);
+		}
 	}
 	
 	public void insertOutgoing(String packet){
-		bufferOutgoing.add(packet);
+		synchronized(bufferOutgoing){
+			bufferOutgoing.add(packet);
+		}
 	}
 	
 	public String getOutgoing(){
-		int lastIndex=bufferOutgoing.size();
-		return bufferOutgoing.remove(lastIndex);
+		synchronized(bufferOutgoing){
+			int lastIndex=bufferOutgoing.size();
+			return bufferOutgoing.remove(lastIndex);
+		}
 	}
 }

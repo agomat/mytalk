@@ -102,7 +102,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     }
   },
   
-  UserToBlacklist:function(user){
+  userToBlacklist:function(user){
 
     n=MyTalk.User.find(user).get('name');
     n=n+" ";

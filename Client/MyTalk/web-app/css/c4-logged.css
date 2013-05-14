@@ -111,7 +111,7 @@
 	border-color: #888;
 }
 
-#liste .content a:active{
+#liste .content a:active, #liste .content .active{
 	border-color: #aaa !important;
 	box-shadow: 1px 1px 0 0 #00ba00 inset;
 }
@@ -126,20 +126,20 @@
 	text-align: center;
 }
 
-#blacklist{
+.blacklist{
 	background: url("../img/Pdelete_user.png") left 25px center no-repeat;
 }
-#blacklist div{
+.blacklist div{
 	padding-left:26px;
 }
-/*
-#allcontacs{
+
+.allcontacs{
 	background: url("../img/allcontacts.png") left 25px center no-repeat;
 }
-#allcontacs div{
+.allcontacs div{
 	padding-left:26px;
 }
-*/
+
 #utenti .content  ul li{
 	margin-left: 3px;
 	padding: 5px 10px;

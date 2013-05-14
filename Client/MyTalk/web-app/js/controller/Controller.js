@@ -20,9 +20,11 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }
 });
 
+
+
 MyTalk.ListsController = Ember.ArrayController.extend({
   sortProperties: ['name'],
-  
+
   createList:function(){
 
     alert();

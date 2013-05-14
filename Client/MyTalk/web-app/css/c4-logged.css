@@ -127,6 +127,24 @@
 	text-align: center;
 }
 
+#blacklist a{
+	background-image: url("../img/Pdelete_user.png");
+	background-repeat: no-repeat;
+	background-position: left 12px center;
+}
+#blacklist div:nth-child(2){
+	padding-left:26px;
+}
+
+#allcontacs a{
+	background-image: url("../img/allcontacts.png");
+	background-repeat: no-repeat;
+	background-position: left 12px center;
+}
+#allcontacs div:nth-child(2){
+	padding-left:26px;
+}
+
 #utenti .content  ul li{
 	margin-left: 3px;
 	padding: 5px 10px;

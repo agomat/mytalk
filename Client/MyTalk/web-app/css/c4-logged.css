@@ -3,7 +3,7 @@
 	border-radius: 5px;
 	height: 700px;
 	width: 100%;
-	background-color: #F2F4FF;
+	background-color: rgb(252, 252, 252);
 } 
 
 #logged_content a{
@@ -102,7 +102,7 @@
 	height: 2em;
 	padding: 3px 10px;
 	margin: 5px 0 5px 5%;
-	border:1px solid #fff;
+	border:1px solid rgb(252, 252, 252);
 	border-radius: 10px;
 	overflow: hidden;
 }
@@ -126,10 +126,10 @@
 	text-align: center;
 }
 
-.blacklist{
+#blacklist{
 	background: url("../img/Pdelete_user.png") left 25px center no-repeat;
 }
-.blacklist div{
+#blacklist div{
 	padding-left:26px;
 }
 

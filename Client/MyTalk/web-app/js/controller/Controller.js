@@ -1,11 +1,11 @@
 MyTalk.DashboardController = Ember.Controller.extend({});
 
 MyTalk.IndexController = Ember.ObjectController.extend({
-  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
+  /*appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
-  }.property('appState'),
+  }.property('appState'),*/
   login:function(user,pass) {
     MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
     // se autenticato:
@@ -20,11 +20,13 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }
 });
 
-
-
 MyTalk.ListsController = Ember.ArrayController.extend({
   sortProperties: ['name'],
-
+  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
+  appState: null,
+  isAuthenticated: function () {
+    return (this.get('appState') == 'isAuthenticated');
+  }.property('appState'),
   createList:function(){
 
     alert();

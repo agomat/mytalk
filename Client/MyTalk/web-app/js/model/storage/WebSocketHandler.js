@@ -41,9 +41,11 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
     this.ws.all.onmessage = function(data) {
       console.log('WS: New message arrived from server');        // <---------------------------
      
-   // popolamento per campese
 
-    var json =      {
+      Ember.run.later(this, function(){
+      // popolamento per campese
+
+      var json =      {
                     "lists": [
                                      { "id": 1, "name" : "Amici", "user_ids" : [1,2,3,4,5,6] },
                                      { "id": 2, "name" : "Familiari", "user_ids" : [7,8,9,10] },
@@ -87,10 +89,12 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
                              ]
                     };
 
-      var store = DS.get("defaultStore");
-      store.load(MyTalk.List, json);
-      var adapter = store.adapterForType(MyTalk.List);
-      adapter.didFindMany(store, MyTalk.List, json);
+        var store = DS.get("defaultStore");
+        store.load(MyTalk.List, json);
+        var adapter = store.adapterForType(MyTalk.List);
+        adapter.didFindMany(store, MyTalk.List, json);
+      }, 2000);
+
 
       return;
       var store = DS.get('defaultStore'),

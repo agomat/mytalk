@@ -63,7 +63,7 @@
     <script src="js/model/modelstruct/Authentication.js"></script>
     <script src="js/model/modelstruct/PersonalData.js"></script>
     
-     <script src="js/model/modelstruct/User.js"></script>
+    <script src="js/model/modelstruct/User.js"></script>
     <script src="js/model/modelstruct/List.js"></script>
    
     <script src="js/model/modelstruct/Call.js"></script>
@@ -90,7 +90,6 @@
       {{ partial register }}
     </script>
 
-   
     <script type="text/x-handlebars" data-template-name="lists">
       {{ partial header }}
         <div id="logged_content" class="scroll_content">
@@ -100,13 +99,8 @@
           </div>
         </div>
     </script>
-    
-    
-
 
     <script type="text/x-handlebars" data-template-name="_listst">
-      
-
       <div id="liste">
         <div class="header">
           <h5>Le Tue Liste</h5>
@@ -118,8 +112,8 @@
 
               {{#each ulist in controller}}
                 {{#if ulist.generalList}}
-                  <li>
-                   {{#linkTo "ulist" ulist class="allcontacts"}} 
+                  <li id="allcontacs">
+                   {{#linkTo "ulist" ulist}} 
                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                    <div class="list_name">{{ulist.name}} </div>{{/linkTo}}
                   </li>
@@ -129,7 +123,7 @@
               {{#each ulist in controller}}
                 {{#if ulist.customList}}
                  <li>
-                   {{#linkTo "ulist" ulist class=""}} 
+                   {{#linkTo "ulist" ulist}} 
                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                    <div class="list_name">{{ulist.name}}</div>{{/linkTo}}
                  </li>
@@ -139,7 +133,7 @@
               {{#each ulist in controller}}
                 {{#if ulist.blackList}}
                  <li id="blacklist">
-                   {{#linkTo "ulist" ulist class=""}} 
+                   {{#linkTo "ulist" ulist}} 
                     <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                     <div class="list_name">{{ulist.name}}</div>
                    {{/linkTo}}
@@ -150,18 +144,15 @@
             </ul>
           </div>
       </div>
-      
     </script>
 
+    <script type="text/x-handlebars" data-template-name="lists/index">
+      <h2>Seleziona Una lista</h2>
+    </script>
 
-<script type="text/x-handlebars" data-template-name="lists/index">
-  <h2>Seleziona Una lista</h2>
-
-</script>
-
-<script type="text/x-handlebars" data-template-name="ulist">
-  <div class="header">
-    <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
+    <script type="text/x-handlebars" data-template-name="ulist">
+      <div class="header">
+        <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
           <div id="list_option">
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
             <div id="list_button">
@@ -169,40 +160,31 @@
               <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
             </div>
           </div>
-  </div><div class="content">
+      </div>
+      <div class="content">
           {{ render "users" users }}
-        
-    
-</div>
+      </div>
+    </script>
 
-</script>
-
-<script type="text/x-handlebars" data-template-name="users">
-    
-   <ul id="userlist"> 
-    {{#each user in controller}}
-         
-   
-
-            <li>
-              <img width="48" height="48" src="http://www.gravatar.com/avatar/{{ user.avatarTiny }}?s=48&d=identicon" title="{{ user.name }} {{ user.surname }}" alt="{{ user.name }} {{ user.surname }}"/>
-              <div>
-                <div>{{ user.name }} {{ user.surname }}</div>
+    <script type="text/x-handlebars" data-template-name="users">  
+      <ul id="userlist"> 
+        {{#each user in controller}}
+          <li>
+            <img width="48" height="48" src="http://www.gravatar.com/avatar/{{ user.avatarTiny }}?s=48&d=identicon" title="{{ user.name }} {{ user.surname }}" alt="{{ user.name }} {{ user.surname }}" />
+            <div>
+              <div>{{ user.name }} {{ user.surname }}</div>
                 {{ user.username }}
-              </div>
+            </div>
               <ul>
                 <li><a class="call_user" href="#"></a></li>
                 <li><a class="add_user" href="#"></a></li>
                 <li><a class="blacklist_user" href="#"></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
               </ul>
-            </li>
-             
-          
-
-{{/each}}</ul>
-</script>
-<!--<a href="#" {{ action new }}> Click to add a user</a><font style="color:green"></font><br />-->
+          </li>
+        {{/each}}
+      </ul>
+    </script>
 
     <script type="text/x-handlebars" data-template-name="_header">
       <div id="header">
@@ -210,7 +192,6 @@
           <h1>MyTalk</h1>
           <h2>La videochiamata come piace a te!</h2>
         </div>
-          {{ isAuthenticated }}
         {{#if isAuthenticated}}
           {{ partial dashboard }}
         {{else}}
@@ -218,9 +199,9 @@
         {{/if}}
       </div>
     </script>
+
     <script type="text/x-handlebars" data-template-name="_dashboard">  
       <div id="menu_container">
-        {{ partial callip }}
         <div id="menu_label">
           <div>Il tuo nome</div>
         </div>

@@ -14,7 +14,7 @@ MyTalk.StateManager = Ember.StateManager.create({
     },
     login: function (manager, credentials) {
       manager.transitionTo('isAuthenticated');
-      //MyTalk.Router.router.transitionTo('listr');
+      MyTalk.Router.router.transitionTo('listr');
     }
   }),
   isBusy: Ember.State.create({

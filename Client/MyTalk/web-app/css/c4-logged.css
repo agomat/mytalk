@@ -103,17 +103,18 @@
 	padding: 3px 10px;
 	margin: 5px 0 5px 5%;
 	border:1px solid rgb(252, 252, 252);
-	border-radius: 10px;
+	border-radius: 4px;
 	overflow: hidden;
 }
 
 #liste .content a:hover{
-	border-color: #888;
+	background-color: #eeeeee;
 }
 
 #liste .content a:active, #liste .content .active{
-	border-color: #aaa !important;
-	box-shadow: 1px 1px 0 0 #00ba00 inset;
+	color: white;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+	background-color: rgb(0,194,0) !important;
 }
 
 #liste .content .list_name{

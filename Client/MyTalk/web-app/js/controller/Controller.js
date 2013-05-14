@@ -1,6 +1,6 @@
-MyTalk.DashboardController = Ember.Controller.extend({
- setupController: function() {
-    this.controllerFor('dashboard').set('model', MyTalk.PersonalData.find());
+MyTalk.DashboardController = Ember.ObjectController.extend({
+ setupController: function(controller, model) {
+    this.controllerFor('PersonalData').set('content', MyTalk.PersonalData.find(0));
   }
 });
 

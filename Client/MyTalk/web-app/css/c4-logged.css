@@ -158,6 +158,7 @@
 #userlist img{
 	width: 48px;
 	height: 48px;
+	border-radius: 3px;
 }
 
 #utenti .content ul li>ul>li, #utenti .content ul li img, #utenti .content ul li>div{

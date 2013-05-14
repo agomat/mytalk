@@ -33,14 +33,22 @@ MyTalk.ListsRoute = Ember.Route.extend({
  
   renderTemplate: function(controller, model) {
     this.render('lists');
-    //this.render('listscontent'); 
-    /*this.render('spaces',{
-      outlet:'spaces',
-      into:'logged'
-    });*/
   }
 });
 
 
-
+MyTalk.ListsIndexRoute = Ember.Route.extend({
+    redirect: function () {
+      firstItem = this.controllerFor('lists').get('content');
+      var context = this;
+    
+      firstItem.forEach( function(t){
+    
+        if(t.get('name')=='Tutti i contatti'){
+        
+          context.replaceWith('ulist', t);
+        }
+      });
+    }
+});
 

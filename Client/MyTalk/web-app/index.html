@@ -101,9 +101,7 @@
         </div>
     </script>
     
-    <script type="text/x-handlebars" data-template-name="listscontent">
-      
-    </script>
+    
 
 
     <script type="text/x-handlebars" data-template-name="_listst">
@@ -120,8 +118,8 @@
 
               {{#each ulist in controller}}
                 {{#if ulist.generalList}}
-                  <li id="allcontacs">
-                   {{#linkTo "ulist" ulist}} 
+                  <li>
+                   {{#linkTo "ulist" ulist class="allcontacts"}} 
                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                    <div class="list_name">{{ulist.name}} </div>{{/linkTo}}
                   </li>
@@ -131,7 +129,7 @@
               {{#each ulist in controller}}
                 {{#if ulist.customList}}
                  <li>
-                   {{#linkTo "ulist" ulist}} 
+                   {{#linkTo "ulist" ulist class=""}} 
                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                    <div class="list_name">{{ulist.name}}</div>{{/linkTo}}
                  </li>
@@ -140,8 +138,8 @@
 
               {{#each ulist in controller}}
                 {{#if ulist.blackList}}
-                 <li id="blacklist">
-                   {{#linkTo "ulist" ulist}} 
+                 <li>
+                   {{#linkTo "ulist" ulist class="blacklist"}} 
                     <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                     <div class="list_name">{{ulist.name}}</div>
                    {{/linkTo}}

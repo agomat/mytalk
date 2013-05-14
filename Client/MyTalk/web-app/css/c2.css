@@ -63,9 +63,9 @@
 	display:block; 
 	border:2px solid #00c200;  
 	border-radius:10px;
-	box-shadow: 2px 2px 3px #9e9e9e;
+	box-shadow: 2px 2px 5px 3px #aeaeae;
 	padding: 15px;
-  background: #fff url("../img/stripes_reverse.png") repeat;
+	background-color: #fff;
 }
 
 #menu_container fieldset{

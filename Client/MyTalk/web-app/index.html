@@ -112,7 +112,7 @@
 
               {{#each ulist in controller}}
                 {{#if ulist.generalList}}
-                  <li id="allcontacs">
+                  <li>
                    {{#linkTo "ulist" ulist}} 
                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
                    <div class="list_name">{{ulist.name}} </div>{{/linkTo}}
@@ -132,9 +132,10 @@
 
               {{#each ulist in controller}}
                 {{#if ulist.blackList}}
-                 <li id="blacklist">
+                 <li>
                    {{#linkTo "ulist" ulist}} 
                     <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
+                    <img src="img/Pdelete_user.png" alt="" />
                     <div class="list_name">{{ulist.name}}</div>
                    {{/linkTo}}
                  </li>
@@ -170,7 +171,7 @@
       <ul id="userlist"> 
         {{#each user in controller}}
           <li>
-            <img width="48" height="48" src="http://www.gravatar.com/avatar/{{ user.avatarTiny }}?s=48&d=identicon" title="{{ user.name }} {{ user.surname }}" alt="{{ user.name }} {{ user.surname }}" />
+            <img width="48" height="48" {{bindAttr src="user.avatarTiny"}} />
             <div>
               <div>{{ user.name }} {{ user.surname }}</div>
                 {{ user.username }}
@@ -190,7 +191,6 @@
       <div id="header">
         <div id="logo">
           <h1>MyTalk</h1>
-          <h2>La videochiamata come piace a te!</h2>
         </div>
         {{#if isAuthenticated}}
           {{ partial dashboard }}

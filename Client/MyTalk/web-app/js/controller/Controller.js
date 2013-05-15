@@ -1,9 +1,3 @@
-// MyTalk.DashboardController = Ember.ObjectController.extend({
-//  setupController: function(controller, model) {
-//     this.controllerFor('PersonalData').set('content', MyTalk.PersonalData.find(0));
-//   }
-// });
-
 MyTalk.IndexController = Ember.ObjectController.extend({
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
@@ -25,8 +19,12 @@ MyTalk.IndexController = Ember.ObjectController.extend({
 });
 
 MyTalk.LoggedController = Ember.ArrayController.extend({
+  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
+  appState: null,
+  isAuthenticated: function () {
+    return (this.get('appState') == 'isAuthenticated');
+  }.property('appState'),
   sortProperties: ['name'],
-  
   createList:function(){
 
     var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
@@ -34,6 +32,7 @@ MyTalk.LoggedController = Ember.ArrayController.extend({
     var test=true;
 
     list.forEach(function(t){
+      console.debug(t.get('name'));
       if(t.get('name')==newName){
         test=false;
       }
@@ -48,24 +47,27 @@ MyTalk.LoggedController = Ember.ArrayController.extend({
       }
     }
 
-  },
-  
-    deleteList:function(id){
+  }
+   
+});
+
+MyTalk.ListController = Ember.ObjectController.extend({
+  sortProperties: ['name'],
+  deleteList:function(id){
     var l=this.get('content').get('name');
     var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
       if(r==true){
       
-        var List=MyTalk.List.find(4);
+        var list=MyTalk.List.find(0);
         var context=this.get('target.router');
         this.get('content').deleteRecord();
-        context.replaceWith('ulist', List);
+        context.replaceWith('list', list);
           
       } 
     
   },
  
   renameList:function(){
-    alert(2);
     var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
     var list=MyTalk.List.find();
     var test=true;
@@ -85,7 +87,7 @@ MyTalk.LoggedController = Ember.ArrayController.extend({
       }
     }
   },
-   
+  
   addUser: function(currentList) {
           currentList.get('users').createRecord(
           {username:'New User from List', online: true}
@@ -93,51 +95,6 @@ MyTalk.LoggedController = Ember.ArrayController.extend({
   }
 
 });
-
-/*
-MyTalk.UlistController = Ember.ObjectController.extend({
-  sortProperties: ['name'],
-  deleteList:function(id){
-    var l=this.get('content').get('name');
-    var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
-      if(r==true){
-      
-        var List=MyTalk.List.find(4);
-        var context=this.get('target.router');
-        this.get('content').deleteRecord();
-        context.replaceWith('ulist', List);
-          
-      } 
-    
-  },
- 
-  renameList:function(){
-    var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
-    var list=MyTalk.List.find();
-    var test=true;
-
-    list.forEach( function(t){
-      if(t.get('name')==newName){
-        test=false;
-      }
-    });
-
-    if(newName!="Nome della lista"){
-      if(test==true){
-            this.get('content').setProperties({name:newName});
-      }
-      else if(newName!=null){
-        alert("Esiste già una lista con questo nome");
-      }
-    }
-  },
-
- setupController: function() {
-    this.controllerFor('ulist').set('model', MyTalk.List.find());
-  }  
-
-});
- */
 
    
 MyTalk.UsersController = Ember.ArrayController.extend({

@@ -103,10 +103,6 @@
           <h5>Le Tue Liste</h5>
           <a href="#" class="common_button"{{action "createList"}}>Crea una Nuova Lista</a>
           </div>
-          <div id="list_button">
-            <a href="#" class="common_button" {{action "deleteList" id }}>Rimuovi</a>
-            <a href="#" class="common_button" {{action "renameList" id }}>Rinomina</a>
-          </div>
           <div class="content">
             <ul>
 
@@ -145,7 +141,7 @@
           </div>
       </div>
       <div id="utenti">
-        {{outlet}}
+        {{ outlet }}
       </div>
     </script>
 
@@ -154,6 +150,10 @@
         <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
           <div id="list_option">
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
+            <div id="list_button">
+              <a href="#" class="common_button" {{action "deleteList" id }}>Rimuovi</a>
+              <a href="#" class="common_button" {{action "renameList" id }}>Rinomina</a>
+            </div>
           </div>
       </div>
       <div class="content">

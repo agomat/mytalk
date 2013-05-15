@@ -28,6 +28,7 @@ MyTalk.ListsController = Ember.ArrayController.extend({
   sortProperties: ['name'],
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
+  
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
@@ -36,30 +37,30 @@ MyTalk.ListsController = Ember.ArrayController.extend({
 
     var r = prompt("Digita il nome della nuova lista: ","Scrivi qui il nome della lista");
     newList=this.get('content');
-    var id = parseInt(this.get('content').get('lastObject').get('id'))+1;
+    var ids = parseInt(this.get('content').get('lastObject').get('id'))+1;
+    var test=false;
     newList.forEach( function(t){
     
-      if(t.get('name')!=r){
-        
-        if(t.get('id')== (id-1)){
-          MyTalk.List.createRecord({id: id,name:r,});
-        }
-      }
-      else{
-
-        alert("Esiste già una lista con questo nome, cambialo.");
+      if(t.get('name')==r){
+        test=true;
       }
     });
-    
-    
-    
+
+    if(test==false){
+
+          MyTalk.List.createRecord({id: ids,name:r,});
+    }
+    else{
+
+      alert("Esiste già una lista con questo nome, cambialo.");
+    }
   },
    
-  newUser: function(currentList) {
-        currentList.get('users').createRecord(
+  addUser: function(currentList) {
+          currentList.get('users').createRecord(
           {username:'New User from List', online: true}
           );
-    },
+  },
 
   
 
@@ -89,9 +90,32 @@ MyTalk.UlistController = Ember.ObjectController.extend({
       } 
     
   },
-
+ 
   renameList:function(){
-    alert();
+    var n=this.get('content').get('name');
+    if(n=="Tutti i contatti" || n=="Blacklist"){
+      alert('Non è possibile modificare il nome della lista '+n+'.');
+    }
+    else{
+      var r = prompt("Digita il  nuovo nome della lista: ","Scrivi qui il nuovo nome");
+      newList=MyTalk.List.find();
+      var test=false;
+      newList.forEach( function(t){
+    
+        if(t.get('name')==r){
+          test=true;
+        }
+      });
+        
+        if(test==false){
+          this.get('content').setProperties({name:r});
+        }
+        else{
+
+        alert("Esiste già una lista con questo nome, cambialo.");
+        }
+    }
+
   },
 
  setupController: function() {
@@ -101,7 +125,7 @@ MyTalk.UlistController = Ember.ObjectController.extend({
 });
  
 
-    
+   
 MyTalk.UsersController = Ember.ArrayController.extend({
     new: function() {
     this.content.createRecord({

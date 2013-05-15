@@ -19,19 +19,26 @@
 
 package com.mytalk.server.comunication;
 
+import java.net.InetSocketAddress;
+import java.util.Collection;
+import java.util.Iterator;
+import com.mytalk.server.exceptions.*;
+
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import com.mytalk.server.exceptions.IpNotFound;
+
 public class Receiver extends WebSocketServer implements Runnable {
 
-	public void run(){
-			
+	public Receiver(InetSocketAddress address) {
+		super(address);
 	}
 	
 	@Override
-	public void onOpen(WebSocket arg0, ClientHandshake arg1) {
-		addConnection(arg0); //by WebSocketServer, riga 512
+	public void onOpen(WebSocket ws, ClientHandshake hs) {
+		boolean b=addConnection(ws);
 	}
 	
 	@Override
@@ -56,12 +63,29 @@ public class Receiver extends WebSocketServer implements Runnable {
 	}
 
 	@Override
-	public void onMessage(WebSocket arg0, String arg1) {
-		// manda l'IP e JSON nel buffer
-		BufferIncoming x=BufferIncoming.getInstance();	//provvisorio
-		x.pushPacket(arg0.getRemoteSocketAddress().getAddress().getHostAddress(), arg1); //provvisorio
+	public void onMessage(WebSocket conn, String msg) {
+		BufferIncoming bufferIn=BufferIncoming.getInstance();
+		Message newMsg=new Message(conn.getRemoteSocketAddress().getAddress().getHostAddress(),msg);
+		bufferIn.push(newMsg);
 	}
 
-	
+	public WebSocket searchConnection(String ip) throws IpNotFound{
+		Collection<WebSocket> connections=connections();
+		Iterator<WebSocket> iterator = connections.iterator();
+		WebSocket wsFound=null;
+		while (iterator.hasNext()) {
+			WebSocket ws=iterator.next();
+			String wsIp=ws.getRemoteSocketAddress().getAddress().getHostAddress();
+			if(wsIp.equals(ip)){
+				wsFound=ws;
+			}
+		}
+		if(wsFound!=null){
+			return wsFound;
+		}else{
+			throw new IpNotFound();
+		}
+		
+	}
 
 }

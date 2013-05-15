@@ -19,23 +19,31 @@
 
 package com.mytalk.server.comunication;
 
-public class Sender extends WebSocketServer implements Runnable {
+import org.java_websocket.WebSocket;
 
-	BufferOutcoming x=BufferOutcoming.getInstance();
+import com.mytalk.server.exceptions.IpNotFound;
 
+public class Sender implements Runnable {
+
+	Receiver receiver;
+	
+	BufferOutgoing bufferOut=BufferOutgoing.getInstance();
+
+	public void registerReceiver(Receiver rec){
+		receiver=rec;
+	}
+	
 	@Override
 	public void run() {
 		while(true){
-			String pack=x.popPacket();
-			Collection<WebSocket> con = connections();
-			boolean trov=false;
-			synchronized (con) {
-			for( WebSocket c : con && !trov) {
-				if(IP.equals(c.getRemoteSocketAddress().getAddress().getHostAddress())){
-					c.send(pack);
-					trov=true;
-					}
-				}
+			Message pack=bufferOut.pop();
+			String ip= pack.getIp();
+			try{
+				WebSocket ws=receiver.searchConnection(ip);
+				String json=pack.getJson();
+				ws.send(json);
+			}catch(IpNotFound exc){
+				exc.printStackTrace();
 			}
 		}
 	}

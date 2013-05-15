@@ -203,6 +203,10 @@
       {{#if isAuthenticated}}
         <div id="menu_container">
           <div id="menu_label">
+            {{controllers.personaldata}}
+          {{#each personaldata in controllers.personaldata}}
+                personaldata.name
+          {{/each}}
             <img src=""><div>{{ name }}</div>
           </div>
           <div id="menu_area">

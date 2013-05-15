@@ -14,9 +14,9 @@ MyTalk.IndexRoute = Ember.Route.extend({
 
 MyTalk.LoggedRoute = Ember.Route.extend({
   model: function(params) {
-    return MyTalk.List.find(params.list_id);
+    // alert(params.list_id); max: occhio è undefined! by Mattia
+    return MyTalk.List.find(params.list_id); 
   }
-  
 });
 
 MyTalk.LoggedIndexRoute = Ember.Route.extend({

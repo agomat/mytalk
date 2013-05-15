@@ -1,9 +1,11 @@
 MyTalk.IndexController = Ember.ObjectController.extend({
+  /* max: Non ricordo per che motivo servisse. Mattia */
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
+
   login:function(user,pass) {
     MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
     // se autenticato:
@@ -19,6 +21,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
 });
 
 MyTalk.LoggedController = Ember.ArrayController.extend({
+  needs: ['PersonalData'],
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
   isAuthenticated: function () {
@@ -148,8 +151,9 @@ MyTalk.UsersController = Ember.ArrayController.extend({
 
      
   }
-
-
-  
 });
 
+MyTalk.PersonalDataController = Ember.ObjectController.extend({
+
+});
+  

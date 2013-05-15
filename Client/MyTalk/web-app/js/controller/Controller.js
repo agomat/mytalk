@@ -35,25 +35,26 @@ MyTalk.ListsController = Ember.ArrayController.extend({
   
   createList:function(){
 
-    var r = prompt("Digita il nome della nuova lista: ","Scrivi qui il nome della lista");
-    newList=this.get('content');
-    var ids = parseInt(this.get('content').get('lastObject').get('id'))+1;
-    var test=false;
-    newList.forEach( function(t){
-    
-      if(t.get('name')==r){
-        test=true;
+    var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
+    var List=this.get('content');
+    var test=true;
+
+    List.forEach( function(t){
+      if(t.get('name')==newName){
+        test=false;
       }
     });
 
-    if(test==false){
-
-          MyTalk.List.createRecord({id: ids,name:r,});
+    if(newName!="Nome della lista"){
+      if(test==true){
+            var ids = parseInt(this.get('content').get('lastObject').get('id'))+1;
+            MyTalk.List.createRecord({id:ids, name:newName,});
+      }
+      else if(newName!=null){
+        alert("Esiste già una lista con questo nome");
+      }
     }
-    else{
 
-      alert("Esiste già una lista con questo nome, cambialo.");
-    }
   },
    
   addUser: function(currentList) {
@@ -70,52 +71,38 @@ MyTalk.ListsController = Ember.ArrayController.extend({
 MyTalk.UlistController = Ember.ObjectController.extend({
   sortProperties: ['name'],
   deleteList:function(id){
-    l=this.get('content').get('name');
+    var l=this.get('content').get('name');
     var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
       if(r==true){
       
-        nextList=MyTalk.List.find();
-        context=this.get('target.router');
-    
+        var List=MyTalk.List.find(4);
+        var context=this.get('target.router');
         this.get('content').deleteRecord();
-        //this.get('store').commit();
-
-        nextList.forEach( function(t){
-    
-          if(t.get('name')!='null'){
-        
-            context.replaceWith('ulist', t);
-          }
-        });
+        context.replaceWith('ulist', List);
+          
       } 
     
   },
  
   renameList:function(){
-    var n=this.get('content').get('name');
-    if(n=="Tutti i contatti" || n=="Blacklist"){
-      alert('Non è possibile modificare il nome della lista '+n+'.');
-    }
-    else{
-      var r = prompt("Digita il  nuovo nome della lista: ","Scrivi qui il nuovo nome");
-      newList=MyTalk.List.find();
-      var test=false;
-      newList.forEach( function(t){
-    
-        if(t.get('name')==r){
-          test=true;
-        }
-      });
-        
-        if(test==false){
-          this.get('content').setProperties({name:r});
-        }
-        else{
+    var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
+    var list=MyTalk.List.find();
+    var test=true;
 
-        alert("Esiste già una lista con questo nome, cambialo.");
-        }
-    }
+    list.forEach( function(t){
+      if(t.get('name')==newName){
+        test=false;
+      }
+    });
 
+    if(newName!="Nome della lista"){
+      if(test==true){
+            this.get('content').setProperties({name:newName});
+      }
+      else if(newName!=null){
+        alert("Esiste già una lista con questo nome");
+      }
+    }
   },
 
  setupController: function() {

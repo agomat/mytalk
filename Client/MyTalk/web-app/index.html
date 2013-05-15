@@ -170,12 +170,21 @@
       <ul id="userlist"> 
         {{#each user in controller}}
           <li>
-            <img {{bindAttr src="user.avatarTiny"}} />
+            {{#if user.online}}
+              <img class="online_status" src="img/dot_green.png" />
+            {{else}}
+              <img class="online_status" src="img/dot_grey.png" />
+            {{/if}}
+            <img class="avatar" {{bindAttr src="user.avatarTiny"}} />
             <div>
               <div>{{ user.name }} {{ user.surname }}</div>
                 {{ user.username }}
             </div>
+            {{#if user.online}}
               <ul>
+            {{else}}
+              <ul class="offline_limit"
+            {{/if}}
                 <li><a class="call_user" href="#"></a></li>
                 <li><a class="add_user" href="#"></a></li>
                 <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>

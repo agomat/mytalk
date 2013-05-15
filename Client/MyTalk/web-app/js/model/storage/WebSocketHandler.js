@@ -47,13 +47,13 @@ MyTalk.WebSocketHandler = Ember.Object.extend(MyTalk.IPAddressProxy, MyTalk.Requ
 
       var json =      {
                     "lists": [
+                                     { "id": 0, "name" : "Tutti i contatti", "user_ids" : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30] },
                                      { "id": 1, "name" : "Amici", "user_ids" : [1,14,20,25,16,22] },
                                      { "id": 2, "name" : "Familiari", "user_ids" : [7,19,9,10] },
                                      { "id": 3, "name" : "Blacklist", "user_ids" : [11,12] },
-                                     { "id": 4, "name" : "Tutti i contatti", "user_ids" : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30] },
-                                     { "id": 5, "name" : "Università", "user_ids" : [13,14,15] },
-                                     { "id": 6, "name" : "Lavoro", "user_ids" : [16,17,18,19,20,21,22,23,24] },
-                                     { "id": 7, "name" : "Forum Adesivi", "user_ids" : [25,26,27,28,29,30] },
+                                     { "id": 4, "name" : "Università", "user_ids" : [13,14,15] },
+                                     { "id": 5, "name" : "Lavoro", "user_ids" : [16,17,18,19,20,21,22,23,24] },
+                                     { "id": 6, "name" : "Forum Adesivi", "user_ids" : [25,26,27,28,29,30] },
                              ],
                     "users": [
                                      { "id": 1, "username": "mattia", "online":false, "name": "Mattia", "surname": "Agostinetto", "ip": "192.168.1.2", "md5": "699b1b3f9c23e21f13b2ac9267942b01" },

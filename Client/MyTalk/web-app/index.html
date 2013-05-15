@@ -79,25 +79,10 @@
     <!-- bootstrap RTCAdapter -->
     <script src="js/controller/communicator/PeerConnection.js"></script> 
 
-    <script type="text/javascript">
-    var checklist=false;
-    var test=false;
-    function checkBlack(){
-
-      if(location.hash.split('/')[2]==4)
-        {
-          alert(location.hash.split('/')[2]);
-          checklist=true;
-
-        }
-      else{
-        checklist=false;
-      }
-    }
-    </script>
+    
 
   </head>
-  <body onload="javascript:checkBlack()">
+  <body >
     <script type="text/x-handlebars" data-template-name="index">
       {{ outlet }}
     </script>
@@ -184,8 +169,8 @@
       </div>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="users">  
-      <ul id="userlist"> 
+    <script type="text/x-handlebars" data-template-name="users" >  
+      <ul id="userlist" > 
         {{#each user in controller}}
           <li>
             {{#if user.online}}
@@ -203,7 +188,8 @@
             {{else}}
               <ul class="offline_limit"
             {{/if}}
-            {{#if_eq checklist compare=test}} 
+            {{view.actualList}}
+            {{#if controll }} 
                 <li><a class="call_user" href="#"></a></li>
                 <li><a class="add_user" href="#"></a></li>
                 <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
@@ -214,7 +200,7 @@
                 <li><a class="add_user" href="#"></a></li>
                 
               </ul>
-            {{/if_eq}}  
+            {{/if}}  
                 
           </li>
         {{/each}}

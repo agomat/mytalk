@@ -109,8 +109,23 @@ MyTalk.UlistController = Ember.ObjectController.extend({
 
    
 MyTalk.UsersController = Ember.ArrayController.extend({
-    
-    setupController: function() {
+  
+  controll:true,
+  
+  check:function(){
+
+    if(location.hash.split('/')[2]==4){
+      this.setProperties({controll:false});
+    }
+    else{
+        
+        if(location.hash.split('/')[2]==3){
+            this.setProperties({controll:false});
+        }
+    }
+  },
+  
+  setupController: function() {
     this.controllerFor('users').set('model', MyTalk.User.find());
   } , 
 
@@ -154,7 +169,10 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     } 
 
      
-  }
+  },
+
+    
+    
 
 
   

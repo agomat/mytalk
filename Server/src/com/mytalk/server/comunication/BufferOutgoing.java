@@ -20,7 +20,7 @@ package com.mytalk.server.comunication;
 
 import java.util.Vector;
 
-public class BufferOutgoing{
+public class BufferOutgoing implements Buffer{
 	
 	private Vector<Thread> consumers;
 	

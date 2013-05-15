@@ -84,59 +84,59 @@
       {{ outlet }}
     </script>
 
-    <script type="text/x-handlebars" data-template-name="content">
+    <script type="text/x-handlebars" data-template-name="guest">
       {{ partial header }}
       {{ partial description }}
       {{ partial register }}
     </script>
 
-    <script type="text/x-handlebars" data-template-name="lists">
+    <script type="text/x-handlebars" data-template-name="logged">
       {{ partial header }}
         <div id="logged_content" class="scroll_content">
-          {{partial "listst"}} 
-          <div id="utenti">
-            {{outlet}}
-          </div>
+          {{ partial lists }} 
         </div>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="_listst">
+    <script type="text/x-handlebars" data-template-name="_lists">
       <div id="liste">
         <div class="header">
           <h5>Le Tue Liste</h5>
-
           <a href="#" class="common_button"{{action "createList"}}>Crea una Nuova Lista</a>
+          </div>
+          <div id="list_button">
+            <a href="#" class="common_button" {{action "deleteList" id }}>Rimuovi</a>
+            <a href="#" class="common_button" {{action "renameList" id }}>Rinomina</a>
           </div>
           <div class="content">
             <ul>
 
-              {{#each ulist in controller}}
-                {{#if ulist.generalList}}
+              {{#each list in controller}}
+                {{#if list.generalList}}
                   <li id="allcontacs">
-                   {{#linkTo "ulist" ulist}} 
-                   <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
-                   <div class="list_name">{{ulist.name}} </div>{{/linkTo}}
+                   {{#linkTo "list" list}} 
+                   <div class="online_user"><div>online</div>{{list.online}}/{{list.total}}</div>
+                   <div class="list_name">{{list.name}} </div>{{/linkTo}}
                   </li>
                 {{/if}}
               {{/each}}
               
-              {{#each ulist in controller}}
-                {{#if ulist.blackList}}
+              {{#each list in controller}}
+                {{#if list.blackList}}
                  <li id="blacklist">
-                   {{#linkTo "ulist" ulist}} 
-                    <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
-                    <div class="list_name">{{ulist.name}}</div>
+                   {{#linkTo "list" list}} 
+                    <div class="online_user"><div>online</div>{{list.online}}/{{list.total}}</div>
+                    <div class="list_name">{{list.name}}</div>
                    {{/linkTo}}
                  </li>
                 {{/if}} 
               {{/each}}
               
-              {{#each ulist in controller}}
-                {{#if ulist.customList}}
+              {{#each list in controller}}
+                {{#if list.customList}}
                  <li>
-                   {{#linkTo "ulist" ulist}} 
-                   <div class="online_user"><div>online</div>{{ulist.online}}/{{ulist.total}}</div>
-                   <div class="list_name">{{ulist.name}}</div>{{/linkTo}}
+                   {{#linkTo "list" list}} 
+                   <div class="online_user"><div>online</div>{{list.online}}/{{list.total}}</div>
+                   <div class="list_name">{{list.name}}</div>{{/linkTo}}
                  </li>
                 {{/if}} 
               {{/each}}
@@ -144,21 +144,16 @@
             </ul>
           </div>
       </div>
+      <div id="utenti">
+        {{outlet}}
+      </div>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="lists/index">
-      <h2>Seleziona Una lista</h2>
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="ulist">
+    <script type="text/x-handlebars" data-template-name="list">
       <div class="header">
         <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
           <div id="list_option">
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
-            <div id="list_button">
-              <a href="#" class="common_button" {{action "deleteList" id  }}>Rimuovi</a>
-              <a href="#" class="common_button" {{action "renameList" id }}>Rinomina</a>
-            </div>
           </div>
       </div>
       <div class="content">
@@ -200,69 +195,65 @@
         <div id="logo">
           <h1>MyTalk</h1>
         </div>
-        {{#if isAuthenticated}}
-          {{ partial dashboard }}
-        {{else}}
-          {{ partial login }}
-        {{/if}}
+        {{ partial dashboard }}
       </div>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="_dashboard">  
-      <div id="menu_container">
-        <div id="menu_label">
-          <img src=""><div>{{ name }}</div>
-        </div>
-        <div id="menu_area">
-          <div id="arrow"></div>
-          <div id="menu_content">
-            <div id="auth_content">
-              <h2>Sei collegato come:</h2>
-              <ul>
-                <li>Il tuo nome</li>
-                <li>email@dominio.com</li>
-              </ul>
-              <ul class="separator">
-                <li><img src="img/settings.png"/> <a href="#"> Modifica Profilo </a></li>
-                <li><img src="img/stats.png"/> <a href="#"> Statistiche sulle chiamate </a></li>
-              </ul>
-              <ul class="separator">
-                <li><img src="img/door_out.png"/> <a href="#">Esci</a></li>
-              </ul>
-            </div>
+    <script type="text/x-handlebars" data-template-name="_dashboard">
+      {{#if isAuthenticated}}
+        <div id="menu_container">
+          <div id="menu_label">
+            <img src=""><div>{{ name }}</div>
           </div>
-        </div> 
-      </div>
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="_login">
-      <div id="menu_container">
-        <div id="menu_label">
-          <div>Accedi</div>
-          <img src="img/open_door.png"/>
-        </div>
-        <div id="menu_area" >
-          <div id="arrow"></div>
-          <div id="menu_content">
-            {{#view MyTalk.LoginFormView }}   
-              <fieldset>
-                <legend hidden>Loggati</legend>
+          <div id="menu_area">
+            <div id="arrow"></div>
+            <div id="menu_content">
+              <div id="auth_content">
+                <h2>Sei collegato come:</h2>
                 <ul>
-                  <li>
-                    <label for="email" hidden>Email</label>
-                    {{view MyTalk.LoginUsername valueBinding='view.username'}}
-                  </li>
-                  <li>
-                    <label for="password" hidden>Password</label>
-                    {{view MyTalk.LoginPassword valueBinding='view.password' }}
-                  </li>
+                  <li>Il tuo nome</li>
+                  <li>email@dominio.com</li>
                 </ul>
-                <button type="submit" id="button_login" class="common_button" >Accedi</button>
-              </fieldset>
-              {{/view}}
+                <ul class="separator">
+                  <li><img src="img/settings.png"/> <a href="#"> Modifica Profilo </a></li>
+                  <li><img src="img/stats.png"/> <a href="#"> Statistiche sulle chiamate </a></li>
+                </ul>
+                <ul class="separator">
+                  <li><img src="img/door_out.png"/> <a href="#">Esci</a></li>
+                </ul>
+              </div>
+            </div>
+          </div> 
+        </div>
+      {{else}}
+        <div id="menu_container">
+          <div id="menu_label">
+            <div>Accedi</div>
+            <img src="img/open_door.png"/>
           </div>
-        </div> 
-      </div>
+          <div id="menu_area" >
+            <div id="arrow"></div>
+            <div id="menu_content">
+              {{#view MyTalk.LoginFormView }}   
+                <fieldset>
+                  <legend hidden>Loggati</legend>
+                  <ul>
+                    <li>
+                      <label for="email" hidden>Email</label>
+                      {{view MyTalk.LoginUsername valueBinding='view.username'}}
+                    </li>
+                    <li>
+                      <label for="password" hidden>Password</label>
+                      {{view MyTalk.LoginPassword valueBinding='view.password' }}
+                    </li>
+                  </ul>
+                  <button type="submit" id="button_login" class="common_button" >Accedi</button>
+                </fieldset>
+                {{/view}}
+            </div>
+          </div> 
+        </div>
+      {{/if}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="_register">

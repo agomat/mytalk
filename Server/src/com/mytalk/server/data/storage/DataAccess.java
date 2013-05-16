@@ -531,4 +531,16 @@ public class DataAccess implements IDataAccess{
 			throw new AuthenticationFail();
 		}
 	}
+	
+	//metodo di utilita` per la logic: ritorna un user passando il suo id
+	public User getUserById(int id) throws IdNotFound{
+		UserDAO ud=new UserDAO();
+		User requested=ud.getById(id);
+		if(requested==null){
+			GenericDAO.closeSession();
+			throw new IdNotFound();
+		}
+		GenericDAO.closeSession();
+		return requested;
+	}
 }

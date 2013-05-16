@@ -71,4 +71,6 @@ public interface IDataAccess{
 			public void deleteAccount(User userObj) throws AuthenticationFail;
 			
 			public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding;
+			
+			public User getUserById(int id) throws IdNotFound;
 }

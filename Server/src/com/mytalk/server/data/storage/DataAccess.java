@@ -543,4 +543,33 @@ public class DataAccess implements IDataAccess{
 		GenericDAO.closeSession();
 		return requested;
 	}
+	
+	//metodo di utilita` per la logic: ritorna l'ip di un utente
+	public String getUserIp(String username)throws UserNotLogged{
+		OnlineUserDAO od=new OnlineUserDAO();
+		if(username.isEmpty()){
+			GenericDAO.closeSession();
+			throw new UserNotLogged();
+		}
+		String ip=od.getUserIp(username);
+		if(ip==null){
+			GenericDAO.closeSession();
+			throw new UserNotLogged();
+		}
+		GenericDAO.closeSession();
+		return ip;
+	}
+	
+	//metodo di utilita` per la logic: ritorna l'id di un utente
+	public int getIdFromUsername(String username)throws UserNotExisting{
+		UserDAO ud=new UserDAO();
+		User user=ud.get(username);
+		if(user==null){
+			GenericDAO.closeSession();
+			throw new UserNotExisting();
+		}
+		GenericDAO.closeSession();
+		int id=user.getId();
+		return id;
+	}
 }

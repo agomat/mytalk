@@ -28,6 +28,7 @@ public class BufferOutgoing implements Buffer{
 	
 	private BufferOutgoing(){
 		buffer=new Vector<Message>();
+		consumers=new Vector<Thread>();
 	}
 	
 	public synchronized void waitConsumers() throws InterruptedException{

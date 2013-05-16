@@ -27,15 +27,17 @@ public class User{
 	private String name;
 	private String surname;
 	private String email;
+	private String emailHash;
 
 	public User (){}
 	
-	public User(String us, String pwd, String mail, String n, String s){
+	public User(String us, String pwd, String mail, String n, String s, String eh){
 		username=us;
 		password=pwd;
 		email=mail;
 		name=n;
 		surname=s;
+		emailHash=eh;
 	}
 	
 	public int getId(){
@@ -85,6 +87,14 @@ public class User{
 	public void setEmail(String e){
 		email=e;
 	}
+	
+	public String getEmailHash(){
+		return emailHash;
+	}
+	
+	public void setEmailHash(String e){
+		emailHash=e;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -131,6 +141,13 @@ public class User{
 				return false;
 			}
 		} else if (!username.equals(other.username)) {
+			return false;
+		}
+		if (emailHash == null) {
+			if (other.emailHash != null) {
+				return false;
+			}
+		} else if (!emailHash.equals(other.emailHash)) {
 			return false;
 		}
 		return true;

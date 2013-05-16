@@ -47,6 +47,9 @@ public class UserDAO extends GenericDAO{
 		if(userObj.getEmail()==null){
 			userObj.setEmail(userEntity.getEmail());
 		}
+		if(userObj.getEmailHash()==null){
+			userObj.setEmailHash(userEntity.getEmailHash());
+		}
 		session.update(userObj);
 		t.commit();
 	}	

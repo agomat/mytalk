@@ -45,9 +45,9 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkAutentication() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		User firstTestUser=new User("user0","user0",null,null,null);
-		User secondTestUser=new User("user1","password",null,null,null);
-		User thirdTestUser=new User("random","password",null,null,null);
+		User firstTestUser=new User("user0","user0",null,null,null,null);
+		User secondTestUser=new User("user1","password",null,null,null,null);
+		User thirdTestUser=new User("random","password",null,null,null,null);
 		Class[] args1 = new Class[1];
 		args1[0] = User.class;
 		Method method = DataAccess.class.getDeclaredMethod("authenticateClient",args1);
@@ -85,7 +85,7 @@ public class DataAccessTest {
 	public void checkCheckUserByName() throws AuthenticationFail{
 		String existingUsername="user2";
 		String notExistingUsername="random";
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		
 		//test con username presente nella tabella OnlineUsers
 		boolean result1=dataAccess.checkUserByName(existingUsername, toAuth);
@@ -99,7 +99,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkCreateAccount(){
-		User testUser=new User("user10","user10","user10@mytalk.com","user10","user10");
+		User testUser=new User("user10","user10","user10@mytalk.com","user10","user10","emailhash123123123");
 		
 		//test creazione di un nuovo utente
 		try{
@@ -116,7 +116,7 @@ public class DataAccessTest {
 	
 	@Test(expected = UsernameAlreadyExisting.class)
 	public void checkCreateAccountFail() throws UsernameAlreadyExisting{
-		User testUser=new User("user0","user0","user0@mytalk.com","user0","user0");
+		User testUser=new User("user0","user0","user0@mytalk.com","user0","user0","emailhash123123123");
 		
 		//test creazione di un utente avente un username già usato
 		dataAccess.createAccount(testUser);
@@ -124,7 +124,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkLogin()throws AuthenticationFail{
-		User toAuth=new User("user4","user4",null,null,null);
+		User toAuth=new User("user4","user4",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user4","111.111.111.1");
 		
 		//testo il metodo con un OnlineUser avente ip autenticato come anonimo e username non autenticato nel sistema
@@ -146,7 +146,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserAlreadyLogged.class)
 	public void checkLoginAuthenticatedUsername()throws AuthenticationFail,UserAlreadyLogged, IpNotLogged, IpAlreadyLogged, UsernameNotCorresponding{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.2");
 		
 		//testo il metodo con un OnlineUser avente username già autenticato con un altro ip
@@ -155,7 +155,7 @@ public class DataAccessTest {
 	
 	@Test(expected=IpAlreadyLogged.class)
 	public void checkLoginAuthenticatedIp()throws AuthenticationFail,IpAlreadyLogged, IpNotLogged, UserAlreadyLogged, UsernameNotCorresponding{
-		User toAuth=new User("user5","user5",null,null,null);
+		User toAuth=new User("user5","user5",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.1");
 		
 		//testo il metodo con un OnlineUser avente ip già autenticato con un username
@@ -164,7 +164,7 @@ public class DataAccessTest {
 
 	@Test(expected = IpNotLogged.class)
 	public void checkLoginFailIp()throws AuthenticationFail,IpNotLogged, UserAlreadyLogged, IpAlreadyLogged, UsernameNotCorresponding{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.111");
 		
 		//testo il metodo con un OnlineUser avente un ip non autenticato come anonimo
@@ -173,7 +173,7 @@ public class DataAccessTest {
 	
 	@Test(expected = UsernameNotCorresponding.class)
 	public void checkLoginFailNotCorresponding()throws AuthenticationFail,UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("random","111.111.111.2");
 		
 		//testo il metodo con un OnlineUser avente username da autenticare non corrispondente al campo dell'oggetto da autenticare
@@ -182,8 +182,8 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkUserLists()throws AuthenticationFail{
-		User testUser1=new User("user0","user0",null,null,null);
-		User testUser2=new User("user9","user9",null,null,null);
+		User testUser1=new User("user0","user0",null,null,null,null);
+		User testUser2=new User("user9","user9",null,null,null,null);
 		
 		//test con un User che ha liste
 		List<ListName> list1=dataAccess.userLists(testUser1);
@@ -221,7 +221,7 @@ public class DataAccessTest {
 	
 	 @Test
 	 public void checkGetListUsers()throws AuthenticationFail{
-		 User toAuth=new User("user1","user1",null,null,null);
+		 User toAuth=new User("user1","user1",null,null,null,null);
 		 ListName list=new ListName();
 		 list.setId(2);
 		 
@@ -236,7 +236,7 @@ public class DataAccessTest {
 	 
 	 @Test(expected=UsernameNotCorresponding.class)
 	 public void checkGetListUsersFail()throws AuthenticationFail, UsernameNotCorresponding{
-		 User toAuth=new User("user1","user1",null,null,null);
+		 User toAuth=new User("user1","user1",null,null,null,null);
 		 ListName list=new ListName();
 		 list.setId(3);
 		 
@@ -246,21 +246,21 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkGetOnlineUsers()throws AuthenticationFail{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		List<User> onlines=dataAccess.getOnlineUsers(toAuth);
 		assertEquals("il numero di utenti autenticati non corrisponde quello effettivo",4,onlines.size());
 	}
 	
 	@Test
 	public void checkGetOfflineUsers()throws AuthenticationFail{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		List<User> offlines=dataAccess.getOfflineUsers(toAuth);
 		assertEquals("il numero di utenti non autenticati non corrisponde quello effettivo",6,offlines.size());
 	}
 	
 	@Test
 	public void checkListCreate()throws AuthenticationFail{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		//testo la creazione della lista
 		try{
@@ -277,7 +277,7 @@ public class DataAccessTest {
 	
 	@Test(expected=ListAlreadyExists.class)
 	public void checkListCreateFail()throws AuthenticationFail, ListAlreadyExists, UsernameNotCorresponding{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		
 		//test con una lista già presente per l'utente
@@ -286,7 +286,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkListCreateFailCorresponding()throws AuthenticationFail, ListAlreadyExists, UsernameNotCorresponding{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user2");
 		
 		//test con una lista di un altro utente rispetto all'autenticato
@@ -295,7 +295,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkListDelete()throws AuthenticationFail{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		//testo la cancellazione di una lista
 		try{
@@ -313,7 +313,7 @@ public class DataAccessTest {
 	
 	@Test(expected=ListNotExisting.class)
 	public void checkListDeleteFail()throws AuthenticationFail, ListNotExisting, UsernameNotCorresponding{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		
 		//test di cancellazione di una lista che non esiste
@@ -322,7 +322,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkListDeleteFailCorresponding()throws AuthenticationFail, ListNotExisting, UsernameNotCorresponding{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user2");
 		
 		//test di cancellazione di una lista di un altro utente
@@ -331,7 +331,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkUserListAdd()throws AuthenticationFail{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user5";
 		
@@ -356,7 +356,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserAlreadyListed.class)
 	public void checkUserListAddFail()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user4";
 		
@@ -366,7 +366,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotExisting.class)
 	public void checkUserListAddFailNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
 		
@@ -376,7 +376,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotExisting.class)
 	public void checkUserListAddFailSameUser()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user1";
 		
@@ -386,7 +386,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkUserListAddFailNotCorresponding()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String toAdd="user4";
 		
@@ -396,7 +396,7 @@ public class DataAccessTest {
 	
 	@Test(expected=ListNotExisting.class)
 	public void checkUserListAddFailListNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		String toAdd="user4";
 		
@@ -406,7 +406,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkUserListRemove()throws AuthenticationFail{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user3";
 		
@@ -431,7 +431,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotListed.class)
 	public void checkUserListRemoveFail()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user5";
 		
@@ -441,7 +441,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotExisting.class)
 	public void checkUserListRemoveFailNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
 		
@@ -451,7 +451,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkUserListRemoveFailNotCorresponding()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String toAdd="user2";
 		
@@ -461,7 +461,7 @@ public class DataAccessTest {
 	
 	@Test(expected=ListNotExisting.class)
 	public void checkUserListRemoveFailListNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
-		User toAuth=new User("user1","user1",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		String toAdd="user4";
 		
@@ -493,14 +493,14 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkGetUserBlacklist()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		List<User> blacklisted=dataAccess.getUserBlacklist(toAuth);
 		assertEquals("non sono stati trovati utenti nella blacklist di un utente che ne ha",1,blacklisted.size());
 	}
 	
 	@Test
 	public void checkBlacklistAdd()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user1");
 		
 		//test di aggiunta di un utente alla blacklist
@@ -520,7 +520,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkBlacklistAddFailNotCorresponding()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user1","user2");
 		
 		//test di aggiunta di un utente alla blacklist di un altro utente
@@ -529,7 +529,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserAlreadyBlacklisted.class)
 	public void checkBlacklistAddFailAlreadyBlacklisted()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
 		//test di aggiunta di un utente già presente nella blacklist
@@ -538,7 +538,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotExisting.class)
 	public void checkBlacklistAddFailSame()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user0");
 		
 		//test di aggiunta di se stesso alla blacklist
@@ -547,7 +547,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotExisting.class)
 	public void checkBlacklistAddFailNotExisting()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","random");
 		
 		//test di aggiunta di un utente inesistente alla blacklist
@@ -556,7 +556,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkBlacklistRemove()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
 		//test di rimozione di un utente dalla blacklist
@@ -574,7 +574,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkBlacklistRemoveFailNotCorresponding()throws AuthenticationFail, UsernameNotCorresponding, UserNotBlacklisted{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user1","user8");
 		
 		//test di rimozione di un utente dalla blacklist di un altro utente
@@ -583,7 +583,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UserNotBlacklisted.class)
 	public void checkBlacklistRemoveFailNotBlacklisted()throws AuthenticationFail, UsernameNotCorresponding, UserNotBlacklisted{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user1");
 		
 		//test di rimozione di un utente non presente nella blacklist
@@ -592,14 +592,14 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkGetCalls()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		List<Call> calls=dataAccess.getCalls(toAuth);
 		assertEquals("e` stato trovato un numero di chiamate errato",4,calls.size());
 	}
 	
 	@Test
 	public void checkAddCall()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		Call call=new Call("user0","user1",34000,"2013-04-01",30495,56039);
 		call.setId(12);
 		dataAccess.addCall(call, toAuth);
@@ -610,7 +610,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkDeleteAccount()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		dataAccess.deleteAccount(toAuth);
 		UserDAO ud=new UserDAO();
 		User u=ud.get(toAuth.getUsername());
@@ -619,8 +619,8 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkChangePassword()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
-		User toChange=new User("user0","password",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
+		User toChange=new User("user0","password",null,null,null,null);
 		
 		//test di cambio password
 		try{
@@ -637,8 +637,8 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkChangePasswordFail()throws AuthenticationFail,UsernameNotCorresponding{
-		User toAuth=new User("user1","user1",null,null,null);
-		User toChange=new User("user11","user11",null,null,null);
+		User toAuth=new User("user1","user1",null,null,null,null);
+		User toChange=new User("user11","user11",null,null,null,null);
 		
 		//test di cambio password di un altro user
 		dataAccess.changePassword(toChange, toAuth);
@@ -646,7 +646,7 @@ public class DataAccessTest {
 	
 	@Test
 	public void checkRenameList()throws AuthenticationFail{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String newName="enemies";
 		
@@ -668,7 +668,7 @@ public class DataAccessTest {
 	
 	@Test(expected=UsernameNotCorresponding.class)
 	public void checkRenameListFailNotCorresponding()throws AuthenticationFail, ListNotExisting, ListAlreadyExists, UsernameNotCorresponding{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String newName="enemies";
 		
@@ -678,7 +678,7 @@ public class DataAccessTest {
 	
 	@Test(expected=ListNotExisting.class)
 	public void checkRenameListFailNotExisting()throws AuthenticationFail, ListNotExisting, ListAlreadyExists, UsernameNotCorresponding{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("office","user0");
 		String newName="friends";
 		
@@ -688,7 +688,7 @@ public class DataAccessTest {
 	
 	@Test(expected=ListAlreadyExists.class)
 	public void checkRenameListFailAlreadyExisting()throws AuthenticationFail, ListNotExisting, ListAlreadyExists, UsernameNotCorresponding{
-		User toAuth=new User("user0","user0",null,null,null);
+		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String newName="friends";
 		

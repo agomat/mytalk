@@ -6,6 +6,7 @@
 			<id name="username" column="username" type="string"></id>
 			<property name="id" column="id" type="integer"></property>
 			<property name="email" column="email" type="string"></property>
+			<property name="emailHash" column="emailhash" type="string"></property>
 			<property name="name" column="name" type="string"></property>
 			<property name="surname" column="surname" type="string"></property>
 			<property name="password" column="password" type="string"></property>

@@ -695,4 +695,26 @@ public class DataAccessTest {
 		//test di rinomina di una lista con un nome già usato
 		dataAccess.renameList(newList, newName, toAuth);
 	}
+	
+	@Test
+	public void checkGetUserById(){
+		int id=2;
+		
+		//test di rinomina di una lista con un nome già usato
+		try{
+			User u=dataAccess.getUserById(id);
+			assertNotNull("non e` stato ritornato nessun oggetto User",u);
+			assertEquals("non e` stato ritornato l'oggetto User corretto",id,u.getId());
+		}catch(IdNotFound exc){
+			fail("l'id non e` stato trovato correttamente nel database");
+		}
+	}
+	
+	@Test(expected=IdNotFound.class)
+	public void checkGetUserByIdFail()throws IdNotFound{
+		int id=300;
+		
+		//test di ricerca di un User con id non presente
+		User u=dataAccess.getUserById(id);
+	}
 }

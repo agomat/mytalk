@@ -87,4 +87,13 @@ public class UserDAO extends GenericDAO{
 		session.delete(userObj);
 		t.commit();
 	}
+	
+	public User getById(int id){
+		Transaction t=session.beginTransaction();
+		SQLQuery query=session.createSQLQuery("SELECT * FROM Users WHERE id='"+id+"'");
+		query=query.addEntity(User.class);
+		User user=(User)query.uniqueResult();
+		t.commit();
+		return user;
+	}
 }

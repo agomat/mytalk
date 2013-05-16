@@ -178,3 +178,10 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   
 });
 
+MyTalk.DashboardContentController = Ember.ArrayController.extend({
+
+
+  prova:function(){
+    alert();
+  }
+});

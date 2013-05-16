@@ -73,4 +73,8 @@ public interface IDataAccess{
 			public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding;
 			
 			public User getUserById(int id) throws IdNotFound;
+			
+			public String getUserIp(String username)throws UserNotLogged;
+			
+			public int getIdFromUsername(String username)throws UserNotExisting;
 }

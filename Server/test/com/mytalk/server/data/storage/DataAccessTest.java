@@ -717,4 +717,56 @@ public class DataAccessTest {
 		//test di ricerca di un User con id non presente
 		User u=dataAccess.getUserById(id);
 	}
+	
+	@Test
+	public void checkGetUserIp(){
+		String username="user0";
+		
+		//test di ricerca di un username autenticato
+		try{
+			String ip=dataAccess.getUserIp(username);
+			String expected="123.123.123.0";
+			assertEquals("l'ip dell'utente cercato e` sbagliato",expected,ip);
+		}catch(UserNotLogged exc){
+			fail("l'username non e` stato trovato correttamente nel database");
+		}
+	}
+	
+	@Test(expected=UserNotLogged.class)
+	public void checkGetUserIpFailNotExisting()throws UserNotLogged{
+		String username="";
+		
+		//test di ricerca di un username vuoto
+		String ip=dataAccess.getUserIp(username);
+	}
+	
+	@Test(expected=UserNotLogged.class)
+	public void checkGetUserIpFail()throws UserNotLogged{
+		String username="user6";
+		
+		//test di ricerca di un username di un utente non autenticato
+		String ip=dataAccess.getUserIp(username);
+	}
+	
+	@Test
+	public void checkGetIdFromUsername(){
+		String username="user0";
+		
+		//test di ricerca di un username esistente
+		try{
+			int id=dataAccess.getIdFromUsername(username);
+			int expected=1;
+			assertEquals("l'id dell'utente cercato e` sbagliato",expected,id);
+		}catch(UserNotExisting exc){
+			fail("l'username non e` stato trovato correttamente nel database");
+		}
+	}
+	
+	@Test(expected=UserNotExisting.class)
+	public void checkGetIdFromUsernameFail()throws UserNotExisting{
+		String username="random";
+		
+		//test di ricerca di un username non esistente
+		int id=dataAccess.getIdFromUsername(username);
+	}
 }

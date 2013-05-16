@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS Users
   name varchar(50) NOT NULL,
   surname varchar(50) NOT NULL,
   email varchar(100)  NOT NULL,
+  md5mail varchar(100) NOT NULL,
   PRIMARY KEY (username)
 ) ENGINE=InnoDB;
 

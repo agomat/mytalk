@@ -1,54 +1,39 @@
-MyTalk.Router.map(function(match) {
-  this.route("index", {path:'/'});
-  this.route("listr");
-  this.resource("lists", function() {
-    this.resource('ulist', {path: ':ulist_id' });
-  });/*
-  this.route("lists");
-  this.resource('list', { path: ':list_id' });*/
-});
-
-MyTalk.ListrRoute=Ember.Route.extend({
-   redirect: function() {
-    this.transitionTo('lists');
-  }
+MyTalk.Router.map(function() {
+  this.resource('logged', { path: '/lists' } , function() {
+    this.resource('list', { path: ':list_id' });
+  });
 });
 
 MyTalk.IndexRoute = Ember.Route.extend({
  
- model: function() {
-    return MyTalk.List.find();
-  },
   renderTemplate: function(controller, model) { 
-    this.render('index'); 
-    this.render('content'); 
-  }
-});
-
-MyTalk.ListsRoute = Ember.Route.extend({
-
-  model: function() {
-    return MyTalk.List.find();
+    this.render('index');
+    this.render('guest');
   },
- 
-  renderTemplate: function(controller, model) {
-    this.render('lists');
+
+});
+
+MyTalk.LoggedRoute = Ember.Route.extend({
+  model: function(params) {
+    // alert(params.list_id); max: occhio è undefined! by Mattia
+    return MyTalk.List.find(params.list_id); 
   }
 });
 
 
-MyTalk.ListsIndexRoute = Ember.Route.extend({
-    redirect: function () {
-      firstItem = this.controllerFor('lists').get('content');
-      var context = this;
-    
-      firstItem.forEach( function(t){
-    
-        if(t.get('name')=='Tutti i contatti'){
-        
-          context.replaceWith('ulist', t);
-        }
-      });
-    }
+
+MyTalk.LoggedIndexRoute = Ember.Route.extend({
+  redirect: function() {
+    globalList = this.modelFor('logged').toArray()[1];
+    this.replaceWith('list', globalList);
+  }
 });
 
+MyTalk.ApplicationRoute = Ember.Route.extend({
+  setupController: function() {
+    
+    var model =  MyTalk.PersonalData.find(1);
+    this.controllerFor('header').set('model', MyTalk.PersonalData.find());
+    return model;
+  }
+});

@@ -32,8 +32,7 @@ MyTalk.LoggedIndexRoute = Ember.Route.extend({
 MyTalk.ApplicationRoute = Ember.Route.extend({
   setupController: function() {
     
-    var model =  MyTalk.PersonalData.find(1);
     this.controllerFor('header').set('model', MyTalk.PersonalData.find());
-    return model;
+    
   }
 });

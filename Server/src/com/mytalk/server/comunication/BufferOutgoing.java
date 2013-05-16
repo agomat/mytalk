@@ -22,29 +22,10 @@ import java.util.Vector;
 
 public class BufferOutgoing implements Buffer{
 	
-	private Vector<Thread> consumers;
-	
 	protected Vector<Message> buffer;
 	
 	private BufferOutgoing(){
 		buffer=new Vector<Message>();
-		consumers=new Vector<Thread>();
-	}
-	
-	public synchronized void waitConsumers() throws InterruptedException{
-		for(int i=0;i<consumers.size();i++){
-			consumers.get(i).wait();
-		}
-	}
-	
-	public synchronized void notifyConsumers(){
-		for(int i=0;i<consumers.size();i++){
-			consumers.get(i).notify();
-		}
-	}
-	
-	public synchronized void registerConsumer(Thread consumer){
-		consumers.add(consumer);
 	}
 	
 	private static final BufferOutgoing instance = new BufferOutgoing();
@@ -55,20 +36,21 @@ public class BufferOutgoing implements Buffer{
 	
 	public synchronized void push(Message packet){
 		if(buffer.isEmpty()){
-			notifyConsumers();
+			notify();
 		}
 		buffer.add(packet);
 	}
 	
 	public synchronized Message pop(){
-		Message msg=buffer.remove(0);
 		if(buffer.isEmpty()){
 			try {
-				waitConsumers();
+				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		Message msg=buffer.firstElement();
+		buffer.remove(msg);
 		return msg;
 	}
 }

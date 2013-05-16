@@ -19,12 +19,6 @@
 package com.mytalk.server.comunication;
 
 public interface Buffer {
-
-	public void waitConsumers() throws InterruptedException;
-	
-	public void notifyConsumers();
-	
-	public void registerConsumer(Thread consumer);
 	
 	public void push(Message packet);
 	

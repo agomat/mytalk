@@ -151,8 +151,9 @@
           <div id="list_option">
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
             <div id="list_button">
-              <a href="#" class="common_button" {{action "deleteList" id }}>Rimuovi</a>
-              <a href="#" class="common_button" {{action "renameList" id }}>Rinomina</a>
+            
+              <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
+              <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
             </div>
           </div>
       </div>
@@ -180,11 +181,18 @@
             {{else}}
               <ul class="offline_limit"
             {{/if}}
+            {{view.actualList}}
+            {{#if controll}}
                 <li><a class="call_user" href="#"></a></li>
                 <li><a class="add_user" href="#"></a></li>
                 <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
               </ul>
+            {{else}}
+                <li><a class="call_user" href="#"></a></li>
+                <li><a class="add_user" href="#"></a></li>
+                </ul>
+            {{/if}}
           </li>
         {{/each}}
       </ul>
@@ -202,12 +210,11 @@
     <script type="text/x-handlebars" data-template-name="_dashboard">
       {{#if isAuthenticated}}
         <div id="menu_container">
-          <div id="menu_label">
-          {{controller}}
-          {{#each aa in controller}}
-                aa.name
-          {{/each}}
-            <img src=""><div>{{ name }}</div>
+        {{#each me in controller}}
+        {{#if me.name}}
+          <div id="menu_label" >
+              
+          <img {{bindAttr src="me.avatarTiny"}} =""alt="" /><div >{{ me.name }} {{ me.surname }}</div>
           </div>
           <div id="menu_area">
             <div id="arrow"></div>
@@ -215,8 +222,8 @@
               <div id="auth_content">
                 <h2>Sei collegato come:</h2>
                 <ul>
-                  <li>Il tuo nome</li>
-                  <li>email@dominio.com</li>
+                  <li>{{ me.name }} {{ me.surname }}</li>
+                  <li>{{ me.email }}</li>
                 </ul>
                 <ul class="separator">
                   <li><img src="img/settings.png"/> <a href="#"> Modifica Profilo </a></li>
@@ -229,6 +236,8 @@
             </div>
           </div> 
         </div>
+        {{/if}}
+        {{/each}}
       {{else}}
         <div id="menu_container">
           <div id="menu_label">

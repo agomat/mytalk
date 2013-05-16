@@ -45,37 +45,51 @@ MyTalk.LoggedController = Ember.ArrayController.extend({
 
 MyTalk.ListController = Ember.ObjectController.extend({
   sortProperties: ['name'],
-  deleteList:function(id){
+  
+  deleteList:function(){
     var l=this.get('content').get('name');
-    var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
-      if(r==true){
+    var id=this.get('content').get('id');
+    if(id == 1 || id == 0){
+      alert('La lista '+l+' non può essere eliminata');
+    }
+    else{ 
+      var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
+        if(r==true){
       
-        var list=MyTalk.List.find(0);
-        var context=this.get('target.router');
-        this.get('content').deleteRecord();
-        context.replaceWith('list', list);
-          
-      } 
+          var list=MyTalk.List.find(0);
+          var context=this.get('target.router');
+          this.get('content').deleteRecord();
+          context.replaceWith('list', list);
+        }
+    } 
     
   },
  
   renameList:function(){
-    var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
-    var list=MyTalk.List.find();
-    var test=true;
 
-    list.forEach( function(t){
-      if(t.get('name')==newName){
-        test=false;
-      }
-    });
+    var id = this.get('content').get('id');
+    var name = this.get('content').get('name');
+    if(id == 1 || id == 0){
+      alert('La lista '+name+' non può essere eliminata');
+    }
+    else{
+      var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
+      var list=MyTalk.List.find();
+      var test=true;
 
-    if(newName!="Nome della lista"){
-      if(test==true){
-            this.get('content').setProperties({name:newName});
-      }
+      list.forEach( function(t){
+          if(t.get('name')==newName){
+          test=false;
+        }
+      });
+
+      if(newName!="Nome della lista"){
+        if(test==true){
+              this.get('content').setProperties({name:newName});
+        }
       else if(newName!=null){
-        alert("Esiste già una lista con questo nome");
+          alert("Esiste già una lista con questo nome");
+        }
       }
     }
   },
@@ -90,12 +104,21 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
    
 MyTalk.UsersController = Ember.ArrayController.extend({
-    new: function() {
-    this.content.createRecord({
-        username: 'New User from List',
-        online: true
-    })},
-    setupController: function() {
+  controll:true,
+
+  check:function(){
+
+    if(location.hash.split('/')[2]==0){
+      this.setProperties({controll:false});
+    }
+    else{
+        
+        if(location.hash.split('/')[2]==1){
+            this.setProperties({controll:false});
+        }
+    }
+  },
+  setupController: function() {
     this.controllerFor('users').set('model', MyTalk.User.find()); // max: funziona anche senza. Mattia
   } , 
 
@@ -144,11 +167,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
 
 
 MyTalk.HeaderController = Ember.ArrayController.extend({
-  setupController: function() { 
-    // Non esegue questo statement!
-    this.controllerFor('header').set('model', MyTalk.PersonalData.find());
-  }, 
 
+  
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
   
@@ -163,6 +183,3 @@ MyTalk.HeaderController = Ember.ArrayController.extend({
      MyTalk.StateManager.send("login", credentials); 
   }
 });
-
-
-  

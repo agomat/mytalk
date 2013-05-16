@@ -57,12 +57,12 @@ var json =      {
 	adapter.didFindMany(store, MyTalk.List, json);
 
 	json = {
-	          "personal_datas": [{ id:1, "username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}] 
+	          "personal_data": { id:1, "md5":"699b1b3f9c23e21f13b2ac9267942b01","username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}
 	       };
 
 	store.load(MyTalk.PersonalData, json);
 	adapter = store.adapterForType(MyTalk.PersonalData);
-	adapter.didFindMany(store, MyTalk.PersonalData, json);        
+	adapter.didFindRecord(store, MyTalk.PersonalData, json,1);  // function(store, type, payload, id)    
 
 	$("input[name=username]").val("aaaaaaa");
 	$("input[name=password]").val("aaaaaaa");

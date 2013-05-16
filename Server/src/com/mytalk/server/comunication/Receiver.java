@@ -37,35 +37,23 @@ public class Receiver extends WebSocketServer implements Runnable {
 	}
 	
 	@Override
-	public void onOpen(WebSocket ws, ClientHandshake hs) {
-		boolean b=addConnection(ws);
+	public void onOpen(WebSocket conn, ClientHandshake hs) {
 	}
 	
 	@Override
-	public void onClose(WebSocket arg0, int arg1, String arg2, boolean arg3) {	
-		int i=0;
-		boolean trov=false;
-		while(i<connections() && !trov){		//ritorna tutte le connessioni, riga 242
-			if(arg0.equals(collection[i])){
-				removeConnection(i);			//rimuove connessione, riga 507
-				trov=true;
-			}
-			i++;
-		}
+	public void onClose(WebSocket conn, int code, String reason, boolean remote) {	
 	}
 
 	@Override
-	public void onError(WebSocket arg0, Exception arg1) {
+	public void onError(WebSocket conn, Exception ex) {
 		ex.printStackTrace();
-		if( conn != null ) {
-			// some errors like port binding failed may not be assignable to a specific websocket
-		}
 	}
 
 	@Override
 	public void onMessage(WebSocket conn, String msg) {
 		BufferIncoming bufferIn=BufferIncoming.getInstance();
-		Message newMsg=new Message(conn.getRemoteSocketAddress().getAddress().getHostAddress(),msg);
+		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+		Message newMsg=new Message(wsIp,msg);
 		bufferIn.push(newMsg);
 	}
 

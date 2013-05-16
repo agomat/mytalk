@@ -60,8 +60,7 @@ public class BufferOutgoing implements Buffer{
 	}
 	
 	public synchronized Message pop(){
-		int lastIndex=buffer.size();
-		Message msg=buffer.remove(lastIndex);
+		Message msg=buffer.remove(0);
 		if(buffer.isEmpty()){
 			try {
 				waitConsumers();

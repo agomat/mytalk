@@ -20,7 +20,7 @@
     <script src="js/app.js"></script>
 
     <!-- bootstrap views -->
-    <script src="js/view/ContentView.js"></script>
+    
     <script src="js/view/IndexView.js"></script>
     <script src="js/view/ListsView.js"></script>
     <script src="js/view/DashboardView.js"></script>
@@ -29,10 +29,11 @@
     <script src="js/view/RegisterFormView.js"></script>
     <script src="js/view/RegisterPassword.js"></script>
     <script src="js/view/IPCall.js"></script>
-    <script src="js/view/UlistView.js"></script>
-    <script src="js/view/UsersView.js"></script> 
-    <script src="js/view/ListHeaderView.js"></script> 
-    <script src="js/view/ListContentView.js"></script>
+    
+    <script src="js/view/UsersView.js"></script>
+    <script src="js/view/GuestView.js"></script> 
+    
+ 
     <script src="js/view/LoginView.js"></script>
     <script src="js/view/RegisterConfirmPassword.js"></script>
     <script src="js/view/RegisterView.js"></script>
@@ -146,6 +147,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="list">
+
       <div class="header">
         <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
           <div id="list_option">
@@ -160,6 +162,7 @@
       <div class="content">
           {{ render "users" users }}
       </div>
+      
     </script>
 
     <script type="text/x-handlebars" data-template-name="users">  

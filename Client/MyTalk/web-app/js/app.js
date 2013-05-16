@@ -2,7 +2,19 @@ MyTalk = Ember.Application.create({
   LOG_TRANSITIONS: true,
 });
 
+Ember.View.reopen({
+    didInsertElement: function() {
+       this.set('elementIsInserted', true);
+       console.log("Nome del template associato -> " + this.get('templateName'));
+       //$.getScript('js_graphics/animation.js');
+       this._super();
+    },
 
+    willDestroyElement: function() {
+       this.set('elementIsInserted', false);
+       this._super();
+    }
+});
 /* Parte di popolamento in assenza di un Server funzionante */
 
 Ember.run.later(this, function(){

@@ -6,12 +6,6 @@ MyTalk.IndexController = Ember.ObjectController.extend({
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
 
-  login:function(user,pass) {
-    MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
-    // se autenticato:
-    var credentials = {}; // TODO vedere se spostare create record in login statemanager
-    MyTalk.StateManager.send("login", credentials); 
-  },
   register:function(name,surname,username,email,password,password_conf){
     console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password +" "+ password_conf);
   },
@@ -21,12 +15,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
 });
 
 MyTalk.LoggedController = Ember.ArrayController.extend({
-  needs: ['PersonalData'],
-  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
-  appState: null,
-  isAuthenticated: function () {
-    return (this.get('appState') == 'isAuthenticated');
-  }.property('appState'),
+  //needs: ['HeaderController'],
   sortProperties: ['name'],
   createList:function(){
 
@@ -91,7 +80,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
     }
   },
   
-  addUser: function(currentList) {
+  addUser: function(currentList) { // ??? by Mattia
           currentList.get('users').createRecord(
           {username:'New User from List', online: true}
           );
@@ -107,7 +96,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
         online: true
     })},
     setupController: function() {
-    this.controllerFor('users').set('model', MyTalk.User.find());
+    this.controllerFor('users').set('model', MyTalk.User.find()); // max: funziona anche senza. Mattia
   } , 
 
   deleteUser:function(user){
@@ -153,7 +142,27 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   }
 });
 
-MyTalk.PersonalDataController = Ember.ObjectController.extend({
 
+MyTalk.HeaderController = Ember.ArrayController.extend({
+  setupController: function() { 
+    // Non esegue questo statement!
+    this.controllerFor('header').set('model', MyTalk.PersonalData.find());
+  }, 
+
+  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
+  appState: null,
+  
+  isAuthenticated: function () {
+    return (this.get('appState') == 'isAuthenticated');
+  }.property('appState'),
+
+  login: function(user,pass) {
+    MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
+    // se autenticato:
+    var credentials = {}; // TODO vedere se spostare create record in login statemanager
+     MyTalk.StateManager.send("login", credentials); 
+  }
 });
+
+
   

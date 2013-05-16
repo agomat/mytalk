@@ -22,16 +22,7 @@ MyTalk.IPAddressProxy = Ember.Mixin.create({
     IP: function() {
         // Lazy creation
         if(!this.get('ip')) {
-            $.ajax({
-              async: false,
-              method: 'GET',
-			  url: 'http://' + location.host + '/MyTalk/',
-			  context: this
-			}).done(function( ip ) {
-              ip = $.trim(ip) + ':0';
-			  console.log('My IP is: ' + ip);
-			  this.set('ip', ip);
-			});
+          this.set('ip', 'FakeIP');
         }
         return this.get('ip');
     }.property('ip')

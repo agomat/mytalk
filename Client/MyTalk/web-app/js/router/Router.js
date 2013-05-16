@@ -26,3 +26,13 @@ MyTalk.LoggedIndexRoute = Ember.Route.extend({
   }
 });
 
+MyTalk.HeaderRoute = Ember.Route.extend({
+  init: function(){
+    alert(1);
+  },
+
+  setupController: function(controller) {
+    controller.set('content', MyTalk.PersonalData.find() );
+  }
+});
+

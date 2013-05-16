@@ -85,13 +85,13 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="guest">
-      {{ partial header }}
+      {{ render header }}
       {{ partial description }}
       {{ partial register }}
     </script>
 
     <script type="text/x-handlebars" data-template-name="logged">
-      {{ partial header }}
+      {{ render header }}
         <div id="logged_content" class="scroll_content">
           {{ partial lists }} 
         </div>
@@ -190,7 +190,7 @@
       </ul>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="_header">
+    <script type="text/x-handlebars" data-template-name="header">
       <div id="header">
         <div id="logo">
           <h1>MyTalk</h1>
@@ -203,9 +203,9 @@
       {{#if isAuthenticated}}
         <div id="menu_container">
           <div id="menu_label">
-            {{controllers.personaldata}}
-          {{#each personaldata in controllers.personaldata}}
-                personaldata.name
+          {{controller}}
+          {{#each aa in controller}}
+                aa.name
           {{/each}}
             <img src=""><div>{{ name }}</div>
           </div>

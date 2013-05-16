@@ -18,41 +18,15 @@
 
 package com.mytalk.server.comunication;
 
-import java.util.Vector;
+public interface Buffer {
 
-public abstract class Buffer {
+	public void waitConsumers() throws InterruptedException;
 	
-	private Vector<Runnable> consumers;
+	public void notifyConsumers();
 	
-	protected Vector<Object> buffer;
+	public void registerConsumer(Thread consumer);
 	
-	public Buffer(){
-		buffer=new Vector<Object>();
-	}
+	public void push(Message packet);
 	
-	public synchronized void waitConsumers(){
-		for(int i=0;i<consumers.size();i++){
-			consumers.get(i).wait();
-		}
-	}
-	
-	public synchronized void notifyConsumers(){
-		for(int i=0;i<consumers.size();i++){
-			consumers.get(i).notify();
-		}
-	}
-	
-	public synchronized void registerConsumer(Runnable thread){
-		consumers.add(thread);
-	}
-	
-	public synchronized void push(Object obj){
-		buffer.add(obj);
-	}
-	
-	public synchronized Object pop(){
-		int lastIndex=buffer.size();
-		Object obj=buffer.remove(lastIndex);
-		return obj;
-	}
+	public Message pop();
 }

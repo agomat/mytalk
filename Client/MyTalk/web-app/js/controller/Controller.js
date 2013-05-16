@@ -5,11 +5,7 @@ MyTalk.DashboardController = Ember.ObjectController.extend({
 });
 
 MyTalk.IndexController = Ember.ObjectController.extend({
-  /*appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
-  appState: null,
-  isAuthenticated: function () {
-    return (this.get('appState') == 'isAuthenticated');
-  }.property('appState'),*/
+
   login:function(user,pass) {
     MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
     // se autenticato:
@@ -63,7 +59,6 @@ MyTalk.ListsController = Ember.ArrayController.extend({
           );
   },
 
-  
 
 });
 
@@ -114,12 +109,23 @@ MyTalk.UlistController = Ember.ObjectController.extend({
 
    
 MyTalk.UsersController = Ember.ArrayController.extend({
-    new: function() {
-    this.content.createRecord({
-        username: 'New User from List',
-        online: true
-    })},
-    setupController: function() {
+  
+  controll:true,
+  
+  check:function(){
+
+    if(location.hash.split('/')[2]==4){
+      this.setProperties({controll:false});
+    }
+    else{
+        
+        if(location.hash.split('/')[2]==3){
+            this.setProperties({controll:false});
+        }
+    }
+  },
+  
+  setupController: function() {
     this.controllerFor('users').set('model', MyTalk.User.find());
   } , 
 
@@ -163,9 +169,19 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     } 
 
      
-  }
+  },
+
+    
+    
 
 
   
 });
 
+MyTalk.DashboardContentController = Ember.ArrayController.extend({
+
+
+  prova:function(){
+    alert();
+  }
+});

@@ -18,7 +18,34 @@
 
 package com.mytalk.server.comunication;
 
-public class BufferIncoming extends Buffer {
+import java.util.Vector;
+
+public class BufferIncoming implements Buffer{
+	
+	private Vector<Thread> consumers;
+	
+	protected Vector<Message> buffer;
+	
+	private BufferIncoming(){
+		buffer=new Vector<Message>();
+		consumers=new Vector<Thread>();
+	}
+	
+	public synchronized void waitConsumers() throws InterruptedException{
+		for(int i=0;i<consumers.size();i++){
+			consumers.get(i).wait();
+		}
+	}
+	
+	public synchronized void notifyConsumers(){
+		for(int i=0;i<consumers.size();i++){
+			consumers.get(i).notify();
+		}
+	}
+	
+	public synchronized void registerConsumer(Thread consumer){
+		consumers.add(consumer);
+	}
 	
 	private static final BufferIncoming instance = new BufferIncoming();
 	
@@ -26,18 +53,22 @@ public class BufferIncoming extends Buffer {
         return instance;
     }
 	
-	public synchronized void pushPacket(String packet){
+	public synchronized void push(Message packet){
 		if(buffer.isEmpty()){
 			notifyConsumers();
 		}
-		push(packet);
+		buffer.add(packet);
 	}
 	
-	public synchronized String popPacket(){
-		String packet=(String)pop();
+	public synchronized Message pop(){
+		Message msg=buffer.remove(0);
 		if(buffer.isEmpty()){
-			waitConsumers();
+			try {
+				waitConsumers();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		return packet;
+		return msg;
 	}
 }

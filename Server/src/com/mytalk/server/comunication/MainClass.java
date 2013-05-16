@@ -18,15 +18,21 @@
 
 package com.mytalk.server.comunication;
 
+import java.net.InetSocketAddress;
+
 public class MainClass {
 
 	public static void main(String[] args) {
-		Receiver receiver=new Receiver();
+		InetSocketAddress address=new InetSocketAddress(8887);//porta a caso temporanea
+		Receiver receiver=new Receiver(address);
 		Thread receiverThread= new Thread(receiver);
 		Sender sender=new Sender();
 		Thread senderThread=new Thread(sender);
+		sender.registerReceiver(receiver);
 		Dispatcher dispatcher=new Dispatcher();
 		Thread dispatcherThread=new Thread(dispatcher);
+		BufferIncoming.getInstance().registerConsumer(dispatcherThread);
+		BufferOutgoing.getInstance().registerConsumer(senderThread);
 		receiverThread.start();
 		senderThread.start();
 		dispatcherThread.start();

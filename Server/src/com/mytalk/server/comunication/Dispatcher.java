@@ -18,12 +18,20 @@
 
 package com.mytalk.server.comunication;
 
-public class Dispatcher implements Runnable {
+import com.mytalk.server.logic.processing.*;
 
+public class Dispatcher implements Runnable {
+	
+	Processor processor=new Processor();
+	BufferIncoming bufferIn=BufferIncoming.getInstance();
+	BufferOutgoing bufferOut=BufferOutgoing.getInstance();
+	
 	@Override
 	public void run() {
 		while(true){
-			
+			Message request=bufferIn.pop();
+			Message response=processor.processRequest(request);
+			bufferOut.push(response);
 		}
 	}
 

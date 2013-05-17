@@ -40,7 +40,7 @@ public class DeleteAccount extends GenericRequest{
 			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail(),p.getMd5());
 			try{
 				da.deleteAccount(u);
-				response=new ARI(ari.getAuth(), "SuccessfulDeleteAccount", null);
+				response=new ARI(null, "SuccessfulDeleteAccount", null);
 			}catch(AuthenticationFail af){
 				response=new ARI(null, "AuthenticationFail", null);
 			}

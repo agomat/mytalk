@@ -46,7 +46,7 @@ public class Login extends GenericRequest{
 				
 				PersonalData p=pack.getWorldPersonalData().getPersonalData();
 				com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(p.getUsername(),p.getPassword(),p.getEmail(),p.getName(),p.getSurname(),p.getMd5());
-				OnlineUser o=new OnlineUser(p.getUsername(), p.getIp());
+				OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
 				List<com.mytalk.server.data.model.User> listOnlineServer=null;
 				List<com.mytalk.server.data.model.User> listOfflineServer=null;
 				List<User> listAllUsersClient=new ArrayList<User>();
@@ -96,7 +96,7 @@ public class Login extends GenericRequest{
 					responsePack=new WorldPack(worldList,worldPersonalData);
 					String responsePackString=conv.convertJavaToJson(responsePack);
 					
-					response=new ARI(ari.getAuth(), "SuccessfulLogin", responsePackString);
+					response=new ARI(null, "SuccessfulLogin", responsePackString);
 				} catch(AuthenticationFail af){
 					response=new ARI(null, "AuthenticationFail", null);
 				} catch (UsernameNotCorresponding e) {

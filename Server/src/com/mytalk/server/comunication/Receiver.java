@@ -22,7 +22,6 @@ package com.mytalk.server.comunication;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Iterator;
-import com.mytalk.server.exceptions.*;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -38,23 +37,26 @@ public class Receiver extends WebSocketServer implements Runnable {
 	
 	@Override
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
+		System.out.println("Client connected with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress());
 	}
 	
 	@Override
-	public void onClose(WebSocket conn, int code, String reason, boolean remote) {	
+	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+		System.out.println("Client with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress()+"disconnected");
 	}
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		ex.printStackTrace();
+		System.out.println("WebsocketServer Error");
 	}
 
 	@Override
 	public void onMessage(WebSocket conn, String msg) {
-		BufferIncoming bufferIn=BufferIncoming.getInstance();
-		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		Message newMsg=new Message(wsIp,msg);
-		bufferIn.push(newMsg);
+		System.out.println("messaggio ricevuto");
+//		BufferIncoming bufferIn=BufferIncoming.getInstance();
+//		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+//		Message newMsg=new Message(wsIp,msg);
+//		bufferIn.push(newMsg);
 	}
 
 	public WebSocket searchConnection(String ip) throws IpNotFound{

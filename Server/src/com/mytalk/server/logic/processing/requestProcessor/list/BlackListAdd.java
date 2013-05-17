@@ -60,17 +60,17 @@ public class BlackListAdd extends GenericRequest {
 					blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),username);
 					da.blacklistAdd(blacklist,userAuth);
 				}
-				response=new ARI(auth,"SuccessfulBlacklistAdd",infoRequest);
+				response=new ARI(null,"SuccessfulBlacklistAdd",infoRequest);
 			}catch(UserAlreadyBlacklisted uab){
-				response=new ARI(auth,"UserAlreadyBlacklisted",infoRequest);
+				response=new ARI(null,"UserAlreadyBlacklisted",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(auth,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFail",null);
 			} catch (UserNotExisting une) {
-				response=new ARI(auth,"UserNotExisting",null);
+				response=new ARI(null,"UserNotExisting",null);
 			} catch (UsernameNotCorresponding unc) {
-				response=new ARI(auth,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorresponding",null);
 			} catch (IdNotFound inf) {
-				response=new ARI(auth,"IdNotFound",null);
+				response=new ARI(null,"IdNotFound",null);
 			}
 		}
 		return response;

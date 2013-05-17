@@ -47,6 +47,7 @@ public class UpdateListName extends GenericRequest {
 			ListName list=new ListName(listName,listOwner);
 			try {
 				da.renameList(list, newListName, userAuth);
+				response=new ARI(null,"SuccessfulRenameList",null);
 			} catch (AuthenticationFail e) {
 				response=new ARI(null, "AuthenticationFail", null);
 			} catch (ListNotExisting e) {

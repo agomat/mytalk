@@ -21,7 +21,6 @@ Date
 package com.mytalk.server.data.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class UserList implements Serializable{
 	

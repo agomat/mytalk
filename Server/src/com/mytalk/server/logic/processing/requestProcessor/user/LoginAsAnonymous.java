@@ -37,7 +37,7 @@ public class LoginAsAnonymous extends GenericRequest {
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			OnlineUser o=new OnlineUser(p.getUsername(), p.getIp());
+			OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
 			try {
 				da.loginAsAnonymous(o);
 				response=new ARI(null,"SuccessfulLogout",null);

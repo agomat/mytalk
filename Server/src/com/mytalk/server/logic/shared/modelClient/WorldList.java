@@ -1,6 +1,6 @@
 /**
-* Filename: WorldPackList.java
-* Package: com.mytalk.server.logic.shared
+* Filename: WorldList.java
+* Package: com.mytalk.server.logic.shared.modelClient
 * Author: Michael Ferronato
 * Date: 2013-05-02
 *
@@ -16,18 +16,16 @@
 */
 
 
-package com.mytalk.server.logic.shared;
+package com.mytalk.server.logic.shared.modelClient;
 
 import java.util.List;
 
-import com.mytalk.server.logic.shared.modelClient.User;
-import com.mytalk.server.logic.shared.modelClient.UserList;
 
-public class WorldPackList {
+public class WorldList {
 	private List<UserList> userList;
 	private List<User> list;
 	
-	public WorldPackList(List<UserList> ul, List<User> l){
+	public WorldList(List<UserList> ul, List<User> l){
 		userList=ul;
 		list=l;
 	}

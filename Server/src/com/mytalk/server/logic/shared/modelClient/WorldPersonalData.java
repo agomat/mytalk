@@ -1,6 +1,6 @@
 /**
-* Filename: WorldPackPersonalData.java
-* Package: com.mytalk.server.logic.shared
+* Filename: WorldPersonalData.java
+* Package: com.mytalk.server.logic.shared.modelClient
 * Author: Michael Ferronato
 * Date: 2013-05-02
 *
@@ -16,15 +16,14 @@
 */
 
 
-package com.mytalk.server.logic.shared;
-
-import com.mytalk.server.logic.shared.modelClient.PersonalData;
+package com.mytalk.server.logic.shared.modelClient;
 
 
-public class WorldPackPersonalData {
+
+public class WorldPersonalData {
 private PersonalData pd;
 	
-	public WorldPackPersonalData(PersonalData pdEntity){
+	public WorldPersonalData(PersonalData pdEntity){
 		pd=pdEntity;
 	}
 	

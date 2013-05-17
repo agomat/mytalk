@@ -21,21 +21,32 @@ Date
 package com.mytalk.server.logic.shared.modelClient;
 
 public class User{
-	//private Integer id;
+	private Integer id;
 	private String username;
-	private boolean online;
 	private String name;
 	private String surname;	
+	private String md5;
 	private String ip;
+	private boolean online;
 
 	public User (){}
 	
-	public User(String us, boolean o,String n,String sn,String i){
+	public User(Integer id_user, String us, String n, String sn, String m, String i, boolean o){
+		id=id_user;
 		username=us;
 		name=n;
 		surname=sn;
 		online=o;
 		ip=i;
+		md5=m;
+	}
+	
+	public Integer getId(){
+		return id;
+	}
+	
+	public void setId(Integer id_user){
+		id=id_user;
 	}
 	
 	public String getUsername(){
@@ -68,5 +79,21 @@ public class User{
 	
 	public void setStatus(boolean o){
 		online=o;
+	}
+	
+	public String getMd5(){
+		return md5;
+	}
+	
+	public void setMd5(String m){
+		md5=m;
+	}
+	
+	public String getIp(){
+		return ip;
+	}
+	
+	public void setIp(String i){
+		ip=i;
 	}
 }

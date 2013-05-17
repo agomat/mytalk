@@ -19,11 +19,7 @@
 package com.mytalk.server.logic.processing.requestProcessor.user;
 
 import com.mytalk.server.data.model.OnlineUser;
-import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.exceptions.IpAlreadyLogged;
-import com.mytalk.server.exceptions.IpNotLogged;
-import com.mytalk.server.exceptions.UserAlreadyLogged;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
 import com.mytalk.server.logic.processing.requestProcessor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;
@@ -33,14 +29,22 @@ public class LoginAsAnonymous extends GenericRequest {
 
 	@Override
 	public ARI manage(ARI ari) {
-		String i=ari.getInfo();
+		String infoRequest=ari.getInfo();
 		ARI response=null;
-		WorldPack x=(WorldPack)conv.convertJsonToJava(i, WorldPack.class);
-		PersonalData p=x.getPersonalData();
-		OnlineUser o=new OnlineUser(p.getUsername(), p.getIp());
-		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
-		da.loginAsAnonymous(o);
-		
+		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
+		boolean checkPack=this.checkWorldPackWellFormed(pack);
+		if(!checkPack){
+			response=new ARI(null,"CorruptedPack",null);
+		}else{
+			PersonalData p=pack.getWorldPersonalData().getPersonalData();
+			OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
+			try {
+				da.loginAsAnonymous(o);
+				response=new ARI(null,"SuccessfulLogout",null);
+			} catch (IpAlreadyLogged e) {
+				response=new ARI(null,"IpAlreadyLogged",null);
+			}
+		}
 		return response;
 	}
 

@@ -17,12 +17,14 @@
 
 package com.mytalk.server.logic.processing.requestProcessor;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import com.mytalk.server.logic.shared.*;
 import com.mytalk.server.logic.shared.modelClient.UserList;
-import com.mytalk.server.logic.shared.modelClient.WrapperUserList;
-
 import com.mytalk.server.data.storage.*;
 import com.mytalk.server.logic.processing.Convert;
 
@@ -54,9 +56,8 @@ public abstract class GenericRequest {
 
 	public boolean checkListPackWellFormed(ListPack pack){
 		boolean check=false;
-		WrapperUserList wl=pack.getWrapperUserList();
-		List<UserList> listUserList=wl.getList();
-		if(pack!=null && wl!=null && listUserList!=null){
+		List<UserList> listUserList=pack.getList();
+		if(pack!=null && listUserList!=null){
 			for(int i=0;i<listUserList.size();i++){
 				if(listUserList.get(i).getList()!=null){
 					check=true;
@@ -68,5 +69,46 @@ public abstract class GenericRequest {
 			
 		}
 		return check;
+	}
+	
+	public boolean checkGiveCallPackWellFormed(GiveCallPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getWrapperCall()!=null && pack.getWrapperCall().getList().size()!=0){
+			check=true;
+		}
+		return check;
+	}
+	
+	public boolean checkWorldPackWellFormed(WorldPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getWorldPersonalData()!=null && pack.getWorldPersonalData().getPersonalData()!=null){
+			check=true;
+		}
+		return check;
+	}
+	
+	public boolean checkUpdateListPackWellFormed(UpdateListPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getListName()!=null && pack.getNewListName()!=null && pack.getOwner()!=null){
+			check=true;
+		}
+		return check;
+	}
+	
+	public String getHashMD5(String s){
+		String string=null;
+		try {
+			byte[] byteMail= s.getBytes("UTF-8");
+			MessageDigest md=MessageDigest.getInstance("MD5");
+			byte[] digest=md.digest(byteMail);
+			BigInteger integer=new BigInteger(1,digest);
+			string=integer.toString(16);
+			System.out.println("///"+string+"///");
+		} catch (UnsupportedEncodingException e) {
+			return s;
+		} catch (NoSuchAlgorithmException e) {
+			return s;
+		}
+		return string;
 	}
 }

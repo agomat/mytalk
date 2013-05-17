@@ -19,33 +19,32 @@ Date
 */
 
 package com.mytalk.server.logic.shared;
-import java.util.List;
 
 import com.mytalk.server.logic.shared.modelClient.*;
 
 public class WorldPack extends Information{
 	
-	private WorldPackList worldPackList;
-	private WorldPackPersonalData worldPackPersonalData;
+	private WorldList worldList;
+	private WorldPersonalData worldPersonalData;
 	
-	public WorldPack(WorldPackList wpl,WorldPackPersonalData wppd){
-		worldPackList=wpl;
-		worldPackPersonalData=wppd;
+	public WorldPack(WorldList wpl,WorldPersonalData wppd){
+		worldList=wpl;
+		worldPersonalData=wppd;
 	}
 	
-	public void setWorldPackList(WorldPackList wpl){
-		worldPackList=wpl;
+	public void setWorldList(WorldList wpl){
+		worldList=wpl;
 	}
 	
-	public WorldPackList getWorldPackList(){
-		return worldPackList;
+	public WorldList getWorldList(){
+		return worldList;
 	}
 	
-	public void setWorldPackPersonalData(WorldPackPersonalData wppd){
-		worldPackPersonalData=wppd;
+	public void setWorldPersonalData(WorldPersonalData wppd){
+		worldPersonalData=wppd;
 	}
 	
-	public WorldPackPersonalData getWorldPackPersonalData(){
-		return worldPackPersonalData;
+	public WorldPersonalData getWorldPersonalData(){
+		return worldPersonalData;
 	}
 }

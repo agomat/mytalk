@@ -34,23 +34,29 @@ public class UpdateListName extends GenericRequest {
 	public ARI manage(ARI ari) {
 		ARI response=null;
 		Authentication auth=ari.getAuth();
-		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null);
+		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
 		String infoRequest=ari.getInfo();
 		UpdateListPack pack=(UpdateListPack)conv.convertJsonToJava(infoRequest, UpdateListPack.class);
-		String listOwner=pack.getOwner();
-		String listName=pack.getListName();
-		String newListName=pack.getNewListName();
-		ListName list=new ListName(listName,listOwner);
-		try {
-			da.renameList(list, newListName, userAuth);
-		} catch (AuthenticationFail e) {
-			response=new ARI(null, "AuthenticationFail", null);
-		} catch (ListNotExisting e) {
-			response=new ARI(null, "ListNotExisting", null);
-		} catch (ListAlreadyExists e) {
-			response=new ARI(null, "ListAlreadyExists", null);
-		} catch (UsernameNotCorresponding e) {
-			response=new ARI(null, "UsernameNotCorresponding", null);
+		boolean checkPack=this.checkUpdateListPackWellFormed(pack);
+		if(!checkPack){
+			response=new ARI(null,"CorruptedPack",null);
+		}else{
+			String listOwner=pack.getOwner();
+			String listName=pack.getListName();
+			String newListName=pack.getNewListName();
+			ListName list=new ListName(listName,listOwner);
+			try {
+				da.renameList(list, newListName, userAuth);
+				response=new ARI(null,"SuccessfulRenameList",null);
+			} catch (AuthenticationFail e) {
+				response=new ARI(null, "AuthenticationFail", null);
+			} catch (ListNotExisting e) {
+				response=new ARI(null, "ListNotExisting", null);
+			} catch (ListAlreadyExists e) {
+				response=new ARI(null, "ListAlreadyExists", null);
+			} catch (UsernameNotCorresponding e) {
+				response=new ARI(null, "UsernameNotCorresponding", null);
+			}
 		}
 		return response;
 	}

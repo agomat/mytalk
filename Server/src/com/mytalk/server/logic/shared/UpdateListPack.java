@@ -18,9 +18,6 @@ Date
 * - Zucchetti SRL
 */
 package com.mytalk.server.logic.shared;
-import java.util.List;
-
-import com.mytalk.server.logic.shared.modelClient.*;
 
 public class UpdateListPack extends Information{
 	

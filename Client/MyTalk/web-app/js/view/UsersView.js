@@ -3,5 +3,5 @@ MyTalk.UsersView= Ember.View.extend({
   name: "users",
   actualList:function(){
   	this.get('controller').check();
-  }.property('controll')
+  }.property('blacklist')
 });

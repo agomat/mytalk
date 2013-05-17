@@ -22,6 +22,8 @@ package com.mytalk.server.logic.shared;
 import java.io.Serializable;
 
 public class ARI implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private String req;
 	private Authentication auth;
 	private String info;

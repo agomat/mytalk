@@ -19,6 +19,10 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
-public interface IProcessor {
+import com.mytalk.server.comunication.Message;
 
+public interface IProcessor {
+	
+	public Message processRequest(Message message);
+	
 }

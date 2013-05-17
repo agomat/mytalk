@@ -33,6 +33,7 @@ public class UserList implements Serializable{
 		idList=ident;
 		username=us;
 	}
+
 	public int getIdList(){
 		return idList;
 	}

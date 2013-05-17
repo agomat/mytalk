@@ -22,28 +22,28 @@ package com.mytalk.server.logic.shared.modelClient;
 
 public class Call{
 	
-	private String speaker; //id dell'user
+	private Integer speaker; 
+	private boolean caller;
+	private String startDate;
+	private int duration;
 	private int byteSent;
 	private int byteReceived;
-	private int duration;
-	private String startdate;
-	private boolean caller;
 	
 	public Call(){}
 	
-	public Call(String s, int bs, int br, int d, String sd, boolean c){
+	public Call(Integer s, boolean c, String sd, int d, int bs, int br){
 		speaker=s;
 		byteSent=bs;
 		byteReceived=br;
 		duration=d;
-		startdate=sd;
+		startDate=sd;
 		caller=c;
 	}
 	
-	public String getSpeaker(){
+	public Integer getSpeaker(){
 		return speaker;
 	}
-	public void setSpeaker(String n){
+	public void setSpeaker(Integer n){
 		speaker=n;
 	}
 	public boolean getCaller(){
@@ -70,11 +70,11 @@ public class Call{
 	public void setByteReceived(int n){
 		byteReceived=n;
 	}
-	public String getStartdate(){
-		return startdate;
+	public String getStartDate(){
+		return startDate;
 	}
 	public void setStartDate(String t){
-		startdate=t;
+		startDate=t;
 	}
 	
 }

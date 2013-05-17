@@ -29,18 +29,23 @@ public class CreateAccount extends GenericRequest{
 	public CreateAccount(){}
 	
 	public ARI manage(ARI ari){
-		String i=ari.getInfo();
+		String infoRequest=ari.getInfo();
 		ARI response=null;
-		WorldPack x=(WorldPack)conv.convertJsonToJava(i, WorldPack.class);
-		PersonalData p=x.getPersonalData();
-		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname());
-		try{
-			da.createAccount(u);
-			response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
-		}catch(UsernameAlreadyExisting uae){
-			response=new ARI(null, "UsernameAlreadyExisting", null);
+		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
+		boolean checkPack=this.checkWorldPackWellFormed(pack);
+		if(!checkPack){
+			response=new ARI(null,"CorruptedPack",null);
+		}else{
+			PersonalData p=pack.getWorldPersonalData().getPersonalData();
+			String md5=this.getHashMD5(p.getEmail());
+			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname(),md5);
+			try{
+				da.createAccount(u);
+				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
+			}catch(UsernameAlreadyExisting uae){
+				response=new ARI(null, "UsernameAlreadyExisting", null);
+			}
 		}
-		
 		return response;
 	}
 

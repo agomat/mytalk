@@ -28,7 +28,6 @@ import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
 import com.mytalk.server.logic.shared.modelClient.UserList;
-import com.mytalk.server.logic.shared.modelClient.WrapperUserList;
 
 
 public class ListCreate extends GenericRequest {
@@ -45,9 +44,8 @@ public class ListCreate extends GenericRequest {
 			response=new ARI(null,"CorruptedPack",null);
 		}
 		else{
-			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null);
-			WrapperUserList wlist=pack.getWrapperUserList();
-			List<UserList> listUserList=wlist.getList();
+			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
+			List<UserList> listUserList=pack.getList();
 			UserList listObj=listUserList.get(0);
 			String listName=listObj.getName();
 			ListName newList=new ListName(listName,auth.getUser());

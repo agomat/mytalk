@@ -43,25 +43,36 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    
 });
 
+
 MyTalk.ListController = Ember.ObjectController.extend({
   sortProperties: ['name'],
+  check:true,
+
+  checkList:function(){
+    var id = this.get('content').get('id');
+    if(id < 2){
+      this.setProperties({check:false});
+    }
+    else{
+      this.setProperties({check:true});
+    }
+  }.observes(this),
+  
+
   
   deleteList:function(){
     var l=this.get('content').get('name');
     var id=this.get('content').get('id');
-    if(id == 1 || id == 0){
-      alert('La lista '+l+' non può essere eliminata');
-    }
-    else{ 
-      var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
-        if(r==true){
+    
+    var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
+      if(r==true){
       
-          var list=MyTalk.List.find(0);
-          var context=this.get('target.router');
-          this.get('content').deleteRecord();
-          context.replaceWith('list', list);
-        }
-    } 
+        var list=MyTalk.List.find(0);
+        var context=this.get('target.router');
+        this.get('content').deleteRecord();
+        context.replaceWith('list', list);
+      }
+
     
   },
  
@@ -69,29 +80,26 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
     var id = this.get('content').get('id');
     var name = this.get('content').get('name');
-    if(id == 1 || id == 0){
-      alert('La lista '+name+' non può essere eliminata');
-    }
-    else{
-      var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
-      var list=MyTalk.List.find();
-      var test=true;
+    
+    var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
+    var list=MyTalk.List.find();
+    var test=true;
 
-      list.forEach( function(t){
-          if(t.get('name')==newName){
-          test=false;
-        }
-      });
+    list.forEach( function(t){
+      if(t.get('name')==newName){
+        test=false;
+      }
+    });
 
-      if(newName!="Nome della lista"){
-        if(test==true){
-              this.get('content').setProperties({name:newName});
-        }
-      else if(newName!=null){
-          alert("Esiste già una lista con questo nome");
-        }
+    if(newName!="Nome della lista"){
+      if(test==true){
+          this.get('content').setProperties({name:newName});
+      }
+    else if(newName!=null){
+      alert("Esiste già una lista con questo nome");
       }
     }
+    
   },
   
   addUser: function(currentList) { // ??? by Mattia
@@ -101,20 +109,23 @@ MyTalk.ListController = Ember.ObjectController.extend({
   }
 
 });
+MyTalk.ListCheck=Ember.run(function(){
+  
+});
 
-   
+ 
 MyTalk.UsersController = Ember.ArrayController.extend({
-  controll:true,
-
+  blacklist:false,
+  alluser:false, 
   check:function(){
 
     if(location.hash.split('/')[2]==0){
-      this.setProperties({controll:false});
+      this.setProperties({alluser:true});
     }
     else{
         
         if(location.hash.split('/')[2]==1){
-            this.setProperties({controll:false});
+            this.setProperties({blacklist:true});
         }
     }
   },

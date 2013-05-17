@@ -18,7 +18,6 @@
 package com.mytalk.server.logic.processing.requestProcessor.comunication;
 
 import com.mytalk.server.logic.processing.requestProcessor.*;
-import com.mytalk.server.data.model.*;
 import com.mytalk.server.logic.shared.*;
 
 public class UserCall extends GenericRequest{
@@ -26,26 +25,25 @@ public class UserCall extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		String infoRequest=ari.getInfo();
-		ARI a=null;
+		ARI response=null;
 		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
 		Authentication auth=null;
 		boolean check=this.checkConnectionPackWellFormed(pack);
 		if(!check){
-			auth=new Authentication(null,null,pack.getMyIp());// potrebbe cambiare
-			a=new ARI(auth,"CorruptedConnectionPack",null);
+			response=new ARI(null,"CorruptedConnectionPack",null);
 		}
 		else {
 			boolean result=da.checkUserByIp(pack.getSpeakerIp());
 			if(result){
 				auth=new Authentication(null, null,pack.getSpeakerIp());
-				a=new ARI(auth,"SuccessfulUserCall",infoRequest);
+				response=new ARI(auth,"SuccessfulUserCall",infoRequest);
 			}
 			else{
 				auth=new Authentication(null, null, pack.getMyIp());
-				a=new ARI(auth,"UnsuccessfulUserCall",null);
+				response=new ARI(auth,"UnsuccessfulUserCall",null);
 			}
 		}
-		return a;
+		return response;
 	}
 }
  

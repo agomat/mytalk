@@ -33,7 +33,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.mytalk.server.data.persistence.HibernateUtil;
-import com.mytalk.server.data.storage.DataAccessTest;
 
 
 public class EnvironmentSetter {

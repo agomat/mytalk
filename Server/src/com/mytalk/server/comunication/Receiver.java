@@ -42,21 +42,22 @@ public class Receiver extends WebSocketServer implements Runnable {
 	
 	@Override
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-		System.out.println("Client with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress()+"disconnected");
+		System.out.println("Client with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress()+" disconnected");
 	}
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
 		System.out.println("WebsocketServer Error");
+		ex.printStackTrace();
 	}
 
 	@Override
 	public void onMessage(WebSocket conn, String msg) {
-		System.out.println("messaggio ricevuto");
-//		BufferIncoming bufferIn=BufferIncoming.getInstance();
-//		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-//		Message newMsg=new Message(wsIp,msg);
-//		bufferIn.push(newMsg);
+		System.out.println("New message Received");
+		BufferIncoming bufferIn=BufferIncoming.getInstance();
+		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+		Message newMsg=new Message(wsIp,msg);
+		bufferIn.push(newMsg);
 	}
 
 	public WebSocket searchConnection(String ip) throws IpNotFound{

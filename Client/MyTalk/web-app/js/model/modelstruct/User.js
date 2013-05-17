@@ -12,11 +12,11 @@ MyTalk.User = DS.Model.extend({
   },
  
   avatarTiny: function() {
-    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=identicon';
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=blank';
   }.property('md5'),
 
   avatarBig: function() {
-    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=identicon';
+    return 'background-image: url(http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=blank)';
   }.property('md5')
 
 });

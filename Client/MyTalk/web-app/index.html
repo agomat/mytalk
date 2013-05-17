@@ -27,6 +27,7 @@
     <script src="js/view/DashboardView.js"></script>
     <script src="js/view/LoginFormView.js"></script>
     <script src="js/view/LoginView.js"></script>
+    <script src="js/view/LoggedView.js"></script>
     <script src="js/view/RegisterFormView.js"></script>
     <script src="js/view/RegisterPassword.js"></script>
     <script src="js/view/IPCall.js"></script>
@@ -177,7 +178,10 @@
           <li>
 
             <div {{bindAttr class="user.online:online:offline"}}></div>
-            <img class="avatar" {{bindAttr src="user.avatarTiny"}} />
+            <div class="avatar">
+             <img {{bindAttr src="user.avatarTiny"}} />
+            </div>
+
             <div>
               <div>{{ user.name }} {{ user.surname }}</div>
                 {{ user.username }}
@@ -224,8 +228,10 @@
         {{#each me in model}}
         {{#if me.name}}
           <div id="menu_label" >
-              
-          <img {{bindAttr src="me.avatarTiny"}} =""alt="" /><div >{{ me.name }} {{ me.surname }}</div>
+            <div class="avatar"> 
+              <img {{bindAttr src="me.avatarTiny"}} alt="" />
+            </div>
+          <div id="identity" class="logged">{{ me.name }} {{ me.surname }}</div>
           </div>
           <div id="menu_area">
             <div id="arrow"></div>
@@ -237,11 +243,15 @@
                   <li>{{ me.email }}</li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="img/settings.png"/> <a href="#"> Modifica Profilo </a></li>
-                  <li><img src="img/stats.png"/> <a href="#"> Statistiche sulle chiamate </a></li>
+                  <li><img src="img/settings.png" alt="" /> <a href="#"> Modifica Profilo </a></li>
+                  <li><img src="img/stats.png" alt="" /> <a href="#"> Statistiche sulle chiamate </a></li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="img/door_out.png"/> <a href="#">Esci</a></li>
+                  <li><img src="img/allcontacts.png" alt="" /> <a href="#"> Chiama un IP globale </a></li>
+                  <li><img src="img/users.png" alt="" /> <a href="#/lists"> Visualizza i miei contatti </a></li>
+                </ul>
+                <ul class="separator">
+                  <li><img src="img/door_out.png" alt=""/> <a href="#">Esci</a></li>
                 </ul>
               </div>
             </div>
@@ -252,7 +262,7 @@
       {{else}}
         <div id="menu_container">
           <div id="menu_label">
-            <div>Accedi</div>
+            <div id="identity">Accedi</div>
             <img src="img/open_door.png"/>
           </div>
           <div id="menu_area" >

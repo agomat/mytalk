@@ -19,18 +19,14 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
+import com.mytalk.server.comunication.Message;
 import com.mytalk.server.logic.shared.*;
-import com.mytalk.server.logic.processing.requestProcessor.*;
-import com.mytalk.server.logic.processing.requestProcessor.list.*;
-import com.mytalk.server.logic.processing.requestProcessor.stats.*;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.*;
 
-public class Processor {
+public class Processor implements IProcessor{
 	//classe che riceve e manda il JSON alla Comunication
 	//comunica la richiesta alla GenericRequest
 	Map<String, String> hm;
@@ -61,19 +57,23 @@ public class Processor {
 	}
 		
 	//metodo che riceve JSON, ottiene la conversione in ARI e manda la Stringa "richiesta", controllando tipo
-	public void processRequest(String json){
+	public Message processRequest(Message message){
+		
 		Convert c=new Convert();
-		ARI pack=c.convertJsonToJava(json);
+		ARI pack=c.convertJsonToJava(message.getJson());
 		String request=pack.getReq();
-		ARI response=null;
+		ARI esito=null;
+		String ipToSend=null;
+		Message response=null;
 		try{
 			String r= hm.get(request);
 			Class<?> cl=Class.forName(r);
 			Object obj=cl.newInstance();
 			Method m= cl.getDeclaredMethod("manage", ARI.class);
-			response=(ARI)m.invoke(obj, pack);	
+			esito=(ARI)m.invoke(obj, pack);	
 		}catch(ClassNotFoundException cnfe){
-			
+			// TODO Auto-generated catch block
+			cnfe.printStackTrace();
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,16 +93,15 @@ public class Processor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		up(response);
-	}
-	
-	//metodo che riceve l'ARI, lo converte in JSON e manda la comunication
-	public void up(ARI response){			
-		if(!response.getReq().equals("UnsuccessfulRefuseCall") && !response.getReq().equals("CorruptedPack") ){
-			Convert c=new Convert();
-			String new_pack=c.convertJavaToJson(response); //conversione pacchetto ARI completo da mandare
-			metodoComunication(response.getAuth().getIp(),new_pack);
+		if(esito.getAuth().getIp()!=null){
+			ipToSend=esito.getAuth().getIp();
 		}
+		else{
+			ipToSend=message.getIp();
+		}
+		esito.setAuth(null);
+		String json=c.convertJavaToJson(esito);
+		response=new Message(ipToSend,json);
+		return response;
 	}
 }

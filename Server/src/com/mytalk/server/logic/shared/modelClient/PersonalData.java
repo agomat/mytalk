@@ -27,17 +27,19 @@ public class PersonalData{
 	private String name;
 	private String surname;
 	private String email;
+	private String md5;
 	private String ip;
 
 	public PersonalData(){}
 	
-	public PersonalData(String us, String pwd, String n, String s,String mail, String i){
+	public PersonalData(String us, String pwd, String n, String s,String mail, String m,String ip_user){
 		username=us;
 		password=pwd;
 		email=mail;
 		name=n;
 		surname=s;
-		ip=i;
+		md5=m;
+		ip=ip_user;
 	}
 	
 	public String getUsername(){
@@ -80,11 +82,19 @@ public class PersonalData{
 		email=e;
 	}
 	
+	public String getMd5(){
+		return md5;
+	}
+	
+	public void setMd5(String m){
+		md5=m;
+	}
+	
 	public String getIp(){
 		return ip;
 	}
 	
-	public void setIp(String i){
-		ip=i;
+	public void setIp(String ip_user){
+		ip=ip_user;
 	}
 }

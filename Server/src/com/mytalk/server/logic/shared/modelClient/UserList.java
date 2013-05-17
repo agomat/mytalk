@@ -24,15 +24,23 @@ import java.util.List;
 
 public class UserList{
 	
-	private Integer id;
+	private int id;
 	private String name;
-	private List<User> list; //List<Integer>
+	private List<Integer> list; 
 	
 	public UserList(){}
 	
-	public UserList( Integer i,String n,List<User> c){
+	public UserList( int i,String n,List<Integer> c){
 		list=c;
 		name=n;
+		id=i;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int i){
 		id=i;
 	}
 	
@@ -43,10 +51,10 @@ public class UserList{
 		name=c;
 	}
 	
-	public List<User> getList(){
+	public List<Integer> getList(){
 		return list;
 	}
-	public void setList(List<User> c){
+	public void setList(List<Integer> c){
 		list=c;
 	}
 }

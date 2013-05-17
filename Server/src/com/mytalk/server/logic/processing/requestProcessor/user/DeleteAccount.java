@@ -29,16 +29,21 @@ public class DeleteAccount extends GenericRequest{
 	public DeleteAccount(){}
 	
 	public ARI manage(ARI ari){
-		String i=ari.getInfo();
+		String infoRequest=ari.getInfo();
 		ARI response=null;
-		WorldPack x=(WorldPack)conv.convertJsonToJava(i, WorldPack.class);
-		PersonalData p=x.getPersonalData();
-		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail());
-		try{
-			da.deleteAccount(u);
-			response=new ARI(ari.getAuth(), "SuccessfulDeleteAccount", null);
-		}catch(AuthenticationFail af){
-			response=new ARI(null, "AuthenticationFail", null);
+		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
+		boolean checkPack=this.checkWorldPackWellFormed(pack);
+		if(!checkPack){
+			response=new ARI(null,"CorruptedPack",null);
+		}else{
+			PersonalData p=pack.getWorldPersonalData().getPersonalData();
+			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail(),p.getMd5());
+			try{
+				da.deleteAccount(u);
+				response=new ARI(ari.getAuth(), "SuccessfulDeleteAccount", null);
+			}catch(AuthenticationFail af){
+				response=new ARI(null, "AuthenticationFail", null);
+			}
 		}
 		return response;
 	}

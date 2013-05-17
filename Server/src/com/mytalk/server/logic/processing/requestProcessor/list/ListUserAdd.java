@@ -19,7 +19,11 @@ package com.mytalk.server.logic.processing.requestProcessor.list;
 
 import java.util.List;
 import com.mytalk.server.exceptions.AuthenticationFail;
+import com.mytalk.server.exceptions.IdNotFound;
+import com.mytalk.server.exceptions.ListNotExisting;
 import com.mytalk.server.exceptions.UserAlreadyListed;
+import com.mytalk.server.exceptions.UserNotExisting;
+import com.mytalk.server.exceptions.UsernameNotCorresponding;
 import com.mytalk.server.logic.processing.requestProcessor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -33,33 +37,46 @@ public class ListUserAdd extends GenericRequest{
 		ARI response=null;
 		//creo oggetto necessario per l'autenticazione
 		Authentication auth=ari.getAuth();
-		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null);
+		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
 		//ottengo la stringa di info
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
 		//elaboro l'oggetto ListPack per ricavare le informazioni necessarie a chiamare il metodo appropriato
-		WrapperUserList wul=pack.getWrapperUserList(); //ricavo il wrapperUserList
-		List<UserList> listUserList=wul.getList(); // userlist contiene nome lista e lista di stringhe
-		UserList userList=null;
-		com.mytalk.server.data.model.ListName listName=null;
-		List<String> listString=null;
-		String user=null;
-		try{
-			for(int i=0;i<listUserList.size();i++){ //scorre tutte le liste presenti
-				userList=listUserList.get(i); //nome lista e la lista di user
-				listName=new com.mytalk.server.data.model.ListName(userList.getName(),auth.getUser()); //nome lista e owner
-				listString=userList.getList();// lista di user
-				for(int j=0;j<listString.size();j++){ //scorre lista di utenti 
-					user=listString.get(j);
-					da.userListAdd(listName, user, userAuth);
+		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
+		boolean checkPack=this.checkListPackWellFormed(pack);
+		if(!checkAuth || !checkPack){
+			response=new ARI(null,"CorruptedPack",null);
+		}	
+		else{		
+			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista di stringhe
+			UserList userList=null;
+			com.mytalk.server.data.model.ListName listName=null;
+			List<Integer> listString=null;
+			String user=null;
+			try{
+				for(int i=0;i<listUserList.size();i++){ //scorre tutte le liste presenti
+					userList=listUserList.get(i); //nome lista e la lista di user
+					listName=new com.mytalk.server.data.model.ListName(userList.getName(),auth.getUser()); //nome lista e owner
+					listString=userList.getList();// lista di user
+					for(int j=0;j<listString.size();j++){ //scorre lista di id utenti 
+						user=(da.getUserById(listString.get(j))).getUsername();
+						da.userListAdd(listName, user, userAuth);
+					}
+					response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
 				}
-				//se arrivo qua è andato a buon fine
-				response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
+			}catch(UserAlreadyListed ual){
+				response=new ARI(null,"UnsuccessfulListUserAdd",infoRequest);
+			}catch(AuthenticationFail af){
+				response=new ARI(null,"AuthenticationFail",null);
+			} catch (IdNotFound inf) {
+				response=new ARI(auth,"IdNotFound",null);
+			} catch (UserNotExisting e) {
+				response=new ARI(auth,"UserNotExisting",null);
+			} catch (ListNotExisting e) {
+				response=new ARI(auth,"ListNotExisting",null);
+			} catch (UsernameNotCorresponding e) {
+				response=new ARI(auth,"UsernameNotCorresponding",null);
 			}
-		}catch(UserAlreadyListed ual){
-			response=new ARI(null,"UnsuccessfulListUserAdd",infoRequest);
-		}catch(AuthenticationFail af){
-			response=new ARI(null,"AuthenticationFail",null);
 		}
 		return response;
 	}

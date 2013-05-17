@@ -100,26 +100,20 @@ MyTalk.ListController = Ember.ObjectController.extend({
 });
 
  
-MyTalk.UsersController = Ember.ObjectController.extend({
+MyTalk.UsersController = Ember.ArrayController.extend({
   blacklist:false,
   alluser:false,
-  currentList:0, 
   needs: ['list'],
-  
-  setCurrentList:function(){
-
-    this.set('currentList',this.get('controllers.list.content.id'));
-    alert(this.currentList);
-  }.observes('controllers.list.content.id'),
-  
+    
   check:function(){
-
-    if(location.hash.split('/')[2]==0){
+    var id = this.get('controllers.list.content.id');
+    
+    if(id==0){
       this.setProperties({alluser:true});
     }
     else{
         
-        if(location.hash.split('/')[2]==1){
+        if(id==1){
             this.setProperties({blacklist:true});
         }
     }
@@ -133,10 +127,8 @@ MyTalk.UsersController = Ember.ObjectController.extend({
     
     var r=confirm("Sei sicuro di eliminare l'utente " + n +" dalla lista ?");
    if(r==true){
-      //var c = location.hash.split('/')[2];
-      var c=this.get('currentList');
-      alert(this.get('currentList'));
-      var list = MyTalk.List.find(c).get('users');
+      var id=this.get('controllers.list.content.id');
+      var list = MyTalk.List.find(id).get('users');
       list.removeObject( MyTalk.User.find(user) );
     }
     

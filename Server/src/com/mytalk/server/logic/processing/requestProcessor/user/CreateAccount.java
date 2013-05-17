@@ -37,7 +37,8 @@ public class CreateAccount extends GenericRequest{
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname(),p.getMd5());
+			String md5=this.getHashMD5(p.getEmail());
+			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname(),md5);
 			try{
 				da.createAccount(u);
 				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);

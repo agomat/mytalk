@@ -52,6 +52,9 @@
     <script src="js/view/RegisterEmail.js"></script>
     <script src="js/view/RegisterName.js"></script>
     <script src="js/view/RegisterUsername.js"></script>
+    
+    <!-- bootstrap Router -->
+    <script src="js/router/Router.js"></script>
 
     <!-- bootstrap StateManager -->
     <script src="js/statemanager/StateManager.js"></script>
@@ -76,9 +79,6 @@
    
     <script src="js/model/modelstruct/Call.js"></script>
     <script src="js/model/modelstruct/WCall.js"></script>
-
-    <!-- bootstrap Router -->
-    <script src="js/router/Router.js"></script>
 
     <!-- bootstrap controllers -->
     <script src="js/controller/Controller.js"></script>
@@ -224,14 +224,14 @@
         <div id="logo">
           <h1>MyTalk</h1>
         </div>
-        {{ partial dashboard }}
+        {{ partial "dashboard" }}
       </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="_dashboard">
       {{#if isAuthenticated}}
         <div id="menu_container">
-        {{#each me in controller}}
+        {{#each me in model}}
         {{#if me.name}}
           <div id="menu_label" >
               

@@ -38,7 +38,7 @@ public class Logout extends GenericRequest{
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			OnlineUser o=new OnlineUser(p.getUsername(), p.getIp());
+			OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
 			try {
 				da.logout(o);
 			} catch (LogoutException e) {

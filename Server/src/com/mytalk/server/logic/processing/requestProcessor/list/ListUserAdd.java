@@ -69,13 +69,13 @@ public class ListUserAdd extends GenericRequest{
 			}catch(AuthenticationFail af){
 				response=new ARI(null,"AuthenticationFail",null);
 			} catch (IdNotFound inf) {
-				response=new ARI(auth,"IdNotFound",null);
+				response=new ARI(null,"IdNotFound",null);
 			} catch (UserNotExisting e) {
-				response=new ARI(auth,"UserNotExisting",null);
+				response=new ARI(null,"UserNotExisting",null);
 			} catch (ListNotExisting e) {
-				response=new ARI(auth,"ListNotExisting",null);
+				response=new ARI(null,"ListNotExisting",null);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(auth,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorresponding",null);
 			}
 		}
 		return response;

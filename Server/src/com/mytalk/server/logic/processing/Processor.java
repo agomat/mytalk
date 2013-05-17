@@ -50,6 +50,7 @@ public class Processor implements IProcessor{
 		hm.put("ListDelete","com.mytalk.server.logic.processing.requestProcessor.list.ListDelete");
 		hm.put("ListUserAdd","com.mytalk.server.logic.processing.requestProcessor.list.ListUserAdd");
 		hm.put("ListUserRemove","com.mytalk.server.logic.processing.requestProcessor.list.ListUserRemove");
+		hm.put("UpdateListName","com.mytalk.server.logic.processing.requestProcessor.list.UpdateListName");
 		
 		hm.put("AddCall","com.mytalk.server.logic.processing.requestProcessor.stats.AddCall");
 		hm.put("GetCalls","com.mytalk.server.logic.processing.requestProcessor.stats.GetCalls");
@@ -61,6 +62,12 @@ public class Processor implements IProcessor{
 		
 		Convert c=new Convert();
 		ARI pack=c.convertJsonToJava(message.getJson());
+		if(pack.getAuth()!=null){
+			pack.getAuth().setIp(message.getIp());
+		}
+		else{
+			pack.setAuth(new Authentication(null,null,message.getIp()));
+		}
 		String request=pack.getReq();
 		ARI esito=null;
 		String ipToSend=null;
@@ -93,7 +100,7 @@ public class Processor implements IProcessor{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(esito.getAuth().getIp()!=null){
+		if(esito.getAuth()!=null){
 			ipToSend=esito.getAuth().getIp();
 		}
 		else{

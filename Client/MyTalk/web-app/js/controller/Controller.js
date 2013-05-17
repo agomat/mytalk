@@ -1,11 +1,14 @@
 MyTalk.IndexController = Ember.ObjectController.extend({
-  /* max: Non ricordo per che motivo servisse. Mattia */
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
-
+  login: function(user,pass) {
+    MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
+    var credentials = {};
+    MyTalk.StateManager.send("login", credentials); 
+  },
   register:function(name,surname,username,email,password,password_conf){
     console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password +" "+ password_conf);
   },
@@ -14,32 +17,30 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }
 });
 
-MyTalk.LoggedController = Ember.ArrayController.extend({
+MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
   createList:function(){
 
     var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
-    var list=this.get('content');
-    var test=true;
+    if(newName!="Nome della lista") {
+      var list=this.get('content');
+      var test=true;
 
-    list.forEach(function(t){
-      console.debug(t.get('name'));
-      if(t.get('name')==newName){
-        test=false;
-      }
-    });
-
-    if(newName!="Nome della lista"){
+      list.forEach(function(t){
+        console.debug(t.get('name'));
+        if(t.get('name')==newName){
+          test=false;
+        }
+      });
+      
       if(test==true){
-            MyTalk.List.createRecord({name:newName});
+            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName});
       }
       else if(newName!=null){
         alert("Esiste già una lista con questo nome");
       }
     }
-
   }
-   
 });
 
 
@@ -57,8 +58,6 @@ MyTalk.ListController = Ember.ObjectController.extend({
     }
   }.observes(this),
   
-
-  
   deleteList:function(){
     var l=this.get('content').get('name');
     var id=this.get('content').get('id');
@@ -71,8 +70,6 @@ MyTalk.ListController = Ember.ObjectController.extend({
         this.get('content').deleteRecord();
         context.replaceWith('list', list);
       }
-
-    
   },
  
   renameList:function(){
@@ -98,14 +95,18 @@ MyTalk.ListController = Ember.ObjectController.extend({
       alert("Esiste già una lista con questo nome");
       }
     }
+<<<<<<< HEAD
     
   },
  
+=======
+  }
+>>>>>>> af682911a510afad759621b4704995f6834941b5
 
 });
 
  
-MyTalk.UsersController = Ember.ArrayController.extend({
+MyTalk.UsersController = Ember.ObjectController.extend({
   blacklist:false,
   alluser:false,
   currentList:0, 
@@ -129,7 +130,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
         }
     }
   },
-
 
   deleteUser:function(user){
 
@@ -165,26 +165,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       });
       MyTalk.List.find(1).get('users').addObject(MyTalk.User.find(user));
     } 
-
-     
   }
-});
-
-
-MyTalk.HeaderController = Ember.ArrayController.extend({
-
   
-  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
-  appState: null,
-  
-  isAuthenticated: function () {
-    return (this.get('appState') == 'isAuthenticated');
-  }.property('appState'),
-
-  login: function(user,pass) {
-    MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
-    // se autenticato:
-    var credentials = {}; // TODO vedere se spostare create record in login statemanager
-     MyTalk.StateManager.send("login", credentials); 
-  }
 });

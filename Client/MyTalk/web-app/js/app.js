@@ -5,8 +5,7 @@ MyTalk = Ember.Application.create({
 Ember.View.reopen({
     didInsertElement: function() {
        this.set('elementIsInserted', true);
-       console.log("Nome del template associato -> " + this.get('templateName'));
-       //$.getScript('js_graphics/animation.js');
+//        console.log("Nome del template associato -> " + this.get('templateName'));
        this._super();
     },
 

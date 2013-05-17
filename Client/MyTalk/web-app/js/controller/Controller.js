@@ -22,19 +22,19 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   createList:function(){
 
     var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
-    var list=this.get('content');
-    var test=true;
+    if(newName!="Nome della lista") {
+      var list=this.get('content');
+      var test=true;
 
-    list.forEach(function(t){
-      console.debug(t.get('name'));
-      if(t.get('name')==newName){
-        test=false;
-      }
-    });
-
-    if(newName!="Nome della lista"){
+      list.forEach(function(t){
+        console.debug(t.get('name'));
+        if(t.get('name')==newName){
+          test=false;
+        }
+      });
+      
       if(test==true){
-            MyTalk.List.createRecord({name:newName});
+            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName});
       }
       else if(newName!=null){
         alert("Esiste già una lista con questo nome");

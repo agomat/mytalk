@@ -13,6 +13,7 @@
   
     <script type="text/javascript" src="js/libs/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="js/libs/handlebars-1.0.0-rc.3.js"></script>
+    <script type="text/javascript" src="js/libs/helpers.js"></script>
     <script type="text/javascript" src="js/libs/ember-1.0.0-rc.3.js"></script> 
     <script type="text/javascript" src="js/libs/ember-data.js"></script>
 
@@ -31,7 +32,8 @@
     <script src="js/view/IPCall.js"></script>
     
     <script src="js/view/UsersView.js"></script>
-    <script src="js/view/GuestView.js"></script> 
+    <script src="js/view/GuestView.js"></script>
+    
     
  
     <script src="js/view/LoginView.js"></script>
@@ -154,8 +156,13 @@
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
             <div id="list_button">
             
-              <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
-              <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
+            {{#if check}}
+                <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
+                <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
+              {{else}}
+                
+            {{/if}}
+            
             </div>
           </div>
       </div>

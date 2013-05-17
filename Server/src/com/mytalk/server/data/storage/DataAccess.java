@@ -81,7 +81,7 @@ public class DataAccess implements IDataAccess{
 	//crea un account nel database
 	public void createAccount(User toCreate) throws UsernameAlreadyExisting{
 		UserDAO ud=new UserDAO();
-		User existant=ud.get(toCreate.getName());
+		User existant=ud.get(toCreate.getUsername());
 		if(existant!=null){
 			GenericDAO.closeSession();
 			throw new UsernameAlreadyExisting();

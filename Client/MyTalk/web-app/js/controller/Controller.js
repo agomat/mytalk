@@ -95,17 +95,16 @@ MyTalk.ListController = Ember.ObjectController.extend({
       alert("Esiste già una lista con questo nome");
       }
     }
-  },
-  
-  addUser: function(currentList) {
-    currentList.get('users').createRecord({ username:'New User from List', online: true });
   }
 
 });
+
+
  
 MyTalk.UsersController = Ember.ObjectController.extend({
   blacklist:false,
   alluser:false, 
+  
   check:function(){
 
     if(location.hash.split('/')[2]==0){
@@ -142,20 +141,11 @@ MyTalk.UsersController = Ember.ObjectController.extend({
     var r=confirm("Sei sicuro di mettere l'utente " + n +" nella Blacklist ?");
    
     if(r==true){
-      
-      var c = location.hash.split('/')[2];
-      var list = MyTalk.List.find(c).get('users');
-      list.removeObject( MyTalk.User.find(user) );
-      
-      blackList = MyTalk.List.find();
-      blackList.forEach( function(t){
-    
-        if(t.get('name')=='Blacklist'){
-        
-          MyTalk.List.find(t.get('id')).get('users').addObject(MyTalk.User.find(user));
-        
-        }
+      var list = MyTalk.List.find();
+      list.forEach( function(t){
+        t.get('users').removeObject( MyTalk.User.find(user) );
       });
+      MyTalk.List.find(1).get('users').addObject(MyTalk.User.find(user));
     } 
   }
   

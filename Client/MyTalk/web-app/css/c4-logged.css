@@ -162,10 +162,24 @@
 	border-radius: 3px;
 }
 
-#userlist .online_status{
-	position: absolute;
-	margin-left: -7px;
-	margin-top: -3px;
+#userlist .online{
+        position: absolute;
+        padding: 0 !important;
+        margin-left: -7px;
+        margin-top: -3px;
+        background: url(../img/dot_green.png);
+        width: 16px;
+        height: 16px;
+}
+
+#userlist .offline{
+        position: absolute;
+        padding: 0 !important;
+        margin-left: -7px;
+        margin-top: -3px;
+        background: url(../img/dot_grey.png);
+        width: 16px;
+        height: 16px;
 }
 
 #utenti .content ul li>ul>li, #utenti .content ul li img, #utenti .content ul li>div{
@@ -210,9 +224,8 @@
 .blacklist_user{background: url("../img/Gdelete_user.png") center center no-repeat;}
 .remove_user{background: url("../img/delete.png") center center no-repeat;}
 
-
-.offline_limit .call_user{
-	box-shadow: none !important;
-	cursor: default !important;
-	background-image: url("../img/phone_grey.png") !important;
+.callDisabled .call_user{
+        box-shadow: none !important;
+        cursor: default !important;
+        background-image: url("../img/phone_grey.png") !important;
 }

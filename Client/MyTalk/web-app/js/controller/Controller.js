@@ -15,7 +15,6 @@ MyTalk.IndexController = Ember.ObjectController.extend({
 });
 
 MyTalk.LoggedController = Ember.ArrayController.extend({
-  //needs: ['HeaderController'],
   sortProperties: ['name'],
   createList:function(){
 
@@ -101,22 +100,15 @@ MyTalk.ListController = Ember.ObjectController.extend({
     }
     
   },
-  
-  addUser: function(currentList) { // ??? by Mattia
-          currentList.get('users').createRecord(
-          {username:'New User from List', online: true}
-          );
-  }
 
 });
-MyTalk.ListCheck=Ember.run(function(){
-  
-});
+
 
  
 MyTalk.UsersController = Ember.ArrayController.extend({
   blacklist:false,
   alluser:false, 
+  
   check:function(){
 
     if(location.hash.split('/')[2]==0){
@@ -129,9 +121,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
         }
     }
   },
-  setupController: function() {
-    this.controllerFor('users').set('model', MyTalk.User.find()); // max: funziona anche senza. Mattia
-  } , 
+
 
   deleteUser:function(user){
 
@@ -156,20 +146,11 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     var r=confirm("Sei sicuro di mettere l'utente " + n +" nella Blacklist ?");
    
     if(r==true){
-      
-      var c = location.hash.split('/')[2];
-      var list = MyTalk.List.find(c).get('users');
-      list.removeObject( MyTalk.User.find(user) );
-      
-      blackList = MyTalk.List.find();
-      blackList.forEach( function(t){
-    
-        if(t.get('name')=='Blacklist'){
-        
-          MyTalk.List.find(t.get('id')).get('users').addObject(MyTalk.User.find(user));
-        
-        }
+      var list = MyTalk.List.find();
+      list.forEach( function(t){
+        t.get('users').removeObject( MyTalk.User.find(user) );
       });
+      MyTalk.List.find(1).get('users').addObject(MyTalk.User.find(user));
     } 
 
      

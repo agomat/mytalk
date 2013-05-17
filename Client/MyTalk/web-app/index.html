@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-      .hidden-class{
-        display:hidden;
-      }
-    </style>
     <meta charset="utf-8">
     <title>MyTalk</title>
     <link rel="stylesheet" type="text/css"  href="font/roboto.css" media="screen" />
@@ -178,12 +173,7 @@
 
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
-<<<<<<< HEAD
-      
-        {{#each user in controller}}
-=======
         {{#each user in model}}
->>>>>>> af682911a510afad759621b4704995f6834941b5
           <li>
             {{#if user.online}}
               <img class="online_status" src="img/dot_green.png" />

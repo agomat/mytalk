@@ -95,13 +95,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
       alert("Esiste già una lista con questo nome");
       }
     }
-<<<<<<< HEAD
-    
-  },
- 
-=======
   }
->>>>>>> af682911a510afad759621b4704995f6834941b5
 
 });
 

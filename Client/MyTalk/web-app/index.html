@@ -82,17 +82,16 @@
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="index">
-      {{ outlet }}
+      {{ outlet 'head' }}
+      {{ outlet 'content' }}
     </script>
 
     <script type="text/x-handlebars" data-template-name="guest">
-      {{ render header }}
       {{ partial description }}
       {{ partial register }}
     </script>
 
     <script type="text/x-handlebars" data-template-name="logged">
-      {{ render header }}
         <div id="logged_content" class="scroll_content">
           {{ partial lists }} 
         </div>
@@ -107,7 +106,7 @@
           <div class="content">
             <ul>
 
-              {{#each list in controller}}
+              {{#each list in model}}
                 {{#if list.generalList}}
                   <li id="allcontacs">
                    {{#linkTo "list" list}} 
@@ -117,7 +116,7 @@
                 {{/if}}
               {{/each}}
               
-              {{#each list in controller}}
+              {{#each list in model}}
                 {{#if list.blackList}}
                  <li id="blacklist">
                    {{#linkTo "list" list}} 
@@ -128,7 +127,7 @@
                 {{/if}} 
               {{/each}}
               
-              {{#each list in controller}}
+              {{#each list in model}}
                 {{#if list.customList}}
                  <li>
                    {{#linkTo "list" list}} 
@@ -142,7 +141,7 @@
           </div>
       </div>
       <div id="utenti">
-        {{ outlet }}
+        {{ outlet 'list' }}
       </div>
     </script>
 
@@ -167,7 +166,7 @@
 
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
-        {{#each user in controller}}
+        {{#each user in model}}
           <li>
             {{#if user.online}}
               <img class="online_status" src="img/dot_green.png" />

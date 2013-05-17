@@ -14,7 +14,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }
 });
 
-MyTalk.LoggedController = Ember.ArrayController.extend({
+MyTalk.LoggedController = Ember.ObjectController.extend({
   //needs: ['HeaderController'],
   sortProperties: ['name'],
   createList:function(){
@@ -118,9 +118,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
         }
     }
   },
-  setupController: function() {
-    this.controllerFor('users').set('model', MyTalk.User.find()); // max: funziona anche senza. Mattia
-  } , 
 
   deleteUser:function(user){
 

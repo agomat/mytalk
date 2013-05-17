@@ -1,26 +1,33 @@
 MyTalk.Router.map(function() {
-  this.resource('logged', { path: '/lists' } , function() {
-    this.resource('list', { path: ':list_id' });
+  this.resource('index', { path: '/' }, function() {
+    this.resource('guest', {path: '/' });
+    this.resource('logged', { path: '/lists' } , function() {
+      this.resource('list', { path: ':list_id' });
+    });
   });
 });
 
 MyTalk.IndexRoute = Ember.Route.extend({
- 
   renderTemplate: function(controller, model) { 
-    this.render('index');
-    this.render('guest');
-  },
-
-});
-
-MyTalk.LoggedRoute = Ember.Route.extend({
-  model: function(params) {
-    // alert(params.list_id); max: occhio è undefined! by Mattia
-    return MyTalk.List.find(params.list_id); 
+    this._super();
+    this.render('header', { into: 'index', outlet: 'head' });
   }
 });
 
+MyTalk.GuestRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    this.render('guest', { outlet: 'content' });
+  }
+});
 
+MyTalk.LoggedRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    this.render('logged', { outlet: 'content' });
+  },
+  model: function() {
+    return MyTalk.List.find(); 
+  }
+});
 
 MyTalk.LoggedIndexRoute = Ember.Route.extend({
   redirect: function() {
@@ -29,10 +36,14 @@ MyTalk.LoggedIndexRoute = Ember.Route.extend({
   }
 });
 
+MyTalk.ListRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    this.render('list', { into: 'logged', outlet: 'list' });
+  }
+});
+
 MyTalk.ApplicationRoute = Ember.Route.extend({
   setupController: function() {
-    
     this.controllerFor('header').set('model', MyTalk.PersonalData.find());
-    
   }
 });

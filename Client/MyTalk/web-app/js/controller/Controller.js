@@ -115,18 +115,17 @@ MyTalk.ListCheck=Ember.run(function(){
 
  
 MyTalk.UsersController = Ember.ArrayController.extend({
-  controll:true,
-
-
+  blacklist:false,
+  alluser:false, 
   check:function(){
 
     if(location.hash.split('/')[2]==0){
-      this.setProperties({controll:false});
+      this.setProperties({alluser:true});
     }
     else{
         
         if(location.hash.split('/')[2]==1){
-            this.setProperties({controll:false});
+            this.setProperties({blacklist:true});
         }
     }
   },

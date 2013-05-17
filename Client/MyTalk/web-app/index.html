@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style type="text/css">
+      .hidden-class{
+        display:hidden;
+      }
+    </style>
     <meta charset="utf-8">
     <title>MyTalk</title>
     <link rel="stylesheet" type="text/css"  href="font/roboto.css" media="screen" />
@@ -192,16 +197,23 @@
               <ul class="offline_limit"
             {{/if}}
             {{view.actualList}}
-            {{#if controll}}
+            {{#if blacklist}}
                 <li><a class="call_user" href="#"></a></li>
                 <li><a class="add_user" href="#"></a></li>
-                <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
-                <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
               </ul>
             {{else}}
-                <li><a class="call_user" href="#"></a></li>
-                <li><a class="add_user" href="#"></a></li>
+                {{#if alluser}}
+                  <li><a class="call_user" href="#"></a></li>
+                  <li><a class="add_user" href="#"></a></li>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                 </ul>
+                {{else}}
+                  <li><a class="call_user" href="#"></a></li>
+                  <li><a class="add_user" href="#"></a></li>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
+                  <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
+                </ul>
+                {{/if}}
             {{/if}}
           </li>
         {{/each}}

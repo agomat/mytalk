@@ -41,8 +41,8 @@ public class ListDelete extends GenericRequest {
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
 		//elaborazione
-		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
-		boolean checkPack=this.checkListPackWellFormed(pack);
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
+		boolean checkPack=checkPartialListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}
@@ -55,7 +55,7 @@ public class ListDelete extends GenericRequest {
 				da.listDelete(newList,userAuth);
 				response=new ARI(null,"SuccessfulListDelete",infoRequest);
 			}catch(ListNotExisting lne){
-				response=new ARI(null,"UnsuccessfulListDelete",infoRequest);
+				response=new ARI(null,"ListNotExisting",infoRequest);
 			}catch(AuthenticationFail af){
 				response=new ARI(null,"AuthenticationFail",null);
 			} catch (UsernameNotCorresponding e) {

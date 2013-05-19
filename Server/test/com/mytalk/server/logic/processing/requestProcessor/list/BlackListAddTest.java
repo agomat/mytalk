@@ -32,7 +32,6 @@ import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
 import com.mytalk.server.logic.shared.modelClient.UserList;
-import com.mytalk.server.logic.shared.modelClient.WrapperUserList;
 import com.mytalk.server.logic.shared.modelClient.User;
 
 public class BlackListAddTest {
@@ -50,45 +49,42 @@ public class BlackListAddTest {
 	public void testManage() {
 		BlackListAdd blackListAdd=new BlackListAdd();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
-		User user2=new User("user2",true,"user2","user2","123.123.123.2");
-		List<User> listUser=new ArrayList<User>();
-		listUser.add(user2);
-		UserList userList=new UserList(0,"Blacklist",listUser);
+		List<Integer> listIdUser=new ArrayList<Integer>();
+		listIdUser.add(3);
+		UserList userList=new UserList(0,"Blacklist",listIdUser);
 		List<UserList> listUserList=new ArrayList<UserList>();
 		listUserList.add(userList);
-		WrapperUserList wul=new WrapperUserList(listUserList);
-		ListPack pack=new ListPack(wul);
+		ListPack pack=new ListPack(listUserList);
 		String packString=conv.convertJavaToJson(pack);
 		ARI ari= new ARI(auth,"BlackListAdd",packString);
 		
 		ARI ariResponse=blackListAdd.manage(ari);
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlacklistAdd",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());	
 		
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("User già in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklisted",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 	
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListAdd",packString);
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Autenticazione assente ma viene aggiunto lo stesso","AuthenticationFail",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
-		User user12=new User("user12",false,"user12","user12","123.123.123.12");
-		listUser.remove(0);
-		listUser.add(user12);
+		listIdUser.remove(0);
+		listIdUser.add(13);
 		String new_packString=conv.convertJavaToJson(pack);
 		ari=new ARI(auth,"BlackListAdd",new_packString);
 		ariResponse=blackListAdd.manage(ari);
-		assertEquals("Username non esiste ma viene aggiunto lo stesso","UserNotExisting",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
+		assertEquals("Id non esiste ma viene aggiunto lo stesso","IdNotFound",ariResponse.getReq());
+		
 		
 		listUserList.get(0).setList(null);
 		new_packString=conv.convertJavaToJson(pack);
 		ari=new ARI(auth,"BlackListAdd",new_packString);
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Nesssun user da aggiungere in blacklist ma processata","CorruptedPack",ariResponse.getReq());
+	
+	//UsernameNotCorresponding non viene mai sollevata perchè per creare l'user si usa il valore presente in authentication
+	//UsernameNotExisting non viene mai sollevata perchè vi è l'eccezione IdNotFound che previene ciò
 	}
 
 }

@@ -30,7 +30,7 @@ public AcceptCall(){}
 		ARI response=null;
 		Authentication auth=null;
 		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
-		boolean check=this.checkConnectionPackWellFormed(pack);
+		boolean check=checkConnectionPackWellFormed(pack);
 		if(!check){
 			response=new ARI(null,"CorruptedConnectionPack",null);
 		}

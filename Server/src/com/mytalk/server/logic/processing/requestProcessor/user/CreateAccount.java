@@ -30,14 +30,15 @@ public class CreateAccount extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		String infoRequest=ari.getInfo();
+		System.out.println(infoRequest);
 		ARI response=null;
 		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-		boolean checkPack=this.checkWorldPackWellFormed(pack);
+		boolean checkPack=checkWorldPackWellFormed(pack);
 		if(!checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			String md5=this.getHashMD5(p.getEmail());
+			String md5=getHashMD5(p.getEmail());
 			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname(),md5);
 			try{
 				da.createAccount(u);

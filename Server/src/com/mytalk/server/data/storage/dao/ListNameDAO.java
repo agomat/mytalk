@@ -68,7 +68,7 @@ public class ListNameDAO extends GenericDAO{
 		String name=listObj.getName();
 		String owner=listObj.getOwner();
 		ListName list=null;
-		SQLQuery query=session.createSQLQuery("SELECT * FROM ListNames WHERE owner='"+owner+"' && name='"+name+"'");
+		SQLQuery query=session.createSQLQuery("SELECT * FROM ListNames WHERE owner='"+owner+"' && BINARY name='"+name+"'");
 		query=query.addEntity(ListName.class);
 		list=(ListName)query.uniqueResult();
 		t.commit();

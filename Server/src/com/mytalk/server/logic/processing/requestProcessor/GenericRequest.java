@@ -38,7 +38,7 @@ public abstract class GenericRequest {
 	
 	public abstract ARI manage(ARI pack);
 	
-	public boolean checkAuthenticationWellFormed(Authentication auth){
+	public  static boolean checkAuthenticationWellFormed(Authentication auth){
 		boolean check=false;
 		if(auth!=null && auth.getUser()!=null && auth.getPwd()!=null){
 			check=true;
@@ -46,7 +46,7 @@ public abstract class GenericRequest {
 		return check;
 	}
 	
-	public boolean checkConnectionPackWellFormed(ConnectionPack pack){
+	public static boolean checkConnectionPackWellFormed(ConnectionPack pack){
 		boolean check=false;
 		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null){
 			check=true;
@@ -54,10 +54,11 @@ public abstract class GenericRequest {
 		return check;
 	}
 
-	public boolean checkListPackWellFormed(ListPack pack){
+	public static boolean checkListPackWellFormed(ListPack pack){
 		boolean check=false;
-		List<UserList> listUserList=pack.getList();
-		if(pack!=null && listUserList!=null){
+		
+		if(pack!=null && pack.getList()!=null){
+			List<UserList> listUserList=pack.getList();
 			for(int i=0;i<listUserList.size();i++){
 				if(listUserList.get(i).getList()!=null){
 					check=true;
@@ -71,15 +72,23 @@ public abstract class GenericRequest {
 		return check;
 	}
 	
-	public boolean checkGiveCallPackWellFormed(GiveCallPack pack){
-		boolean check=false;
-		if(pack!=null && pack.getWrapperCall()!=null && pack.getWrapperCall().getList().size()!=0){
+	public static boolean checkPartialListPackWellFormed(ListPack pack){
+		boolean check=false;		
+		if(pack!=null && pack.getList()!=null && pack.getList().size()!=0){
 			check=true;
 		}
 		return check;
 	}
 	
-	public boolean checkWorldPackWellFormed(WorldPack pack){
+	public static boolean checkGiveCallPackWellFormed(GiveCallPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getWrapperCall()!=null && pack.getWrapperCall().getList()!=null && pack.getWrapperCall().getList().size()!=0){
+			check=true;
+		}
+		return check;
+	}
+	
+	public static boolean checkWorldPackWellFormed(WorldPack pack){
 		boolean check=false;
 		if(pack!=null && pack.getWorldPersonalData()!=null && pack.getWorldPersonalData().getPersonalData()!=null){
 			check=true;
@@ -87,7 +96,7 @@ public abstract class GenericRequest {
 		return check;
 	}
 	
-	public boolean checkUpdateListPackWellFormed(UpdateListPack pack){
+	public static boolean checkUpdateListPackWellFormed(UpdateListPack pack){
 		boolean check=false;
 		if(pack!=null && pack.getListName()!=null && pack.getNewListName()!=null && pack.getOwner()!=null){
 			check=true;
@@ -95,7 +104,7 @@ public abstract class GenericRequest {
 		return check;
 	}
 	
-	public String getHashMD5(String s){
+	public static String getHashMD5(String s){
 		String string=null;
 		try {
 			byte[] byteMail= s.getBytes("UTF-8");

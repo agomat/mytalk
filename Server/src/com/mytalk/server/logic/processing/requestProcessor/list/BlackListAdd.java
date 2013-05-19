@@ -40,8 +40,8 @@ public class BlackListAdd extends GenericRequest {
 		Authentication auth=ari.getAuth();
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
-		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
-		boolean checkPack=this.checkListPackWellFormed(pack);
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
+		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}	

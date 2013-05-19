@@ -46,8 +46,7 @@ public class AcceptCallTest {
 		String packString=conv.convertJavaToJson(packTest);
 		ARI ari=new ARI(null,"AcceptCall",packString);
 		ARI ariResponse=acceptCall.manage(ari);
-		assertEquals("Pacchetto formato errato","CorruptedConnectionPack",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","CorruptedConnectionPack",ariResponse.getAuth().getIp());
+		assertEquals("Pacchetto in formato errato","CorruptedConnectionPack",ariResponse.getReq());
 		
 		packTest=new ConnectionPack("123.123.123.0","123.123.123.1","sdp");
 		packString=conv.convertJavaToJson(packTest);

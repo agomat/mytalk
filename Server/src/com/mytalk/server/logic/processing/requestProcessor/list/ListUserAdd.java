@@ -42,8 +42,8 @@ public class ListUserAdd extends GenericRequest{
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
 		//elaboro l'oggetto ListPack per ricavare le informazioni necessarie a chiamare il metodo appropriato
-		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
-		boolean checkPack=this.checkListPackWellFormed(pack);
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
+		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}	
@@ -65,7 +65,7 @@ public class ListUserAdd extends GenericRequest{
 					response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
 				}
 			}catch(UserAlreadyListed ual){
-				response=new ARI(null,"UnsuccessfulListUserAdd",infoRequest);
+				response=new ARI(null,"UserAlreadyListed",infoRequest);
 			}catch(AuthenticationFail af){
 				response=new ARI(null,"AuthenticationFail",null);
 			} catch (IdNotFound inf) {

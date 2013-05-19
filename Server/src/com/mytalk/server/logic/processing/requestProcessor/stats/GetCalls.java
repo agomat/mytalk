@@ -37,7 +37,7 @@ public class GetCalls extends GenericRequest {
 	public ARI manage(ARI ari) {
 		ARI response=null;
 		Authentication auth=ari.getAuth();
-		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		if(!checkAuth){
 			response=new ARI(null,"CorruptedPack",null);
 		}

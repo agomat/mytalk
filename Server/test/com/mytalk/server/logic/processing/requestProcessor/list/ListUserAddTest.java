@@ -1,5 +1,5 @@
 /**
-* Filename: ListCreateTest.java
+* Filename: ListUserAddTest.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.list
 * Author: Michael Ferronato
 * Date: 2013/05/08
@@ -33,7 +33,7 @@ import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
 import com.mytalk.server.logic.shared.modelClient.UserList;
 
-public class ListCreateTest {
+public class ListUserAddTest {
 
 	EnvironmentSetter envSetter=new EnvironmentSetter();
 	private Convert conv=new Convert();
@@ -46,46 +46,51 @@ public class ListCreateTest {
 	
 	@Test
 	public void testManage() {
-		ListCreate listCreate=new ListCreate();
-		Authentication auth=new Authentication("user1","user1","123.123.123.1");
+		ListUserAdd listUserAdd=new ListUserAdd();
+		Authentication auth=new Authentication("user0","user0","123.123.123.0");
 		List<Integer> list=new ArrayList<Integer>();
-		UserList userList=new UserList(0,"NuovaLista",list);
+		list.add(6);
+		UserList userList=new UserList(0,"friends",list);
 		List<UserList> listUserList=new ArrayList<UserList>();
 		listUserList.add(userList);
 		ListPack listPack=new ListPack(listUserList);
 		String packString=conv.convertJavaToJson(listPack);
-		ARI ari=new ARI(auth,"ListCreate",packString);
+		ARI ari=new ARI(auth,"ListUserAdd",packString);
 		
-		ARI ariResponse=listCreate.manage(ari);
-		assertEquals("Dati corretti ma non avviene la creazione","SuccessfulListCreate",ariResponse.getReq());
-	
-		userList=new UserList(0,"NuovaList",null);
-		listUserList.remove(0);
-		listUserList.add(userList);
-		listPack.setList(listUserList);
+		ARI ariResponse=listUserAdd.manage(ari);
+		assertEquals("Dati corretti ma non avviene l'aggiunta","SuccessfulListUserAdd",ariResponse.getReq());
+		
+		ariResponse=listUserAdd.manage(ari);
+		assertEquals("User già presente","UserAlreadyListed",ariResponse.getReq());
+		
+		auth.setPwd("user1");
+		ariResponse=listUserAdd.manage(ari);
+		assertEquals("Autenticazione deve fallire","AuthenticationFail",ariResponse.getReq());
+		
+		auth.setPwd("user0");
+		list.remove(0);
+		list.add(30);
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
+		ariResponse=listUserAdd.manage(ari);
+		assertEquals("Id non corrisponde a nessun user","IdNotFound",ariResponse.getReq());
 		
-		ariResponse=listCreate.manage(ari);
-		assertEquals("Pacchetto corrotto","CorruptedPack",ariResponse.getReq());
-		
-		userList.setList(list);
-		userList.setName("friends");
-		listUserList.remove(0);
-		listUserList.add(userList);
+		list.remove(0);
+		list.add(1);
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
+		ariResponse=listUserAdd.manage(ari);
+		assertEquals("User non può aggiungere se stesso","UserNotExisting",ariResponse.getReq());
 		
-		ariResponse=listCreate.manage(ari);
-		assertEquals("Lista esiste già","ListAlreadyExists",ariResponse.getReq());
+		userList.setName("lista");
+		list.remove(0);
+		list.add(7);
+		packString=conv.convertJavaToJson(listPack);
+		ari.setInfo(packString);
+		ariResponse=listUserAdd.manage(ari);
+		assertEquals("Lista non esiste per questo user","ListNotExisting",ariResponse.getReq());
 		
-		Authentication authWrong=new Authentication("user1","user0","123.123.123.1");
-		ari.setAuth(authWrong);
-		ariResponse=listCreate.manage(ari);
-		assertEquals("Autenticazione fallita","AuthenticationFail",ariResponse.getReq());
-		
-		//UsernameNotCorresponding non viene mai sollevata poiché il prorpietario viene settato con l'username presente in authentication
-		
+		//UsernameNotCorresponding non viene sollevata per costruzione
 	}
 
 }

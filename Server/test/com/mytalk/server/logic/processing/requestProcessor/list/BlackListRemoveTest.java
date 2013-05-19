@@ -1,13 +1,13 @@
 /**
 * Filename: BlackListRemoveTest.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.list
-* Author: 
-* Date:
+* Author: Michael Ferronato
+* Date: 2013/05/08
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  | 2013/05/08 |   MF      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -33,7 +33,6 @@ import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
 import com.mytalk.server.logic.shared.modelClient.User;
 import com.mytalk.server.logic.shared.modelClient.UserList;
-import com.mytalk.server.logic.shared.modelClient.WrapperUserList;
 
 public class BlackListRemoveTest {
 
@@ -50,14 +49,12 @@ public class BlackListRemoveTest {
 	public void testManage() {
 		BlackListRemove blackListRemove=new BlackListRemove();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
-		User user8=new User("user8",true,"user8","user8",null);
-		List<User> listUser=new ArrayList<User>();
-		listUser.add(user8);
-		UserList userList=new UserList(0,"Blacklist",listUser);
+		List<Integer> listIdUser=new ArrayList<Integer>();
+		listIdUser.add(9);
+		UserList userList=new UserList(0,"Blacklist",listIdUser);
 		List<UserList> listUserList=new ArrayList<UserList>();
 		listUserList.add(userList);
-		WrapperUserList wul=new WrapperUserList(listUserList);
-		ListPack pack=new ListPack(wul);
+		ListPack pack=new ListPack(listUserList);
 		String packString=conv.convertJavaToJson(pack);
 		ARI ari= new ARI(auth,"BlackListRemove",packString);
 		
@@ -72,12 +69,20 @@ public class BlackListRemoveTest {
 		ariResponse=blackListRemove.manage(ari);
 		assertEquals("Autenticazione errata ma viene aggiunto lo stesso","AuthenticationFail",ariResponse.getReq());
 		
-		listUserList.get(0).setList(null);
+		listIdUser.remove(0);
+		listIdUser.add(13);
 		String new_packString=conv.convertJavaToJson(pack);
-		ari=new ARI(auth,"BlackListAdd",new_packString);
+		ari=new ARI(auth,"BlackListRemove",new_packString);
+		ariResponse=blackListRemove.manage(ari);
+		assertEquals("Id non esiste ma viene aggiunto lo stesso","IdNotFound",ariResponse.getReq());
+		
+		listUserList.get(0).setList(null);
+		new_packString=conv.convertJavaToJson(pack);
+		ari=new ARI(auth,"BlackListRemove",new_packString);
 		ariResponse=blackListRemove.manage(ari);
 		assertEquals("Nesssun user da togliere dalla blacklist ma processata","CorruptedPack",ariResponse.getReq());
 	
+		//UsernameNotCorresponding non viene mai sollevata perchè per creare l'user si usa il valore presente in authentication
 	}
 
 }

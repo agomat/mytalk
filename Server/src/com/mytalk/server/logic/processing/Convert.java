@@ -19,8 +19,12 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
+import java.util.List;
+
 import com.google.gson.*;
+import com.google.gson.reflect.*;
 import com.mytalk.server.logic.shared.*;
+
 
 public class Convert {
 	
@@ -29,7 +33,7 @@ public class Convert {
 	public Convert(){}
 	
 	//JSON -> Java
-	public ARI convertJsonToJava(String stringJson){
+	public ARI convertJsonToJava(String stringJson){		
 		ARI object =gson.fromJson(stringJson, ARI.class);
 		return object;
 	}

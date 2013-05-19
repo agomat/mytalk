@@ -29,6 +29,7 @@ import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
+import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 
 public class LoginTest {
 
@@ -44,27 +45,53 @@ public class LoginTest {
 	@Test
 	public void testManage() {
 		Login login=new Login();
-		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
-		PersonalData personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","1.1.1.4");
-		WorldPack pack=new WorldPack(null,null,personalData);
+		Authentication authRightTest=new Authentication("user4","user4","111.111.111.1");
+		PersonalData personalData=new PersonalData("user4","user4","user4","user4","user4@mytalk.com","us04us04us04us04us04us04us04us04","111.111.111.1");
+		WorldPersonalData wpd=new WorldPersonalData(personalData);
+		WorldPack pack=new WorldPack(null,wpd);
 		String packString=conv.convertJavaToJson(pack);
 		
 		ARI ari=new ARI(authRightTest,"Login",packString);
 		ARI ariResult=login.manage(ari);
 		assertEquals("Login fallito ma i dati sono corretti","SuccessfulLogin",ariResult.getReq());
 		
-		Authentication authWrongTest=new Authentication("user1","user0","1.1.1.1");
+		Authentication authWrongTest=new Authentication("user4","user0","111.111.111.1");
 		
 		ari=new ARI(authWrongTest,"Login",packString);
 		ariResult=login.manage(ari);
 		assertEquals("Login effettuato anche se viene fallita l'autenticazione","AuthenticationFail",ariResult.getReq());
 		
-		personalData=new PersonalData("user11","user11","user11","user11","user11@mytalk.com","1.1.1.11");
-		pack=new WorldPack(null,null,personalData);
+		PersonalData personalData1=new PersonalData("user11","user11","user11","user11","user11@mytalk.com","us11us11us11us11us11us11us11us11","111.111.111.11");
+		wpd=new WorldPersonalData(personalData1);
+		pack=new WorldPack(null,wpd);
 		packString=conv.convertJavaToJson(pack);
 		ari=new ARI(authRightTest,"Login",packString);
 		ariResult=login.manage(ari);
 		assertEquals("Login effettuato con dati autenticazione diversi da quelli in personal data","UsernameNotExisting",ariResult.getReq());
+		
+		authWrongTest.setIp("111.11.111.1");
+		authWrongTest.setPwd("user4");
+		ari.setAuth(authWrongTest);
+		wpd.setPersonalData(personalData);
+		packString=conv.convertJavaToJson(pack);
+		ari.setInfo(packString);
+		ariResult=login.manage(ari);
+		assertEquals("Tentativo di login con ip non loggato","IpNotLogged",ariResult.getReq());
+		
+		
+		ari.setAuth(authRightTest);
+		ariResult=login.manage(ari);
+		assertEquals("Tentativo di login con user già loggato","UserAlreadyLogged",ariResult.getReq());
+		
+		PersonalData personalData2=new PersonalData("user5","user5","user5","user5","user5@mytalk.com","us05us05us08us08us08us08us08us08","123.123.123.0");
+		wpd.setPersonalData(personalData2);
+		packString=conv.convertJavaToJson(pack);
+		ari.setInfo(packString);
+		authRightTest=new Authentication("user5","user5","123.123.123.0");
+		ari.setAuth(authRightTest);
+		ariResult=login.manage(ari);
+		assertEquals("Tentativo di login con ip già assegnato ad un altro user","IpAlreadyLogged",ariResult.getReq());
+		//UserNotLogged mai lanciata poiché i candidati sono oggetti ricavati dal db e quindi consistenti
 	}
 
 }

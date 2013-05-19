@@ -1,13 +1,13 @@
 /**
 * Filename: UpdateListName.java
 * Package: com.mytalk.server.logic.processing.requestProcessor.list
-* Author: 
-* Date:
+* Author: Michael Ferronato
+* Date: 2013-05-01 
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-01 |  MF       | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -37,7 +37,7 @@ public class UpdateListName extends GenericRequest {
 		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
 		String infoRequest=ari.getInfo();
 		UpdateListPack pack=(UpdateListPack)conv.convertJsonToJava(infoRequest, UpdateListPack.class);
-		boolean checkPack=this.checkUpdateListPackWellFormed(pack);
+		boolean checkPack=checkUpdateListPackWellFormed(pack);
 		if(!checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{

@@ -27,6 +27,7 @@ import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
+import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 
 public class CreateAccountTest {
 
@@ -42,8 +43,9 @@ public class CreateAccountTest {
 	@Test
 	public void testManage() {
 		CreateAccount createAccount=new CreateAccount();
-		PersonalData personalData=new PersonalData("user11","user11","user11","user11","user11@mytalk.com","1.1.1.3");
-		WorldPack pack=new WorldPack(null,null,personalData);
+		PersonalData personalData=new PersonalData("user11","user11","user11","user11","user11@mytalk.com","us11us11us11us11us11us11us11us11","1.1.1.3");
+		WorldPersonalData wpd=new WorldPersonalData(personalData);
+		WorldPack pack=new WorldPack(null,wpd);
 		String packString=conv.convertJavaToJson(pack);
 		
 		ARI ari=new ARI(null,"CreateAccount",packString);
@@ -51,8 +53,9 @@ public class CreateAccountTest {
 		
 		assertEquals("Creazione account fallita ma username non è già presente","SuccessfulCreateAccount",ariResult.getReq());
 		
-		personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","1.1.1.4");
-		pack=new WorldPack(null,null,personalData);
+		personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","us01us01us01us01us01us01us01us01","1.1.1.4");
+		
+		pack=new WorldPack(null,wpd);
 		packString=conv.convertJavaToJson(pack);
 		
 		ari=new ARI(null,"CreateAccount",packString);

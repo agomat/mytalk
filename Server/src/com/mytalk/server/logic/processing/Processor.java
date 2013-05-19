@@ -21,6 +21,9 @@ package com.mytalk.server.logic.processing;
 
 import com.mytalk.server.comunication.Message;
 import com.mytalk.server.logic.shared.*;
+import com.mytalk.server.logic.shared.modelClient.PersonalData;
+import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -61,7 +64,10 @@ public class Processor implements IProcessor{
 	public Message processRequest(Message message){
 		
 		Convert c=new Convert();
+		System.out.println(message.getJson());
 		ARI pack=c.convertJsonToJava(message.getJson());
+		String s=c.convertJavaToJson(pack);
+		System.out.println(s);
 		if(pack.getAuth()!=null){
 			pack.getAuth().setIp(message.getIp());
 		}

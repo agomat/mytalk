@@ -32,7 +32,7 @@ public class DeleteAccount extends GenericRequest{
 		String infoRequest=ari.getInfo();
 		ARI response=null;
 		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-		boolean checkPack=this.checkWorldPackWellFormed(pack);
+		boolean checkPack=checkWorldPackWellFormed(pack);
 		if(!checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{

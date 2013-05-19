@@ -57,7 +57,8 @@ public class AddCallTest {
 		
 		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
 		Authentication authWrongTest=new Authentication("user1","user2","1.1.1.1");
-		Call call1=new Call("user2",100,100,1000,"2013-05-03 13.37:58",true);
+		Call call1=new Call(3,true,"2013-05-03 13.37:58",1000,100,100);
+		Call call2=new Call(20,true,"2013-05-03 13.37:58",1000,100,100);
 		List<Call> callListTest=new ArrayList<Call>();
 		callListTest.add(call1);
 		WrapperCall wrapperTest=new WrapperCall(callListTest);
@@ -75,5 +76,13 @@ public class AddCallTest {
 		
 		ARI ariUnsuccess=addCall.manage(ariWrongTest);
 		org.junit.Assert.assertEquals("L'autenticazione è errata ma fa l'autenticazione lo stesso","AuthenticationFail", ariUnsuccess.getReq());
+		
+		callListTest.remove(0);
+		callListTest.add(call2);
+		packJson=conv.convertJavaToJson(packTest);
+		ariRightTest= new ARI(authRightTest,"AddCall",packJson);
+		ARI ariIdNotRight=addCall.manage(ariRightTest);
+		org.junit.Assert.assertEquals("L'id fornito è inesistente","IdNotFound", ariIdNotRight.getReq());
+	
 	}
 }

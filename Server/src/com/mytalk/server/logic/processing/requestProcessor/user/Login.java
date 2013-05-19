@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.*;
 
@@ -37,15 +38,17 @@ public class Login extends GenericRequest{
 		public ARI manage(ARI ari){
 			String infoRequest=ari.getInfo();
 			ARI response=null;
+			Authentication auth=ari.getAuth();
 			WorldPack responsePack=null;
 			WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-			boolean checkPack=this.checkWorldPackWellFormed(pack);
-			if(!checkPack){
+			boolean checkPack=checkWorldPackWellFormed(pack);
+			boolean checkAuth=checkAuthenticationWellFormed(auth);
+			if(!checkPack && !checkAuth){
 				response=new ARI(null,"CorruptedPack",null);
 			}else{
 				
 				PersonalData p=pack.getWorldPersonalData().getPersonalData();
-				com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(p.getUsername(),p.getPassword(),p.getEmail(),p.getName(),p.getSurname(),p.getMd5());
+				com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),p.getEmail(),p.getName(),p.getSurname(),p.getMd5());
 				OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
 				List<com.mytalk.server.data.model.User> listOnlineServer=null;
 				List<com.mytalk.server.data.model.User> listOfflineServer=null;
@@ -59,14 +62,16 @@ public class Login extends GenericRequest{
 				List<Integer> listInteger=new ArrayList<Integer>();
 				String ip_user=null;
 				com.mytalk.server.data.model.User myData=null;
+				List<com.mytalk.server.data.model.User> blackListUserServer=null;
+				List<Integer> blackListInteger=new ArrayList<Integer>();
 				try{
 					da.login(o, user);
-					listOfflineServer=da.getOnlineUsers(user);
-					listOnlineServer=da.getOfflineUsers(user);
+					
+					listOnlineServer=da.getOnlineUsers(user);
+					listOfflineServer=da.getOfflineUsers(user);
 					for(int i=0;i<listOfflineServer.size();i++){
 						userServer=listOfflineServer.get(i);
-						ip_user=da.getUserIp(userServer.getUsername());
-						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash() ,ip_user,false);
+						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash() ,null,false);
 						listAllUsersClient.add(userClient);
 					}
 					for(int j=0;j<listOnlineServer.size();j++){
@@ -78,6 +83,7 @@ public class Login extends GenericRequest{
 						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash(),ip_user,true);
 						listAllUsersClient.add(userClient);
 					}
+					//aggiunta liste utente
 					listName=da.userLists(user);
 					for(int k=0;k<listName.size();k++){
 						list=da.getListUsers(listName.get(k), user);
@@ -87,6 +93,13 @@ public class Login extends GenericRequest{
 						userList=new UserList(listName.get(k).getId(),listName.get(k).getName(),listInteger);
 						listUserlist.add(userList);
 					}
+					//aggiunta blacklist
+					blackListUserServer=da.getUserBlacklist(user);
+					for(int x=0;x<blackListUserServer.size();x++){
+						blackListInteger.add(blackListUserServer.get(x).getId());
+					}
+					userList=new UserList(1,"BlackList",blackListInteger);
+					listUserlist.add(userList);
 					
 					WorldList worldList=new WorldList(listUserlist,listAllUsersClient);
 					String myIp=da.getUserIp(myData.getUsername());

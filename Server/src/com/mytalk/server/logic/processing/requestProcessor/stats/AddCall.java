@@ -39,8 +39,8 @@ public class AddCall extends GenericRequest {
 		Authentication auth=ari.getAuth();
 		String infoRequest=ari.getInfo();
 		GiveCallPack pack=(GiveCallPack)conv.convertJsonToJava(infoRequest, GiveCallPack.class);
-		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
-		boolean checkPack=this.checkGiveCallPackWellFormed(pack);
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
+		boolean checkPack=checkGiveCallPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}	

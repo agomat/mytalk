@@ -29,6 +29,7 @@ import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
+import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 
 public class DeleteAccountTest {
 
@@ -45,8 +46,9 @@ public class DeleteAccountTest {
 	public void testManage() {
 		DeleteAccount deleteAccount=new DeleteAccount();
 		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
-		PersonalData personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","1.1.1.4");
-		WorldPack pack=new WorldPack(null,null,personalData);
+		PersonalData personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","us01us01us01us01us01us01us01us01","1.1.1.4");
+		WorldPersonalData wpd=new WorldPersonalData(personalData);
+		WorldPack pack=new WorldPack(null,wpd);
 		String packString=conv.convertJavaToJson(pack);
 		ARI ari=new ARI(authRightTest,"DeleteAccount",packString);
 		
@@ -55,9 +57,6 @@ public class DeleteAccountTest {
 		assertEquals("Eliminazione non effettuata anche se l'account esiste","SuccessfulDeleteAccount",ariResult.getReq());
 	
 		Authentication authWrongTest=new Authentication("user2","user1","1.1.1.1");
-		personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","1.1.1.4");
-		pack=new WorldPack(null,null,personalData);
-		packString=conv.convertJavaToJson(pack);
 		ari=new ARI(authWrongTest,"DeleteAccount",packString);
 		
 		ariResult=deleteAccount.manage(ari);

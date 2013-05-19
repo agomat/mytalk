@@ -38,8 +38,8 @@ public class ListCreate extends GenericRequest {
 		Authentication auth=ari.getAuth();
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
-		boolean checkAuth=this.checkAuthenticationWellFormed(auth);
-		boolean checkPack=this.checkListPackWellFormed(pack);
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
+		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}
@@ -53,7 +53,7 @@ public class ListCreate extends GenericRequest {
 				da.listCreate(newList,userAuth);
 				response=new ARI(null,"SuccessfulListCreate",infoRequest);
 			}catch(ListAlreadyExists lae){
-				response=new ARI(null,"UnsuccessfulListCreate",infoRequest);
+				response=new ARI(null,"ListAlreadyExists",infoRequest);
 			}catch(AuthenticationFail af){
 				response=new ARI(null,"AuthenticationFail",null);
 			} catch (UsernameNotCorresponding e) {

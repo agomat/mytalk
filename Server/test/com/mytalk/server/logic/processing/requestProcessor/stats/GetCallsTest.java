@@ -66,6 +66,8 @@ public class GetCallsTest {
 		assertEquals("Le statistiche totali relative ai byte ricevuti sono errate",60000,packTest.getWrapperCall().getTotalByteReceived());
 		assertEquals("Le statistiche totali relative ai byte mandati sono errate",70000,packTest.getWrapperCall().getTotalByteSent());
 		assertEquals("Le statistiche totali relative alla durata sono errate",1700,packTest.getWrapperCall().getTotalDuration());
+	
+		//UsernameNotExisting non viene sollevata perchè usa dati provvenienti dal db e quindi consistenti
 	}
 
 }

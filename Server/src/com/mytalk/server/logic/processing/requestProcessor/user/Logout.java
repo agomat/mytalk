@@ -33,7 +33,7 @@ public class Logout extends GenericRequest{
 		String infoRequest=ari.getInfo();
 		ARI response=null;
 		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-		boolean checkPack=this.checkWorldPackWellFormed(pack);
+		boolean checkPack=checkWorldPackWellFormed(pack);
 		if(!checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
@@ -41,10 +41,11 @@ public class Logout extends GenericRequest{
 			OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
 			try {
 				da.logout(o);
+				response=new ARI(null, "SuccessfulLogout", null);
 			} catch (LogoutException e) {
 				response= new ARI(null, "LogoutException",null);
 			}
-			response=new ARI(null, "SuccessfulLogout", null);	
+				
 		}
 		return response;
 	}

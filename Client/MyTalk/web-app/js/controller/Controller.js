@@ -99,7 +99,6 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
 });
 
- var C;
 MyTalk.UsersController = Ember.ArrayController.extend({
   blacklist:false,
   alluser:false,
@@ -114,7 +113,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   check:function(){
-    C=this.get('content');
+ 
     var id = this.get('controllers.list.content.id');
     
     if(id==0){

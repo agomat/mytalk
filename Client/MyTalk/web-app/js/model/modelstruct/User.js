@@ -11,6 +11,10 @@ MyTalk.User = DS.Model.extend({
     return { username:this.get('username'), password:this.get('online') };
   },
  
+  fullName: function() {
+    return this.get('name') + " " + this.get('surname');
+  }.property('name','surname'),
+
   avatarTiny: function() {
     return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=blank';
   }.property('md5'),

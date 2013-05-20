@@ -34,7 +34,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
       });
       
       if(test==true){
-            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName});
+            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
       }
       else if(newName!=null){
         alert("Esiste già una lista con questo nome");
@@ -137,19 +137,24 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
   
   userToBlacklist:function(user){
-
-    n=MyTalk.User.find(user).get('name');
-    n=n+" ";
-    n=n+MyTalk.User.find(user).get('surname');
     
-    var r=confirm("Sei sicuro di mettere l'utente " + n +" nella Blacklist ?");
+    var r=confirm("Sei sicuro di mettere l'utente " + MyTalk.User.find(user).get('fullName') +" nella Blacklist ?");
    
     if(r==true){
-      var list = MyTalk.List.find();
-      list.forEach( function(t){
-        t.get('users').removeObject( MyTalk.User.find(user) );
+      var lists = MyTalk.List.find();
+      lists.forEach( function(list){
+
+        //var transaction = DS.get('defaultStore').transaction();
+        //transaction.add(this);
+
+        list.get('users').removeObject( MyTalk.User.find(user) );
+        //list.get('transaction').reopen({giu:2});
+        //list.get('transaction').commit();
       });
-      MyTalk.List.find(1).get('users').addObject(MyTalk.User.find(user));
+      var record = MyTalk.List.find(1);
+      record.get('users').addObject(MyTalk.User.find(user));
+      record.get('transaction').reopen({giu:2});
+      record.get('transaction').commit();
     } 
   }
   

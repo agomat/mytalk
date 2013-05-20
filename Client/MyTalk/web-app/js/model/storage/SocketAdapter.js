@@ -20,6 +20,7 @@
 
 DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, { 
   socket: undefined,
+  bulkCommit: true,
 
   init: function() {    
     socket = this.getSocket();
@@ -40,30 +41,43 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
   findAll: function (store, type) { 
     console.log("findAll");  
-
-    //var obj = ' { "list" : {"id" : 1, "name" : "Nome", "users" : [1,2] }, "users": [{ "id":1, "username": "user1", "list": 1 },{ "id":2, "username":"user2", "list" : 1}] } ';
-
-    //obj = JSON.parse(obj);
-    //DS.get('defaultStore').load( MyTalk.List, obj);
-    //var adapter = store.adapterForType(type);
-    //adapter.load(store,type,obj);
-
   },
 
   createRecord: function(store, type, record) {
+    console.log("CreateRecord");
+    this.get('socket').send( record );
+    this.didCreateRecord(store, type, record, undefined);
+  },
 
-    var context = this;
-    if (true) { // se il record è di autentificazione...
-      this.socket.openUserConnection(function() {
-        // onOpen callback
-        context.socket.send( record );
-        context.didCreateRecord(store, type, record, undefined);
-      });
-    } else {
-      // tutti gli altri record
-    }
-    
+  createRecords: function(store, type, records) {
+    console.log("createRecords");
+  },
+
+  updateRecord: function(store, type, record) {
+    console.log("updateRecord");
+  },
+
+  updateRecords: function(store, type, records) {
+    /*
+    var re = sss[0];
+re.forEach(function(dd){
+console.log(dd.get("transaction").get('giu'));
+});
+
+e vedi: http://stackoverflow.com/questions/15132531/prevent-ember-data-bulk-commit-for-single-item/15133409#15133409
+*/
+    window.sss.pushObject(records);
+    console.debug("updateRecords "+records+ " " + type);
+  },
+
+  deleteRecord: function(store, type, record) {
+    console.log("deleteRecord");
+  },
+
+  deleteRecords: function(store, type, records) {
+    console.log("deleteRecords");
   }
+
 });
 
 

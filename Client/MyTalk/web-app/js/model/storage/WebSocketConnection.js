@@ -9,7 +9,7 @@
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-01 | MA        | [+] Creazione Mixin WebSocketConnection
+* 0.1   | 2013-05-01 | MA        | [+] Creazione Mixin WebSocketConnection
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -18,12 +18,34 @@
 */
 
 MyTalk.WebSocketConnection = Ember.Mixin.create({
-    socket: undefined,
-    getSocket: function() {
-        // Lazy creation
-        if(!this.get('socket')) {
-            this.set('socket', new MyTalk.WebSocketHandler());
-        }
-        return this.get('socket');
+  resource: 'ws://'+window.location.hostname+':8887',
+  socket: undefined,
+
+  getSocket: function() {
+    // Lazy creation
+    if(!this.get('socket')) {
+      var ws = new WebSocket(this.get('resource'));
+      ws.onopen = function() {
+        console.log('[WS] Connection established');
+      };
+      ws.onclone = function() {
+        console.log('[WS] Connection closed');
+      };
+      ws.onmessage = function(data) {
+        data = data.data;
+      }
+      this.set('socket', ws);
     }
+    return this.get('socket');
+  },
+
+  closeConnection: function() { 
+    this.get('resource').close();
+    this.set('resource', undefined);
+  },
+
+  send: function(data) { 
+    this.get('socket').send( "ARI" );
+  }
+
 });

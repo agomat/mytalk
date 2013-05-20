@@ -39,7 +39,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
 		System.out.println("Client connected with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress());
 		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String loginAnonymous="{\"auth\":\"{\"username\":null \"password\":null \"ip\":"+wsIp+"}\" \"req\":\"LoginAsAnonymous\" \"info\":null}";//json scritto a mano
+		String loginAnonymous="{\"auth\":\"{\"username\":null \"password\":null \"ip\":"+wsIp+"}\" \"req\":\"LoginAsAnonymous\" \"info\":null}";
 		Message openMsg=new Message(wsIp,loginAnonymous);
 		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(openMsg);
@@ -49,7 +49,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
 		System.out.println("Client with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress()+" disconnected");
 		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String logout="{\"auth\":\"{\"username\":null \"password\":null \"ip\":"+wsIp+"}\" \"req\":\"Logout\" \"info\":null}";//json scritto a mano
+		String logout="{\"auth\":\"{\"username\":null \"password\":null \"ip\":"+wsIp+"}\" \"req\":\"Logout\" \"info\":null}";
 		Message closeMsg=new Message(wsIp,logout);
 		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(closeMsg);
@@ -59,7 +59,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	public void onError(WebSocket conn, Exception ex) {
 		System.out.println("WebsocketServer Error");
 		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String error="{\"auth\":null \"req\":\"ConnectionError\" \"info\":null}";//json scritto a mano
+		String error="{\"auth\":null \"req\":\"ConnectionError\" \"info\":null}";
 		Message errorMsg=new Message(wsIp,error);
 		BufferOutgoing bufferOut=BufferOutgoing.getInstance();
 		bufferOut.push(errorMsg);

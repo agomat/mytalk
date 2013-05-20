@@ -792,4 +792,37 @@ public class DataAccessTest {
 		//test di logout di un utente non autenticato
 		dataAccess.logoutToAnonymous(user);
 	}
+	
+	@Test
+	public void checkCheckBlacklist()throws AuthenticationFail{
+		User toAuth=new User("user0","user0",null,null,null,null);
+		Blacklist toCheckTrue=new Blacklist("user0","user9");
+		Blacklist toCheckFalse=new Blacklist("user0","random");
+		
+		//test di controllo di un user che è nella blacklist dell'user0
+		try{
+			boolean b=dataAccess.checkBlacklist(toAuth, toCheckTrue);
+			assertTrue("l'utente non è stato trovato nella blacklist",b);
+		}catch(UsernameNotCorresponding exc){
+			fail("non è stata trovata corrispondenza tra username autenticato e owner");
+		}
+		
+		//test di controllo di un user che non è nella blacklist dell'user0
+		try{
+			boolean t=dataAccess.checkBlacklist(toAuth, toCheckFalse);
+			assertTrue("l'utente è stato trovato in blacklist pur non essendo presente",!t);
+		}catch(UsernameNotCorresponding exc){
+			
+		}
+	}
+	
+	@Test(expected=UsernameNotCorresponding.class)
+	public void checkCheckBlacklistFail()throws AuthenticationFail, UsernameNotCorresponding{
+		User toAuth=new User("user0","user0",null,null,null,null);
+		Blacklist toCheck=new Blacklist("user1","random");
+		
+		//test di controllo con un username non corrispondente all'owner della blacklist
+		boolean b=dataAccess.checkBlacklist(toAuth, toCheck);
+	}
+
 }

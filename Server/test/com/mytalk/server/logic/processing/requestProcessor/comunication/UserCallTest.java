@@ -26,6 +26,7 @@ import org.junit.Test;
 import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ConnectionPack;
 
 public class UserCallTest {
@@ -42,25 +43,56 @@ public class UserCallTest {
 	@Test
 	public void testManage() {
 		UserCall userCall=new UserCall();
-		ConnectionPack packTest=new ConnectionPack(null,"","sdp");
+		ConnectionPack packTest=new ConnectionPack(null,"","","","sdp");
 		String packString=conv.convertJavaToJson(packTest);
 		ARI ari=new ARI(null,"UserCall",packString);
 		ARI ariResponse=userCall.manage(ari);
-		assertEquals("Pacchetto formato errato","CorruptedConnectionPack",ariResponse.getReq());
+		assertEquals("Pacchetto formato errato","CorruptedPack",ariResponse.getReq());
 		
-		packTest=new ConnectionPack("123.123.123.0","123.123.123.1","sdp");
+		Authentication auth=new Authentication("user0","user0","123.123.123.0");
+		ari.setAuth(auth);
+		ariResponse=userCall.manage(ari);
+		assertEquals("Pacchetto formato errato con auth","CorruptedPack",ariResponse.getReq());
+		
+		ari.setAuth(null);
+		packTest=new ConnectionPack("123.123.123.0","user0","123.123.123.1","user1","sdp");
 		packString=conv.convertJavaToJson(packTest);
-		ari=new ARI(null,"UserCall",packString);
+		ari.setInfo(packString);
 		ariResponse=userCall.manage(ari);
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulUserCall",ariResponse.getReq());
 		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
-		packTest=new ConnectionPack("123.123.123.0","123.123.123.4","sdp");
-		packString=conv.convertJavaToJson(packTest);
-		ari=new ARI(null,"UserCall",packString);
+		ari.setAuth(auth);
+		ariResponse=userCall.manage(ari);
+		assertEquals("Dati corretti ma non viene processata la richiesta con auth","SuccessfulUserCall",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
+		
+		ari.setAuth(null);
+		packTest=new ConnectionPack("123.123.123.0","user0","123.123.123.4","user1","sdp");
+		String packString2=conv.convertJavaToJson(packTest);
+		ari.setInfo(packString2);
 		ariResponse=userCall.manage(ari);
 		assertEquals("IpSpeaker non è online ma viene processata lo stesso","UnsuccessfulUserCall",ariResponse.getReq());
 		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
+		
+		ari.setAuth(auth);
+		ariResponse=userCall.manage(ari);
+		assertEquals("IpSpeaker non è online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
+		
+		auth.setUser("user1");
+		ari.setInfo(packString);
+		ariResponse=userCall.manage(ari);
+		assertEquals("Autenticazione deve fallire","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
+		
+		auth.setPwd("user1");
+		auth.setIp("123.123.123.1");
+		ariResponse=userCall.manage(ari);
+		assertEquals("Username non corrispondono","UsernameNotCorresponding",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
+		
+		
 	}
 
 }

@@ -23,14 +23,18 @@ package com.mytalk.server.logic.shared;
 public class ConnectionPack extends Information{
 	
 	private String myIp;
+	private String myUsername;
 	private String speakerIp;
+	private String speakerUsername;
 	private String sdpCall;
 	
 	
-	public ConnectionPack(String cIp,String rIp,String sdpC){
+	public ConnectionPack(String cIp,String cn,String rIp,String rn,String sdpC){
 		myIp=cIp;
 		speakerIp=rIp;
 		sdpCall=sdpC;
+		myUsername=cn;
+		speakerUsername=rn;
 	}
 	
 	public String getMyIp(){
@@ -55,5 +59,21 @@ public class ConnectionPack extends Information{
 	
 	public void setSdpCall(String sdp){
 		sdpCall=sdp;
+	}
+	
+	public String getMyUsername(){
+		return myUsername;
+	}
+	
+	public void setMyUsername(String mu){
+		myUsername=mu;
+	}
+	
+	public String getSpeakerUsername(){
+		return speakerUsername;
+	}
+	
+	public void setSpeakerUsername(String su){
+		speakerUsername=su;
 	}
 }

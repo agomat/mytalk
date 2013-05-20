@@ -46,6 +46,7 @@ public class Processor implements IProcessor{
 		hm.put("Login","com.mytalk.server.logic.processing.requestProcessor.user.Login");
 		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.requestProcessor.user.LoginAsAnonymous");
 		hm.put("Logout","com.mytalk.server.logic.processing.requestProcessor.user.Logout");
+		hm.put("LogoutAsAnonymous","com.mytalk.server.logic.processing.requestProcessor.user.LogoutAsAnonymous");
 		
 		hm.put("BlackListAdd","com.mytalk.server.logic.processing.requestProcessor.list.BlackListAdd");
 		hm.put("BlackListRemove","com.mytalk.server.logic.processing.requestProcessor.list.BlackListRemove");

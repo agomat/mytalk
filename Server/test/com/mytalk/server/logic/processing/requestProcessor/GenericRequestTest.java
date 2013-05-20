@@ -26,7 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
-import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ConnectionPack;
 import com.mytalk.server.logic.shared.GiveCallPack;
@@ -36,7 +35,6 @@ import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.Call;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
 import com.mytalk.server.logic.shared.modelClient.UserList;
-import com.mytalk.server.logic.shared.modelClient.WorldList;
 import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 import com.mytalk.server.logic.shared.modelClient.WrapperCall;
 
@@ -72,7 +70,7 @@ public class GenericRequestTest {
 
 	@Test
 	public void testCheckConnectionPackWellFormed() {
-		ConnectionPack pack= new ConnectionPack("myIp","speakerIp","ip");
+		ConnectionPack pack= new ConnectionPack("myIp","myUsername","speakerIp","speakerUsername","sdp");
 		boolean esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertTrue("esito positivo",esito);
 		
@@ -85,13 +83,48 @@ public class GenericRequestTest {
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
-		pack.setSpeakerIp("speakcerIp");
+		pack.setSpeakerIp("speakerIp");
 		pack.setSdpCall(null);
+		esito=GenericRequest.checkConnectionPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack.setMyUsername(null);
+		pack.setSdpCall("sdp");
+		esito=GenericRequest.checkConnectionPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack.setMyUsername("myUsername");
+		pack.setSpeakerUsername(null);
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
 		pack=null;
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+	}
+	
+	@Test
+	public void testCheckAnonymousConnectionPackWellFormed() {
+		ConnectionPack pack= new ConnectionPack("myIp",null,"speakerIp",null,"sdp");
+		boolean esito=GenericRequest.checkAnonymousConnectionPackWellFormed(pack);
+		assertTrue("esito positivo",esito);
+		
+		pack.setMyIp(null);
+		esito=GenericRequest.checkAnonymousConnectionPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack.setMyIp("myIp");
+		pack.setSpeakerIp(null);
+		esito=GenericRequest.checkAnonymousConnectionPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack.setSpeakerIp("speakerIp");
+		pack.setSdpCall(null);
+		esito=GenericRequest.checkAnonymousConnectionPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack=null;
+		esito=GenericRequest.checkAnonymousConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 	}
 

@@ -29,7 +29,7 @@ public class RefuseCall extends GenericRequest{
 		String infoRequest=ari.getInfo();
 		ARI response=null;
 		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
-		boolean check=checkConnectionPackWellFormed(pack);
+		boolean check=checkAnonymousConnectionPackWellFormed(pack);
 		Authentication auth=null;
 		if(!check){
 			response=new ARI(null,"CorruptedConnectionPack",null);

@@ -20,6 +20,9 @@ package com.mytalk.server.logic.processing.requestProcessor.user;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +33,7 @@ import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
 import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
+import com.mytalk.server.logic.shared.modelClient.User;
 
 public class LoginTest {
 
@@ -54,6 +58,16 @@ public class LoginTest {
 		ARI ari=new ARI(authRightTest,"Login",packString);
 		ARI ariResult=login.manage(ari);
 		assertEquals("Login fallito ma i dati sono corretti","SuccessfulLogin",ariResult.getReq());
+		
+		String worldPackString=ariResult.getInfo();
+		WorldPack packTest=(WorldPack)conv.convertJsonToJava(worldPackString, WorldPack.class);
+		
+		//lista utenti
+				
+		for(int i=0;i<packTest.getWorldList().getList().size();i++){
+			boolean check=false;
+			for(int j=0;j<)
+		}
 		
 		Authentication authWrongTest=new Authentication("user4","user0","111.111.111.1");
 		

@@ -22,6 +22,9 @@ import com.mytalk.server.data.model.OnlineUser;
 import com.mytalk.server.exceptions.IpAlreadyLogged;
 import com.mytalk.server.logic.processing.requestProcessor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.modelClient.PersonalData;
+import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 
 public class LoginAsAnonymous extends GenericRequest {
 
@@ -32,11 +35,16 @@ public class LoginAsAnonymous extends GenericRequest {
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
 			OnlineUser o=new OnlineUser(null, ari.getAuth().getIp());
+			String infoResponse=null;
 			try {
 				da.loginAsAnonymous(o);
-				response=new ARI(null,"SuccessfulLoginAsAnonymous",null);//rispondere con l'ip dell'utente
+				PersonalData pd=new PersonalData(null,null,null,null,null,null,ari.getAuth().getIp());
+				WorldPersonalData wpd=new WorldPersonalData(pd);
+				WorldPack wlp=new WorldPack(null,wpd);
+				infoResponse=conv.convertJavaToJson(wlp);
+				response=new ARI(null,"SuccessfulLoginAsAnonymous",infoResponse);
 			} catch (IpAlreadyLogged e) {
-				response=new ARI(null,"IpAlreadyLogged",null);
+				response=new ARI(null,"IpAlreadyLogged",infoResponse);
 			}
 		}
 		return response;

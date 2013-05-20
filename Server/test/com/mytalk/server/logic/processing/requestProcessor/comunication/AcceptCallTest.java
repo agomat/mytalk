@@ -42,20 +42,20 @@ public class AcceptCallTest {
 	@Test
 	public void testManage() {
 		AcceptCall acceptCall=new AcceptCall();
-		ConnectionPack packTest=new ConnectionPack(null,"","sdp");
+		ConnectionPack packTest=new ConnectionPack(null,null,"speakerIp",null,"sdp");
 		String packString=conv.convertJavaToJson(packTest);
 		ARI ari=new ARI(null,"AcceptCall",packString);
 		ARI ariResponse=acceptCall.manage(ari);
 		assertEquals("Pacchetto in formato errato","CorruptedConnectionPack",ariResponse.getReq());
 		
-		packTest=new ConnectionPack("123.123.123.0","123.123.123.1","sdp");
+		packTest=new ConnectionPack("123.123.123.0",null,"123.123.123.1",null,"sdp");
 		packString=conv.convertJavaToJson(packTest);
 		ari=new ARI(null,"AcceptCall",packString);
 		ariResponse=acceptCall.manage(ari);
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulAcceptCall",ariResponse.getReq());
 		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
-		packTest=new ConnectionPack("123.123.123.0","123.123.123.4","sdp");
+		packTest=new ConnectionPack("123.123.123.0","user0","123.123.123.4","user1","sdp");
 		packString=conv.convertJavaToJson(packTest);
 		ari=new ARI(null,"AcceptCall",packString);
 		ariResponse=acceptCall.manage(ari);

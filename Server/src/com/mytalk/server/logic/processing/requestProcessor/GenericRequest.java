@@ -48,8 +48,16 @@ public abstract class GenericRequest {
 	
 	public static boolean checkConnectionPackWellFormed(ConnectionPack pack){
 		boolean check=false;
-		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null){
+		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null && pack.getMyUsername()!=null && pack.getSpeakerUsername()!=null){
 			check=true;
+		}
+		return check;
+	}
+	
+	public static boolean checkAnonymousConnectionPackWellFormed(ConnectionPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null){
+				check=true;
 		}
 		return check;
 	}

@@ -572,4 +572,40 @@ public class DataAccess implements IDataAccess{
 		int id=user.getId();
 		return id;
 	}
+	
+	//logout da autenticato ad anonimo
+	public void logoutToAnonymous(OnlineUser user)throws LogoutException{
+		OnlineUserDAO od=new OnlineUserDAO();
+		String ip=user.getIp();
+		OnlineUser unlogged=od.get(ip);
+		if(unlogged==null){
+			GenericDAO.closeSession();
+			throw new LogoutException();
+		}
+		unlogged.setUsername(null);
+		od.update(unlogged);
+		GenericDAO.closeSession();
+	}
+	
+	public boolean checkBlacklist(User authenticate, Blacklist blacklistObj)throws AuthenticationFail,UsernameNotCorresponding{
+		boolean authenticated=authenticateClient(authenticate);
+		if(authenticated==true){
+			if(!authenticate.getUsername().equals(blacklistObj.getOwner())){
+				GenericDAO.closeSession();
+				throw new UsernameNotCorresponding();
+			}
+			BlacklistDAO bd=new BlacklistDAO();
+			String owner=blacklistObj.getOwner();
+			String user=blacklistObj.getUsername();
+			Blacklist checkUser=bd.get(owner, user);
+			boolean result=false;
+			if(checkUser!=null){
+				result=true;
+			}
+			return result;
+		}else{
+			GenericDAO.closeSession();
+			throw new AuthenticationFail();
+		}
+	}
 }

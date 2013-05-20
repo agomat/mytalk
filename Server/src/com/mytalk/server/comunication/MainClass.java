@@ -23,7 +23,7 @@ import java.net.InetSocketAddress;
 public class MainClass {
 
 	public static void main(String[] args) {
-		InetSocketAddress address=new InetSocketAddress(3400);
+		InetSocketAddress address=new InetSocketAddress(8887);
 		Receiver receiver=new Receiver(address);
 		Thread receiverThread= new Thread(receiver);
 		Sender sender=new Sender();

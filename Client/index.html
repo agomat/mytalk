@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MyTalk</title>
+    <link type="text/css" rel="stylesheet" href="assets/font/roboto.css" media="screen" />
+    <link type="text/css" rel="stylesheet" href="assets/css/common.css" media="screen" />
+    <link type="text/css" rel="stylesheet" href="assets/css/c1.css" media="screen" />
+    <link type="text/css" rel="stylesheet" href="assets/css/c2.css" media="screen" />
+    <link type="text/css" rel="stylesheet" href="assets/css/c3.css" media="screen" /> 
+    <link type="text/css" rel="stylesheet" href="assets/css/c4.css" media="screen" /> 
+    <link type="text/css" rel="stylesheet" href="assets/css/c4-logged.css" media="screen" />
+  
+    <script type="text/javascript" src="assets/lib/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="assets/lib/handlebars-1.0.0-rc.3.js"></script>
+    <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.3.js"></script> 
+    <script type="text/javascript" src="assets/lib/ember-data.js"></script>
+
+    <!-- JsCompressor -->
+    <!-- bootstrap application -->
+    <script type="text/javascript" src="com/mytalk/app.js"></script>
+
+    <!-- bootstrap views -->
+    
+    <script type="text/javascript" src="com/mytalk/view/IndexView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/ListsView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/DashboardView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/LoginFormView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/LoginView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/LoggedView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterFormView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/IPCall.js"></script>
+    
+    <script type="text/javascript" src="com/mytalk/view/UsersView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/GuestView.js"></script>
+    
+    
+ 
+    <script type="text/javascript" src="com/mytalk/view/LoginView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterConfirmPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterSurname.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/HeaderView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/IPFormView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/LoginUsername.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/LoginPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterEmail.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterName.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/RegisterUsername.js"></script>
+    
+    <!-- bootstrap Router -->
+    <script type="text/javascript" src="com/mytalk/controller/router/Router.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/IndexRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/GuestRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/LoggedRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/LoggedIndexRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/ListRoute.js"></script>
+
+    <!-- bootstrap StateManager -->
+    <script type="text/javascript" src="com/mytalk/controller/statemanager/StateManager.js"></script>
+
+    <!-- bootstrap Storage -->
+    <script type="text/javascript" src="com/mytalk/model/storage/ARI.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/WebSocketConnection.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/SocketAdapter.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/Store.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/RequestManager.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/AcceptCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/RefuseCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/UserCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/BlackListAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/BlackListRemove.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListCreate.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListDelete.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListUserAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListUserRemove.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/stats/AddCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/stats/GetCalls.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/CreateAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/DeleteAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/Login.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/LogoutToAnonymous.js"></script>
+
+    <!-- bootstrap DS.Model -->
+    
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/Authentication.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/PersonalData.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/User.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/List.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/Call.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/WCall.js"></script>
+
+    <!-- bootstrap controllers -->
+    <script type="text/javascript" src="com/mytalk/controller/Controller.js"></script>
+
+    <!-- bootstrap RTCAdapter -->
+    <script type="text/javascript" src="com/mytalk/controller/communicator/PeerConnection.js"></script> 
+
+    <!-- bootstrap jQuery stuffs -->
+    <script type="text/javascript" src="assets/animation/animation.js"></script>
+    <!-- JsCompressor -->
+  </head>
+  <body>
+    <script type="text/x-handlebars" data-template-name="index">
+      {{ outlet 'head' }}
+      {{ outlet 'content' }}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="guest">
+      {{ partial description }}
+      {{ partial register }}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="logged">
+        <div id="logged_content" class="scroll_content">
+          {{ partial lists }} 
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_lists">
+      <div id="liste">
+        <div class="header">
+          <h5>Le Tue Liste</h5>
+          <a href="#" class="common_button"{{action "createList"}}>Crea una Nuova Lista</a>
+          </div>
+          <div class="content">
+            <ul>
+
+              {{#each list in model}}
+                {{#if list.generalList}}
+                  <li id="allcontacs">
+                   {{#linkTo "list" list}} 
+                   <div class="online_user"><div>online</div>{{list.online}}/{{list.total}}</div>
+                   <div class="list_name">{{list.name}} </div>{{/linkTo}}
+                  </li>
+                {{/if}}
+              {{/each}}
+              
+              {{#each list in model}}
+                {{#if list.blackList}}
+                 <li id="blacklist">
+                   {{#linkTo "list" list}} 
+                    <div class="online_user"><div>online</div>{{list.online}}/{{list.total}}</div>
+                    <div class="list_name">{{list.name}}</div>
+                   {{/linkTo}}
+                 </li>
+                {{/if}} 
+              {{/each}}
+              
+              {{#each list in model}}
+                {{#if list.customList}}
+                 <li>
+                   {{#linkTo "list" list}} 
+                   <div class="online_user"><div>online</div>{{list.online}}/{{list.total}}</div>
+                   <div class="list_name">{{list.name}}</div>{{/linkTo}}
+                 </li>
+                {{/if}} 
+              {{/each}}
+
+            </ul>
+          </div>
+      </div>
+      <div id="utenti">
+        {{ outlet 'list' }}
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="list">
+
+      <div class="header">
+        <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
+          <div id="list_option">
+            <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
+            <div id="list_button">
+            
+            {{#if check}}
+                <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
+                <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
+              {{else}}
+                
+            {{/if}}
+            
+            </div>
+          </div>
+      </div>
+      <div class="content">
+          {{ render "users" users }}
+      </div>
+      
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="users">  
+      <ul id="userlist"> 
+        {{#each user in controller}}
+          <li>
+
+            <div {{bindAttr class="user.online:online:offline"}}></div>
+            <div class="avatar">
+             <img {{bindAttr src="user.avatarTiny"}} />
+            </div>
+
+            <div>
+              <div>{{ user.name }} {{ user.surname }}</div>
+                {{ user.username }}
+            </div>
+
+            <ul {{bindAttr class="user.online:callEnebled:callDisabled"}}>
+            {{view.actualList}}
+
+            {{#if blacklist}}
+                <li><a class="call_user" href="#" {{action "call" users.id }} ></a></li>
+                <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
+              </ul>
+            {{else}}
+                {{#if alluser}}
+                  <li><a class="call_user" href="#" {{action "call" user.id }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
+                </ul>
+                {{else}}
+                  <li><a class="call_user" href="#" {{action "call" usedr.id }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
+                  <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
+                </ul>
+                {{/if}}
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="header">
+      <div id="header">
+        <div id="logo">
+          <h1>MyTalk</h1>
+        </div>
+        {{ partial "dashboard" }}
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_dashboard">
+      {{#if isAuthenticated}}
+        <div id="menu_container">
+        {{#each me in model}}
+        {{#if me.name}}
+          <div id="menu_label" >
+            <div class="avatar"> 
+              <img {{bindAttr src="me.avatarTiny"}} alt="" />
+            </div>
+          <div id="identity" class="logged">{{ me.name }} {{ me.surname }}</div>
+          </div>
+          <div id="menu_area">
+            <div id="arrow"></div>
+            <div id="menu_content">
+              <div id="auth_content">
+                <h2>Sei collegato come:</h2>
+                <ul>
+                  <li>{{ me.name }} {{ me.surname }}</li>
+                  <li>{{ me.email }}</li>
+                </ul>
+                <ul class="separator">
+                  <li><img src="assets/img/settings.png" alt="" /> <a href="#"> Modifica Profilo </a></li>
+                  <li><img src="assets/img/stats.png" alt="" /> <a href="#"> Statistiche sulle chiamate </a></li>
+                </ul>
+                <ul class="separator">
+                  <li><img src="assets/img/allcontacts.png" alt="" /> <a href="#"> Chiama un IP globale </a></li>
+                  <li><img src="assets/img/users.png" alt="" /> <a href="#/lists"> Visualizza i miei contatti </a></li>
+                </ul>
+                <ul class="separator">
+                  <li><img src="assets/img/door_out.png" alt=""/> <a href="#">Esci</a></li>
+                </ul>
+              </div>
+            </div>
+          </div> 
+        </div>
+        {{/if}}
+        {{/each}}
+      {{else}}
+        <div id="menu_container">
+          <div id="menu_label">
+            <div id="identity">Accedi</div>
+            <img src="assets/img/open_door.png"/>
+          </div>
+          <div id="menu_area" >
+            <div id="arrow"></div>
+            <div id="menu_content">
+              {{#view MyTalk.LoginFormView }}   
+                <fieldset>
+                  <legend hidden>Loggati</legend>
+                  <ul>
+                    <li>
+                      <label for="email" hidden>Email</label>
+                      {{view MyTalk.LoginUsername valueBinding='view.username'}}
+                    </li>
+                    <li>
+                      <label for="password" hidden>Password</label>
+                      {{view MyTalk.LoginPassword valueBinding='view.password' }}
+                    </li>
+                  </ul>
+                  <button type="submit" id="button_login" class="common_button" >Accedi</button>
+                </fieldset>
+                {{/view}}
+            </div>
+          </div> 
+        </div>
+      {{/if}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_register">
+      <div id="notlogged_content">
+        <div id="video_container">
+          <div id="video_frame">
+            <h5>Video Tutorial</h5>
+            <p>In <em>due minuti</em>, scopri quanto è semplice utilizzare MyTalk.</p>
+            <video id="video_tutorial" poster="assets/img/video_placeholder.png">
+              <source src="assets/video/intro.ogg" type="video/ogg" />
+              <source src="assets/video/intro.mp4" type="video/mp4" />
+              Il tuo browser non supporta il video in html5
+            </video>
+          </div>
+        </div>
+        <div id="divider"></div>
+        <div id="signup_container">
+          <div id="signup">
+            <h5>Registrati ora!</h5>
+            <p>Registrarsi &egrave; gratuito e ti permette di chiamare gli altri utenti che gi&agrave; utilizzano MyTalk.</p>
+            {{#view MyTalk.RegisterFormView}}
+              <fieldset>
+                <legend hidden>Registrazione</legend>
+                <ul>
+                  <li>
+                    <label for="name" hidden>Nome</label>
+                    {{view MyTalk.RegisterName valueBinding='view.name' }}
+                  </li>
+                  <li>
+                    <label for="surname" hidden>Cognome</label>
+                    {{view MyTalk.RegisterSurname valueBinding='view.surname' }}
+                  </li>
+                  <li>
+                    <label for="username" hidden>Username</label>
+                    {{view MyTalk.RegisterUsername valueBinding='view.username' }}
+                  </li>
+                  <li>
+                    <label for="email" hidden>Email</label>
+                    {{view MyTalk.RegisterEmail valueBinding='view.email' }}
+                  </li>
+                  <li>
+                    <label for="password" hidden>Password</label>
+                    {{view MyTalk.RegisterPassword valueBinding='view.password' }}
+                  </li>
+                  <li>
+                    <label for="password_conf" hidden>Conferma la password</label>
+                    {{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}
+                  </li>
+                  <li>
+                    <button type="submit"class="common_button" id="button_signup">Registrati</button>
+                  </li>
+                </ul>
+              </fieldset>
+            {{/view}}
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_description">
+      <div id="ip_container">
+        <div id="ip_call">
+          <h3> Chiama i tuoi amici </h3>
+          <p>
+            Inserisci l'indirizzo IP di un amico e mettiti in contatto con lui!
+          </p>
+          {{ partial callip }}
+        </div>
+        <div id="ip_yours">
+          <h3>Il tuo indirizzo IP</h3>
+          <p>
+            Fornisci ai tuoi amici questo indirizzo IP. Sarai repereribile da qualsiasi utente che conosca il tuo IP senza doversi registrare nel sistema!
+          </p>
+          <h4 id="ip_address">192.168.168.168:19</h4>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_callip">
+      {{#view MyTalk.IPFormView}}
+        <fieldset>
+        <legend hidden>Chiama inserendo l'indirizzo IP</legend>
+        <label for="ip_call_text" hidden>Indirizzo IP</label> 
+        {{view MyTalk.IPCall valueBinding='view.ip_call'}}
+        <button id="ip_call_button" class="common_button" type="submit"><div></div>Chiama</button>
+        </fieldset>
+      {{/view}}
+    </script>
+  </body>
+</html>

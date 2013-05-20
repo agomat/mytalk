@@ -19,10 +19,12 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
+import java.util.List;
+
 import com.mytalk.server.comunication.Message;
 
 public interface IProcessor {
 	
-	public Message processRequest(Message message);
+	public List<Message> processRequest(Message message);
 	
 }

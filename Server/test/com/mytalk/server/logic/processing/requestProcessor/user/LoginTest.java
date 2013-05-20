@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.shared.modelClient.UserList;
 import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -49,8 +50,8 @@ public class LoginTest {
 	@Test
 	public void testManage() {
 		Login login=new Login();
-		Authentication authRightTest=new Authentication("user4","user4","111.111.111.1");
-		PersonalData personalData=new PersonalData("user4","user4","user4","user4","user4@mytalk.com","us04us04us04us04us04us04us04us04","111.111.111.1");
+		Authentication authRightTest=new Authentication("user1","user1","123.123.123.1");
+		PersonalData personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","emailhash123123123","123.123.123.1");
 		WorldPersonalData wpd=new WorldPersonalData(personalData);
 		WorldPack pack=new WorldPack(null,wpd);
 		String packString=conv.convertJavaToJson(pack);
@@ -62,14 +63,45 @@ public class LoginTest {
 		String worldPackString=ariResult.getInfo();
 		WorldPack packTest=(WorldPack)conv.convertJsonToJava(worldPackString, WorldPack.class);
 		
-		//lista utenti
-				
-		for(int i=0;i<packTest.getWorldList().getList().size();i++){
-			boolean check=false;
-			for(int j=0;j<)
+		List<User> list=packTest.getWorldList().getList();
+		for(int i=0;i<list.size();i++){		
+			if(list.get(i).getUsername().equals("user0") || list.get(i).getUsername().equals("user1") || list.get(i).getUsername().equals("user2") || list.get(i).getUsername().equals("user3")){
+				assertTrue(list.get(i).getUsername(),list.get(i).getOnline());	
+			}
+			else{
+				assertFalse(list.get(i).getUsername(),list.get(i).getOnline());
+			}
 		}
 		
-		Authentication authWrongTest=new Authentication("user4","user0","111.111.111.1");
+		List<UserList> listUserList=packTest.getWorldList().getUserList();
+		List<Integer> listTest=new ArrayList<Integer>();
+		listTest.add(new Integer(1));
+		listTest.add(new Integer(3));
+		listTest.add(new Integer(4));
+		listTest.add(new Integer(5));
+		for(int j=0;j<listUserList.size();j++){
+			for(int k=0;k<listUserList.get(j).getList().size();k++){
+				if(listUserList.get(j).getName().equals("Blacklist")){
+					assertEquals(listUserList.get(j).getList().get(k),new Integer(8));
+				}
+				if(listUserList.get(j).getName().equals("friends")){
+					assertEquals(listUserList.get(j).getList().get(k),listTest.get(k));
+				}
+			}
+		}
+		
+		PersonalData pd=packTest.getWorldPersonalData().getPersonalData();
+		assertEquals("123.123.123.1",pd.getIp());
+		assertEquals("user1",pd.getUsername());
+		assertEquals("user1",pd.getSurname());
+		assertEquals("user1",pd.getName());
+		assertEquals("user1",pd.getPassword());
+		assertEquals("user1@mytalk.com",pd.getEmail());
+		assertEquals("emailhash123123123",pd.getMd5());
+		
+
+		
+		Authentication authWrongTest=new Authentication("user1","user0","111.111.111.1");
 		
 		ari=new ARI(authWrongTest,"Login",packString);
 		ariResult=login.manage(ari);
@@ -84,7 +116,7 @@ public class LoginTest {
 		assertEquals("Login effettuato con dati autenticazione diversi da quelli in personal data","UsernameNotExisting",ariResult.getReq());
 		
 		authWrongTest.setIp("111.11.111.1");
-		authWrongTest.setPwd("user4");
+		authWrongTest.setPwd("user1");
 		ari.setAuth(authWrongTest);
 		wpd.setPersonalData(personalData);
 		packString=conv.convertJavaToJson(pack);

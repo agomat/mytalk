@@ -20,8 +20,10 @@ Date
 package com.mytalk.server.logic.processing;
 
 import com.mytalk.server.comunication.Message;
+import com.mytalk.server.logic.processing.requestProcessor.user.StateUpdate;
 import com.mytalk.server.logic.shared.*;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
+import com.mytalk.server.logic.shared.modelClient.User;
 import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 
 import java.lang.reflect.InvocationTargetException;
@@ -62,13 +64,10 @@ public class Processor implements IProcessor{
 	}
 		
 	//metodo che riceve JSON, ottiene la conversione in ARI e manda la Stringa "richiesta", controllando tipo
-	public Message processRequest(Message message){
+	public List<Message> processRequest(Message message){
 		
 		Convert c=new Convert();
-		System.out.println(message.getJson());
 		ARI pack=c.convertJsonToJava(message.getJson());
-		String s=c.convertJavaToJson(pack);
-		System.out.println(s);
 		if(pack.getAuth()!=null){
 			pack.getAuth().setIp(message.getIp());
 		}
@@ -78,7 +77,7 @@ public class Processor implements IProcessor{
 		String request=pack.getReq();
 		ARI esito=null;
 		String ipToSend=null;
-		Message response=null;
+		List<Message> response=new ArrayList<Message>();
 		try{
 			String r= hm.get(request);
 			Class<?> cl=Class.forName(r);
@@ -113,9 +112,15 @@ public class Processor implements IProcessor{
 		else{
 			ipToSend=message.getIp();
 		}
+		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulCreateAccount") || esito.getReq().equals("SuccessfulDeleteAccount")){
+			StateUpdate stateUpdate=new StateUpdate();
+			ARI ari=stateUpdate.manage(pack);
+			String jsonAri=c.convertJavaToJson(ari);
+			response.add(new Message("broadcast",jsonAri));
+		}
 		esito.setAuth(null);
 		String json=c.convertJavaToJson(esito);
-		response=new Message(ipToSend,json);
+		response.add(new Message(ipToSend,json));
 		return response;
 	}
 }

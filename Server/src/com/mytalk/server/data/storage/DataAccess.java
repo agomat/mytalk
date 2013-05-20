@@ -572,4 +572,18 @@ public class DataAccess implements IDataAccess{
 		int id=user.getId();
 		return id;
 	}
+	
+	//logout da autenticato ad anonimo
+	public void logoutToAnonymous(OnlineUser user)throws LogoutException{
+		OnlineUserDAO od=new OnlineUserDAO();
+		String ip=user.getIp();
+		OnlineUser unlogged=od.get(ip);
+		if(unlogged==null){
+			GenericDAO.closeSession();
+			throw new LogoutException();
+		}
+		unlogged.setUsername(null);
+		od.update(unlogged);
+		GenericDAO.closeSession();
+	}
 }

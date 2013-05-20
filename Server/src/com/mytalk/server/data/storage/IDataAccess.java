@@ -77,4 +77,6 @@ public interface IDataAccess{
 			public String getUserIp(String username)throws UserNotLogged;
 			
 			public int getIdFromUsername(String username)throws UserNotExisting;
+			
+			public void logoutToAnonymous(OnlineUser user)throws LogoutException;
 }

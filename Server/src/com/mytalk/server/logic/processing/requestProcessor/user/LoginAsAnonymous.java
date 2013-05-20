@@ -34,7 +34,7 @@ public class LoginAsAnonymous extends GenericRequest {
 			OnlineUser o=new OnlineUser(null, ari.getAuth().getIp());
 			try {
 				da.loginAsAnonymous(o);
-				response=new ARI(null,"SuccessfulLoginAsAnonymous",null);
+				response=new ARI(null,"SuccessfulLoginAsAnonymous",null);//rispondere con l'ip dell'utente
 			} catch (IpAlreadyLogged e) {
 				response=new ARI(null,"IpAlreadyLogged",null);
 			}

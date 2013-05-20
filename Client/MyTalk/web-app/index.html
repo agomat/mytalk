@@ -192,18 +192,18 @@
             {{view.actualList}}
 
             {{#if blacklist}}
-                <li><a class="call_user" href="#"></a></li>
-                <li><a class="add_user" href="#"></a></li>
+                <li><a class="call_user" href="#" {{action "call" users.id }} ></a></li>
+                <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
               </ul>
             {{else}}
                 {{#if alluser}}
-                  <li><a class="call_user" href="#"></a></li>
-                  <li><a class="add_user" href="#"></a></li>
+                  <li><a class="call_user" href="#" {{action "call" user.id }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                 </ul>
                 {{else}}
-                  <li><a class="call_user" href="#"></a></li>
-                  <li><a class="add_user" href="#"></a></li>
+                  <li><a class="call_user" href="#" {{action "call" usedr.id }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                   <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
                 </ul>

@@ -15,7 +15,7 @@
 * - Zucchetti SRL
 */
 
-package com.mytalk.server.comunication;
+package com.mytalk.server.communication.buffer;
 
 public class Message {
 

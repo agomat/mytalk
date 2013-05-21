@@ -17,10 +17,14 @@
 */
 
 
-package com.mytalk.server.comunication;
+package com.mytalk.server.communication;
+
+import java.util.Iterator;
 
 import org.java_websocket.WebSocket;
 
+import com.mytalk.server.communication.buffer.BufferOutgoing;
+import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.exceptions.IpNotFound;
 
 public class Sender implements Runnable {
@@ -39,12 +43,24 @@ public class Sender implements Runnable {
 			Message pack=bufferOut.pop();
 			String ip= pack.getIp();
 			try{
-				WebSocket ws=receiver.searchConnection(ip);
-				String json=pack.getJson();
-				ws.send(json);
+				if(ip.equals("broadcast")){
+					sendToAll(pack.getJson());
+				}else{
+					WebSocket ws=receiver.searchConnection(ip);
+					String json=pack.getJson();
+					ws.send(json);
+				}
 			}catch(IpNotFound exc){
 				exc.printStackTrace();
 			}
+		}
+	}
+	
+	public void sendToAll(String json){
+		Iterator<WebSocket> iterator = receiver.connections().iterator();
+		while (iterator.hasNext()) {
+			WebSocket ws=iterator.next();
+			ws.send(json);
 		}
 	}
 }

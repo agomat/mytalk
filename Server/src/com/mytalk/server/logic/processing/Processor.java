@@ -19,7 +19,7 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
-import com.mytalk.server.comunication.Message;
+import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.logic.processing.requestProcessor.user.StateUpdate;
 import com.mytalk.server.logic.shared.*;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;

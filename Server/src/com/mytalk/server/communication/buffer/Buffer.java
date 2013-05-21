@@ -16,7 +16,7 @@
 */
 
 
-package com.mytalk.server.comunication;
+package com.mytalk.server.communication.buffer;
 
 public interface Buffer {
 	

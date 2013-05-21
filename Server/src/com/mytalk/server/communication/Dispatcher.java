@@ -16,8 +16,13 @@
 */
 
 
-package com.mytalk.server.comunication;
+package com.mytalk.server.communication;
 
+import java.util.List;
+
+import com.mytalk.server.communication.buffer.BufferIncoming;
+import com.mytalk.server.communication.buffer.BufferOutgoing;
+import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.logic.processing.*;
 
 public class Dispatcher implements Runnable {
@@ -30,8 +35,10 @@ public class Dispatcher implements Runnable {
 	public void run() {
 		while(true){
 			Message request=bufferIn.pop();
-			Message response=processor.processRequest(request);
-			bufferOut.push(response);
+			List<Message> response=processor.processRequest(request);
+			for(int i=0;i<response.size();i++){
+				bufferOut.push(response.get(i));
+			}
 		}
 	}
 

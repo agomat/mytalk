@@ -21,6 +21,10 @@ package com.mytalk.server.comunication;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.mytalk.server.communication.buffer.BufferIncoming;
+import com.mytalk.server.communication.buffer.Message;
+
 import java.util.Vector;
 
 public class BufferTest {

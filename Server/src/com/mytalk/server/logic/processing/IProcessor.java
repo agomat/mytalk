@@ -21,7 +21,7 @@ package com.mytalk.server.logic.processing;
 
 import java.util.List;
 
-import com.mytalk.server.comunication.Message;
+import com.mytalk.server.communication.buffer.Message;
 
 public interface IProcessor {
 	

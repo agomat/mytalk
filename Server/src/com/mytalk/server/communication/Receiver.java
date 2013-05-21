@@ -17,7 +17,7 @@
 */
 
 
-package com.mytalk.server.comunication;
+package com.mytalk.server.communication;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
@@ -27,6 +27,8 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
+import com.mytalk.server.communication.buffer.BufferIncoming;
+import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.exceptions.IpNotFound;
 
 public class Receiver extends WebSocketServer implements Runnable {
@@ -57,12 +59,12 @@ public class Receiver extends WebSocketServer implements Runnable {
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		System.out.println("WebsocketServer Error");
-		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String error="{\"auth\":null \"req\":\"ConnectionError\" \"info\":null}";
-		Message errorMsg=new Message(wsIp,error);
-		BufferOutgoing bufferOut=BufferOutgoing.getInstance();
-		bufferOut.push(errorMsg);
+//		System.out.println("WebsocketServer Error");
+//		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+//		String error="{\"auth\":null \"req\":\"ConnectionError\" \"info\":null}";
+//		Message errorMsg=new Message(wsIp,error);
+//		BufferOutgoing bufferOut=BufferOutgoing.getInstance();
+//		bufferOut.push(errorMsg);
 	}
 
 	@Override
@@ -75,8 +77,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	}
 
 	public WebSocket searchConnection(String ip) throws IpNotFound{
-		Collection<WebSocket> connections=connections();
-		Iterator<WebSocket> iterator = connections.iterator();
+		Iterator<WebSocket> iterator = connections().iterator();
 		WebSocket wsFound=null;
 		while (iterator.hasNext()) {
 			WebSocket ws=iterator.next();

@@ -194,7 +194,7 @@
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
         {{#each user in controller}}
-        {{#unless unmatched}}
+        {{#unless user.unmatched}}
           <li>
 
             <div {{bindAttr class="user.online:online:offline"}}></div>

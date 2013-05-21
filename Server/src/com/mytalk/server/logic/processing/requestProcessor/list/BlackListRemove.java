@@ -37,7 +37,6 @@ public class BlackListRemove extends GenericRequest {
 	
 	public ARI manage(ARI ari) {
 		ARI response=null;
-		//creo oggetto necessario per l'autenticazione
 		Authentication auth=ari.getAuth();
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
@@ -47,22 +46,18 @@ public class BlackListRemove extends GenericRequest {
 			response=new ARI(null,"CorruptedPack",null);
 		}	
 		else{
-			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);	
-			//elaboro l'oggetto ListPack per ricavare le informazioni necessarie a chiamare il metodo appropriato
-			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista di stringhe
+			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);			
+			List<UserList> listUserList=pack.getList(); 
 			UserList userList=null;
 			com.mytalk.server.data.model.Blacklist blacklist=null;
 			List<Integer> listUser=null;
 			String user=null;
-			try{ // ho una sola blacklist perciò non scorro le liste
-				userList=listUserList.get(0); //nome lista e la lista di user
-				listUser=userList.getList();// lista di id user
-				for(int j=0;j<listUser.size();j++){ //scorre lista di utenti 
-					user=(da.getUserById(listUser.get(j))).getUsername();
-					blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),user);
-					da.blacklistRemove(blacklist,userAuth);
-				}
-				//se arrivo qua è andato a buon fine
+			try{ 
+				userList=listUserList.get(0); 
+				listUser=userList.getList();
+				user=(da.getUserById(listUser.get(0))).getUsername();
+				blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),user);
+				da.blacklistRemove(blacklist,userAuth);
 				response=new ARI(null,"SuccessfulBlacklistRemove",infoRequest);
 			}catch(UserNotBlacklisted unb){
 				response=new ARI(null,"UserNotBlacklisted",infoRequest);

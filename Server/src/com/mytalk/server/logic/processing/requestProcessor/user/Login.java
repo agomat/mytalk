@@ -83,6 +83,7 @@ public class Login extends GenericRequest{
 						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash(),ip_user,true);
 						listAllUsersClient.add(userClient);
 					}
+					
 					//aggiunta liste utente
 					listName=da.userLists(user);
 					for(int k=0;k<listName.size();k++){
@@ -93,6 +94,7 @@ public class Login extends GenericRequest{
 						userList=new UserList(listName.get(k).getId(),listName.get(k).getName(),listInteger);
 						listUserlist.add(userList);
 					}
+					
 					//aggiunta blacklist
 					blackListUserServer=da.getUserBlacklist(user);
 					for(int x=0;x<blackListUserServer.size();x++){

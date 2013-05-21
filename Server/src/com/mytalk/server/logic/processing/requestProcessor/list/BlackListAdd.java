@@ -52,14 +52,13 @@ public class BlackListAdd extends GenericRequest {
 			com.mytalk.server.data.model.Blacklist blacklist=null;
 			List<Integer> listUser=null;
 			String username=null;
-			try{ // ho una sola blacklist perciò non scorro le liste
-				userList=listUserList.get(0); //nome lista e la lista di user
-				listUser=userList.getList();// lista di user
-				for(int j=0;j<listUser.size();j++){ //scorre lista di id utente 
-					username=(da.getUserById(listUser.get(j))).getUsername();
-					blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),username);
-					da.blacklistAdd(blacklist,userAuth);
-				}
+			try{ 
+				userList=listUserList.get(0); 
+				listUser=userList.getList();
+				username=(da.getUserById(listUser.get(0))).getUsername();
+				blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),username);
+				da.blacklistAdd(blacklist,userAuth);
+
 				response=new ARI(null,"SuccessfulBlacklistAdd",infoRequest);
 			}catch(UserAlreadyBlacklisted uab){
 				response=new ARI(null,"UserAlreadyBlacklisted",infoRequest);

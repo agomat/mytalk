@@ -35,36 +35,30 @@ public class ListUserAdd extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		ARI response=null;
-		//creo oggetto necessario per l'autenticazione
 		Authentication auth=ari.getAuth();
 		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
-		//ottengo la stringa di info
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
-		//elaboro l'oggetto ListPack per ricavare le informazioni necessarie a chiamare il metodo appropriato
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",null);
 		}	
-		else{		
-			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista di stringhe
+		else{	
+			List<UserList> listUserList=pack.getList();
 			UserList userList=null;
 			com.mytalk.server.data.model.ListName listName=null;
 			List<Integer> listString=null;
 			String user=null;
 			try{
-				for(int i=0;i<listUserList.size();i++){ //scorre tutte le liste presenti
-					userList=listUserList.get(i); //nome lista e la lista di user
-					listName=new com.mytalk.server.data.model.ListName(userList.getName(),auth.getUser()); //nome lista e owner
-					listString=userList.getList();// lista di user
-					for(int j=0;j<listString.size();j++){ //scorre lista di id utenti 
-						user=(da.getUserById(listString.get(j))).getUsername();
-						da.userListAdd(listName, user, userAuth);
-					}
-					response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
-				}
-			}catch(UserAlreadyListed ual){
+				userList=listUserList.get(0); 
+				listName=new com.mytalk.server.data.model.ListName(userList.getName(),auth.getUser()); 
+				listString=userList.getList();
+				user=(da.getUserById(listString.get(0))).getUsername();
+				da.userListAdd(listName, user, userAuth);
+				response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
+			}
+			catch(UserAlreadyListed ual){
 				response=new ARI(null,"UserAlreadyListed",infoRequest);
 			}catch(AuthenticationFail af){
 				response=new ARI(null,"AuthenticationFail",null);

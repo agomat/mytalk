@@ -89,7 +89,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
         context.replaceWith('list', list);
       }
   },
-  renameList: function(){ // TODO sistemare immediatamente
+  renameList: function(){ 
 
     var id = this.get('content').get('id');
     var name = this.get('content').get('name');
@@ -98,27 +98,29 @@ MyTalk.ListController = Ember.ObjectController.extend({
     var list = MyTalk.List.find();
     var test = true;
 
-    list.forEach( function(t){
-      if(t.get('name') == newName){
-        test=false;
-      }
-    });
 
-    if(newName!="Nome della lista"){
-      if(test==true){
+      if(newName!="Nome della lista"){
+        list.forEach( function(t){
+          if(t.get('name') == newName){
+            test=false;
+           }
+        });
+
+        if(test==true){
           this.get('content').setProperties({name:newName});
+        }
+        
+        else{
+          alert("Esiste già una lista con questo nome");
+        }
       }
-    else if(newName!=null){
-      alert("Esiste già una lista con questo nome");
-      }
-    }
   }
 
 });
 
 MyTalk.UsersController = Ember.ArrayController.extend({
   blacklist: false,
-  alluser: false,   // TODO: perchè non usare un terzo booleano per facilitare la condizione if nel template?
+  alluser: false,   
   needs: ['list'],
     
   call: function(id){
@@ -129,12 +131,12 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     console.log('addUser');
     // TODO
   },
-  check: function(){ // TODO: metti un nome appropriato
+  specialList: function(){ 
     var id = this.get('controllers.list.content.id');
     if(id == 0){
       this.set('alluser',true);
     }
-    if(id == 1){
+    else if(id == 1){
       this.set('blacklist',true);
     }
   },

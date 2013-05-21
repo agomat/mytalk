@@ -1,3 +1,5 @@
+// usa mixin unico: http://www.kaspertidemann.com/mixins-in-ember-js/
+
 MyTalk.User = DS.Model.extend({
   username: DS.attr('string'),
   lists: DS.hasMany('MyTalk.List'),

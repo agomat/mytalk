@@ -1,3 +1,3 @@
-MyTalk.BlackListRemove = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.BlackListRemove = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

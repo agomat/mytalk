@@ -1,3 +1,3 @@
-MyTalk.CreateAccount = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.CreateAccount = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

@@ -1,3 +1,3 @@
-MyTalk.ListUserAdd = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.ListUserAdd = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

@@ -1,3 +1,3 @@
-MyTalk.DeleteAccount = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.DeleteAccount = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

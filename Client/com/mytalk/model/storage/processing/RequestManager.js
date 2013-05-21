@@ -18,13 +18,21 @@
 * - Zucchetti SRL
 */
 
-// TODO RequestManager potrebbe essere un mixin (o oggetto) che si compone di tutte le richieste
 MyTalk.RequestManager = Ember.Mixin.create({
-    // implementare un metodo che data un nome di una richiesta
-    // ritorna in mixin deputato a gestirla
-    //// questo serve per onMessage; da server a me
+  
+  processRequest: function (record, onSuccess, onError) {
+  	Ember.assert('The method processRequest() [com.MyTalk.model.storage.processing.RequestManager] cannot be called beacuse it is abstract',false);
+  },
 
-    username: function() {
-    	return MyTalk.Authentication.find(0).get('username');
-    }.property()
+  getRequestName: function () {
+  	Ember.assert('The method getRequestName() [com.MyTalk.model.storage.processing.RequestManager] cannot be called beacuse it is abstract',false);
+  },  
+
+  // concrete method
+  getProcessorByName: function (requestName) {
+  
+  }
+
+
 });
+

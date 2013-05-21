@@ -1,3 +1,3 @@
-MyTalk.ListUserRemove = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.ListUserRemove = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

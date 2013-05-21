@@ -19,7 +19,7 @@
 */
 
 DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, { 
-  socket: undefined,
+  socket: undefined, // TODO spostare minin WebSocketConnection in RequestManagery
   bulkCommit: true,
 
   init: function() {    
@@ -45,12 +45,27 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
   createRecord: function(store, type, record) {
     console.log('CreateRecord');
-    this.get('socket').send( record );
-    this.didCreateRecord(store, type, record, undefined);
+    var context = this;
+    var processor = record.get('transaction').get('request');
+    
+    var onSuccess = function(json){
+      context.didCreateRecord(store, type, record, json);
+    }; // TODO fare in modo che appaia una scritta "Login in corso"
+    
+    var onError = function(){
+      context.didError(store, type, record);
+    }; // TODO fare in modo che appaia una scritta "Connessione con il server persa"
+
+    if(processor == "Login") {
+      var req = MyTalk.processor.Login.create({});
+      req.processRequest(record, this.get('socket'), onSuccess, onError);
+    }
+    
   },
 
   createRecords: function(store, type, records) {
-    console.log('createRecords');
+    console.log('CreateRecords');
+    return this.createRecord(store, type, records.list[0]); // single bulk commit
   },
 
   updateRecord: function(store, type, record) {
@@ -63,13 +78,8 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
   updateRecords: function(store, type, records) {
-    console.log('updateRecords');
-    var recordList = records.list;
-    if (recordList.length === 1) {
-      return this.updateRecord(store, type, recordList[0]);
-    } else {
-      return this._super(store, type, records);
-    }
+    console.log('updateRecords '+ record);
+    return this.updateRecord(store, type, records.list[0]); // single bulk commit
   },
 
   deleteRecord: function(store, type, record) {

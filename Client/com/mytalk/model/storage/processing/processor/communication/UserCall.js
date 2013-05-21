@@ -1,3 +1,3 @@
-MyTalk.UserCall = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.UserCall = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

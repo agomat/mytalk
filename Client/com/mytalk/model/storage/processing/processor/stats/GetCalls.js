@@ -1,3 +1,3 @@
-MyTalk.GetCalls = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.GetCalls = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

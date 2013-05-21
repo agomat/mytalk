@@ -3,20 +3,11 @@ MyTalk = Ember.Application.create({
 });
 
 // Namespaces definition
-MyTalk.model = Ember.Namespace.create({});
-MyTalk.model.storage = Ember.Namespace.create({});
-MyTalk.model.storage.processing = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.list = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.communication = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.stats = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.user = Ember.Namespace.create({});
-MyTalk.model.modelstruct = Ember.Namespace.create({});
-MyTalk.controller = Ember.Namespace.create({});
-MyTalk.controller.communicator = Ember.Namespace.create({});
-MyTalk.controller.router = Ember.Namespace.create({});
-MyTalk.controller.statemanager = Ember.Namespace.create({});
-MyTalk.view = Ember.Namespace.create({});
+//MyTalk.model = Ember.Namespace.create({});
+//MyTalk.controller = Ember.Namespace.create({});
+//MyTalk.view = Ember.Namespace.create({});
+
+MyTalk.processor = Ember.Namespace.create({});
 
 
 
@@ -81,6 +72,8 @@ var json =      {
 	adapter = store.adapterForType(MyTalk.PersonalData);
 	adapter.didFindRecord(store, MyTalk.PersonalData, json,1);  // function(store, type, payload, id)    
 
-	$("input[name=username]").val("aaaaaaa");
-	$("input[name=password]").val("aaaaaaa");
+	$("input[name=username]").val("mattia");
+    $("input[name=username]").change()
+    $("input[name=password]").val("mattia");
+	$("input[name=password]").change()
 }, 1000);

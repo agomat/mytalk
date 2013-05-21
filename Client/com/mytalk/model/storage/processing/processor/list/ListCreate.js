@@ -1,3 +1,3 @@
-MyTalk.ListCreate = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.ListCreate = Ember.Mixin.create(MyTalk.RequestManager,{
 
 });

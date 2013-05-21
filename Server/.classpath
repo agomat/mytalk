@@ -2,24 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="lib/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="lib/javassist-3.17.1-GA.jar"/>
-	<classpathentry kind="lib" path="lib/javassist.jar"/>
-	<classpathentry kind="lib" path="lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.24-bin.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.5.jar"/>
-	<classpathentry kind="lib" path="lib/java_websocket.jar"/>
-	<classpathentry kind="lib" path="lib/gson-2.2.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gson"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/WebSocket"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Java-Websocket"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -22,8 +22,6 @@ import com.mytalk.server.data.model.OnlineUser;
 import com.mytalk.server.exceptions.LogoutException;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
-import com.mytalk.server.logic.shared.WorldPack;
-import com.mytalk.server.logic.shared.modelClient.PersonalData;
 import com.mytalk.server.logic.processing.requestProcessor.*;
 
 public class Logout extends GenericRequest{

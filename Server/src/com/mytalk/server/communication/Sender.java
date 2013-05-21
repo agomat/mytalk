@@ -56,7 +56,7 @@ public class Sender implements Runnable {
 		}
 	}
 	
-	public void sendToAll(String json){
+	private void sendToAll(String json){
 		Iterator<WebSocket> iterator = receiver.connections().iterator();
 		while (iterator.hasNext()) {
 			WebSocket ws=iterator.next();

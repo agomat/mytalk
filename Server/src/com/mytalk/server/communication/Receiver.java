@@ -41,7 +41,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
 		System.out.println("Client connected with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress());
 		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String loginAnonymous="{\"auth\":\"{\"username\":null \"password\":null \"ip\":"+wsIp+"}\" \"req\":\"LoginAsAnonymous\" \"info\":null}";
+		String loginAnonymous="{'auth':{'username':null,'password':null,"+wsIp+":'111.111.111.1'},'req':'LoginAsAnonymous','info':null}";
 		Message openMsg=new Message(wsIp,loginAnonymous);
 		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(openMsg);

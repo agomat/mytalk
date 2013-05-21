@@ -19,10 +19,12 @@
 package com.mytalk.server.communication;
 
 import java.net.InetSocketAddress;
+import com.mytalk.server.data.persistence.HibernateUtil;
 
 public class MainClass {
 
 	public static void main(String[] args) {
+		HibernateUtil hu=new HibernateUtil();
 		InetSocketAddress address=new InetSocketAddress(8887);
 		Receiver receiver=new Receiver(address);
 		Thread receiverThread= new Thread(receiver);

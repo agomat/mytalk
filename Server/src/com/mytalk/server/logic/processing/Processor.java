@@ -36,6 +36,7 @@ public class Processor implements IProcessor{
 	//classe che riceve e manda il JSON alla Comunication
 	//comunica la richiesta alla GenericRequest
 	Map<String, String> hm;
+	Convert convert=new Convert();
 	
 	public Processor(){
 		hm = new HashMap<String, String>();
@@ -66,8 +67,7 @@ public class Processor implements IProcessor{
 		
 	public List<Message> processRequest(Message message){
 		
-		Convert c=new Convert();
-		ARI pack=c.convertJsonToJava(message.getJson());
+		ARI pack=convert.convertJsonToJava(message.getJson());
 		if(pack.getAuth()!=null){
 			pack.getAuth().setIp(message.getIp());
 		}
@@ -117,11 +117,11 @@ public class Processor implements IProcessor{
 		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulCreateAccount") || esito.getReq().equals("SuccessfulDeleteAccount")){
 			StateUpdate stateUpdate=new StateUpdate();
 			ARI ari=stateUpdate.manage(pack);
-			String jsonAri=c.convertJavaToJson(ari);
+			String jsonAri=convert.convertJavaToJson(ari);
 			response.add(new Message("broadcast",jsonAri));
 		}
 		if(!esito.getReq().equals("Logout")){
-			String json=c.convertJavaToJson(esito);
+			String json=convert.convertJavaToJson(esito);
 			response.add(new Message(ipToSend,json));
 		}
 		return response;

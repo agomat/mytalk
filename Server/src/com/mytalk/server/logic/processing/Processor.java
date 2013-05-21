@@ -17,6 +17,7 @@ Date
 * Software licensed to:
 * - Zucchetti SRL
 */
+
 package com.mytalk.server.logic.processing;
 
 import com.mytalk.server.communication.buffer.Message;
@@ -63,7 +64,6 @@ public class Processor implements IProcessor{
 
 	}
 		
-	//metodo che riceve JSON, ottiene la conversione in ARI e manda la Stringa "richiesta", controllando tipo
 	public List<Message> processRequest(Message message){
 		
 		Convert c=new Convert();

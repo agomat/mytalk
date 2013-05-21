@@ -20,7 +20,6 @@
 package com.mytalk.server.communication;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.java_websocket.WebSocket;
@@ -31,7 +30,7 @@ import com.mytalk.server.communication.buffer.BufferIncoming;
 import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.exceptions.IpNotFound;
 
-public class Receiver extends WebSocketServer implements Runnable {
+public class Receiver extends WebSocketServer{
 
 	public Receiver(InetSocketAddress address) {
 		super(address);
@@ -41,7 +40,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
 		System.out.println("Client connected with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress());
 		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String loginAnonymous="{'auth':{'username':null,'password':null,"+wsIp+":'111.111.111.1'},'req':'LoginAsAnonymous','info':null}";
+		String loginAnonymous="{'auth':{'username':null,'password':null, ip:'"+wsIp+"'},'req':'LoginAsAnonymous','info':null}";
 		Message openMsg=new Message(wsIp,loginAnonymous);
 		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(openMsg);
@@ -51,7 +50,7 @@ public class Receiver extends WebSocketServer implements Runnable {
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
 		System.out.println("Client with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress()+" disconnected");
 		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
-		String logout="{\"auth\":\"{\"username\":null \"password\":null \"ip\":"+wsIp+"}\" \"req\":\"Logout\" \"info\":null}";
+		String logout="{'auth':{'username':null,'password':null, ip:'"+wsIp+"'},'req':'Logout','info':null}";
 		Message closeMsg=new Message(wsIp,logout);
 		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(closeMsg);

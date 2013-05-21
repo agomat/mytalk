@@ -29,9 +29,9 @@ import com.mytalk.server.exceptions.IpNotFound;
 
 public class Sender implements Runnable {
 
-	Receiver receiver;
+	private Receiver receiver;
 	
-	BufferOutgoing bufferOut=BufferOutgoing.getInstance();
+	private BufferOutgoing bufferOut=BufferOutgoing.getInstance();
 
 	public void registerReceiver(Receiver rec){
 		receiver=rec;

@@ -35,8 +35,8 @@ import java.util.*;
 public class Processor implements IProcessor{
 	//classe che riceve e manda il JSON alla Comunication
 	//comunica la richiesta alla GenericRequest
-	Map<String, String> hm;
-	Convert convert=new Convert();
+	private Map<String, String> hm;
+	private Convert convert=new Convert();
 	
 	public Processor(){
 		hm = new HashMap<String, String>();

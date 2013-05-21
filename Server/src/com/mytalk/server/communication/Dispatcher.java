@@ -27,9 +27,9 @@ import com.mytalk.server.logic.processing.*;
 
 public class Dispatcher implements Runnable {
 	
-	Processor processor=new Processor();
-	BufferIncoming bufferIn=BufferIncoming.getInstance();
-	BufferOutgoing bufferOut=BufferOutgoing.getInstance();
+	private IProcessor processor=new Processor();
+	private BufferIncoming bufferIn=BufferIncoming.getInstance();
+	private BufferOutgoing bufferOut=BufferOutgoing.getInstance();
 	
 	@Override
 	public void run() {

@@ -19,16 +19,13 @@ Date
 */
 package com.mytalk.server.logic.processing;
 
-import java.util.List;
-
 import com.google.gson.*;
-import com.google.gson.reflect.*;
 import com.mytalk.server.logic.shared.*;
 
 
 public class Convert {
 	
-	Gson gson=new Gson();
+	private Gson gson=new Gson();
 	
 	public Convert(){}
 	

@@ -95,6 +95,28 @@ MyTalk.ListController = Ember.ObjectController.extend({
       alert("Esiste già una lista con questo nome");
       }
     }
+  },
+
+  filter:function(value){
+    var context=this;
+    var fcontent=[];
+   
+    if(value){
+      context.get('content').get('users').forEach(function(entry){
+        if((entry.get('fullNameConc')).indexOf(value) !== -1) {
+          entry.set('unmatched',false);
+        }
+        else{
+          entry.set('unmatched',true);
+        }
+      });
+
+    }
+    else{
+      context.get('content').get('users').forEach(function(entry){
+        entry.set('unmatched',false);
+     });
+    }
   }
 
 });

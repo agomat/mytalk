@@ -6,6 +6,7 @@ MyTalk.User = DS.Model.extend({
   md5: DS.attr('string'),
   ip: DS.attr('string'),
   online: DS.attr('boolean'),
+  unmatched: DS.attr('boolean'),
   
   getObject: function() { // di dubbia utilità
     return { username:this.get('username'), password:this.get('online') };

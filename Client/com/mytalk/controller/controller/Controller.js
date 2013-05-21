@@ -64,15 +64,15 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
 
 MyTalk.ListController = Ember.ObjectController.extend({
   sortProperties: ['name'],
-  check: true,
+  specialList: true,
 
   checkList: function(){
     var id = this.get('content').get('id');
     if(id < 2){
-      this.setProperties({check:false});
+      this.setProperties({specialList:false});
     }
     else{
-      this.setProperties({check:true});
+      this.setProperties({specialList:true});
     }
   }.observes(this),
   
@@ -118,17 +118,23 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
 });
 
+MyTalk.Prova=new Array('1','2');
+
 MyTalk.UsersController = Ember.ArrayController.extend({
+  sortProperties:['name'],
   blacklist: false,
   alluser: false,   
   needs: ['list'],
+  prova:['schgifo','schifo2'],
     
   call: function(id){
     console.log("call "+id);
     // TODO
   },
-  addUser: function(){
-    console.log('addUser');
+  addUser: function(userId,listId){
+    //console.log(user);
+    var list = MyTalk.List.find(listId);
+    list.get('users').addObject(MyTalk.User.find(userId));
     // TODO
   },
   specialList: function(){ 
@@ -136,7 +142,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     if(id == 0){
       this.set('alluser',true);
     }
-    else if(id == 1){
+    if(id == 1){
       this.set('blacklist',true);
     }
   },

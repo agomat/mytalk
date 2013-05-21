@@ -48,6 +48,7 @@
     <script type="text/javascript" src="com/mytalk/view/RegisterEmail.js"></script>
     <script type="text/javascript" src="com/mytalk/view/RegisterName.js"></script>
     <script type="text/javascript" src="com/mytalk/view/RegisterUsername.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/SearchView.js"></script>
     
     <!-- bootstrap Router -->
     <script type="text/javascript" src="com/mytalk/controller/router/Router.js"></script>
@@ -171,7 +172,7 @@
       <div class="header">
         <h5>{{ name }}<span id="current_online">Online: {{ online }}/{{ total }}</span></h5>
           <div id="list_option">
-            <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
+             {{view MyTalk.SearchView id="search_bar"}}
             <div id="list_button">
             
             {{#if check}}

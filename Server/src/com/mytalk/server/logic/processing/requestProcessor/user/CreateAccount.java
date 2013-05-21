@@ -19,6 +19,7 @@
 package com.mytalk.server.logic.processing.requestProcessor.user;
 
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
 import com.mytalk.server.logic.processing.requestProcessor.*;
@@ -30,7 +31,6 @@ public class CreateAccount extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		String infoRequest=ari.getInfo();
-		System.out.println(infoRequest);
 		ARI response=null;
 		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
 		boolean checkPack=checkWorldPackWellFormed(pack);
@@ -42,6 +42,8 @@ public class CreateAccount extends GenericRequest{
 			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname(),md5);
 			try{
 				da.createAccount(u);
+				ari.getAuth().setUser(pack.getWorldPersonalData().getPersonalData().getUsername());
+				ari.getAuth().setPwd(pack.getWorldPersonalData().getPersonalData().getPassword());
 				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
 			}catch(UsernameAlreadyExisting uae){
 				response=new ARI(null, "UsernameAlreadyExisting", null);

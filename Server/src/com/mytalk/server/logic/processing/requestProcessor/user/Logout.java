@@ -21,6 +21,7 @@ package com.mytalk.server.logic.processing.requestProcessor.user;
 import com.mytalk.server.data.model.OnlineUser;
 import com.mytalk.server.exceptions.LogoutException;
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
 import com.mytalk.server.logic.processing.requestProcessor.*;
@@ -30,23 +31,20 @@ public class Logout extends GenericRequest{
 	public Logout(){}
 	
 	public ARI manage(ARI ari){
-		String infoRequest=ari.getInfo();
 		ARI response=null;
-		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-		boolean checkPack=checkWorldPackWellFormed(pack);
-		if(!checkPack){
-			response=new ARI(null,"CorruptedPack",null);
-		}else{
-			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
+		Authentication auth=ari.getAuth();
+		if(auth.getIp()==null){
+			response= new ARI(null,"CorruptedPack",null);
+		}
+		else{
+			OnlineUser o=new OnlineUser(auth.getUser(), auth.getIp());
 			try {
 				da.logout(o);
-				response=new ARI(null, "SuccessfulLogout", null);
+				response=new ARI(null, "Logout", null);
 			} catch (LogoutException e) {
 				response= new ARI(null, "LogoutException",null);
 			}
-				
-		}
+		}	
 		return response;
 	}
 }

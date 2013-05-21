@@ -22,6 +22,7 @@ import com.mytalk.server.data.model.OnlineUser;
 import com.mytalk.server.exceptions.LogoutException;
 import com.mytalk.server.logic.processing.requestProcessor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
 
@@ -30,21 +31,18 @@ public class LogoutAsAnonymous extends GenericRequest {
 	
 	public ARI manage(ARI ari){
 		ARI response=null;
-		String infoRequest=ari.getInfo();
-		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-		boolean checkPack=checkWorldPackWellFormed(pack);
-		if(!checkPack){
+		Authentication auth=ari.getAuth();
+		boolean checkAuth=checkAuthenticationWellFormed(auth);
+		if(!checkAuth){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
-			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			OnlineUser o=new OnlineUser(p.getUsername(), ari.getAuth().getIp());
+			OnlineUser o=new OnlineUser(auth.getUser(), auth.getIp());
 			try {
 				da.logoutToAnonymous(o);
-				response=new ARI(null, "SuccessfulLogoutAsAnonymous", null);
+				response=new ARI(null, "Logout", null);
 			} catch (LogoutException e) {
 				response= new ARI(null, "LogoutException",null);
-			}
-				
+			}		
 		}
 		return response;
 	}

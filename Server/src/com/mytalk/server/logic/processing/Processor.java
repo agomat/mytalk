@@ -112,15 +112,18 @@ public class Processor implements IProcessor{
 		else{
 			ipToSend=message.getIp();
 		}
+		esito.setAuth(null);
+		
 		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulCreateAccount") || esito.getReq().equals("SuccessfulDeleteAccount")){
 			StateUpdate stateUpdate=new StateUpdate();
 			ARI ari=stateUpdate.manage(pack);
 			String jsonAri=c.convertJavaToJson(ari);
 			response.add(new Message("broadcast",jsonAri));
 		}
-		esito.setAuth(null);
-		String json=c.convertJavaToJson(esito);
-		response.add(new Message(ipToSend,json));
+		if(!esito.getReq().equals("Logout")){
+			String json=c.convertJavaToJson(esito);
+			response.add(new Message(ipToSend,json));
+		}
 		return response;
 	}
 }

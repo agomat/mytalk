@@ -34,9 +34,9 @@ public class StateUpdate extends GenericRequest{
 	
 	public ARI manage(ARI ari){
 		ARI response=null;
-		int id;
+		Integer id;
 		boolean status=false;
-		if(ari.getReq().equals("Login") || ari.getReq().equals("CreateAccount")){
+		if(ari.getReq().equals("Login")){
 			status=true;
 		}
 		try {

@@ -43,24 +43,21 @@ public class LogoutAsAnonymousTest {
 	
 	@Test
 	public void testManage() {
-		Logout logout=new Logout();
+		LogoutAsAnonymous logoutAsAnonymous=new LogoutAsAnonymous();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
-		PersonalData personalData=new PersonalData("user1","user1","user1","user1","user1@mytalk.com","us01us01us01us01us01us01us01us01","123.123.123.1");
-		WorldPersonalData wpd=new WorldPersonalData(personalData);
-		WorldPack pack=new WorldPack(null,wpd);
-		String packString=conv.convertJavaToJson(pack);
 		
-		ARI ari=new ARI(auth,"Logout",packString);
-		ARI ariResult=logout.manage(ari);
-		assertEquals("Logout fallito nonostante dati coerenti","SuccessfulLogout",ariResult.getReq());
+		ARI ari=new ARI(auth,"LogoutAsAnonymous",null);
+		ARI ariResult=logoutAsAnonymous.manage(ari);
+		assertEquals("Logout fallito nonostante dati coerenti","Logout",ariResult.getReq());
 		
 		auth=new Authentication("user4","user4","123.123.123.4");
 		ari.setAuth(auth);
-		personalData=new PersonalData("user4","user4","user4","user4","user4@mytalk.com","us04us04us04us04us04us04us04us04","123.123.123.4");
-		wpd.setPersonalData(personalData);
-		packString=conv.convertJavaToJson(pack);
-		ariResult=logout.manage(ari);
+		ariResult=logoutAsAnonymous.manage(ari);
 		assertEquals("Logout di un user non loggato","LogoutException",ariResult.getReq());
+		
+		ari.getAuth().setUser(null);
+		ariResult=logoutAsAnonymous.manage(ari);
+		assertEquals("Autenticazione mal formata","CorruptedPack",ariResult.getReq());
 	}
 
 }

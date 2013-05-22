@@ -9,6 +9,7 @@
     <link type="text/css" rel="stylesheet" href="assets/css/c2.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/c3.css" media="screen" /> 
     <link type="text/css" rel="stylesheet" href="assets/css/c4.css" media="screen" /> 
+    <link type="text/css" rel="stylesheet" href="assets/css/popup.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/c4-logged.css" media="screen" />
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.0.min.js"></script>
@@ -209,18 +210,18 @@
 
             {{#if blacklist}}
                 <li><a class="call_user" href="#" {{action "call" users.id }} ></a></li>
-                <li><a class="add_user" href="#" {{action "addUser" user.id }}></a></li>
+                <li><a class="add_user" href="#" {{action "addUser" user}}></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
               </ul>
             {{else}}
                 {{#if alluser}}
                   <li><a class="call_user" href="#" {{action "call" user.id }} ></a></li>
-                  <li><a class="add_user" href="#" {{action "addUser" user.id }}></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" user}}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                 </ul>
                 {{else}}
                   <li><a class="call_user" href="#" {{action "call" usedr.id }} ></a></li>
-                  <li><a class="add_user" href="#" {{action "addUser" user.id }}></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" user}}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                   <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
                 </ul>
@@ -229,7 +230,35 @@
           </li>
         {{/each}}
       </ul>
-      {{view Ember.Select contentBinding="MyTalk.UsersController.prova"}}
+      {{controller.charge}}
+       <div id="adduser" class="blanket">
+        <div class="modal">
+          <div class="modal_header">
+            <a href="#" {{action "resetSelect"}}></a>
+            <h3>Aggungi ad una lista</h3>
+          </div>
+          <form action="#">
+            <fieldset>
+              <legend hidden>Aggungi ad una lista</legend>
+              <div class="modal_content">
+                <p> Segli a quale lista aggiungere l'utente {{ controller.userName }}</p>
+                <label for="search_list" hidden>Scegli la lista</label>
+                  {{view Ember.Select 
+                    contentBinding="controller.selectArray"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.firstName"
+                    prompt="Seleziona un lista"
+                    valueBinding="controller.selectedValue"
+                  }}
+              </div>
+              <div class="modal_button">
+                <button type="button" class="common_button" {{action "doAdd"}}>Ok</button>
+                <button type="button" class="hangup_button" {{action "resetSelect"}}>Annulla</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="header">

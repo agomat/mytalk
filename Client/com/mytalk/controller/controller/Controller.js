@@ -118,24 +118,59 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
 });
 
-MyTalk.Prova=new Array('1','2');
 
 MyTalk.UsersController = Ember.ArrayController.extend({
   sortProperties:['name'],
   blacklist: false,
   alluser: false,   
   needs: ['list'],
-  prova:['schgifo','schifo2'],
+  selectArray:[],
+  selectedValue:null,
+  userId:null,
+  userName:null,
     
   call: function(id){
     console.log("call "+id);
     // TODO
   },
-  addUser: function(userId,listId){
-    //console.log(user);
-    var list = MyTalk.List.find(listId);
-    list.get('users').addObject(MyTalk.User.find(userId));
-    // TODO
+  
+  charge:function(){
+    var temp=new Array();
+      (MyTalk.List.find()).forEach(function(t){
+        if(t.get('id')!=0 && t.get('id')!=1 ){
+          temp.pushObject(Ember.Object.create({firstName: t.get('name'), id: t.get('id')}));
+        }
+
+     });
+    this.set('this.selectArray',temp);
+  }.property('selectArray'),
+
+  
+  addUser: function(user){
+    document.getElementById('adduser').style.display='block';
+    var n=user.get('name')+" "+user.get('surname');
+    this.set('userId',user.get('id'));
+    this.set('userName',n);
+  },
+
+  resetSelect:function(){
+    document.getElementById('adduser').style.display='none';
+    this.set('selectedValue',null);
+    this.set('userId',null);
+    this.set('userName',null);
+  },
+  doAdd:function(){
+    if(this.selectedValue!=null){
+      var list=MyTalk.List.find(this.selectedValue);
+      list.get('users').addObject(MyTalk.User.find(this.userId));
+      document.getElementById('adduser').style.display='none';
+      this.set('selectedValue',null);
+      this.set('userId',null);
+      this.set('userName',null);
+    }
+    else{
+      alert('Selezionare una lista corretta');
+    }
   },
   specialList: function(){ 
     var id = this.get('controllers.list.content.id');

@@ -1,5 +1,6 @@
-#blanket {
+.blanket {
 	position: absolute;
+	display: none;
 	top: 0;
 	left: 0;
 	z-index: 999;
@@ -9,7 +10,7 @@
 	vertical-align: middle;
 } 
 
-#modal{
+.modal{
 	position: absolute;
 	width: 30%;
     height: 200px;
@@ -17,6 +18,7 @@
     left: 50%;
     margin-top: -100px;
     margin-left: -15%;
+    background-color: #fff;
 
     
 	border: 1px solid #999;
@@ -24,30 +26,30 @@
 	box-shadow: 0 0 44px #999;
 }
 
-#modal form{
+.modal form{
 	height: 70%;
 	margin: 0;
 	padding: 0;
 }
 
-#modal p{
+.modal p{
 	margin: 0;
 }
 
-#modal form fieldset{
+.modal form fieldset{
 	height: 100%;
 }
 
-#modal_header{
+.modal_header{
 	height: 30%;	
 }
 
-#modal_header h3{
+.modal_header h3{
 	font-size: 1.8em;
 	padding: 10px;
 }
 
-#modal_header a{
+.modal_header a{
 	display: block;
 	float: right;
 	padding: 8px;
@@ -57,29 +59,29 @@
 	opacity: 0.8;
 }
 
-#modal_header a:hover{
+.modal_header a:hover{
 	opacity: 1;
 }
 
-#modal_content{
+.modal_content{
 	height: 70%;
 	padding: 0 20px;
 }
 
-#modal_content p{
+.modal_content p{
 	padding: 5px 0;
 }
 
-#modal_content input{
+.modal_content input{
 	
 }
 
-#modal_button{
+.modal_button{
 	text-align: right;
 	padding-right: 15px;
 }
 
-#modal_button button{
+.modal_button button{
 	font-size: 1.5em;
 	padding: 5px 15px;
 }

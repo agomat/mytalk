@@ -16,7 +16,7 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
-
+*/
 
 MyTalk.AbstractOutProcessorProduct = Ember.Mixin.create({
   
@@ -33,4 +33,4 @@ MyTalk.AbstractOutProcessorProduct = Ember.Mixin.create({
   } 
 
 });
-*/
+

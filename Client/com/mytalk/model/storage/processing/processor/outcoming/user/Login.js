@@ -1,4 +1,4 @@
-MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct, {
   name: 'Login',
 
   process: function (params) {
@@ -13,15 +13,21 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, 
   },
 
   sendToServer: function (socket, record, onSent) {
-    
-    // TODO: usare seriamente la classe ARI
     var ARI = new Object();
-    ARI.auth = null;
-    ARI.req = this.get('name');
+
+    var auth = new Object();
+    auth.username = record.get('username');
+    auth.password = record.get('password');
+    auth.ip = "127.0.0.1";
+
     var credenzials = new Object();
     credenzials.username = record.get('username');
     credenzials.password = record.get('password');
-    ARI.info = JSON.stringify(credenzials);
+
+    
+    ARI.auth = auth;
+    ARI.req = this.get('name');
+    ARI.info = null;//JSON.stringify(credenzials);
     
     var wasSent = socket.send( JSON.stringify(ARI) );
   	onSent( this.getProcessorName(), wasSent );

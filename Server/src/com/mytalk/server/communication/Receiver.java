@@ -79,7 +79,7 @@ public class Receiver extends WebSocketServer{
 	public WebSocket searchConnection(String ip) throws IpNotFound{
 		Iterator<WebSocket> iterator = connections().iterator();
 		WebSocket wsFound=null;
-		while (iterator.hasNext()) {
+		while (iterator.hasNext() && wsFound==null) {
 			WebSocket ws=iterator.next();
 			String wsIp=ws.getRemoteSocketAddress().getAddress().getHostAddress();
 			if(wsIp.equals(ip)){

@@ -5,6 +5,7 @@ MyTalk.PersonalData = DS.Model.extend({
   surname: DS.attr('string'),
   email: DS.attr('string'),
   md5: DS.attr('string'),
+  ip: DS.attr('string'),
   
   getObject: function() { // di dubbia utilità
     return { username:this.get('username'), password:this.get('password') };

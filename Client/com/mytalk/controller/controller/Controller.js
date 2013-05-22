@@ -129,8 +129,10 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   userId:null,
   userName:null,
     
-  call: function(id){
-    console.log("call "+id);
+  call: function(user){
+    if(user.get('online')){
+      console.log("call "+user.get('id'));
+    }
     // TODO
   },
   
@@ -221,4 +223,10 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       //blacklist.get('transaction').commit();
     } 
   }
+});
+
+
+MyTalk.GuestController = Ember.ObjectController.extend({
+
+
 });

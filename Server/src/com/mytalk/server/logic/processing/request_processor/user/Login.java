@@ -1,6 +1,6 @@
 /**
 * Filename: Login.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.user
+* Package: com.mytalk.server.logic.processing.request_processor.user
 * Author: 
 * Date:
 *
@@ -43,7 +43,7 @@ public class Login extends GenericRequest{
 			WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
 			boolean checkPack=checkWorldPackWellFormed(pack);
 			boolean checkAuth=checkAuthenticationWellFormed(auth);
-			if(!checkPack && !checkAuth){
+			if(!checkPack || !checkAuth){
 				response=new ARI(null,"CorruptedPack",null);
 			}else{
 				
@@ -115,7 +115,7 @@ public class Login extends GenericRequest{
 				} catch(AuthenticationFail af){
 					response=new ARI(null, "AuthenticationFail", null);
 				} catch (UsernameNotCorresponding e) {
-					response= new ARI(null, "UsernameNotExisting",null);
+					response= new ARI(null, "UsernameCorrespondingExisting",null);
 				} catch (IpNotLogged e) {
 					response= new ARI(null, "IpNotLogged",null);
 				} catch (UserAlreadyLogged e) {

@@ -1,6 +1,6 @@
 /**
 * Filename: DeleteAccount.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.user
+* Package: com.mytalk.server.logic.processing.request_processor.user
 * Author: Nicolò Toso
 * Date: 2013-05-02
 *

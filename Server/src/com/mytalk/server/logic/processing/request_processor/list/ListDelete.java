@@ -1,6 +1,6 @@
 /**
 * Filename: ListDelete.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.list
+* Package: com.mytalk.server.logic.processing.request_processor.list
 * Author: Michael Ferronato
 * Date: 2013-05-01 
 *

@@ -1,6 +1,6 @@
 /**
 * Filename: GetCalls.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.list
+* Package: com.mytalk.server.logic.processing.request_processor.stats
 * Author: Michael Ferronato
 * Date: 2013-05-01 
 *

@@ -1,6 +1,6 @@
 /**
 * Filename: WorldPersonalData.java
-* Package: com.mytalk.server.logic.shared.modelClient
+* Package: com.mytalk.server.logic.shared.model_client
 * Author: Michael Ferronato
 * Date: 2013-05-02
 *

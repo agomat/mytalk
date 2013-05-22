@@ -1,6 +1,6 @@
 /**
 * Filename: RefuseCall.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.comunication
+* Package: com.mytalk.server.logic.processing.request_processor.communication
 * Author: Nicolò Toso
 * Date: 2013-05-02
 *

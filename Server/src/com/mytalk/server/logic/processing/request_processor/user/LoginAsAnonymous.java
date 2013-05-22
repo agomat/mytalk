@@ -1,6 +1,6 @@
 /**
 * Filename: LoginAsAnonymous.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.user
+* Package: com.mytalk.server.logic.processing.request_processor.user
 * Author: Michael Ferronato
 * Date: 2013-05-07
 *

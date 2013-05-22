@@ -1,6 +1,6 @@
 /**
 * Filename: GenericRequest.java
-* Package: com.mytalk.server.logic.processing
+* Package: com.mytalk.server.logic.processing.request_processor
 * Author: Nicolò Toso
 * Date: 2013-04-29
 *

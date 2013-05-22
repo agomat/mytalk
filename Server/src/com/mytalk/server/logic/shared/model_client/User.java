@@ -1,6 +1,6 @@
 /**
 * Filename: User.java
-* Package: com.mytalk.server.logic.shared.modelclient
+* Package: com.mytalk.server.logic.shared.model_client
 * Author: Nicolò Toso
 * Date: 2013-04-11
 *

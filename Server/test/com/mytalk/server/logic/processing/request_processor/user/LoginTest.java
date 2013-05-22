@@ -1,6 +1,6 @@
 /**
 * Filename: LoginTest.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.user
+* Package: com.mytalk.server.logic.processing.request_processor.user
 * Author: Michael Ferronato
 * Date: 2013-05-07
 *
@@ -27,15 +27,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
-import com.mytalk.server.logic.shared.modelClient.UserList;
+import com.mytalk.server.logic.shared.model_client.UserList;
 import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.user.Login;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
-import com.mytalk.server.logic.shared.modelClient.PersonalData;
-import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
-import com.mytalk.server.logic.shared.modelClient.User;
+import com.mytalk.server.logic.shared.model_client.PersonalData;
+import com.mytalk.server.logic.shared.model_client.User;
 
 public class LoginTest {
 
@@ -104,17 +103,12 @@ public class LoginTest {
 		ariResult=login.manage(ari);
 		assertEquals("Login effettuato anche se viene fallita l'autenticazione","AuthenticationFail",ariResult.getReq());
 		
-		authWrongTest=new Authentication("user12","user12",);
-		ariResult=login.manage(ari);
-		assertEquals("Login effettuato ma username non esiste","UsernameNotExisting",ariResult.getReq());
+		//UsernameNotCorresponding non viene mai sollevata per costruzione
 		
 		
 		authWrongTest.setIp("111.11.111.1");
 		authWrongTest.setPwd("user1");
 		ari.setAuth(authWrongTest);
-		wpd.setPersonalData(personalData);
-		packString=conv.convertJavaToJson(pack);
-		ari.setInfo(packString);
 		ariResult=login.manage(ari);
 		assertEquals("Tentativo di login con ip non loggato","IpNotLogged",ariResult.getReq());
 		
@@ -123,10 +117,6 @@ public class LoginTest {
 		ariResult=login.manage(ari);
 		assertEquals("Tentativo di login con user già loggato","UserAlreadyLogged",ariResult.getReq());
 		
-		PersonalData personalData2=new PersonalData(6,"user5","user5","user5","user5","user5@mytalk.com","us05us05us08us08us08us08us08us08","123.123.123.0");
-		wpd.setPersonalData(personalData2);
-		packString=conv.convertJavaToJson(pack);
-		ari.setInfo(packString);
 		authRightTest=new Authentication("user5","user5","123.123.123.0");
 		ari.setAuth(authRightTest);
 		ariResult=login.manage(ari);

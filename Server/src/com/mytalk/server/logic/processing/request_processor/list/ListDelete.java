@@ -44,7 +44,7 @@ public class ListDelete extends GenericRequest {
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkPartialListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}
 		else{
 			List<UserList> listUserList=pack.getList();
@@ -55,11 +55,11 @@ public class ListDelete extends GenericRequest {
 				da.listDelete(newList,userAuth);
 				response=new ARI(null,"SuccessfulListDelete",infoRequest);
 			}catch(ListNotExisting lne){
-				response=new ARI(null,"ListNotExisting",infoRequest);
+				response=new ARI(null,"ListNotExistingListDelete",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailListDelete",infoRequest);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorrespondingListDelete",infoRequest);
 			}
 		}
 		return response;

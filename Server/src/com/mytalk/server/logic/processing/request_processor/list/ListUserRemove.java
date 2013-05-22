@@ -45,7 +45,7 @@ public class ListUserRemove extends GenericRequest {
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}	
 		else{		
 			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista interi
@@ -63,15 +63,15 @@ public class ListUserRemove extends GenericRequest {
 			}catch(UserNotListed unl){
 				response=new ARI(null,"UserNotListed",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailListUserRemove",infoRequest);
 			}catch (IdNotFound e) {
-				response=new ARI(null,"IdNotFound",null);
+				response=new ARI(null,"IdNotFoundListUserRemove",infoRequest);
 			}catch (UserNotExisting e) {
-				response=new ARI(null,"UserNotExisting",null);
+				response=new ARI(null,"UserNotExistingListUserRemove",infoRequest);
 			} catch (ListNotExisting e) {
-				response=new ARI(null,"ListNotExisting",null);
+				response=new ARI(null,"ListNotExistingListUserRemove",infoRequest);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorrespondingListUserRemove",infoRequest);
 			}
 		}
 		return response;

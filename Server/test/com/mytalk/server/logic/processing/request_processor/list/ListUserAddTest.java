@@ -66,7 +66,7 @@ public class ListUserAddTest {
 		
 		auth.setPwd("user1");
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("Autenticazione deve fallire","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Autenticazione deve fallire","AuthenticationFailListUserAdd",ariResponse.getReq());
 		
 		auth.setPwd("user0");
 		list.remove(0);
@@ -74,14 +74,14 @@ public class ListUserAddTest {
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("Id non corrisponde a nessun user","IdNotFound",ariResponse.getReq());
+		assertEquals("Id non corrisponde a nessun user","IdNotFoundListUserAdd",ariResponse.getReq());
 		
 		list.remove(0);
 		list.add(1);
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("User non può aggiungere se stesso","UserNotExisting",ariResponse.getReq());
+		assertEquals("User non può aggiungere se stesso","UserNotExistingListUserAdd",ariResponse.getReq());
 		
 		userList.setName("lista");
 		list.remove(0);
@@ -89,9 +89,9 @@ public class ListUserAddTest {
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("Lista non esiste per questo user","ListNotExisting",ariResponse.getReq());
+		assertEquals("Lista non esiste per questo user","ListNotExistingListUserAdd",ariResponse.getReq());
 		
-		//UsernameNotCorresponding non viene sollevata per costruzione
+		//UsernameNotCorrespondingListUserAdd non viene sollevata per costruzione
 	}
 
 }

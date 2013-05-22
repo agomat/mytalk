@@ -37,10 +37,11 @@ public class LogoutToAnonymous extends GenericRequest {
 			OnlineUser o=new OnlineUser(auth.getUser(), auth.getIp());
 			try {
 				da.logoutToAnonymous(o);
-				response=new ARI(null, "Logout", null);
 			} catch (LogoutException e) {
-				response= new ARI(null, "LogoutException",null);
-			}		
+			}	
+			finally{
+				response=new ARI(null, "Logout", null);
+			}
 		}
 		return response;
 	}

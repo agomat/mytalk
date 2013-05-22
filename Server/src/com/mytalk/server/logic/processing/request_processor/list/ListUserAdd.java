@@ -42,7 +42,7 @@ public class ListUserAdd extends GenericRequest{
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}	
 		else{	
 			List<UserList> listUserList=pack.getList();
@@ -61,15 +61,15 @@ public class ListUserAdd extends GenericRequest{
 			catch(UserAlreadyListed ual){
 				response=new ARI(null,"UserAlreadyListed",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailListUserAdd",infoRequest);
 			} catch (IdNotFound inf) {
-				response=new ARI(null,"IdNotFound",null);
+				response=new ARI(null,"IdNotFoundListUserAdd",infoRequest);
 			} catch (UserNotExisting e) {
-				response=new ARI(null,"UserNotExisting",null);
+				response=new ARI(null,"UserNotExistingListUserAdd",infoRequest);
 			} catch (ListNotExisting e) {
-				response=new ARI(null,"ListNotExisting",null);
+				response=new ARI(null,"ListNotExistingListUserAdd",infoRequest);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorrespondingListUserAdd",infoRequest);
 			}
 		}
 		return response;

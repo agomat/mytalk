@@ -39,7 +39,7 @@ public class ListCreate extends GenericRequest {
 		String infoRequest=ari.getInfo();
 		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
-		boolean checkPack=checkListPackWellFormed(pack);
+		boolean checkPack=checkPartialListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
 			response=new ARI(null,"CorruptedPack",infoRequest);
 		}

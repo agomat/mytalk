@@ -68,15 +68,9 @@ public abstract class GenericRequest {
 		
 		if(pack!=null && pack.getList()!=null){
 			List<UserList> listUserList=pack.getList();
-			for(int i=0;i<listUserList.size();i++){
-				if(listUserList.get(i).getList()!=null){
-					check=true;
-				}
-				else{
-					return false;
-				}
-			}
-			
+			if(listUserList.get(0)!=null && listUserList.get(0).getList()!=null){
+				check=true;
+			}	
 		}
 		return check;
 	}

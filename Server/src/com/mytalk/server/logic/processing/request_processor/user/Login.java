@@ -1,13 +1,13 @@
 /**
 * Filename: Login.java
 * Package: com.mytalk.server.logic.processing.request_processor.user
-* Author: 
-* Date:
+* Author: Nicolò Toso
+* Date: 2013-05-02
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -108,17 +108,17 @@ public class Login extends GenericRequest{
 					
 					response=new ARI(null, "SuccessfulLogin", responsePackString);
 				} catch(AuthenticationFail af){
-					response=new ARI(null, "AuthenticationFail", null);
+					response=new ARI(null, "AuthenticationFailLogin", null);
 				} catch (UsernameNotCorresponding e) {
-					response= new ARI(null, "UsernameCorrespondingExisting",null);
+					response= new ARI(null, "UsernameCorrespondingExistingLogin",null);
 				} catch (IpNotLogged e) {
-					response= new ARI(null, "IpNotLogged",null);
+					response= new ARI(null, "IpNotLoggedLogin",null);
 				} catch (UserAlreadyLogged e) {
-					response= new ARI(null, "UserAlreadyLogged",null);
+					response= new ARI(null, "UserAlreadyLoggedLogin",null);
 				} catch (IpAlreadyLogged e) {
-					response= new ARI(null, "IpAlreadyLogged",null);
+					response= new ARI(null, "IpAlreadyLoggedLogin",null);
 				} catch (UserNotLogged e) {
-					response= new ARI(null,"UserNotLogged",null);
+					response= new ARI(null,"UserNotLoggedLogin",null);
 				}
 			}
 			return response;

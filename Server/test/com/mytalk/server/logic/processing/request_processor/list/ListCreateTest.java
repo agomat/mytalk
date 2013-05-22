@@ -49,8 +49,7 @@ public class ListCreateTest {
 	public void testManage() {
 		ListCreate listCreate=new ListCreate();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
-		List<Integer> list=new ArrayList<Integer>();
-		UserList userList=new UserList(0,"NuovaLista",list);
+		UserList userList=new UserList(0,"NuovaLista",null);
 		List<UserList> listUserList=new ArrayList<UserList>();
 		listUserList.add(userList);
 		ListPack listPack=new ListPack(listUserList);
@@ -60,9 +59,8 @@ public class ListCreateTest {
 		ARI ariResponse=listCreate.manage(ari);
 		assertEquals("Dati corretti ma non avviene la creazione","SuccessfulListCreate",ariResponse.getReq());
 	
-		userList=new UserList(0,"NuovaList",null);
+
 		listUserList.remove(0);
-		listUserList.add(userList);
 		listPack.setList(listUserList);
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
@@ -70,9 +68,7 @@ public class ListCreateTest {
 		ariResponse=listCreate.manage(ari);
 		assertEquals("Pacchetto corrotto","CorruptedPack",ariResponse.getReq());
 		
-		userList.setList(list);
 		userList.setName("friends");
-		listUserList.remove(0);
 		listUserList.add(userList);
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
@@ -83,7 +79,7 @@ public class ListCreateTest {
 		Authentication authWrong=new Authentication("user1","user0","123.123.123.1");
 		ari.setAuth(authWrong);
 		ariResponse=listCreate.manage(ari);
-		assertEquals("Autenticazione fallita","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Autenticazione fallita","AuthenticationFailListCreate",ariResponse.getReq());
 		
 		//UsernameNotCorresponding non viene mai sollevata poiché il prorpietario viene settato con l'username presente in authentication
 		

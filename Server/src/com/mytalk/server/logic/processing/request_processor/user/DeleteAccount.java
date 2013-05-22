@@ -21,29 +21,20 @@ package com.mytalk.server.logic.processing.request_processor.user;
 import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
-import com.mytalk.server.logic.shared.WorldPack;
-import com.mytalk.server.logic.shared.model_client.PersonalData;
+
 
 public class DeleteAccount extends GenericRequest{
 
 	public DeleteAccount(){}
 	
 	public ARI manage(ARI ari){
-		String infoRequest=ari.getInfo();
 		ARI response=null;
-		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-		boolean checkPack=checkWorldPackWellFormed(pack);
-		if(!checkPack){
-			response=new ARI(null,"CorruptedPack",null);
-		}else{
-			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(), p.getName(), p.getSurname(), p.getEmail(),p.getMd5());
-			try{
-				da.deleteAccount(u);
-				response=new ARI(null, "SuccessfulDeleteAccount", null);
-			}catch(AuthenticationFail af){
-				response=new ARI(null, "AuthenticationFail", null);
-			}
+		com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(ari.getAuth().getUser(), ari.getAuth().getPwd(), null, null, null,null);
+		try{
+			da.deleteAccount(u);
+			response=new ARI(null, "SuccessfulDeleteAccount", null);
+		}catch(AuthenticationFail af){
+			response=new ARI(null, "AuthenticationFailDeleteAccount", null);
 		}
 		return response;
 	}

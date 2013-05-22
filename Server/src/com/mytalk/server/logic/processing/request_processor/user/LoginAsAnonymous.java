@@ -44,7 +44,7 @@ public class LoginAsAnonymous extends GenericRequest {
 				infoResponse=conv.convertJavaToJson(wlp);
 				response=new ARI(null,"SuccessfulLoginAsAnonymous",infoResponse);
 			} catch (IpAlreadyLogged e) {
-				response=new ARI(null,"IpAlreadyLogged",infoResponse);
+				response=new ARI(null,"IpAlreadyLoggedLoginAsAnonymous",infoResponse);
 			}
 		}
 		return response;

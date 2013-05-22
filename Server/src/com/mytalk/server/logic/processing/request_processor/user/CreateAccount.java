@@ -34,7 +34,7 @@ public class CreateAccount extends GenericRequest{
 		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
 		boolean checkPack=checkWorldPackWellFormed(pack);
 		if(!checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
 			String md5=getHashMD5(p.getEmail());
@@ -44,9 +44,9 @@ public class CreateAccount extends GenericRequest{
 				da.createAccount(u);
 				ari.getAuth().setUser(pack.getWorldPersonalData().getPersonalData().getUsername());
 				ari.getAuth().setPwd(pack.getWorldPersonalData().getPersonalData().getPassword());
-				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", null);
+				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", infoRequest);
 			}catch(UsernameAlreadyExisting uae){
-				response=new ARI(null, "UsernameAlreadyExisting", null);
+				response=new ARI(null, "UsernameAlreadyExistingCreateAccount", infoRequest);
 			}
 		}
 		return response;

@@ -39,7 +39,7 @@ public class UpdateListName extends GenericRequest {
 		UpdateListPack pack=(UpdateListPack)conv.convertJsonToJava(infoRequest, UpdateListPack.class);
 		boolean checkPack=checkUpdateListPackWellFormed(pack);
 		if(!checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}else{
 			String listOwner=pack.getOwner();
 			String listName=pack.getListName();
@@ -47,15 +47,15 @@ public class UpdateListName extends GenericRequest {
 			ListName list=new ListName(listName,listOwner);
 			try {
 				da.renameList(list, newListName, userAuth);
-				response=new ARI(null,"SuccessfulRenameList",null);
+				response=new ARI(null,"SuccessfulRenameList",infoRequest);
 			} catch (AuthenticationFail e) {
-				response=new ARI(null, "AuthenticationFail", null);
+				response=new ARI(null, "AuthenticationFailRenameList", infoRequest);
 			} catch (ListNotExisting e) {
-				response=new ARI(null, "ListNotExisting", null);
+				response=new ARI(null, "ListNotExistingRenameList", infoRequest);
 			} catch (ListAlreadyExists e) {
-				response=new ARI(null, "ListAlreadyExists", null);
+				response=new ARI(null, "ListAlreadyExistsRenameList", infoRequest);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null, "UsernameNotCorresponding", null);
+				response=new ARI(null, "UsernameNotCorrespondingRenameList", infoRequest);
 			}
 		}
 		return response;

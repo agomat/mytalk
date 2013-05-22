@@ -1,6 +1,6 @@
 /**
 * Filename: GenericRequestTest.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.comunication
+* Package: com.mytalk.server.logic.processing.request_processor
 * Author: Michael Ferronato
 * Date: 2013-05-08
 *

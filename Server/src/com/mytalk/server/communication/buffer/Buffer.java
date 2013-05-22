@@ -1,6 +1,6 @@
 /**
 * Filename: Buffer.java
-* Package: com.mytalk.server.comunication
+* Package: com.mytalk.server.comunication.buffer
 * Author: Nicolò Mazzucato
 * Date: 2013-05-14
 *

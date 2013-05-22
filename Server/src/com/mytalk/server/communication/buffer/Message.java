@@ -1,6 +1,6 @@
 /**
 * Filename: Message.java
-* Package: com.mytalk.server.exceptions
+* Package: com.mytalk.server.communication.buffer
 * Author: Nicolò Mazzucato
 * Date: 2013-15-05
 *

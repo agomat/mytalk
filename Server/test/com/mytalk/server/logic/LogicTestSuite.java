@@ -1,6 +1,6 @@
 /**
- * Filename: DataAccessTest.java
- * Package: com.mytalk.server.data.storage
+ * Filename: LogicTestSuite.java
+ * Package: com.mytalk.server.logic
  * Author: Nicolò Mazzucato
  * Date: 2013-05-22
  *

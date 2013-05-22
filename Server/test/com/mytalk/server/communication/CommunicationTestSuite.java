@@ -1,6 +1,6 @@
 /**
- * Filename: DataAccessTest.java
- * Package: com.mytalk.server.data.storage
+ * Filename: CommunicationTestSuite.java
+ * Package: com.mytalk.server.communication
  * Author: Nicolò Mazzucato
  * Date: 2013-05-22
  *

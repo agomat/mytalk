@@ -1,6 +1,6 @@
 /**
 * Filename: MainClass.java
-* Package: com.mytalk.server.comunication
+* Package: com.mytalk.server.communication
 * Author: Nicolò Mazzucato
 * Date: 2013-05-14
 *

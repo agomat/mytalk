@@ -1,13 +1,13 @@
 /**
 * Filename: BufferTest.java
-* Package: com.mytalk.server.comunication
-* Author: 
-* Date:
+* Package: com.mytalk.server.communication.buffer
+* Author: Nicolò Mazzucato
+* Date: 2013-05-22
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-22 |    NM     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *

@@ -1,6 +1,6 @@
 /**
 * Filename: RefuseCallTest.java
-* Package: com.mytalk.server.logic.processing.requestProcessor.communication
+* Package: com.mytalk.server.logic.processing.request_processor.communication
 * Author: Michael Ferronato
 * Date: 2013-05-08
 *

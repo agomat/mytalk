@@ -1,6 +1,6 @@
 /**
  * Filename: EnvironmentSetter.java
- * Package: com.mytalk.server.data.storage
+ * Package: com.mytalk.server
  * Author: Nicolò Mazzucato
  * Date: 2013-05-06
  *

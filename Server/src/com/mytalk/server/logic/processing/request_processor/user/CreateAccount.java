@@ -19,6 +19,7 @@
 package com.mytalk.server.logic.processing.request_processor.user;
 
 import com.mytalk.server.exceptions.UsernameAlreadyExisting;
+import com.mytalk.server.logic.MD5Converter;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;
@@ -37,8 +38,8 @@ public class CreateAccount extends GenericRequest{
 			response=new ARI(null,"CorruptedPack",infoRequest);
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			String md5=getHashMD5(p.getEmail());
-			String pwdHash=getHashMD5(p.getPassword());
+			String md5=MD5Converter.getHashMD5(p.getEmail());
+			String pwdHash=MD5Converter.getHashMD5(p.getPassword());
 			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), pwdHash,p.getEmail(), p.getName(), p.getSurname(),md5);
 			try{
 				da.createAccount(u);

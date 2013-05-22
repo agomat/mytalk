@@ -180,7 +180,7 @@
             <input type="text" placeholder="Filtra per nome o cognome" id="search_bar" />
             <div id="list_button">
             
-            {{#if check}}
+            {{#if customList}}
                 <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
                 <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
               {{else}}
@@ -212,14 +212,14 @@
             </div>
 
             <ul {{bindAttr class="user.online:callEnebled:callDisabled"}}>
-            {{view.actualList}}
+            
 
-            {{#if blacklist}}
+            {{#if controllers.list.blackList}}
                 <li><a class="call_user" href="#" {{action "call" users.id }} ></a></li>
                 <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
               </ul>
             {{else}}
-                {{#if alluser}}
+                {{#if controllers.list.generalList}}
                   <li><a class="call_user" href="#" {{action "call" user.id }} ></a></li>
                   <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>

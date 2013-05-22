@@ -36,21 +36,21 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   createList:function(){
 
     var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
-    if(newName!="Nome della lista") {
-      var list=this.get('content');
-      var test=true;
+    if(newName) {
+      var list = this.get('content');
+      var test = true;
 
       list.forEach(function(t){
         console.debug(t.get('name'));
-        if(t.get('name')==newName){
-          test=false;
+        if(t.get('name') == newName){
+          test = false;
         }
       });
-      
-      if(test==true){
-            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
+
+      if(test){
+        MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
       }
-      else if(newName!=null){
+      else{
         alert("Esiste già una lista con questo nome");
       }
     }
@@ -60,17 +60,6 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
 
 MyTalk.ListController = Ember.ObjectController.extend({
   sortProperties: ['name'],
-  check: true,
-
-  checkList: function(){
-    var id = this.get('content').get('id');
-    if(id < 2){
-      this.setProperties({check:false});
-    }
-    else{
-      this.setProperties({check:true});
-    }
-  }.observes(this),
   
   deleteList: function(){
     var l=this.get('content').get('name');
@@ -113,8 +102,6 @@ MyTalk.ListController = Ember.ObjectController.extend({
 });
 
 MyTalk.UsersController = Ember.ArrayController.extend({
-  blacklist: false,
-  alluser: false,   // TODO: perchè non usare un terzo booleano per facilitare la condizione if nel template?
   needs: ['list'],
     
   call: function(id){
@@ -124,15 +111,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   addUser: function(){
     console.log('addUser');
     // TODO
-  },
-  check: function(){ // TODO: metti un nome appropriato
-    var id = this.get('controllers.list.content.id');
-    if(id == 0){
-      this.set('alluser',true);
-    }
-    if(id == 1){
-      this.set('blacklist',true);
-    }
   },
   deleteUser:function(userId){
     var user = MyTalk.User.find(userId);

@@ -2,35 +2,11 @@ MyTalk.List = DS.Model.extend({
   name: DS.attr('string'),
   users: DS.hasMany('MyTalk.User'),
 
-  //isBlacklist: Ember.computed.equal('name','Blacklist'),
-  //TODO vedi: http://stackoverflow.com/questions/16569815/ember-js-advanced-uses-of-computed-properties
-
-  blackList: function() {
-    if (this.get('name') === 'Blacklist') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }.property('name'),
-
-  generalList: function() {
-    if (this.get('name') === 'Tutti i contatti') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }.property('name'),
-
-  customList: function() {
-    if(this.get('name') != 'Tutti i contatti' && this.get('name') != 'Blacklist' && this.get('name') != null) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }.property('name'),
+  blackList: Ember.computed.equal('name','Blacklist'),
+  generalList: Ember.computed.equal('name','Tutti i contatti'),
+  notBlacklist: Ember.computed.not('blackList'),
+  notGeneralList: Ember.computed.not('generalList'),
+  customList: Ember.computed.and('notBlacklist','notGeneralList'),
 
   online: function(){
     var users = this.get('users');
@@ -48,7 +24,7 @@ MyTalk.List = DS.Model.extend({
       sum = sum + 1;
     });
     return sum;
-  }.property('users.@each.name')
+  }.property('users.@each.id')
 
 
 });

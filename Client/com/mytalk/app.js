@@ -60,12 +60,12 @@ var json =      {
             };
 
 	var store = DS.get("defaultStore");
-	store.load(MyTalk.List, json);
+	store.loadMany(MyTalk.List, json);
 	var adapter = store.adapterForType(MyTalk.List);
 	adapter.didFindMany(store, MyTalk.List, json);
 
 	json = {
-	          "personal_data": { id:1, "md5":"699b1b3f9c23e21f13b2ac9267942b01","username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}
+	          "personal_data": { id:0, "md5":"699b1b3f9c23e21f13b2ac9267942b01","username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}
 	       };
 
 	store.load(MyTalk.PersonalData, json);

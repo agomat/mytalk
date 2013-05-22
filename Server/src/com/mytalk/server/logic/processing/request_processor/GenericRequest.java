@@ -17,12 +17,7 @@
 
 package com.mytalk.server.logic.processing.request_processor;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
 import com.mytalk.server.data.storage.DataAccess;
 import com.mytalk.server.data.storage.IDataAccess;
 import com.mytalk.server.logic.shared.*;
@@ -112,21 +107,5 @@ public abstract class GenericRequest {
 		}
 		return check;
 	}
-	
-	public static String getHashMD5(String s){
-		String string=null;
-		try {
-			byte[] byteMail= s.getBytes("UTF-8");
-			MessageDigest md=MessageDigest.getInstance("MD5");
-			byte[] digest=md.digest(byteMail);
-			BigInteger integer=new BigInteger(1,digest);
-			string=integer.toString(16);
-			System.out.println("///"+string+"///");
-		} catch (UnsupportedEncodingException e) {
-			return s;
-		} catch (NoSuchAlgorithmException e) {
-			return s;
-		}
-		return string;
-	}
+
 }

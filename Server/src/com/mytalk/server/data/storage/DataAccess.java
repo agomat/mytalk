@@ -25,6 +25,7 @@ import java.util.List;
 import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.storage.dao.*;
 import com.mytalk.server.exceptions.*;
+import com.mytalk.server.logic.MD5Converter;
 
 
 public class DataAccess implements IDataAccess{
@@ -43,6 +44,7 @@ public class DataAccess implements IDataAccess{
 		}else{
 			String pwdUserEntity=userEntity.getPassword();
 			String pwdUserObj=userObj.getPassword();
+			pwdUserObj=MD5Converter.getHashMD5(pwdUserObj);
 			if(userEntity!=null && pwdUserEntity.equals(pwdUserObj)){
 				esito=true;
 			}

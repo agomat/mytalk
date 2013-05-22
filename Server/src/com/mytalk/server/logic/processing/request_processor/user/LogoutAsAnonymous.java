@@ -23,8 +23,6 @@ import com.mytalk.server.exceptions.LogoutException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
-import com.mytalk.server.logic.shared.WorldPack;
-import com.mytalk.server.logic.shared.model_client.PersonalData;
 
 public class LogoutAsAnonymous extends GenericRequest {
 	LogoutAsAnonymous(){}

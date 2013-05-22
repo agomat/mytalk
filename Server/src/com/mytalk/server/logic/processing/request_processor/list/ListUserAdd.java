@@ -28,7 +28,7 @@ import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
-import com.mytalk.server.logic.shared.model_client.*;
+import com.mytalk.server.logic.shared.model_client.UserList;
 
 public class ListUserAdd extends GenericRequest{
 	public ListUserAdd(){}

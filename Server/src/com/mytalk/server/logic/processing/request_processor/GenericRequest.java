@@ -23,9 +23,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import com.mytalk.server.data.storage.DataAccess;
+import com.mytalk.server.data.storage.IDataAccess;
 import com.mytalk.server.logic.shared.*;
 import com.mytalk.server.logic.shared.model_client.UserList;
-import com.mytalk.server.data.storage.*;
 import com.mytalk.server.logic.processing.Convert;
 
 public abstract class GenericRequest {

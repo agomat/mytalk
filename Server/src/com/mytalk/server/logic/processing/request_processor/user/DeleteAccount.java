@@ -18,11 +18,11 @@
 
 package com.mytalk.server.logic.processing.request_processor.user;
 
+import com.mytalk.server.exceptions.AuthenticationFail;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.model_client.PersonalData;
-import com.mytalk.server.logic.processing.request_processor.*;
-import com.mytalk.server.exceptions.*;
 
 public class DeleteAccount extends GenericRequest{
 

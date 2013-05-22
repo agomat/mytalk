@@ -23,7 +23,8 @@ import java.util.List;
 import com.mytalk.server.communication.buffer.BufferIncoming;
 import com.mytalk.server.communication.buffer.BufferOutgoing;
 import com.mytalk.server.communication.buffer.Message;
-import com.mytalk.server.logic.processing.*;
+import com.mytalk.server.logic.processing.IProcessor;
+import com.mytalk.server.logic.processing.Processor;
 
 public class Dispatcher implements Runnable {
 	

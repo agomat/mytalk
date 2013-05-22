@@ -17,9 +17,10 @@
 
 package com.mytalk.server.data.storage.dao;
 
-import com.mytalk.server.data.model.*;
-import java.util.*;
+import java.util.List;
 import org.hibernate.*;
+
+import com.mytalk.server.data.model.Blacklist;
 
 public class BlacklistDAO extends GenericDAO{
 	

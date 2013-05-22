@@ -20,7 +20,8 @@ Date
 
 package com.mytalk.server.logic.shared;
 
-import com.mytalk.server.logic.shared.model_client.*;
+import com.mytalk.server.logic.shared.model_client.WorldList;
+import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
 
 public class WorldPack extends Information{
 	

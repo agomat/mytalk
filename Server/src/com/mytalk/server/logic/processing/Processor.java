@@ -22,10 +22,8 @@ package com.mytalk.server.logic.processing;
 
 import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.logic.processing.request_processor.user.StateUpdate;
-import com.mytalk.server.logic.shared.*;
-import com.mytalk.server.logic.shared.model_client.PersonalData;
-import com.mytalk.server.logic.shared.model_client.User;
-import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -21,8 +21,10 @@ import com.mytalk.server.data.model.Blacklist;
 import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.exceptions.IdNotFound;
 import com.mytalk.server.exceptions.UsernameNotCorresponding;
-import com.mytalk.server.logic.processing.request_processor.*;
-import com.mytalk.server.logic.shared.*;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ConnectionPack;
 
 public class UserCall extends GenericRequest{
 	public UserCall(){}

@@ -17,10 +17,12 @@
 
 package com.mytalk.server.data.storage.dao;
 
-import com.mytalk.server.data.model.*;
-import java.util.*;
+import java.util.List;
+
 import org.hibernate.SQLQuery;
 import org.hibernate.Transaction;
+
+import com.mytalk.server.data.model.User;
 
 public class UserDAO extends GenericDAO{
 	public UserDAO(){}

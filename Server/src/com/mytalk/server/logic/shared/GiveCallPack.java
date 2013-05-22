@@ -20,7 +20,7 @@ Date
 
 package com.mytalk.server.logic.shared;
 
-import com.mytalk.server.logic.shared.model_client.*;
+import com.mytalk.server.logic.shared.model_client.WrapperCall;
 
 public class GiveCallPack extends Information{
 	

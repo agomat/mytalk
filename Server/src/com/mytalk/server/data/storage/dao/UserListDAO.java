@@ -17,8 +17,10 @@
 
 package com.mytalk.server.data.storage.dao;
 
-import com.mytalk.server.data.model.*;
 import org.hibernate.*;
+
+import com.mytalk.server.data.model.UserList;
+
 import java.util.List;
 
 

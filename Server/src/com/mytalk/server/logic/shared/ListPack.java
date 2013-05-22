@@ -21,7 +21,7 @@ Date
 package com.mytalk.server.logic.shared;
 import java.util.List;
 
-import com.mytalk.server.logic.shared.model_client.*;
+import com.mytalk.server.logic.shared.model_client.UserList;
 
 public class ListPack extends Information{
 	

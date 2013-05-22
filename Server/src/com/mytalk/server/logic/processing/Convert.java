@@ -20,7 +20,8 @@ Date
 package com.mytalk.server.logic.processing;
 
 import com.google.gson.*;
-import com.mytalk.server.logic.shared.*;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Information;
 
 
 public class Convert {

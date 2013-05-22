@@ -18,8 +18,10 @@
 
 package com.mytalk.server.logic.processing.request_processor.communication;
 
-import com.mytalk.server.logic.processing.request_processor.*;
-import com.mytalk.server.logic.shared.*;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ConnectionPack;
 
 public class AcceptCall extends GenericRequest{
 	

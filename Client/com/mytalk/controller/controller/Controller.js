@@ -1,4 +1,4 @@
-MyTalk.IndexController = Ember.ObjectController.extend({
+MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
 
@@ -6,21 +6,17 @@ MyTalk.IndexController = Ember.ObjectController.extend({
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
 
-  login: function login(username, password) {
-    var record = MyTalk.Authentication.createRecord({
+  login: function makeLogin(username, password) {
+    
+    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+    processor.process({
       id: 0,
       username: username,
       password: password,
       ip: "//TODO"
     });
 
-    var transaction = record.get('transaction');
-
-    transaction.reopen({
-      request: "Login" // TODO usare mixin per ricavare  nome della funzione
-    });
-
-    transaction.commit();
   },
 
   register:function(name, surname, username, email, password1, password2){

@@ -64,25 +64,31 @@
     <script type="text/javascript" src="com/mytalk/model/storage/WebSocketConnection.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/SocketAdapter.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/Store.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/RequestManager.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/AcceptCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/RefuseCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/UserCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/BlackListAdd.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/BlackListRemove.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListCreate.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListDelete.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListUserAdd.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListUserRemove.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/stats/AddCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/stats/GetCalls.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/CreateAccount.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/DeleteAccount.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/Login.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/LogoutToAnonymous.js"></script>
+
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/AbstractInProcessorProduct.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/ProcessorFactory.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/AcceptCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/RefuseCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/UserCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/BlackListAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/BlackListRemove.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/ListCreate.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/ListDelete.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/ListUserAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/ListUserRemove.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/stats/AddCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/stats/GetCalls.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/CreateAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/DeleteAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/Login.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/LogoutToAnonymous.js"></script>
+
+
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/AbstractOutProcessorProduct.js"></script>
 
     <!-- bootstrap DS.Model -->
     
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/DryHelper.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/Authentication.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/PersonalData.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/User.js"></script>
@@ -91,6 +97,7 @@
     <script type="text/javascript" src="com/mytalk/model/modelstruct/WCall.js"></script>
 
     <!-- bootstrap controllers -->
+    <script type="text/javascript" src="com/mytalk/controller/controller/RequestHelper.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/controller/Controller.js"></script>
 
     <!-- bootstrap RTCAdapter -->

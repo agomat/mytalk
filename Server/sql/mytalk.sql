@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Users
 (
   username varchar(20)  NOT NULL,
   id integer(10) UNIQUE NOT NULL AUTO_INCREMENT,
-  password varchar(16)  NOT NULL,
+  password varchar(32)  NOT NULL,
   name varchar(50) NOT NULL,
   surname varchar(50) NOT NULL,
   email varchar(100)  NOT NULL,

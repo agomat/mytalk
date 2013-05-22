@@ -1,7 +1,7 @@
 /**
  * Filename: DataAccessTest.java
  * Package: com.mytalk.server.data.storage
- * Author: Nicolà Mazzucato
+ * Author: Nicolò Mazzucato
  * Date: 2013-04-29
  *
  * Diary:
@@ -31,7 +31,7 @@ import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.storage.dao.*;
 import com.mytalk.server.exceptions.*;
 
-public class DataAccessTest {
+public class DataAccessTest{
 	
 	EnvironmentSetter envSetter=new EnvironmentSetter();
 	IDataAccess dataAccess= new DataAccess();
@@ -156,7 +156,7 @@ public class DataAccessTest {
 	@Test(expected=IpAlreadyLogged.class)
 	public void checkLoginAuthenticatedIp()throws AuthenticationFail,IpAlreadyLogged, IpNotLogged, UserAlreadyLogged, UsernameNotCorresponding{
 		User toAuth=new User("user5","user5",null,null,null,null);
-		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.1");
+		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.2");
 		
 		//testo il metodo con un OnlineUser avente ip già autenticato con un username
 		dataAccess.login(onUserTest, toAuth);
@@ -248,14 +248,14 @@ public class DataAccessTest {
 	public void checkGetOnlineUsers()throws AuthenticationFail{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		List<User> onlines=dataAccess.getOnlineUsers(toAuth);
-		assertEquals("il numero di utenti autenticati non corrisponde quello effettivo",4,onlines.size());
+		assertEquals("il numero di utenti autenticati non corrisponde quello effettivo",3,onlines.size());
 	}
 	
 	@Test
 	public void checkGetOfflineUsers()throws AuthenticationFail{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		List<User> offlines=dataAccess.getOfflineUsers(toAuth);
-		assertEquals("il numero di utenti non autenticati non corrisponde quello effettivo",6,offlines.size());
+		assertEquals("il numero di utenti non autenticati non corrisponde quello effettivo",7,offlines.size());
 	}
 	
 	@Test

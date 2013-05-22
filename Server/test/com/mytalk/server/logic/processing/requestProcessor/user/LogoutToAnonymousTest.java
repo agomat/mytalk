@@ -30,7 +30,7 @@ import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.modelClient.PersonalData;
 import com.mytalk.server.logic.shared.modelClient.WorldPersonalData;
 
-public class LogoutAsAnonymousTest {
+public class LogoutToAnonymousTest {
 
 	private EnvironmentSetter envSetter=new EnvironmentSetter();
 	private Convert conv=new Convert();

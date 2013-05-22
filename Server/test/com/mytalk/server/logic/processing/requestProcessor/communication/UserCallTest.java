@@ -16,7 +16,7 @@
 */
 
 
-package com.mytalk.server.logic.processing.requestProcessor.comunication;
+package com.mytalk.server.logic.processing.requestProcessor.communication;
 
 import static org.junit.Assert.*;
 
@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.requestProcessor.comunication.UserCall;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ConnectionPack;

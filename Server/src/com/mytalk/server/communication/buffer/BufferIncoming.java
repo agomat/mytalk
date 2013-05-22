@@ -22,7 +22,7 @@ import java.util.Vector;
 
 public class BufferIncoming implements Buffer{
 	
-	protected Vector<Message> buffer;
+	private Vector<Message> buffer;
 	
 	private BufferIncoming(){
 		buffer=new Vector<Message>();

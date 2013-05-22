@@ -24,13 +24,13 @@ import java.util.List;
 
 public class UserList{
 	
-	private int id;
+	private Integer id;
 	private String name;
 	private List<Integer> list; 
 	
 	public UserList(){}
 	
-	public UserList( int i,String n,List<Integer> c){
+	public UserList( Integer i,String n,List<Integer> c){
 		list=c;
 		name=n;
 		id=i;

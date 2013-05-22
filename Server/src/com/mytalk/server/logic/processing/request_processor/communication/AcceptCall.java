@@ -27,26 +27,25 @@ public class AcceptCall extends GenericRequest{
 	
 public AcceptCall(){}
 	
-	public ARI manage(ARI ari){
-		String infoRequest=ari.getInfo();
-		ARI response=null;
-		Authentication auth=null;
-		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
-		boolean check=checkAnonymousConnectionPackWellFormed(pack);
-		if(!check){
-			response=new ARI(null,"CorruptedConnectionPack",null);
-		}
-		else {
-			boolean result=da.checkUserByIp(pack.getSpeakerIp());
-			if(result){
-				auth=new Authentication(null, null, pack.getSpeakerIp());
-				response=new ARI(auth, "SuccessfulAcceptCall",infoRequest);
-			}
-			else{
-				auth=new Authentication(null,null, pack.getMyIp());
-				response=new ARI(auth, "UnsuccessfulAcceptCall", null);
-			}
-		}
-		return response;
+public ARI manage(ARI ari){
+	String infoRequest=ari.getInfo();
+	ARI response=null;
+	Authentication auth=null;
+	ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
+	boolean checkPack=checkAnonymousConnectionPackWellFormed(pack);
+	if(!checkPack){
+		response=new ARI(null,"CorruptedConnectionPack",infoRequest);
 	}
+	else {
+		boolean result=da.checkUserByIp(pack.getSpeakerIp());
+		if(result){
+			auth=new Authentication(null, null, pack.getSpeakerIp());
+			response=new ARI(auth, "SuccessfulAcceptCall",infoRequest);
+		}
+		else{
+			response=new ARI(null, "UnsuccessfulAcceptCall", infoRequest);
+		}
+	}
+	return response;
+}
 }

@@ -31,10 +31,10 @@ public class RefuseCall extends GenericRequest{
 		String infoRequest=ari.getInfo();
 		ARI response=null;
 		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
-		boolean check=checkAnonymousConnectionPackWellFormed(pack);
+		boolean checkPack=checkAnonymousConnectionPackWellFormed(pack);
 		Authentication auth=null;
-		if(!check){
-			response=new ARI(null,"CorruptedConnectionPack",null);
+		if(!checkPack){
+			response=new ARI(null,"CorruptedConnectionPack",infoRequest);
 		}
 		else {
 			boolean result=da.checkUserByIp(pack.getSpeakerIp());
@@ -43,7 +43,7 @@ public class RefuseCall extends GenericRequest{
 				response=new ARI(auth, "SuccessfulRefuseCall", infoRequest);
 			}
 			else{
-				response=new ARI(null, "UnsuccessfulRefuseCall", null);
+				response=new ARI(null, "UnsuccessfulRefuseCall", infoRequest);
 			}
 		}
 		return response;

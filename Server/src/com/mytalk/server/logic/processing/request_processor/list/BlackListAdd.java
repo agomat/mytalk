@@ -43,7 +43,7 @@ public class BlackListAdd extends GenericRequest {
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}	
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
@@ -63,13 +63,13 @@ public class BlackListAdd extends GenericRequest {
 			}catch(UserAlreadyBlacklisted uab){
 				response=new ARI(null,"UserAlreadyBlacklisted",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailBlacklistAdd",infoRequest);
 			} catch (UserNotExisting une) {
-				response=new ARI(null,"UserNotExisting",null);
+				response=new ARI(null,"UserNotExistingBlacklistAdd",infoRequest);
 			} catch (UsernameNotCorresponding unc) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorrespondingBlacklistAdd",infoRequest);
 			} catch (IdNotFound inf) {
-				response=new ARI(null,"IdNotFound",null);
+				response=new ARI(null,"IdNotFoundBlacklistAdd",infoRequest);
 			}
 		}
 		return response;

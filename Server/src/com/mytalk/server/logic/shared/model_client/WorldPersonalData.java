@@ -21,7 +21,7 @@ package com.mytalk.server.logic.shared.model_client;
 
 
 public class WorldPersonalData {
-private PersonalData pd;
+	private PersonalData pd;
 	
 	public WorldPersonalData(PersonalData pdEntity){
 		pd=pdEntity;

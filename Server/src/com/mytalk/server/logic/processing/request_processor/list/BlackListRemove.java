@@ -43,7 +43,7 @@ public class BlackListRemove extends GenericRequest {
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}	
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);			
@@ -62,11 +62,11 @@ public class BlackListRemove extends GenericRequest {
 			}catch(UserNotBlacklisted unb){
 				response=new ARI(null,"UserNotBlacklisted",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailBlacklistRemove",null);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorrespondingBlacklistRemove",null);
 			}catch (IdNotFound inf) {
-				response=new ARI(null,"IdNotFound",null);
+				response=new ARI(null,"IdNotFoundBlacklistRemove",null);
 			}
 		}	
 		return response;

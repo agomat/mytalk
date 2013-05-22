@@ -38,7 +38,8 @@ public class CreateAccount extends GenericRequest{
 		}else{
 			PersonalData p=pack.getWorldPersonalData().getPersonalData();
 			String md5=getHashMD5(p.getEmail());
-			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), p.getPassword(),p.getEmail(), p.getName(), p.getSurname(),md5);
+			String pwdHash=getHashMD5(p.getPassword());
+			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), pwdHash,p.getEmail(), p.getName(), p.getSurname(),md5);
 			try{
 				da.createAccount(u);
 				ari.getAuth().setUser(pack.getWorldPersonalData().getPersonalData().getUsername());

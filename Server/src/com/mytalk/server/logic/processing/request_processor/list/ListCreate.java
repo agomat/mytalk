@@ -41,7 +41,7 @@ public class ListCreate extends GenericRequest {
 		boolean checkAuth=checkAuthenticationWellFormed(auth);
 		boolean checkPack=checkListPackWellFormed(pack);
 		if(!checkAuth || !checkPack){
-			response=new ARI(null,"CorruptedPack",null);
+			response=new ARI(null,"CorruptedPack",infoRequest);
 		}
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
@@ -55,9 +55,9 @@ public class ListCreate extends GenericRequest {
 			}catch(ListAlreadyExists lae){
 				response=new ARI(null,"ListAlreadyExists",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailListCreate",infoRequest);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorresponding",null);
+				response=new ARI(null,"UsernameNotCorrespondingListCreate",infoRequest);
 			}
 		}
 		return response;

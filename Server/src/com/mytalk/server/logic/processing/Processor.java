@@ -118,7 +118,7 @@ public class Processor implements IProcessor{
 			String jsonAri=convert.convertJavaToJson(ari);
 			response.add(new Message("broadcast",jsonAri));
 		}
-		if(!esito.getReq().equals("Logout")){
+		if(!esito.getReq().equals("Logout") || !esito.getReq().equals("UnsuccessfulRefuseCall")){
 			String json=convert.convertJavaToJson(esito);
 			response.add(new Message(ipToSend,json));
 		}

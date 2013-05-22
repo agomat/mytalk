@@ -25,13 +25,13 @@ public class Call{
 	private Integer speaker; 
 	private boolean caller;
 	private String startDate;
-	private int duration;
-	private int byteSent;
-	private int byteReceived;
+	private Integer duration;
+	private Integer byteSent;
+	private Integer byteReceived;
 	
 	public Call(){}
 	
-	public Call(Integer s, boolean c, String sd, int d, int bs, int br){
+	public Call(Integer s, boolean c, String sd, Integer d, Integer bs, Integer br){
 		speaker=s;
 		byteSent=bs;
 		byteReceived=br;
@@ -52,22 +52,22 @@ public class Call{
 	public void setCaller(boolean s){
 		caller=s;
 	}
-	public int getDuration(){
+	public Integer getDuration(){
 		return duration;
 	}
-	public void setDuration(int t){
+	public void setDuration(Integer t){
 		duration=t;
 	}
-	public int getByteSent(){
+	public Integer getByteSent(){
 		return byteSent;
 	}
-	public void setByteSent(int n){
+	public void setByteSent(Integer n){
 		byteSent=n;
 	}
-	public int getByteReceived(){
+	public Integer getByteReceived(){
 		return byteReceived;
 	}
-	public void setByteReceived(int n){
+	public void setByteReceived(Integer n){
 		byteReceived=n;
 	}
 	public String getStartDate(){

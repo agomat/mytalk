@@ -58,7 +58,7 @@ public class LogoutTest {
 		ariResult=logout.manage(ari);
 		assertEquals("Logout di un user non loggato","LogoutException",ariResult.getReq());
 		
-		ari.getAuth().setPwd(null);
+		ari.getAuth().setIp(null);
 		ariResult=logout.manage(ari);
 		assertEquals("Autenticazione mal formata","CorruptedPack",ariResult.getReq());
 	}

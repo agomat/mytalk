@@ -38,10 +38,10 @@ public class UserCall extends GenericRequest{
 		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
 		Authentication auth=null;
 		
-		if(ari.getAuth()==null){
+		if(ari.getAuth().getUser()==null){
 			checkPack=checkAnonymousConnectionPackWellFormed(pack);
 			if(!checkPack){
-				response=new ARI(null,"CorruptedPack",null);
+				response=new ARI(null,"CorruptedConnectionPack",infoRequest);
 			}
 			else{
 				result=da.checkUserByIp(pack.getSpeakerIp());
@@ -50,8 +50,7 @@ public class UserCall extends GenericRequest{
 					response=new ARI(auth,"SuccessfulUserCall",infoRequest);
 				}
 				else{
-					auth=new Authentication(null, null, pack.getMyIp());
-					response=new ARI(auth,"UnsuccessfulUserCall",null);
+					response=new ARI(null,"UnsuccessfulUserCall",null);
 				}
 			}
 		}
@@ -76,18 +75,14 @@ public class UserCall extends GenericRequest{
 						response=new ARI(auth,"SuccessfulUserCall",infoRequest);
 					}
 					else{
-						auth=new Authentication(null, null, pack.getMyIp());
-						response=new ARI(auth,"UnsuccessfulUserCall",null);
+						response=new ARI(null,"UnsuccessfulUserCall",infoRequest);
 					}
 				} catch (AuthenticationFail e) {
-					auth=new Authentication(null, null, pack.getMyIp());
-					response= new ARI(auth,"AuthenticationFail",infoRequest);
+					response= new ARI(null,"AuthenticationFailUserCall",infoRequest);
 				} catch (UsernameNotCorresponding e) {
-					auth=new Authentication(null, null, ari.getAuth().getIp());
-					response= new ARI(auth,"UsernameNotCorresponding",infoRequest);
+					response= new ARI(null,"UsernameNotCorrespondingUserCall",infoRequest);
 				} catch (IdNotFound e) {
-					auth=new Authentication(null, null, ari.getAuth().getIp());
-					response= new ARI(auth,"IdNotFound",infoRequest);
+					response= new ARI(null,"IdNotFoundUserCall",infoRequest);
 				}		
 			}
 		}

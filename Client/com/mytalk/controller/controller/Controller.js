@@ -1,20 +1,34 @@
-MyTalk.IndexController = Ember.ObjectController.extend({
+MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
   appState: null,
+
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
-  login: function(user,pass) {
-    MyTalk.Authentication.createRecord({id:1,username:user,password:pass}).get('transaction').commit();
-    var credentials = {};
-    MyTalk.StateManager.send("login", credentials); 
+
+  login: function makeLogin(username, password) {
+    
+    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+    processor.process({
+      id: 0,
+      username: username,
+      password: password,
+      ip: "//TODO"
+    });
+
   },
-  register:function(name,surname,username,email,password,password_conf){
-    console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password +" "+ password_conf);
+
+  register:function(name, surname, username, email, password1, password2){
+    console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password1 +" "+ password2);
+    // TODO
   },
+
   ipCall:function(ip) {
-    console.log('controller ipCAll: '+ip)
+    console.log('controller ipCAll: '+ip);
+    // TODO
   }
+
 });
 
 MyTalk.LoggedController = Ember.ObjectController.extend({
@@ -22,21 +36,21 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   createList:function(){
 
     var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
-    if(newName!="Nome della lista") {
-      var list=this.get('content');
-      var test=true;
+    if(newName) {
+      var list = this.get('content');
+      var test = true;
 
       list.forEach(function(t){
         console.debug(t.get('name'));
-        if(t.get('name')==newName){
-          test=false;
+        if(t.get('name') == newName){
+          test = false;
         }
       });
-      
-      if(test==true){
-            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
+
+      if(test){
+        MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
       }
-      else if(newName!=null){
+      else{
         alert("Esiste già una lista con questo nome");
       }
     }
@@ -46,19 +60,8 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
 
 MyTalk.ListController = Ember.ObjectController.extend({
   sortProperties: ['name'],
-  check:true,
-
-  checkList:function(){
-    var id = this.get('content').get('id');
-    if(id < 2){
-      this.setProperties({check:false});
-    }
-    else{
-      this.setProperties({check:true});
-    }
-  }.observes(this),
   
-  deleteList:function(){
+  deleteList: function(){
     var l=this.get('content').get('name');
     var id=this.get('content').get('id');
     
@@ -71,18 +74,17 @@ MyTalk.ListController = Ember.ObjectController.extend({
         context.replaceWith('list', list);
       }
   },
- 
-  renameList:function(){
+  renameList: function(){ // TODO sistemare immediatamente
 
     var id = this.get('content').get('id');
     var name = this.get('content').get('name');
     
     var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
-    var list=MyTalk.List.find();
-    var test=true;
+    var list = MyTalk.List.find();
+    var test = true;
 
     list.forEach( function(t){
-      if(t.get('name')==newName){
+      if(t.get('name') == newName){
         test=false;
       }
     });
@@ -122,56 +124,25 @@ MyTalk.ListController = Ember.ObjectController.extend({
 });
 
 MyTalk.UsersController = Ember.ArrayController.extend({
-  blacklist:false,
-  alluser:false,
   needs: ['list'],
     
-  call:function(id){
-      console.log(id);
+  call: function(id){
+    console.log("call "+id);
+    // TODO
   },
-
-  addUser:function(){
-
+  addUser: function(){
+    console.log('addUser');
+    // TODO
   },
-
-  check:function(){
- 
-    var id = this.get('controllers.list.content.id');
-    
-    if(id==0){
-      this.setProperties({alluser:true});
-
-    }
-    else{
-        
-        if(id==1){
-            this.setProperties({blacklist:true});
-        }
+  deleteUser:function(userId){
+    var user = MyTalk.User.find(userId);
+    var confirmation = confirm("Sei sicuro di eliminare l'utente " + user.get('fullName') +" dalla lista?");
+    if(confirmation){
+      var listId = this.get('controllers.list.content.id');
+      var currentList = MyTalk.List.find(listId).get('users');
+      currentList.removeObject( user );
     }
   },
-
-  deleteUser:function(user){
-
-    var n = null;
-
-    this.get('content').forEach( function(t){
-      if(t.get('id')==user){
-        n = t.get('fullName');
-      }
-        
-    });
-    
-    var r=confirm("Sei sicuro di eliminare l'utente " + n +" dalla lista ?");
-    if(r==true){
-      var id=this.get('controllers.list.content.id');
-      var list = MyTalk.List.find(id).get('users');
-      list.removeObject( MyTalk.User.find(user) );
-    }
-    
-    
-    
-  },
-  
   userToBlacklist:function(userId){
     var confirmation = confirm("Sei sicuro di mettere l'utente " + MyTalk.User.find(userId).get('fullName') +" nella Blacklist?");
     if(confirmation){
@@ -187,5 +158,4 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       //blacklist.get('transaction').commit();
     } 
   }
-  
 });

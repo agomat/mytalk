@@ -19,8 +19,8 @@
 */
 
 DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, { 
-  socket: undefined,
   bulkCommit: true,
+  socket: undefined,
 
   init: function() {    
     socket = this.getSocket();
@@ -28,56 +28,67 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
  
   find: function (store, type, id) {
-    console.log('find ' + id);    
+    console.debug('find ' + id);    
   },
 
   findQuery: function(store, type, query, recordArray) {
-    console.log('findQuery'); 
+    console.debug('findQuery'); 
   },
 
   findMany: function(store, type, ids, query) {
-    console.log('findQuery');  
+    console.debug('findQuery');  
   },
 
   findAll: function (store, type) { 
-    console.log('findAll');  
+    console.debug('findAll');  
   },
 
   createRecord: function(store, type, record) {
-    console.log('CreateRecord');
-    this.get('socket').send( record );
-    this.didCreateRecord(store, type, record, undefined);
+    console.debug('CreateRecord');
+    var context = this;
+    var processor = record.get('transaction').get('processor');
+
+    var onSent = function(processorName, success){ // da falciare immediatly
+      if (success) {
+        context.didCreateRecord(store, type, record);
+        console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
+        // TODO fare in modo che appaia una scritta "Login in corso"
+      } else {        
+        context.didError(store, type, record);
+        console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
+        // TODO fare in modo che appaia una scritta "Connessione con il server persa"
+      }
+    }; 
+
+    processor.sendToServer(this.get('socket'), record, onSent);
+    
   },
 
   createRecords: function(store, type, records) {
-    console.log('createRecords');
+    console.debug('CreateRecords');
+    return this.createRecord(store, type, records.list[0]); // single bulk commit
   },
 
   updateRecord: function(store, type, record) {
-    console.log('updateRecord '+ record);
+    console.debug('updateRecord '+ record);
     if (! window.sss ) window.sss = []; window.sss.pushObject(record);
     record.get('transaction').get('giu');
     //var re = sss[0];
     //re.forEach(function(dd){
-    //  console.log(dd.get('transaction').get('giu'));
+    //  console.debug(dd.get('transaction').get('giu'));
   },
 
   updateRecords: function(store, type, records) {
-    console.log('updateRecords');
-    var recordList = records.list;
-    if (recordList.length === 1) {
-      return this.updateRecord(store, type, recordList[0]);
-    } else {
-      return this._super(store, type, records);
-    }
+    console.debug('updateRecords '+ record);
+    return this.updateRecord(store, type, records.list[0]); // single bulk commit
   },
 
   deleteRecord: function(store, type, record) {
-    console.log('deleteRecord');
+    console.debug('deleteRecord');
   },
 
   deleteRecords: function(store, type, records) {
-    console.log('deleteRecords');
+    console.debug('deleteRecords');
   }
 
 });

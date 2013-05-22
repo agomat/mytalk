@@ -3,20 +3,11 @@ MyTalk = Ember.Application.create({
 });
 
 // Namespaces definition
-MyTalk.model = Ember.Namespace.create({});
-MyTalk.model.storage = Ember.Namespace.create({});
-MyTalk.model.storage.processing = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.list = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.communication = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.stats = Ember.Namespace.create({});
-MyTalk.model.storage.processing.processor.user = Ember.Namespace.create({});
-MyTalk.model.modelstruct = Ember.Namespace.create({});
-MyTalk.controller = Ember.Namespace.create({});
-MyTalk.controller.communicator = Ember.Namespace.create({});
-MyTalk.controller.router = Ember.Namespace.create({});
-MyTalk.controller.statemanager = Ember.Namespace.create({});
-MyTalk.view = Ember.Namespace.create({});
+//MyTalk.model = Ember.Namespace.create({});
+//MyTalk.controller = Ember.Namespace.create({});
+//MyTalk.view = Ember.Namespace.create({});
+
+MyTalk.processor = Ember.Namespace.create({});
 
 
 
@@ -69,18 +60,20 @@ var json =      {
             };
 
 	var store = DS.get("defaultStore");
-	store.load(MyTalk.List, json);
+	store.loadMany(MyTalk.List, json);
 	var adapter = store.adapterForType(MyTalk.List);
 	adapter.didFindMany(store, MyTalk.List, json);
 
 	json = {
-	          "personal_data": { id:1, "md5":"699b1b3f9c23e21f13b2ac9267942b01","username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}
+	          "personal_data": { id:0, "md5":"699b1b3f9c23e21f13b2ac9267942b01","username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01"}
 	       };
 
 	store.load(MyTalk.PersonalData, json);
 	adapter = store.adapterForType(MyTalk.PersonalData);
 	adapter.didFindRecord(store, MyTalk.PersonalData, json,1);  // function(store, type, payload, id)    
 
-	$("input[name=username]").val("aaaaaaa");
-	$("input[name=password]").val("aaaaaaa");
+	$("input[name=username]").val("mattia");
+    $("input[name=username]").change()
+    $("input[name=password]").val("mattia");
+	$("input[name=password]").change()
 }, 1000);

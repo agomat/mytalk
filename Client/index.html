@@ -16,39 +16,38 @@
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.3.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
 
-    <!-- JsCompressor -->
+
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/app.js"></script>
 
     <!-- bootstrap views -->
     
-    <script type="text/javascript" src="com/mytalk/view/IndexView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/ListsView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/DashboardView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/LoginFormView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/LoginView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/LoggedView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterFormView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterPassword.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/IPCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/IndexView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/ListsView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/DashboardView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/LoginFormView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/LoginView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/LoggedView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/RegisterFormView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/RegisterPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/IPCall.js"></script>
     
-    <script type="text/javascript" src="com/mytalk/view/UsersView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/GuestView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/UsersView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/GuestView.js"></script>
     
     
  
-    <script type="text/javascript" src="com/mytalk/view/LoginView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterConfirmPassword.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterSurname.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/HeaderView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/IPFormView.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/LoginUsername.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/LoginPassword.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterEmail.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterName.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/RegisterUsername.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/SearchView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/LoginView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/RegisterConfirmPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/RegisterView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/RegisterSurname.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/HeaderView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/IPFormView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/LoginUsername.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/LoginPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/RegisterEmail.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/RegisterName.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/RegisterUsername.js"></script>
     
     <!-- bootstrap Router -->
     <script type="text/javascript" src="com/mytalk/controller/router/Router.js"></script>
@@ -66,25 +65,31 @@
     <script type="text/javascript" src="com/mytalk/model/storage/WebSocketConnection.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/SocketAdapter.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/Store.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/RequestManager.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/AcceptCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/RefuseCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/communication/UserCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/BlackListAdd.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/BlackListRemove.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListCreate.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListDelete.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListUserAdd.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/list/ListUserRemove.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/stats/AddCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/stats/GetCalls.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/CreateAccount.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/DeleteAccount.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/Login.js"></script>
-    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/user/LogoutToAnonymous.js"></script>
+
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/AbstractOutProcessorProduct.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/ProcessorFactory.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/communication/AcceptCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/communication/RefuseCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/communication/UserCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/list/BlackListAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/list/BlackListRemove.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/list/ListCreate.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/list/ListDelete.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/list/ListUserAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/list/ListUserRemove.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/stats/AddCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/stats/GetCalls.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/user/CreateAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/user/DeleteAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/user/Login.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/outcoming/user/LogoutToAnonymous.js"></script>
+
+
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/AbstractInProcessorProduct.js"></script>
 
     <!-- bootstrap DS.Model -->
     
+    <script type="text/javascript" src="com/mytalk/model/modelstruct/DryHelper.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/Authentication.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/PersonalData.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/User.js"></script>
@@ -93,14 +98,15 @@
     <script type="text/javascript" src="com/mytalk/model/modelstruct/WCall.js"></script>
 
     <!-- bootstrap controllers -->
-    <script type="text/javascript" src="com/mytalk/controller/Controller.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/controller/RequestHelper.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/controller/Controller.js"></script>
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/controller/communicator/PeerConnection.js"></script> 
 
     <!-- bootstrap jQuery stuffs -->
     <script type="text/javascript" src="assets/animation/animation.js"></script>
-    <!-- JsCompressor -->
+
   </head>
   <body>
     <script type="text/x-handlebars" data-template-name="index">
@@ -175,7 +181,7 @@
              {{view MyTalk.SearchView id="search_bar"}}
             <div id="list_button">
             
-            {{#if check}}
+            {{#if customList}}
                 <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
                 <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
               {{else}}
@@ -208,14 +214,14 @@
             </div>
 
             <ul {{bindAttr class="user.online:callEnebled:callDisabled"}}>
-            {{view.actualList}}
+            
 
-            {{#if blacklist}}
+            {{#if controllers.list.blackList}}
                 <li><a class="call_user" href="#" {{action "call" users.id }} ></a></li>
                 <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
               </ul>
             {{else}}
-                {{#if alluser}}
+                {{#if controllers.list.generalList}}
                   <li><a class="call_user" href="#" {{action "call" user.id }} ></a></li>
                   <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>

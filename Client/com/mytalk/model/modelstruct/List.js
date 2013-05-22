@@ -1,43 +1,18 @@
 MyTalk.List = DS.Model.extend({
   name: DS.attr('string'),
   users: DS.hasMany('MyTalk.User'),
-  
-  getObject: function() { // di dubbia utilità
-    return this.get('users');
-  },
 
-  blackList: function() {
-    if (this.get('name') === 'Blacklist') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }.property('name'),
-
-  generalList: function() {
-    if (this.get('name') === 'Tutti i contatti') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }.property('name'),
-
-  customList: function() {
-    if(this.get('name') != 'Tutti i contatti' && this.get('name') != 'Blacklist' && this.get('name') != null) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }.property('name'),
+  blackList: Ember.computed.equal('name','Blacklist'),
+  generalList: Ember.computed.equal('name','Tutti i contatti'),
+  notBlacklist: Ember.computed.not('blackList'),
+  notGeneralList: Ember.computed.not('generalList'),
+  customList: Ember.computed.and('notBlacklist','notGeneralList'),
 
   online: function(){
     var users = this.get('users');
     var sum = 0;
     users.forEach(function(user){
-      sum += user.get('online');
+      sum = sum + user.get('online');
     });
     return sum;
   }.property('users.@each.online'),
@@ -46,11 +21,12 @@ MyTalk.List = DS.Model.extend({
     var users = this.get('users');
     var sum = 0;
     users.forEach(function(user){
-      sum += 1;
+      sum = sum + 1;
     });
     return sum;
-  }.property('users.@each.name'),
-  
+  }.property('users.@each.id')
+
+
 });
 
 

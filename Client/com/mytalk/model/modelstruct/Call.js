@@ -4,10 +4,6 @@ MyTalk.Call = DS.Model.extend({
   startDate: DS.attr('date'),
   duration: DS.attr('integer'),
   byteSent: DS.attr('integer'),
-  byteReceived: DS.attr('integer'),
-
-  getObject: function() { // di dubbia utilità
-    return { username:this.get('receiver'), password:this.get('duration') };
-  }
+  byteReceived: DS.attr('integer')
   
 });

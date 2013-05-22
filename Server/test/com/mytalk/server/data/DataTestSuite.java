@@ -15,11 +15,12 @@
  * - Zucchetti SRL
  */
 
-package com.mytalk.server.data.storage;
+package com.mytalk.server.data;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.mytalk.server.data.storage.DataAccessTest;
 import com.mytalk.server.data.storage.dao.GenericDAOTest;
 
 @RunWith(Suite.class)

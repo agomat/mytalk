@@ -18,12 +18,14 @@
 
 package com.mytalk.server;
 
+import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import com.mytalk.server.communication.CommunicationTestSuite;
-import com.mytalk.server.data.storage.DataTestSuite;
-import com.mytalk.server.logic.processing.request_processor.LogicTestSuite;
+import com.mytalk.server.data.DataTestSuite;
+import com.mytalk.server.logic.LogicTestSuite;
 
+@RunWith(Suite.class)
 @Suite.SuiteClasses({
 	   LogicTestSuite.class,
 	   CommunicationTestSuite.class,

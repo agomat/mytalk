@@ -16,7 +16,7 @@
 */
 
 
-package com.mytalk.server.communication;
+package com.mytalk.server.communication.buffer;
 
 import static org.junit.Assert.*;
 

@@ -15,10 +15,12 @@
  * - Zucchetti SRL
  */
 
-package com.mytalk.server.logic.processing.request_processor;
+package com.mytalk.server.logic;
 
+import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.mytalk.server.logic.processing.request_processor.GenericRequestTest;
 import com.mytalk.server.logic.processing.request_processor.communication.AcceptCallTest;
 import com.mytalk.server.logic.processing.request_processor.communication.RefuseCallTest;
 import com.mytalk.server.logic.processing.request_processor.communication.UserCallTest;
@@ -39,6 +41,7 @@ import com.mytalk.server.logic.processing.request_processor.user.LogoutTest;
 import com.mytalk.server.logic.processing.request_processor.user.LogoutToAnonymousTest;
 import com.mytalk.server.logic.processing.request_processor.user.StateUpdateTest;
 
+@RunWith(Suite.class)
 @Suite.SuiteClasses({
 	   GenericRequestTest.class,
 	   CreateAccountTest.class,

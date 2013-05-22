@@ -17,8 +17,12 @@
 
 package com.mytalk.server.communication;
 
+import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.mytalk.server.communication.buffer.BufferTest;
+
+@RunWith(Suite.class)
 @Suite.SuiteClasses({
 	   BufferTest.class
 	})

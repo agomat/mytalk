@@ -36,18 +36,13 @@ public class Login extends GenericRequest{
 		public Login(){}
 		
 		public ARI manage(ARI ari){
-			String infoRequest=ari.getInfo();
 			ARI response=null;
 			Authentication auth=ari.getAuth();
 			WorldPack responsePack=null;
-			WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);
-			boolean checkPack=checkWorldPackWellFormed(pack);
 			boolean checkAuth=checkAuthenticationWellFormed(auth);
-			if(!checkPack || !checkAuth){
+			if(!checkAuth){
 				response=new ARI(null,"CorruptedPack",null);
 			}else{
-				
-				PersonalData p=pack.getWorldPersonalData().getPersonalData();
 				com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
 				OnlineUser o=new OnlineUser(ari.getAuth().getUser(), ari.getAuth().getIp());
 				List<com.mytalk.server.data.model.User> listOnlineServer=null;

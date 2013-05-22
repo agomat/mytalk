@@ -24,7 +24,7 @@ import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.logic.processing.Convert;
-import com.mytalk.server.logic.processing.request_processor.user.LogoutAsAnonymous;
+import com.mytalk.server.logic.processing.request_processor.user.LogoutToAnonymous;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
@@ -44,7 +44,7 @@ public class LogoutToAnonymousTest {
 	
 	@Test
 	public void testManage() {
-		LogoutAsAnonymous logoutAsAnonymous=new LogoutAsAnonymous();
+		LogoutToAnonymous logoutAsAnonymous=new LogoutToAnonymous();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
 		
 		ARI ari=new ARI(auth,"LogoutAsAnonymous",null);

@@ -39,27 +39,27 @@ public class Processor implements IProcessor{
 	public Processor(){
 		hm = new HashMap<String, String>();
 		
-		hm.put("AcceptCall","com.mytalk.server.logic.processing.requestProcessor.comunication.AcceptCall");
-		hm.put("RefuseCall","com.mytalk.server.logic.processing.requestProcessor.comunication.RefuseCall");
-		hm.put("UserCall","com.mytalk.server.logic.processing.requestProcessor.comunication.UserCall");
+		hm.put("AcceptCall","com.mytalk.server.logic.processing.request_processor.comunication.AcceptCall");
+		hm.put("RefuseCall","com.mytalk.server.logic.processing.request_processor.comunication.RefuseCall");
+		hm.put("UserCall","com.mytalk.server.logic.processing.request_processor.comunication.UserCall");
 		
-		hm.put("CreateAccount","com.mytalk.server.logic.processing.requestProcessor.user.CreateAccount");
-		hm.put("DeleteAccount","com.mytalk.server.logic.processing.requestProcessor.user.DeleteAccount");
-		hm.put("Login","com.mytalk.server.logic.processing.requestProcessor.user.Login");
-		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.requestProcessor.user.LoginAsAnonymous");
-		hm.put("Logout","com.mytalk.server.logic.processing.requestProcessor.user.Logout");
-		hm.put("LogoutAsAnonymous","com.mytalk.server.logic.processing.requestProcessor.user.LogoutAsAnonymous");
+		hm.put("CreateAccount","com.mytalk.server.logic.processing.request_processor.user.CreateAccount");
+		hm.put("DeleteAccount","com.mytalk.server.logic.processing.request_processor.user.DeleteAccount");
+		hm.put("Login","com.mytalk.server.logic.processing.request_processor.user.Login");
+		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.request_processor.user.LoginAsAnonymous");
+		hm.put("Logout","com.mytalk.server.logic.processing.request_processor.user.Logout");
+		hm.put("LogoutToAnonymous","com.mytalk.server.logic.processing.request_processor.user.LogoutToAnonymous");
 		
-		hm.put("BlackListAdd","com.mytalk.server.logic.processing.requestProcessor.list.BlackListAdd");
-		hm.put("BlackListRemove","com.mytalk.server.logic.processing.requestProcessor.list.BlackListRemove");
-		hm.put("ListCreate","com.mytalk.server.logic.processing.requestProcessor.list.ListCreate");
-		hm.put("ListDelete","com.mytalk.server.logic.processing.requestProcessor.list.ListDelete");
-		hm.put("ListUserAdd","com.mytalk.server.logic.processing.requestProcessor.list.ListUserAdd");
-		hm.put("ListUserRemove","com.mytalk.server.logic.processing.requestProcessor.list.ListUserRemove");
-		hm.put("UpdateListName","com.mytalk.server.logic.processing.requestProcessor.list.UpdateListName");
+		hm.put("BlackListAdd","com.mytalk.server.logic.processing.request_processor.list.BlackListAdd");
+		hm.put("BlackListRemove","com.mytalk.server.logic.processing.request_processor.list.BlackListRemove");
+		hm.put("ListCreate","com.mytalk.server.logic.processing.request_processor.list.ListCreate");
+		hm.put("ListDelete","com.mytalk.server.logic.processing.request_processor.list.ListDelete");
+		hm.put("ListUserAdd","com.mytalk.server.logic.processing.request_processor.list.ListUserAdd");
+		hm.put("ListUserRemove","com.mytalk.server.logic.processing.request_processor.list.ListUserRemove");
+		hm.put("UpdateListName","com.mytalk.server.logic.processing.request_processor.list.UpdateListName");
 		
-		hm.put("AddCall","com.mytalk.server.logic.processing.requestProcessor.stats.AddCall");
-		hm.put("GetCalls","com.mytalk.server.logic.processing.requestProcessor.stats.GetCalls");
+		hm.put("AddCall","com.mytalk.server.logic.processing.request_processor.stats.AddCall");
+		hm.put("GetCalls","com.mytalk.server.logic.processing.request_processor.stats.GetCalls");
 
 	}
 		

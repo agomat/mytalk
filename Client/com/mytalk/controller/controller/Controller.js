@@ -121,10 +121,10 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
 MyTalk.UsersController = Ember.ArrayController.extend({
   sortProperties:['name'],
-  blacklist: false,
-  alluser: false,   
   needs: ['list'],
   selectArray:[],
+  blacklist: false,
+  alluser: false,   
   selectedValue:null,
   userId:null,
   userName:null,
@@ -134,7 +134,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     // TODO
   },
   
-  charge:function(){
+  loadSelect:function(){
     var temp=new Array();
       (MyTalk.List.find()).forEach(function(t){
         if(t.get('id')!=0 && t.get('id')!=1 ){
@@ -153,20 +153,36 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     this.set('userName',n);
   },
 
-  resetSelect:function(){
+  closeSelect:function(){
     document.getElementById('adduser').style.display='none';
     this.set('selectedValue',null);
     this.set('userId',null);
     this.set('userName',null);
   },
-  doAdd:function(){
-    if(this.selectedValue!=null){
-      var list=MyTalk.List.find(this.selectedValue);
-      list.get('users').addObject(MyTalk.User.find(this.userId));
-      document.getElementById('adduser').style.display='none';
-      this.set('selectedValue',null);
-      this.set('userId',null);
-      this.set('userName',null);
+  doAddUser:function(){
+    var currentListId=this.get('controllers.list.content.id');
+    if(this.selectedValue!=null && this.selectedValue!=currentListId){
+   
+      if(currentListId!=1){
+        var list=MyTalk.List.find(this.selectedValue);
+        list.get('users').addObject(MyTalk.User.find(this.userId));
+        document.getElementById('adduser').style.display='none';
+        this.set('selectedValue',null);
+        this.set('userId',null);
+        this.set('userName',null);
+      }
+      else{
+        var list=MyTalk.List.find(this.selectedValue);
+        var generalList=MyTalk.List.find(0);
+        var blacklist=MyTalk.List.find(1);
+        list.get('users').addObject(MyTalk.User.find(this.userId));
+        generalList.get('users').addObject(MyTalk.User.find(this.userId));
+        blacklist.get('users').removeObject(MyTalk.User.find(this.userId));
+        document.getElementById('adduser').style.display='none';
+        this.set('selectedValue',null);
+        this.set('userId',null);
+        this.set('userName',null);
+      }
     }
     else{
       alert('Selezionare una lista corretta');

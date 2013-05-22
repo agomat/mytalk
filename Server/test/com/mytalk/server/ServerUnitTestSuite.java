@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
 
 import com.mytalk.server.communication.CommunicationTestSuite;
 import com.mytalk.server.data.storage.DataTestSuite;
-import com.mytalk.server.logic.processing.requestProcessor.LogicTestSuite;
+import com.mytalk.server.logic.processing.request_processor.LogicTestSuite;
 
 @Suite.SuiteClasses({
 	   LogicTestSuite.class,

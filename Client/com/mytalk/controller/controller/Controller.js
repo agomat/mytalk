@@ -220,3 +220,31 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     } 
   }
 });
+
+MyTalk.CallController = Ember.ArrayController.extend({
+
+  needs:['users'],
+  content:[],
+
+  sendMessage:function(message){
+    var context=this.get('content');
+    var temp=new Array();
+
+    if(context){
+      context.forEach(function(t){
+         temp.pushObject(t);
+      })
+      temp.pushObject(Ember.Object.create({sender:false,text:message}));
+      this.set('content',temp);
+    }
+    else{
+
+        temp.pushObject(Ember.Object.create({sender:false,text:message}));
+        this.set('content',temp);
+    }
+  },
+
+  
+
+
+});

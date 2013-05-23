@@ -4,5 +4,6 @@ MyTalk.Router.map(function() {
     this.resource('logged', { path: '/lists' } , function() {
       this.resource('list', { path: '/:list_id' });
     });
+    this.resource('call',{path:'/'});
   });
 });

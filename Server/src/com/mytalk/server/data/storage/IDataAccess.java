@@ -80,5 +80,5 @@ public interface IDataAccess{
 			
 			public void logoutToAnonymous(OnlineUser user)throws LogoutException;
 			
-			public boolean checkBlacklist(User authenticate, Blacklist blacklistObj)throws AuthenticationFail,UsernameNotCorresponding;
+			public boolean checkBlacklist(Blacklist blacklistObj);
 }

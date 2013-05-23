@@ -74,9 +74,9 @@ public class UserCallTest {
 		assertEquals("Dati corretti ma non viene processata la richiesta con auth","SuccessfulUserCall",ariResponse.getReq());
 		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
+		ConnectionPack packTest2=new ConnectionPack("123.123.123.0",1,"123.123.123.5",2,"sdp");
 		ari.setAuth(authStart);
-		packTest=new ConnectionPack("123.123.123.0",1,"123.123.123.4",2,"sdp");
-		String packString2=conv.convertJavaToJson(packTest);
+		String packString2=conv.convertJavaToJson(packTest2);
 		ari.setInfo(packString2);
 		ariResponse=userCall.manage(ari);
 		assertEquals("IpSpeaker non è online ma viene processata lo stesso","UnsuccessfulUserCall",ariResponse.getReq());
@@ -85,22 +85,19 @@ public class UserCallTest {
 		ariResponse=userCall.manage(ari);
 		assertEquals("IpSpeaker non è online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
 		
-		auth.setUser("user0");
-		packTest.setMyUserId(15);
-		packString2=conv.convertJavaToJson(packTest);
-		ari.setInfo(packString2);
-		ariResponse=userCall.manage(ari);
-		assertEquals("Autenticazione deve fallire","IdNotFoundUserCall",ariResponse.getReq());
-		
-		auth.setUser("user1");
+		packTest.setSpeakerIp("123.123.123.2");
+		packTest.setSpeakerUserId(3);
+		packString=conv.convertJavaToJson(packTest);
 		ari.setInfo(packString);
 		ariResponse=userCall.manage(ari);
-		assertEquals("Autenticazione deve fallire","AuthenticationFailUserCall",ariResponse.getReq());
+		assertEquals("IpSpeaker non è online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
 		
-		auth.setPwd("user1");
-		auth.setIp("123.123.123.1");
+		auth.setUser("user0");
+		packTest.setMyUserId(15);
+		packString=conv.convertJavaToJson(packTest);
+		ari.setInfo(packString);
 		ariResponse=userCall.manage(ari);
-		assertEquals("Username non corrispondono","UsernameNotCorrespondingUserCall",ariResponse.getReq());
+		assertEquals("Autenticazione deve fallire","IdNotFoundUserCall",ariResponse.getReq());
 		
 	}
 

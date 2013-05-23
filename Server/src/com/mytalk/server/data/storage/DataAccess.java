@@ -622,26 +622,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	public boolean checkBlacklist(User authenticate, Blacklist blacklistObj)throws AuthenticationFail,UsernameNotCorresponding{
-		boolean authenticated=authenticateClient(authenticate);
-		if(authenticated==true){
-			if(!authenticate.getUsername().equals(blacklistObj.getOwner())){
-				GenericDAO.closeSession();
-				throw new UsernameNotCorresponding();
-			}else{
-				BlacklistDAO bd=new BlacklistDAO();
-				String owner=blacklistObj.getOwner();
-				String user=blacklistObj.getUsername();
-				Blacklist checkUser=bd.get(owner, user);
-				boolean result=false;
-				if(checkUser!=null){
-					result=true;
-				}
-				return result;
-			}
-		}else{
-			GenericDAO.closeSession();
-			throw new AuthenticationFail();
+	public boolean checkBlacklist(Blacklist blacklistObj){
+		BlacklistDAO bd=new BlacklistDAO();
+		String owner=blacklistObj.getOwner();
+		String user=blacklistObj.getUsername();
+		Blacklist checkUser=bd.get(owner, user);
+		boolean result=false;
+		if(checkUser!=null){
+			result=true;
 		}
+		return result;
 	}
 }

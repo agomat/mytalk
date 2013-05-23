@@ -36,7 +36,6 @@ public class UserCall extends GenericRequest{
 		boolean checkPack=false;
 		boolean result=false;
 		boolean checkPresence=false;
-		com.mytalk.server.data.model.User user=null;
 		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);
 		Authentication auth=null;
 		try {
@@ -52,11 +51,10 @@ public class UserCall extends GenericRequest{
 				if(!checkAuth || !checkPack){
 					return new ARI(null,"CorruptedPack",infoRequest);
 				}
-				user=new com.mytalk.server.data.model.User(ari.getAuth().getUser(),ari.getAuth().getPwd(),null,null,null,null);
 				String callerUsername = da.getUserById(pack.getMyUserId()).getUsername();
 				String speakerUsername=da.getUserById(pack.getSpeakerUserId()).getUsername();
-				Blacklist b=new Blacklist(callerUsername,speakerUsername);
-				checkPresence = da.checkBlacklist(user,b);
+				Blacklist b=new Blacklist(speakerUsername,callerUsername);
+				checkPresence = da.checkBlacklist(b);
 			}
 			result=da.checkUserByIp(pack.getSpeakerIp());
 			if(result && !checkPresence){
@@ -68,11 +66,7 @@ public class UserCall extends GenericRequest{
 			}
 		}catch (IdNotFound e) {
 			response= new ARI(null,"IdNotFoundUserCall",infoRequest);
-		} catch (AuthenticationFail e) {
-			response= new ARI(null,"AuthenticationFailUserCall",infoRequest);
-		} catch (UsernameNotCorresponding e) {
-			response= new ARI(null,"UsernameNotCorrespondingUserCall",infoRequest);
-		}
+		} 
 		return response;
 	}
 }

@@ -21,7 +21,7 @@ Date
 package com.mytalk.server.logic.processing;
 
 import com.mytalk.server.communication.buffer.Message;
-import com.mytalk.server.logic.processing.request_processor.user.StateUpdate;
+import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 
@@ -39,27 +39,27 @@ public class Processor implements IProcessor{
 	public Processor(){
 		hm = new HashMap<String, String>();
 		
-		hm.put("AcceptCall","com.mytalk.server.logic.processing.request_processor.comunication.AcceptCall");
-		hm.put("RefuseCall","com.mytalk.server.logic.processing.request_processor.comunication.RefuseCall");
-		hm.put("UserCall","com.mytalk.server.logic.processing.request_processor.comunication.UserCall");
+		hm.put("AcceptCall","com.mytalk.server.logic.processing.request_processor.connection_information.AcceptCall");
+		hm.put("RefuseCall","com.mytalk.server.logic.processing.request_processor.connection_information.RefuseCall");
+		hm.put("UserCall","com.mytalk.server.logic.processing.request_processor.connection_information.UserCall");
 		
-		hm.put("CreateAccount","com.mytalk.server.logic.processing.request_processor.user.CreateAccount");
-		hm.put("DeleteAccount","com.mytalk.server.logic.processing.request_processor.user.DeleteAccount");
-		hm.put("Login","com.mytalk.server.logic.processing.request_processor.user.Login");
-		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.request_processor.user.LoginAsAnonymous");
-		hm.put("Logout","com.mytalk.server.logic.processing.request_processor.user.Logout");
-		hm.put("LogoutToAnonymous","com.mytalk.server.logic.processing.request_processor.user.LogoutToAnonymous");
+		hm.put("CreateAccount","com.mytalk.server.logic.processing.request_processor.world_information.CreateAccount");
+		hm.put("DeleteAccount","com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount");
+		hm.put("Login","com.mytalk.server.logic.processing.request_processor.world_information.Login");
+		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.request_processor.world_information.LoginAsAnonymous");
+		hm.put("Logout","com.mytalk.server.logic.processing.request_processor.empty_information.Logout");
+		hm.put("LogoutToAnonymous","com.mytalk.server.logic.processing.request_processor.empty_information.LogoutToAnonymous");
 		
-		hm.put("BlackListAdd","com.mytalk.server.logic.processing.request_processor.list.BlackListAdd");
-		hm.put("BlackListRemove","com.mytalk.server.logic.processing.request_processor.list.BlackListRemove");
-		hm.put("ListCreate","com.mytalk.server.logic.processing.request_processor.list.ListCreate");
-		hm.put("ListDelete","com.mytalk.server.logic.processing.request_processor.list.ListDelete");
-		hm.put("ListUserAdd","com.mytalk.server.logic.processing.request_processor.list.ListUserAdd");
-		hm.put("ListUserRemove","com.mytalk.server.logic.processing.request_processor.list.ListUserRemove");
-		hm.put("UpdateListName","com.mytalk.server.logic.processing.request_processor.list.UpdateListName");
+		hm.put("BlackListAdd","com.mytalk.server.logic.processing.request_processor.list_information.BlackListAdd");
+		hm.put("BlackListRemove","com.mytalk.server.logic.processing.request_processor.list_information.BlackListRemove");
+		hm.put("ListCreate","com.mytalk.server.logic.processing.request_processor.update_list_information.ListCreate");
+		hm.put("ListDelete","com.mytalk.server.logic.processing.request_processor.update_list_information.ListDelete");
+		hm.put("ListUserAdd","com.mytalk.server.logic.processing.request_processor.list_information.ListUserAdd");
+		hm.put("ListUserRemove","com.mytalk.server.logic.processing.request_processor.list_information.ListUserRemove");
+		hm.put("UpdateListName","com.mytalk.server.logic.processing.request_processor.update_list_information.UpdateListName");
 		
-		hm.put("AddCall","com.mytalk.server.logic.processing.request_processor.stats.AddCall");
-		hm.put("GetCalls","com.mytalk.server.logic.processing.request_processor.stats.GetCalls");
+		hm.put("AddCall","com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall");
+		hm.put("GetCalls","com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls");
 
 	}
 		

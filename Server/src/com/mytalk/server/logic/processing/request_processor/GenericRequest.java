@@ -101,5 +101,13 @@ public abstract class GenericRequest {
 		}
 		return check;
 	}
+	
+	public static boolean checkPartialUpdateListPackWellFormed(UpdateListPack pack){
+		boolean check=false;
+		if(pack!=null && pack.getListName()!=null && pack.getOwner()!=null){
+			check=true;
+		}
+		return check;
+	}
 
 }

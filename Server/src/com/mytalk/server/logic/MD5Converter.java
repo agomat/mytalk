@@ -32,8 +32,8 @@ public class MD5Converter {
 			MessageDigest md=MessageDigest.getInstance("MD5");
 			byte[] digest=md.digest(byteMail);
 			BigInteger integer=new BigInteger(1,digest);
-			string=integer.toString(16);
-		} catch (UnsupportedEncodingException e) {
+			string=integer.toString(16);	
+ 		} catch (UnsupportedEncodingException e) {
 			return s;
 		} catch (NoSuchAlgorithmException e) {
 			return s;

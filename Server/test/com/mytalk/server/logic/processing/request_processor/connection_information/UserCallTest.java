@@ -80,12 +80,10 @@ public class UserCallTest {
 		ari.setInfo(packString2);
 		ariResponse=userCall.manage(ari);
 		assertEquals("IpSpeaker non è online ma viene processata lo stesso","UnsuccessfulUserCall",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
 		
 		ari.setAuth(auth);
 		ariResponse=userCall.manage(ari);
 		assertEquals("IpSpeaker non è online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
 		
 		auth.setUser("user0");
 		packTest.setMyUserId(15);
@@ -93,19 +91,16 @@ public class UserCallTest {
 		ari.setInfo(packString2);
 		ariResponse=userCall.manage(ari);
 		assertEquals("Autenticazione deve fallire","IdNotFoundUserCall",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
 		
 		auth.setUser("user1");
 		ari.setInfo(packString);
 		ariResponse=userCall.manage(ari);
 		assertEquals("Autenticazione deve fallire","AuthenticationFailUserCall",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
 		
 		auth.setPwd("user1");
 		auth.setIp("123.123.123.1");
 		ariResponse=userCall.manage(ari);
 		assertEquals("Username non corrispondono","UsernameNotCorrespondingUserCall",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());		
 		
 	}
 

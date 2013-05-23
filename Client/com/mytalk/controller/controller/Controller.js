@@ -127,12 +127,10 @@ MyTalk.ListController = Ember.ObjectController.extend({
 MyTalk.UsersController = Ember.ArrayController.extend({
   sortProperties:['name'],
   needs: ['list'],
-  selectArray:[],
-  blacklist: false,
-  alluser: false,   
-  selectedValue:null,
-  userId:null,
-  userName:null,
+  selectArray: [],
+  selectedValue: null,
+  userId: null,
+  userName: null,
     
   call: function(user){
     if(user.get('online')){
@@ -195,15 +193,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       alert('Selezionare una lista corretta');
     }
   },
-  specialList: function(){ 
-    var id = this.get('controllers.list.content.id');
-    if(id == 0){
-      this.set('alluser',true);
-    }
-    if(id == 1){
-      this.set('blacklist',true);
-    }
-  },
   deleteUser:function(userId){
     var user = MyTalk.User.find(userId);
     var confirmation = confirm("Sei sicuro di eliminare l'utente " + user.get('fullName') +" dalla lista?");
@@ -219,11 +208,13 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       var lists = MyTalk.List.find();
       lists.forEach(function(list) {
         list.get('users').removeObject( MyTalk.User.find(userId) );
+        // per mattia: appena le richieste sono finite completare queste linee
         //list.get('transaction').reopen({giu:2}); // passing some data here
         //list.get('transaction').commit(); // Commit take non effects if user do not appears in current list `list`
       });
       var blacklist = MyTalk.List.find(1);
       blacklist.get('users').addObject(MyTalk.User.find(userId));
+      // per mattia: appena le richieste sono finite completare queste linee
       //blacklist.get('transaction').reopen({giu:3});
       //blacklist.get('transaction').commit();
     } 

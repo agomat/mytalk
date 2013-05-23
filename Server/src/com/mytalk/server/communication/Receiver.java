@@ -37,41 +37,44 @@ public class Receiver extends WebSocketServer{
 		super(address);
 	}
 	
+	private BufferIncoming bufferIn=BufferIncoming.getInstance();
+	private BufferOutgoing bufferOut=BufferOutgoing.getInstance();
+	
 	@Override
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
-		System.out.println("Client connected with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress());
-		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+		String wsIp=conn.getRemoteSocketAddress().toString();
+		wsIp=wsIp.substring(1);
+		System.out.println("Client connected with IP: "+wsIp);
 		String loginAnonymous="{'auth':{'username':null,'password':null, ip:'"+wsIp+"'},'req':'LoginAsAnonymous','info':null}";
 		Message openMsg=new Message(wsIp,loginAnonymous);
-		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(openMsg);
 	}
 	
 	@Override
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-		System.out.println("Client with IP: "+conn.getRemoteSocketAddress().getAddress().getHostAddress()+" disconnected");
-		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+		String wsIp=conn.getRemoteSocketAddress().toString();
+		wsIp=wsIp.substring(1);
+		System.out.println("Client with IP: "+wsIp+" disconnected");
 		String logout="{'auth':{'username':null,'password':null, ip:'"+wsIp+"'},'req':'Logout','info':null}";
 		Message closeMsg=new Message(wsIp,logout);
-		BufferIncoming bufferIn=BufferIncoming.getInstance();
 		bufferIn.push(closeMsg);
 	}
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
 		System.out.println("WebsocketServer Error");
-		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+		String wsIp=conn.getRemoteSocketAddress().toString();
+		wsIp=wsIp.substring(1);
 		String error="{\"auth\":null \"req\":\"ConnectionError\" \"info\":null}";
 		Message errorMsg=new Message(wsIp,error);
-		BufferOutgoing bufferOut=BufferOutgoing.getInstance();
 		bufferOut.push(errorMsg);
 	}
 
 	@Override
 	public void onMessage(WebSocket conn, String msg) {
 		System.out.println("New message Received");
-		BufferIncoming bufferIn=BufferIncoming.getInstance();
-		String wsIp=conn.getRemoteSocketAddress().getAddress().getHostAddress();
+		String wsIp=conn.getRemoteSocketAddress().toString();
+		wsIp=wsIp.substring(1);
 		Message newMsg=new Message(wsIp,msg);
 		bufferIn.push(newMsg);
 	}
@@ -81,7 +84,7 @@ public class Receiver extends WebSocketServer{
 		WebSocket wsFound=null;
 		while (iterator.hasNext() && wsFound==null) {
 			WebSocket ws=iterator.next();
-			String wsIp=ws.getRemoteSocketAddress().getAddress().getHostAddress();
+			String wsIp=ws.getRemoteSocketAddress().toString();
 			if(wsIp.equals(ip)){
 				wsFound=ws;
 			}

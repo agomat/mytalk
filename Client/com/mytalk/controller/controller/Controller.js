@@ -36,21 +36,21 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   createList:function(){
 
     var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
-    if(newName) {
-      var list = this.get('content');
-      var test = true;
+    if(newName!="Nome della lista") {
+      var list=this.get('content');
+      var test=true;
 
       list.forEach(function(t){
         console.debug(t.get('name'));
-        if(t.get('name') == newName){
-          test = false;
+        if(t.get('name')==newName){
+          test=false;
         }
       });
-
-      if(test){
-        MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
+      
+      if(test==true){
+            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
       }
-      else{
+      else if(newName!=null){
         alert("Esiste già una lista con questo nome");
       }
     }
@@ -74,7 +74,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
         context.replaceWith('list', list);
       }
   },
-  renameList: function(){ // TODO sistemare immediatamente
+  renameList: function(){ 
 
     var id = this.get('content').get('id');
     var name = this.get('content').get('name');
@@ -83,14 +83,15 @@ MyTalk.ListController = Ember.ObjectController.extend({
     var list = MyTalk.List.find();
     var test = true;
 
-    list.forEach( function(t){
-      if(t.get('name') == newName){
-        test=false;
-      }
-    });
 
-    if(newName!="Nome della lista"){
-      if(test==true){
+      if(newName!="Nome della lista"){
+        list.forEach( function(t){
+          if(t.get('name') == newName){
+            test=false;
+           }
+        });
+
+        if(test==true){
           this.get('content').setProperties({name:newName});
       }
     else if(newName!=null){
@@ -124,15 +125,84 @@ MyTalk.ListController = Ember.ObjectController.extend({
 });
 
 MyTalk.UsersController = Ember.ArrayController.extend({
+  sortProperties:['name'],
   needs: ['list'],
+  selectArray:[],
+  blacklist: false,
+  alluser: false,   
+  selectedValue:null,
+  userId:null,
+  userName:null,
     
-  call: function(id){
-    console.log("call "+id);
+  call: function(user){
+    if(user.get('online')){
+      console.log("call "+user.get('id'));
+    }
     // TODO
   },
-  addUser: function(){
-    console.log('addUser');
-    // TODO
+  
+  loadSelect:function(){
+    var temp=new Array();
+      (MyTalk.List.find()).forEach(function(t){
+        if(t.get('id')!=0 && t.get('id')!=1 ){
+          temp.pushObject(Ember.Object.create({firstName: t.get('name'), id: t.get('id')}));
+        }
+
+     });
+    this.set('this.selectArray',temp);
+  }.property('selectArray'),
+
+  
+  addUser: function(user){
+    document.getElementById('adduser').style.display='block';
+    var n=user.get('name')+" "+user.get('surname');
+    this.set('userId',user.get('id'));
+    this.set('userName',n);
+  },
+
+  closeSelect:function(){
+    document.getElementById('adduser').style.display='none';
+    this.set('selectedValue',null);
+    this.set('userId',null);
+    this.set('userName',null);
+  },
+  doAddUser:function(){
+    var currentListId=this.get('controllers.list.content.id');
+    if(this.selectedValue!=null && this.selectedValue!=currentListId){
+   
+      if(currentListId!=1){
+        var list=MyTalk.List.find(this.selectedValue);
+        list.get('users').addObject(MyTalk.User.find(this.userId));
+        document.getElementById('adduser').style.display='none';
+        this.set('selectedValue',null);
+        this.set('userId',null);
+        this.set('userName',null);
+      }
+      else{
+        var list=MyTalk.List.find(this.selectedValue);
+        var generalList=MyTalk.List.find(0);
+        var blacklist=MyTalk.List.find(1);
+        list.get('users').addObject(MyTalk.User.find(this.userId));
+        generalList.get('users').addObject(MyTalk.User.find(this.userId));
+        blacklist.get('users').removeObject(MyTalk.User.find(this.userId));
+        document.getElementById('adduser').style.display='none';
+        this.set('selectedValue',null);
+        this.set('userId',null);
+        this.set('userName',null);
+      }
+    }
+    else{
+      alert('Selezionare una lista corretta');
+    }
+  },
+  specialList: function(){ 
+    var id = this.get('controllers.list.content.id');
+    if(id == 0){
+      this.set('alluser',true);
+    }
+    if(id == 1){
+      this.set('blacklist',true);
+    }
   },
   deleteUser:function(userId){
     var user = MyTalk.User.find(userId);

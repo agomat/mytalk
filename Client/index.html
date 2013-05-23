@@ -9,13 +9,13 @@
     <link type="text/css" rel="stylesheet" href="assets/css/c2.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/c3.css" media="screen" /> 
     <link type="text/css" rel="stylesheet" href="assets/css/c4.css" media="screen" /> 
+    <link type="text/css" rel="stylesheet" href="assets/css/popup.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/c4-logged.css" media="screen" />
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.0.min.js"></script>
     <script type="text/javascript" src="assets/lib/handlebars-1.0.0-rc.3.js"></script>
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.3.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
-
 
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/app.js"></script>
@@ -217,18 +217,19 @@
             
 
             {{#if controllers.list.blackList}}
-                <li><a class="call_user" href="#" {{action "call" users.id }} ></a></li>
-                <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
+                <li><a class="call_user" href="#" {{action "call" users }} ></a></li>
+                <li><a class="add_user" href="#" {{action "addUser" user}}></a></li>
+                <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
               </ul>
             {{else}}
                 {{#if controllers.list.generalList}}
-                  <li><a class="call_user" href="#" {{action "call" user.id }} ></a></li>
-                  <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
+                  <li><a class="call_user" href="#" {{action "call" user }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" user }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                 </ul>
                 {{else}}
-                  <li><a class="call_user" href="#" {{action "call" usedr.id }} ></a></li>
-                  <li><a class="add_user" href="#" {{action "addUser" }}></a></li>
+                  <li><a class="call_user" href="#" {{action "call" user }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" user }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" user.id }}></a></li>
                   <li><a class="remove_user" href="#" {{action "deleteUser" user.id }}></a></li>
                 </ul>
@@ -238,6 +239,36 @@
           {{/unless}}
         {{/each}}
       </ul>
+      
+       <div id="adduser" class="blanket">
+       {{controller.loadSelect}}
+        <div class="modal">
+          <div class="modal_header">
+            <a href="#" {{action "closeSelect"}}></a>
+            <h3>Aggungi ad una lista</h3>
+          </div>
+          <form action="#">
+            <fieldset>
+              <legend hidden>Aggungi ad una lista</legend>
+              <div class="modal_content">
+                <p> Segli a quale lista aggiungere l'utente {{ controller.userName }}</p>
+                <label for="search_list" hidden>Scegli la lista</label>
+                  {{view Ember.Select 
+                    contentBinding="controller.selectArray"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.firstName"
+                    prompt="Seleziona un lista"
+                    valueBinding="controller.selectedValue"
+                  }}
+              </div>
+              <div class="modal_button">
+                <button type="button" class="common_button" {{action "doAddUser"}}>Ok</button>
+                <button type="button" class="hangup_button" {{action "closeSelect"}}>Annulla</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="header">
@@ -388,7 +419,7 @@
           <p>
             Fornisci ai tuoi amici questo indirizzo IP. Sarai repereribile da qualsiasi utente che conosca il tuo IP senza doversi registrare nel sistema!
           </p>
-          <h4 id="ip_address">192.168.168.168:19</h4>
+          <h4 id="ip_address">{{model.ip}}</h4>
         </div>
       </div>
     </script>

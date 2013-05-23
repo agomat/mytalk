@@ -38,7 +38,11 @@ public class Dispatcher implements Runnable {
 			Message request=bufferIn.pop();
 			List<Message> response=processor.processRequest(request);
 			for(int i=0;i<response.size();i++){
-				bufferOut.push(response.get(i));
+				Message msg=response.get(i);
+				String newIp=msg.getIp();
+				newIp="/".concat(newIp);
+				msg.setIp(newIp);
+				bufferOut.push(msg);
 			}
 		}
 	}

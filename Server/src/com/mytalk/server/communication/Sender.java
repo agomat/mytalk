@@ -43,7 +43,7 @@ public class Sender implements Runnable {
 			Message pack=bufferOut.pop();
 			String ip= pack.getIp();
 			try{
-				if(ip.equals("broadcast")){
+				if(ip.equals("/broadcast")){
 					sendToAll(pack.getJson());
 				}else{
 					WebSocket ws=receiver.searchConnection(ip);

@@ -56,7 +56,7 @@ public abstract class GenericRequest {
 				check=true;
 		}
 		return check;
-	}
+	} 
 
 	public static boolean checkListPackWellFormed(ListPack pack){
 		boolean check=false;

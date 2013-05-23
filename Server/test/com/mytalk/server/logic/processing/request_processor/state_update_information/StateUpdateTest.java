@@ -53,6 +53,7 @@ public class StateUpdateTest {
 		WorldPack pack=new WorldPack(null,wpd);
 		String packString=conv.convertJavaToJson(pack);
 		ARI ari=new ARI(auth,"Login",packString);
+		
 		ARI esito=stateUpdate.manage(ari);
 		String stringEsito=esito.getInfo();
 		UserStatePack userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
@@ -74,6 +75,23 @@ public class StateUpdateTest {
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
 		userEsito=userStatePack.getUser();
 		assertFalse(userEsito.getOnline());
+		
+		ari.setReq("DeleteAccount");
+		User u=new User(4,"user3","user3","user3","md5","123.123.123.3",false);
+		UserStatePack packIn= new UserStatePack(u);
+		String packInString=conv.convertJavaToJson(packIn);
+		ari.setInfo(packInString);
+		esito=stateUpdate.manage(ari);
+		stringEsito=esito.getInfo();
+		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
+		userEsito=userStatePack.getUser();
+		assertEquals(u.getId(),userEsito.getId());
+		assertEquals(u.getUsername(),userEsito.getUsername());
+		assertEquals(u.getName(),userEsito.getName());
+		assertEquals(u.getSurname(),userEsito.getSurname());
+		assertEquals(u.getMd5(),userEsito.getMd5());
+		assertEquals(u.getIp(),userEsito.getIp());
+		assertEquals(u.getOnline(),userEsito.getOnline());
 		// Le due eccezioni non vengono lanciate per correttezza da costruzione
 	}
 

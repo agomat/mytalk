@@ -31,17 +31,27 @@ public class StateUpdate extends GenericRequest{
 	public ARI manage(ARI ari){
 		ARI response=null;
 		Integer id;
+		UserStatePack pack;
+		UserStatePack packIn;
+		String infoResponse;
+		User userClient=null;
 		boolean status=false;
 		if(ari.getReq().equals("Login")){
 			status=true;
 		}
+		if(ari.getReq().equals("DeleteAccount")){
+			packIn=(UserStatePack)conv.convertJsonToJava(ari.getInfo(), UserStatePack.class);
+			userClient=new User(packIn.getUser().getId(),packIn.getUser().getUsername(),packIn.getUser().getName(),packIn.getUser().getSurname(),packIn.getUser().getMd5(),ari.getAuth().getIp(),status);
+			pack= new UserStatePack(userClient);
+			infoResponse=conv.convertJavaToJson(pack);
+			return new ARI(null,"StateUpdate",infoResponse);
+		}
 		try {
 			id = da.getIdFromUsername(ari.getAuth().getUser());
 			com.mytalk.server.data.model.User user=da.getUserById(id);
-			User userClient=new User(id,user.getUsername(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),status);
-			UserStatePack pack= new UserStatePack(userClient);
-			String infoResponse=conv.convertJavaToJson(pack);
-			
+			userClient=new User(id,user.getUsername(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),status);
+			pack= new UserStatePack(userClient);
+			infoResponse=conv.convertJavaToJson(pack);
 			response=new ARI(null,"StateUpdate",infoResponse);
 		} catch (UserNotExisting e) {
 			// TODO Auto-generated catch block

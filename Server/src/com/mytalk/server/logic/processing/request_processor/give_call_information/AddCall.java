@@ -70,12 +70,12 @@ public class AddCall extends GenericRequest {
 					byteS=callClient.getByteSent();
 					callServer=new com.mytalk.server.data.model.Call(caller,receiver,duration,startdate,byteR,byteS);
 					da.addCall(callServer,userAuth);
-					response=new ARI(null,"SuccessfulAddCall",null);
+					response=new ARI(null,"SuccessfulAddCall",infoRequest);
 				}
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFailAddCall",null);
+				response=new ARI(null,"AuthenticationFailAddCall",infoRequest);
 			} catch (IdNotFound e) {
-				response=new ARI(null,"IdNotFoundAddCall",null);
+				response=new ARI(null,"IdNotFoundAddCall",infoRequest);
 			}
 		}
 		return response;

@@ -104,6 +104,7 @@ public class Processor implements IProcessor{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		if(esito.getAuth()!=null){
 			ipToSend=esito.getAuth().getIp();
 		}

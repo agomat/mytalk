@@ -71,7 +71,7 @@ public class GenericRequestTest {
 
 	@Test
 	public void testCheckConnectionPackWellFormed() {
-		ConnectionPack pack= new ConnectionPack("myIp",0,"speakerIp",1,"sdp");
+		ConnectionPack pack= new ConnectionPack("myIp",0,"speakerIp",1,"rtcinfo");
 		boolean esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertTrue("esito positivo",esito);
 		
@@ -85,12 +85,12 @@ public class GenericRequestTest {
 		assertFalse("esito negativo",esito);
 		
 		pack.setSpeakerIp("speakerIp");
-		pack.setSdpCall(null);
+		pack.setRTCinfo(null);
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
 		pack.setMyUserId(null);
-		pack.setSdpCall("sdp");
+		pack.setRTCinfo("rtcinfo");
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
@@ -120,7 +120,7 @@ public class GenericRequestTest {
 		assertFalse("esito negativo",esito);
 		
 		pack.setSpeakerIp("speakerIp");
-		pack.setSdpCall(null);
+		pack.setRTCinfo(null);
 		esito=GenericRequest.checkAnonymousConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
@@ -242,6 +242,26 @@ public class GenericRequestTest {
 		
 		pack=null;
 		esito=GenericRequest.checkUpdateListPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+	}
+	
+	@Test
+	public void testCheckPartialUpdateListPackWellFormed() {
+		UpdateListPack pack= new UpdateListPack("name","owner",null);
+		boolean esito=GenericRequest.checkPartialUpdateListPackWellFormed(pack);
+		assertTrue("esito positivo",esito);		
+
+		pack.setOwner(null);
+		esito=GenericRequest.checkPartialUpdateListPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack.setOwner("owner");
+		pack.setListName(null);
+		esito=GenericRequest.checkPartialUpdateListPackWellFormed(pack);
+		assertFalse("esito negativo",esito);
+		
+		pack=null;
+		esito=GenericRequest.checkPartialUpdateListPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 	}
 

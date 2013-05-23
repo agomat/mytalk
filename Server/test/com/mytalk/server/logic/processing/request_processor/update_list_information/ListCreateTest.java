@@ -20,9 +20,6 @@ package com.mytalk.server.logic.processing.request_processor.update_list_informa
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,8 +28,7 @@ import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.update_list_information.ListCreate;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
-import com.mytalk.server.logic.shared.ListPack;
-import com.mytalk.server.logic.shared.model_client.UserList;
+import com.mytalk.server.logic.shared.UpdateListPack;
 
 public class ListCreateTest {
 
@@ -49,40 +45,39 @@ public class ListCreateTest {
 	public void testManage() {
 		ListCreate listCreate=new ListCreate();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
-		UserList userList=new UserList(0,"NuovaLista",null);
-		List<UserList> listUserList=new ArrayList<UserList>();
-		listUserList.add(userList);
-		ListPack listPack=new ListPack(listUserList);
+		UpdateListPack listPack=new UpdateListPack("NuovaLista","user1",null);
 		String packString=conv.convertJavaToJson(listPack);
 		ARI ari=new ARI(auth,"ListCreate",packString);
 		
 		ARI ariResponse=listCreate.manage(ari);
 		assertEquals("Dati corretti ma non avviene la creazione","SuccessfulListCreate",ariResponse.getReq());
-	
-
-		listUserList.remove(0);
-		listPack.setList(listUserList);
+		
+		listPack.setOwner(null);
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
-		
 		ariResponse=listCreate.manage(ari);
 		assertEquals("Pacchetto corrotto","CorruptedPack",ariResponse.getReq());
 		
-		userList.setName("friends");
-		listUserList.add(userList);
+		listPack.setListName("friends");
+		listPack.setOwner("user1");
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
 		
 		ariResponse=listCreate.manage(ari);
 		assertEquals("Lista esiste già","ListAlreadyExists",ariResponse.getReq());
 		
+		listPack.setListName("NuovaLista");
+		listPack.setOwner("user2");
+		packString=conv.convertJavaToJson(listPack);
+		ari.setInfo(packString);	
+		ariResponse=listCreate.manage(ari);
+		assertEquals("Username di auth e quello del owner sono diversi","UsernameNotCorrespondingListCreate",ariResponse.getReq());
+		
 		Authentication authWrong=new Authentication("user1","user0","123.123.123.1");
 		ari.setAuth(authWrong);
 		ariResponse=listCreate.manage(ari);
 		assertEquals("Autenticazione fallita","AuthenticationFailListCreate",ariResponse.getReq());
-		
-		//UsernameNotCorresponding non viene mai sollevata poiché il prorpietario viene settato con l'username presente in authentication
-		
+
 	}
 
 }

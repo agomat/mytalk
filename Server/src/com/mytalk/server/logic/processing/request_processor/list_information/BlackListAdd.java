@@ -15,7 +15,6 @@
 * - Zucchetti SRL
 */
 
-
 package com.mytalk.server.logic.processing.request_processor.list_information;
 
 import java.util.List;
@@ -59,17 +58,17 @@ public class BlackListAdd extends GenericRequest {
 				blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),username);
 				da.blacklistAdd(blacklist,userAuth);
 
-				response=new ARI(null,"SuccessfulBlacklistAdd",infoRequest);
+				response=new ARI(null,"SuccessfulBlackListAdd",infoRequest);
 			}catch(UserAlreadyBlacklisted uab){
 				response=new ARI(null,"UserAlreadyBlacklisted",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFailBlacklistAdd",infoRequest);
+				response=new ARI(null,"AuthenticationFailBlackListAdd",infoRequest);
 			} catch (UserNotExisting une) {
-				response=new ARI(null,"UserNotExistingBlacklistAdd",infoRequest);
+				response=new ARI(null,"UserNotExistingBlackListAdd",infoRequest);
 			} catch (UsernameNotCorresponding unc) {
-				response=new ARI(null,"UsernameNotCorrespondingBlacklistAdd",infoRequest);
+				response=new ARI(null,"UsernameNotCorrespondingBlackListAdd",infoRequest);
 			} catch (IdNotFound inf) {
-				response=new ARI(null,"IdNotFoundBlacklistAdd",infoRequest);
+				response=new ARI(null,"IdNotFoundBlackListAdd",infoRequest);
 			}
 		}
 		return response;

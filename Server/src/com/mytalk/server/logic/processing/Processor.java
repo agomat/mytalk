@@ -112,7 +112,7 @@ public class Processor implements IProcessor{
 		}
 		esito.setAuth(null);
 		
-		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulCreateAccount") || esito.getReq().equals("SuccessfulDeleteAccount")){
+		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
 			StateUpdate stateUpdate=new StateUpdate();
 			ARI ari=stateUpdate.manage(pack);
 			String jsonAri=convert.convertJavaToJson(ari);

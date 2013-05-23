@@ -24,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
-import com.mytalk.server.data.storage.DataAccessTest;
 import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls;
 import com.mytalk.server.logic.shared.ARI;
@@ -41,9 +40,6 @@ public class GetCallsTest {
 		envSetter.initDB();
 	}
 		
-	/**
-	 * Test method for {@link com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls#manage(com.mytalk.server.logic.shared.ARI)}.
-	 */
 	@Test
 	public void testManage() {
 		
@@ -59,7 +55,7 @@ public class GetCallsTest {
 		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","GiveCalls", ariSuccess.getReq());
 		
 		ARI ariUnsuccess=getCallsTest.manage(ariWrongTest);
-		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","AuthenticationFail", ariUnsuccess.getReq());
+		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","AuthenticationFailGetCalls", ariUnsuccess.getReq());
 	
 		String giveCallPack=ariSuccess.getInfo();
 		GiveCallPack packTest=(GiveCallPack)conv.convertJsonToJava(giveCallPack, GiveCallPack.class);

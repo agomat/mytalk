@@ -26,13 +26,13 @@ public class ConnectionPack extends Information{
 	private Integer myUserId;
 	private String speakerIp;
 	private Integer speakerUserId;
-	private String sdpCall;
+	private String RTCinfo;
 	
 	
-	public ConnectionPack(String cIp,Integer cn,String rIp,Integer rn,String sdpC){
+	public ConnectionPack(String cIp,Integer cn,String rIp,Integer rn,String rtc){
 		myIp=cIp;
 		speakerIp=rIp;
-		sdpCall=sdpC;
+		RTCinfo=rtc;
 		myUserId=cn;
 		speakerUserId=rn;
 	}
@@ -53,12 +53,12 @@ public class ConnectionPack extends Information{
 		speakerIp=ip;
 	}
 	
-	public String getSdpCall(){
-		return sdpCall;
+	public String getRTCinfo(){
+		return RTCinfo;
 	}
 	
-	public void setSdpCall(String sdp){
-		sdpCall=sdp;
+	public void setRTCinfo(String rtc){
+		RTCinfo=rtc;
 	}
 	
 	public Integer getMyUserId(){

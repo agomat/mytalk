@@ -15,7 +15,6 @@
 * - Zucchetti SRL
 */
 
-
 package com.mytalk.server.logic.processing.request_processor.list_information;
 
 import static org.junit.Assert.*;
@@ -60,7 +59,7 @@ public class BlackListAddTest {
 		ARI ari= new ARI(auth,"BlackListAdd",packString);
 		
 		ARI ariResponse=blackListAdd.manage(ari);
-		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlacklistAdd",ariResponse.getReq());
+		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlackListAdd",ariResponse.getReq());
 		
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("User già in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklisted",ariResponse.getReq());
@@ -68,14 +67,15 @@ public class BlackListAddTest {
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListAdd",packString);
 		ariResponse=blackListAdd.manage(ari);
-		assertEquals("Autenticazione assente ma viene aggiunto lo stesso","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Autenticazione assente ma viene aggiunto lo stesso","AuthenticationFailBlackListAdd",ariResponse.getReq());
 		
 		listIdUser.remove(0);
 		listIdUser.add(13);
 		String new_packString=conv.convertJavaToJson(pack);
 		ari=new ARI(auth,"BlackListAdd",new_packString);
 		ariResponse=blackListAdd.manage(ari);
-		assertEquals("Id non esiste ma viene aggiunto lo stesso","IdNotFound",ariResponse.getReq());
+		assertEquals("Id non esiste ma viene aggiunto lo stesso","IdNotFoundBlackListAdd",ariResponse.getReq());
+		
 		
 		
 		listUserList.get(0).setList(null);
@@ -83,7 +83,7 @@ public class BlackListAddTest {
 		ari=new ARI(auth,"BlackListAdd",new_packString);
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Nesssun user da aggiungere in blacklist ma processata","CorruptedPack",ariResponse.getReq());
-	
+			
 	//UsernameNotCorresponding non viene mai sollevata perchè per creare l'user si usa il valore presente in authentication
 	//UsernameNotExisting non viene mai sollevata perchè vi è l'eccezione IdNotFound che previene ciò
 	}

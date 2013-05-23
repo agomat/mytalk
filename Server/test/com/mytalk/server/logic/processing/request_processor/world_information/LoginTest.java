@@ -91,36 +91,34 @@ public class LoginTest {
 		assertEquals("user1",pd.getUsername());
 		assertEquals("user1",pd.getSurname());
 		assertEquals("user1",pd.getName());
-		assertEquals("user1",pd.getPassword());
+		assertEquals("24c9e15e52afc47c225b757e7bee1f9d",pd.getPassword());
 		assertEquals("user1@mytalk.com",pd.getEmail());
 		assertEquals("emailhash123123123",pd.getMd5());
-		
-
 		
 		Authentication authWrongTest=new Authentication("user1","user0","111.111.111.1");
 		
 		ari=new ARI(authWrongTest,"Login",null);
 		ariResult=login.manage(ari);
-		assertEquals("Login effettuato anche se viene fallita l'autenticazione","AuthenticationFail",ariResult.getReq());
+		assertEquals("Login effettuato anche se viene fallita l'autenticazione","AuthenticationFailLogin",ariResult.getReq());
 		
-		//UsernameNotCorresponding non viene mai sollevata per costruzione
-		
+		//UserNotCorrespondingLogin non viene mai sollevata per costruzione
 		
 		authWrongTest.setIp("111.11.111.1");
 		authWrongTest.setPwd("user1");
 		ari.setAuth(authWrongTest);
 		ariResult=login.manage(ari);
-		assertEquals("Tentativo di login con ip non loggato","IpNotLogged",ariResult.getReq());
+		assertEquals("Tentativo di login con ip non loggato","IpNotLoggedLogin",ariResult.getReq());
 		
 		
 		ari.setAuth(authRightTest);
 		ariResult=login.manage(ari);
-		assertEquals("Tentativo di login con user già loggato","UserAlreadyLogged",ariResult.getReq());
+		assertEquals("Tentativo di login con user già loggato","UserAlreadyLoggedLogin",ariResult.getReq());
 		
 		authRightTest=new Authentication("user5","user5","123.123.123.0");
 		ari.setAuth(authRightTest);
 		ariResult=login.manage(ari);
-		assertEquals("Tentativo di login con ip già assegnato ad un altro user","IpAlreadyLogged",ariResult.getReq());
+		assertEquals("Tentativo di login con ip già assegnato ad un altro user","IpAlreadyLoggedLogin",ariResult.getReq());
+		
 		//UserNotLogged mai lanciata poiché i candidati sono oggetti ricavati dal db e quindi consistenti
 	}
 

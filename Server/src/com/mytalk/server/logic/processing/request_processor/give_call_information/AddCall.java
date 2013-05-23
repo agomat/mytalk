@@ -15,10 +15,7 @@
 * - Zucchetti SRL
 */
 
-
 package com.mytalk.server.logic.processing.request_processor.give_call_information;
-
-
 
 import java.util.List;
 
@@ -76,9 +73,9 @@ public class AddCall extends GenericRequest {
 					response=new ARI(null,"SuccessfulAddCall",null);
 				}
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailAddCall",null);
 			} catch (IdNotFound e) {
-				response=new ARI(null,"IdNotFound",null);
+				response=new ARI(null,"IdNotFoundAddCall",null);
 			}
 		}
 		return response;

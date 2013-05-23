@@ -54,26 +54,26 @@ public class UpdateListNameTest {
 	
 		auth.setPwd("user1");
 		ariResponse=updateListName.manage(ari);
-		assertEquals("Autenticazione deve fallire","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Autenticazione deve fallire","AuthenticationFailRenameList",ariResponse.getReq());
 		
 		auth.setPwd("user0");
 		pack.setListName("lista");
 		packString=conv.convertJavaToJson(pack);
 		ari.setInfo(packString);
 		ariResponse=updateListName.manage(ari);
-		assertEquals("Lista da rinominare non esiste","ListNotExisting",ariResponse.getReq());
+		assertEquals("Lista da rinominare non esiste","ListNotExistingRenameList",ariResponse.getReq());
 		
 		pack.setListName("nuovaLista");
 		packString=conv.convertJavaToJson(pack);
 		ari.setInfo(packString);
 		ariResponse=updateListName.manage(ari);
-		assertEquals("C'è una già una lista con il nuovo nome","ListAlreadyExists",ariResponse.getReq());
+		assertEquals("C'è una già una lista con il nuovo nome","ListAlreadyExistsRenameList",ariResponse.getReq());
 		
 		pack.setOwner("user1");
 		packString=conv.convertJavaToJson(pack);
 		ari.setInfo(packString);
 		ariResponse=updateListName.manage(ari);
-		assertEquals("Lista da rinominare non esiste","UsernameNotCorresponding",ariResponse.getReq());
+		assertEquals("Lista da rinominare non esiste","UsernameNotCorrespondingRenameList",ariResponse.getReq());
 	}
 
 }

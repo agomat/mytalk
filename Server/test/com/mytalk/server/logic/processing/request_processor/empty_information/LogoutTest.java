@@ -56,7 +56,7 @@ public class LogoutTest {
 		auth=new Authentication("user4","user4","123.123.123.4");
 		ari.setAuth(auth);
 		ariResult=logout.manage(ari);
-		assertEquals("Logout di un user non loggato","LogoutException",ariResult.getReq());
+		assertEquals("Logout di un user non loggato","Logout",ariResult.getReq());
 		
 		ari.getAuth().setIp(null);
 		ariResult=logout.manage(ari);

@@ -32,6 +32,7 @@ import com.mytalk.server.logic.processing.request_processor.update_list_informat
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
+import com.mytalk.server.logic.shared.UpdateListPack;
 import com.mytalk.server.logic.shared.model_client.UserList;
 
 public class ListDeleteTest {
@@ -49,18 +50,24 @@ public class ListDeleteTest {
 	public void testManage() {
 		ListDelete listDelete=new ListDelete();
 		Authentication auth=new Authentication("user1","user1","123.123.123.1");
-		UserList userList=new UserList(2,"friends",null);
-		List<UserList> listUserList=new ArrayList<UserList>();
-		listUserList.add(userList);
-		ListPack listPack=new ListPack(listUserList);
+		UpdateListPack listPack=new UpdateListPack("friends","user1",null);
 		String packString=conv.convertJavaToJson(listPack);
 		ARI ari=new ARI(auth,"ListDelete",packString);
 		
 		ARI ariResponse=listDelete.manage(ari);
 		assertEquals("Dati corretti ma non avviene l'eliminazione","SuccessfulListDelete",ariResponse.getReq());
 	
+		listPack.setOwner("user2");
+		packString=conv.convertJavaToJson(listPack);
+		ari.setInfo(packString);	
 		ariResponse=listDelete.manage(ari);
-		assertEquals("Lista non esiste ma viene processata","ListNotExisting",ariResponse.getReq());
+		assertEquals("Username di auth e quello del owner sono diversi","UsernameNotCorrespondingListDelete",ariResponse.getReq());
+		
+		listPack.setOwner("user1");
+		packString=conv.convertJavaToJson(listPack);
+		ari.setInfo(packString);
+		ariResponse=listDelete.manage(ari);
+		assertEquals("Lista non esiste ma viene processata","ListNotExistingListDelete",ariResponse.getReq());
 	
 		auth.setPwd("user3");
 		ariResponse=listDelete.manage(ari);

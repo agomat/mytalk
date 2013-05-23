@@ -27,12 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mytalk.server.EnvironmentSetter;
-import com.mytalk.server.data.storage.DataAccess;
-import com.mytalk.server.data.storage.DataAccessTest;
-import com.mytalk.server.data.storage.IDataAccess;
-import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.logic.processing.Convert;
-import com.mytalk.server.logic.processing.Processor;
 import com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -50,9 +45,6 @@ public class AddCallTest {
 		envSetter.initDB();
 	}
 
-	/**
-	 * Test method for {@link com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall#manage(com.mytalk.server.logic.shared.ARI)}.
-	 */
 	@Test
 	public void testManage() {
 		
@@ -73,17 +65,17 @@ public class AddCallTest {
 		AddCall addCall=new AddCall();
 
 		ARI ariSuccess=addCall.manage(ariRightTest);
-		org.junit.Assert.assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","SuccessfulAddCall", ariSuccess.getReq());
+		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","SuccessfulAddCall", ariSuccess.getReq());
 		
 		ARI ariUnsuccess=addCall.manage(ariWrongTest);
-		org.junit.Assert.assertEquals("L'autenticazione è errata ma fa l'autenticazione lo stesso","AuthenticationFail", ariUnsuccess.getReq());
+		assertEquals("L'autenticazione è errata ma fa l'autenticazione lo stesso","AuthenticationFailAddCall", ariUnsuccess.getReq());
 		
 		callListTest.remove(0);
 		callListTest.add(call2);
 		packJson=conv.convertJavaToJson(packTest);
 		ariRightTest= new ARI(authRightTest,"AddCall",packJson);
 		ARI ariIdNotRight=addCall.manage(ariRightTest);
-		org.junit.Assert.assertEquals("L'id fornito è inesistente","IdNotFound", ariIdNotRight.getReq());
+		assertEquals("L'id fornito è inesistente","IdNotFoundAddCall", ariIdNotRight.getReq());
 	
 	}
 }

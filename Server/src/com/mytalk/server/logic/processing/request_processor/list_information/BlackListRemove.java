@@ -58,15 +58,15 @@ public class BlackListRemove extends GenericRequest {
 				user=(da.getUserById(listUser.get(0))).getUsername();
 				blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),user);
 				da.blacklistRemove(blacklist,userAuth);
-				response=new ARI(null,"SuccessfulBlacklistRemove",infoRequest);
+				response=new ARI(null,"SuccessfulBlackListRemove",infoRequest);
 			}catch(UserNotBlacklisted unb){
 				response=new ARI(null,"UserNotBlacklisted",infoRequest);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFailBlacklistRemove",null);
+				response=new ARI(null,"AuthenticationFailBlackListRemove",null);
 			} catch (UsernameNotCorresponding e) {
-				response=new ARI(null,"UsernameNotCorrespondingBlacklistRemove",null);
+				response=new ARI(null,"UsernameNotCorrespondingBlackListRemove",null);
 			}catch (IdNotFound inf) {
-				response=new ARI(null,"IdNotFoundBlacklistRemove",null);
+				response=new ARI(null,"IdNotFoundBlackListRemove",null);
 			}
 		}	
 		return response;

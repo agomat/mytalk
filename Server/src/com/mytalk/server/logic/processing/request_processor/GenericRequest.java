@@ -44,7 +44,7 @@ public abstract class GenericRequest {
 	
 	public static boolean checkConnectionPackWellFormed(ConnectionPack pack){
 		boolean check=false;
-		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null && pack.getMyUserId()!=null && pack.getSpeakerUserId()!=null){
+		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getRTCinfo()!=null && pack.getMyUserId()!=null && pack.getSpeakerUserId()!=null){
 			check=true;
 		}
 		return check;
@@ -52,7 +52,7 @@ public abstract class GenericRequest {
 	
 	public static boolean checkAnonymousConnectionPackWellFormed(ConnectionPack pack){
 		boolean check=false;
-		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getSdpCall()!=null){
+		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getRTCinfo()!=null){
 				check=true;
 		}
 		return check;

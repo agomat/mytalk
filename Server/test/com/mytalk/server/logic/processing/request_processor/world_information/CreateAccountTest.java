@@ -63,7 +63,7 @@ public class CreateAccountTest {
 		ari.setInfo(packString);
 		ariResult=createAccount.manage(ari);
 		
-		assertEquals("Creazione account riuscita ma username è già presente","UsernameAlreadyExisting",ariResult.getReq());
+		assertEquals("Creazione account riuscita ma username è già presente","UsernameAlreadyExistingCreateAccount",ariResult.getReq());
 		
 	}
 

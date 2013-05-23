@@ -47,7 +47,7 @@ public class AcceptCallTest {
 		String packString=conv.convertJavaToJson(packTest);
 		ARI ari=new ARI(null,"AcceptCall",packString);
 		ARI ariResponse=acceptCall.manage(ari);
-		assertEquals("Pacchetto in formato errato","CorruptedConnectionPack",ariResponse.getReq());
+		assertEquals("Pacchetto in formato errato","CorruptedPack",ariResponse.getReq());
 		
 		packTest=new ConnectionPack("123.123.123.0",null,"123.123.123.1",null,"sdp");
 		packString=conv.convertJavaToJson(packTest);
@@ -61,7 +61,6 @@ public class AcceptCallTest {
 		ari=new ARI(null,"AcceptCall",packString);
 		ariResponse=acceptCall.manage(ari);
 		assertEquals("IpSpeaker non è online ma viene processata lo stesso","UnsuccessfulAcceptCall",ariResponse.getReq());
-		assertEquals("Ip a cui mandare errato","123.123.123.0",ariResponse.getAuth().getIp());
 	}
 
 }

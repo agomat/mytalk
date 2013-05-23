@@ -28,9 +28,6 @@ import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.world_information.LoginAsAnonymous;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
-import com.mytalk.server.logic.shared.WorldPack;
-import com.mytalk.server.logic.shared.model_client.PersonalData;
-import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
 
 public class LoginAsAnonymousTest {
 
@@ -57,7 +54,7 @@ public class LoginAsAnonymousTest {
 	
 		authRightTest.setIp("111.111.111.1");
 		ariResult=loginAsAnonymous.manage(ari);
-		assertEquals("Ip già in uso","IpAlreadyLogged",ariResult.getReq());
+		assertEquals("Ip già in uso","IpAlreadyLoggedLoginAsAnonymous",ariResult.getReq());
 	}
 
 }

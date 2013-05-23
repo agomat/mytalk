@@ -27,6 +27,7 @@ import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.UserStatePack;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.model_client.PersonalData;
 import com.mytalk.server.logic.shared.model_client.User;
@@ -54,8 +55,8 @@ public class StateUpdateTest {
 		ARI ari=new ARI(auth,"Login",packString);
 		ARI esito=stateUpdate.manage(ari);
 		String stringEsito=esito.getInfo();
-		WorldPack worldPack=(WorldPack)conv.convertJsonToJava(stringEsito, WorldPack.class);
-		User userEsito=worldPack.getWorldList().getList().get(0);
+		UserStatePack userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
+		User userEsito=userStatePack.getUser();
 		User user=new User(4,"user3","user3","user3","emailhash123123123","123.123.123.3",true);
 		
 		assertEquals(userEsito.getId(),user.getId());
@@ -70,8 +71,8 @@ public class StateUpdateTest {
 		ari.setReq("Logout");
 		esito=stateUpdate.manage(ari);
 		stringEsito=esito.getInfo();
-		worldPack=(WorldPack)conv.convertJsonToJava(stringEsito, WorldPack.class);
-		userEsito=worldPack.getWorldList().getList().get(0);
+		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
+		userEsito=userStatePack.getUser();
 		assertFalse(userEsito.getOnline());
 		// Le due eccezioni non vengono lanciate per correttezza da costruzione
 	}

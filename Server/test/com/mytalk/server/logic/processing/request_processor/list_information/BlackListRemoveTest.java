@@ -60,7 +60,7 @@ public class BlackListRemoveTest {
 		ARI ari= new ARI(auth,"BlackListRemove",packString);
 		
 		ARI ariResponse=blackListRemove.manage(ari);
-		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlacklistRemove",ariResponse.getReq());
+		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlackListRemove",ariResponse.getReq());
 		
 		ariResponse=blackListRemove.manage(ari);
 		assertEquals("User non presente in blacklist ma la richiesta viene processata lo stesso","UserNotBlacklisted",ariResponse.getReq());
@@ -68,14 +68,14 @@ public class BlackListRemoveTest {
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListRemove",packString);
 		ariResponse=blackListRemove.manage(ari);
-		assertEquals("Autenticazione errata ma viene aggiunto lo stesso","AuthenticationFail",ariResponse.getReq());
+		assertEquals("Autenticazione errata ma viene aggiunto lo stesso","AuthenticationFailBlackListRemove",ariResponse.getReq());
 		
 		listIdUser.remove(0);
 		listIdUser.add(13);
 		String new_packString=conv.convertJavaToJson(pack);
 		ari=new ARI(auth,"BlackListRemove",new_packString);
 		ariResponse=blackListRemove.manage(ari);
-		assertEquals("Id non esiste ma viene aggiunto lo stesso","IdNotFound",ariResponse.getReq());
+		assertEquals("Id non esiste ma viene aggiunto lo stesso","IdNotFoundBlackListRemove",ariResponse.getReq());
 		
 		listUserList.get(0).setList(null);
 		new_packString=conv.convertJavaToJson(pack);

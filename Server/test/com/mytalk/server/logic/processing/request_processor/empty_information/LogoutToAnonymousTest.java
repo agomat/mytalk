@@ -54,7 +54,7 @@ public class LogoutToAnonymousTest {
 		auth=new Authentication("user4","user4","123.123.123.4");
 		ari.setAuth(auth);
 		ariResult=logoutAsAnonymous.manage(ari);
-		assertEquals("Logout di un user non loggato","LogoutException",ariResult.getReq());
+		assertEquals("Logout di un user non loggato","Logout",ariResult.getReq());
 		
 		ari.getAuth().setUser(null);
 		ariResult=logoutAsAnonymous.manage(ari);

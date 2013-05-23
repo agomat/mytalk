@@ -58,7 +58,6 @@ public class GetCalls extends GenericRequest {
 					if(callServer.getCaller().equals(userAuth.getUsername())){ //verifico chi è il chiamante
 						caller=true;
 						speaker=da.getIdFromUsername(callServer.getReceiver());
-						
 						listCallClient.add(new Call(speaker, caller, callServer.getStartdate(),callServer.getDuration() , callServer.getByteSent(),callServer.getByteReceived()));
 						//incremento contatori statistiche globali
 						wrapperCall.increaseTotalByteSent(callServer.getByteSent());
@@ -79,9 +78,9 @@ public class GetCalls extends GenericRequest {
 				infoResponse=conv.convertJavaToJson(giveCallPack);
 				response=new ARI(null,"GiveCalls",infoResponse);
 			}catch(AuthenticationFail af){
-				response=new ARI(null,"AuthenticationFail",null);
+				response=new ARI(null,"AuthenticationFailGetCalls",null);
 			} catch (UserNotExisting e) {
-				response=new ARI(null,"UsernameNotExisting",null);
+				response=new ARI(null,"UsernameNotExistingGetCalls",null);
 			}	
 		}
 		return response;

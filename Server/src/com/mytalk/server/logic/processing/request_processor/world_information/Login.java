@@ -110,8 +110,8 @@ public class Login extends GenericRequest{
 				} catch(AuthenticationFail af){
 					response=new ARI(null, "AuthenticationFailLogin", null);
 				} catch (UsernameNotCorresponding e) {
-					response= new ARI(null, "UsernameCorrespondingExistingLogin",null);
-				} catch (IpNotLogged e) {
+					response= new ARI(null, "UsernameNotCorrespondingLogin",null);
+				}catch (IpNotLogged e) {
 					response= new ARI(null, "IpNotLoggedLogin",null);
 				} catch (UserAlreadyLogged e) {
 					response= new ARI(null, "UserAlreadyLoggedLogin",null);

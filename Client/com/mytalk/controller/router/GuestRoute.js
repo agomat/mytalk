@@ -3,6 +3,6 @@ MyTalk.GuestRoute = Ember.Route.extend({
     this.render('guest', { into: 'index', outlet: 'content' });
   },
   model: function() {
-    return MyTalk.PersonalData.find(1);
+    return MyTalk.PersonalData.find(0);
   }
 });

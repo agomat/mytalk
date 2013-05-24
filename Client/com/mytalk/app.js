@@ -70,7 +70,7 @@ var json =      {
 
 	//store.load(MyTalk.PersonalData, json);
 	//adapter = store.adapterForType(MyTalk.PersonalData);
-	//adapter.didFindRecord(store, MyTalk.PersonalData, json,1);  // function(store, type, payload, id)    
+	//adapter.didFindRecord(store, MyTalk.PersonalData, json,0);  // function(store, type, payload, id)    
 
 	$("input[name=username]").val("mattia");
     $("input[name=username]").change()

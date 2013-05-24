@@ -7,11 +7,6 @@
   <property name="src" location="src/"/>
   <property name="build" location="build/"/>
   <property name="dist" location="dist/"/>
-  <property name="lib" location="lib/"/>
-  
-  <path id="classpath">
-    <fileset dir="${lib}" includes="*.jar"/>
-  </path>
   
   <target name="init">
     <tstamp/>
@@ -19,7 +14,7 @@
   </target>
   
   <target name="compile" depends="init" description="Compile the source">
-    <javac encoding="utf8" srcdir="${src}" destdir="${build}" includeantruntime="false"/>
+    <javac encoding="utf8" srcdir="${src}" destdir="${build}" includeantruntime="true"/>
   </target>
   
   <target name="dist" depends="compile" description="Create distribution directory">

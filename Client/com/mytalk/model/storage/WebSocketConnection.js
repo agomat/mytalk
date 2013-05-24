@@ -24,29 +24,24 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
   getSocket: function() {
     // Lazy creation
     if(!this.get('socket')) {
-      var ws = new WebSocket(this.get('resource'));
-      ws.onopen = function() {
-        console.log('[WS] Connection established');
-      };
-      ws.onclone = function() {
-        console.log('[WS] Connection closed');
-      };
-      ws.onmessage = function(frame) {
-        var ari = frame.data;
-        
-      }
-      this.set('socket', ws);
+      Ember.run.later( this, function() {
+        var ws = new WebSocket(this.get('resource'));
+        ws.onopen = function() {
+          console.log('[WS] Connection established');
+        };
+        ws.onclone = function() {
+          console.log('[WS] Connection closed');
+        };
+        ws.onmessage = function(msg) {
+          var ari = JSON.parse( msg.data );
+          var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+          var processor = ProcessorFactory.createProcessorProduct( ari.req );
+          processor.process( ari );
+        }
+        this.set('socket', ws);
+      }, 1000);
     }
     return this.get('socket');
   },
-
-  closeConnection: function() { 
-    this.get('resource').close();
-    this.set('resource', undefined);
-  },
-
-  send: function(data) { 
-    this.get('socket').send( "ARI" );
-  }
 
 });

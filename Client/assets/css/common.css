@@ -2,7 +2,6 @@ html, body{
   padding:0;
   margin:0;
   font-size: 0.9em;
-  font-family: 'RobotoRegular';
   color:#666;
 }
 
@@ -15,7 +14,6 @@ body{
 }
 
 h1,h2,h3,h4,h5,h6{ 
-  font-family: 'RobotoMedium';
   margin: 0;
 }
 
@@ -56,7 +54,6 @@ input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholde
   border:1px solid #009200;
   border-radius: 3px;
   color:#fff !important;
-  font-family: 'RobotoBoldCondensed';
   
   background: rgb(0,184,0); /* Old browsers */
   background: -moz-linear-gradient(top,  rgba(0,184,0,1) 41%, rgba(0,145,0,1) 69%); /* FF3.6+ */
@@ -103,7 +100,6 @@ input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholde
 .hangup_button{
   cursor: pointer;
   color:#fff !important;
-  font-family: 'RobotoBoldCondensed';
   border-radius: 3px;
   border:1px solid #800e00;
 

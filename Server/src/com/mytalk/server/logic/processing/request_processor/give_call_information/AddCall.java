@@ -7,7 +7,9 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-01 |  MF       | [+] Inserimento classe, oggetti e costruttore     
+* 0.2	  |	2013-05-22 |   MF      | [+] Modifica dei nomi del metodo manage al fine di renderli
+* 									     più espressivi e di facile comprensione
+* 0.1	  |	2013-05-01 |   MF      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -30,7 +32,7 @@ import com.mytalk.server.logic.shared.model_client.WrapperCall;
 
 public class AddCall extends GenericRequest {
 
-	@Override
+	
 	public ARI manage(ARI ari) {
 		ARI response=null;
 		Authentication auth=ari.getAuth();
@@ -43,8 +45,8 @@ public class AddCall extends GenericRequest {
 		}	
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
-			WrapperCall wrapperCall=pack.getWrapperCall();//ottengo WrapperCall
-			List<Call> listOfCall=wrapperCall.getList();// lista di chiamate
+			WrapperCall wrapperCall=pack.getWrapperCall();
+			List<Call> listOfCall=wrapperCall.getList();
 			com.mytalk.server.data.model.Call callServer=null;
 			Call callClient=null;
 			String caller=null;

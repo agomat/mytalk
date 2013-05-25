@@ -7,6 +7,8 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2	  | 2013-05-13 |   NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli più espressivi
 * 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -35,9 +37,9 @@ public class Logout extends GenericRequest{
 			response= new ARI(null,"CorruptedPack",null);
 		}
 		else{
-			OnlineUser o=new OnlineUser(auth.getUser(), auth.getIp());
+			OnlineUser onlineUser=new OnlineUser(auth.getUser(), auth.getIp());
 			try {
-				da.logout(o);
+				da.logout(onlineUser);
 			} catch (LogoutException e) {
 			}
 			finally{

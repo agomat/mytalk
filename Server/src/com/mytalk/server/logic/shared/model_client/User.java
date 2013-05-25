@@ -5,9 +5,6 @@
 * Date: 2013-04-11
 *
 * Diary:
-*
-* Version |
-Date
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-11 | NT        | [+] Inserimento classe, oggetti e costruttore     

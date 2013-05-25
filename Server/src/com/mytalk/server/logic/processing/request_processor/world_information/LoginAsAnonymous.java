@@ -7,7 +7,9 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-07 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+* 0.2	  |	2013-05-22 |   MF      | [#] Modifica dei nomi del metodo manage al fine di renderli
+* 									     più espressivi e di facile comprensione
+* 0.1	  |	2013-05-07 |   MF      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -28,20 +30,19 @@ import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
 
 public class LoginAsAnonymous extends GenericRequest {
 
-	@Override
 	public ARI manage(ARI ari) {
 		ARI response=null;
 		if(ari.getAuth()==null || ari.getAuth().getIp()==null){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
-			OnlineUser o=new OnlineUser(null, ari.getAuth().getIp());
+			OnlineUser onlineUser=new OnlineUser(null, ari.getAuth().getIp());
 			String infoResponse=null;
 			try {
-				da.loginAsAnonymous(o);
+				da.loginAsAnonymous(onlineUser);
 				PersonalData pd=new PersonalData(null,null,null,null,null,null,null,ari.getAuth().getIp());
-				WorldPersonalData wpd=new WorldPersonalData(pd);
-				WorldPack wlp=new WorldPack(null,wpd);
-				infoResponse=conv.convertJavaToJson(wlp);
+				WorldPersonalData worldPersonalData=new WorldPersonalData(pd);
+				WorldPack worldPack=new WorldPack(null,worldPersonalData);
+				infoResponse=conv.convertJavaToJson(worldPack);
 				response=new ARI(null,"SuccessfulLoginAsAnonymous",infoResponse);
 			} catch (IpAlreadyLogged e) {
 				response=new ARI(null,"IpAlreadyLoggedLoginAsAnonymous",infoResponse);

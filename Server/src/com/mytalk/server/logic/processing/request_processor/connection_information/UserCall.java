@@ -7,6 +7,8 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2	  | 2013-05-13 |   NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli più espressivi ed eliminazione import superflui
 * 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -18,9 +20,7 @@
 package com.mytalk.server.logic.processing.request_processor.connection_information;
 
 import com.mytalk.server.data.model.Blacklist;
-import com.mytalk.server.exceptions.AuthenticationFail;
 import com.mytalk.server.exceptions.IdNotFound;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -53,8 +53,8 @@ public class UserCall extends GenericRequest{
 				}
 				String callerUsername = da.getUserById(pack.getMyUserId()).getUsername();
 				String speakerUsername=da.getUserById(pack.getSpeakerUserId()).getUsername();
-				Blacklist b=new Blacklist(speakerUsername,callerUsername);
-				checkPresence = da.checkBlacklist(b);
+				Blacklist blacklist=new Blacklist(speakerUsername,callerUsername);
+				checkPresence = da.checkBlacklist(blacklist);
 			}
 			result=da.checkUserByIp(pack.getSpeakerIp());
 			if(result && !checkPresence){

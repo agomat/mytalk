@@ -10,7 +10,9 @@
 Date
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-04-29 | NT        | [+] Creazione classe, costruttore e metodi   
+* 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli più espressivi
+* 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -33,55 +35,55 @@ import java.util.*;
 public class Processor implements IProcessor{
 	//classe che riceve e manda il JSON alla Comunication
 	//comunica la richiesta alla GenericRequest
-	private Map<String, String> hm;
+	private Map<String, String> hashmap;
 	private Convert convert=new Convert();
 	
 	public Processor(){
-		hm = new HashMap<String, String>();
+		hashmap = new HashMap<String, String>();
 		
-		hm.put("AcceptCall","com.mytalk.server.logic.processing.request_processor.connection_information.AcceptCall");
-		hm.put("RefuseCall","com.mytalk.server.logic.processing.request_processor.connection_information.RefuseCall");
-		hm.put("UserCall","com.mytalk.server.logic.processing.request_processor.connection_information.UserCall");
+		hashmap.put("AcceptCall","com.mytalk.server.logic.processing.request_processor.connection_information.AcceptCall");
+		hashmap.put("RefuseCall","com.mytalk.server.logic.processing.request_processor.connection_information.RefuseCall");
+		hashmap.put("UserCall","com.mytalk.server.logic.processing.request_processor.connection_information.UserCall");
 		
-		hm.put("CreateAccount","com.mytalk.server.logic.processing.request_processor.world_information.CreateAccount");
-		hm.put("DeleteAccount","com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount");
-		hm.put("Login","com.mytalk.server.logic.processing.request_processor.world_information.Login");
-		hm.put("LoginAsAnonymous","com.mytalk.server.logic.processing.request_processor.world_information.LoginAsAnonymous");
-		hm.put("Logout","com.mytalk.server.logic.processing.request_processor.empty_information.Logout");
-		hm.put("LogoutToAnonymous","com.mytalk.server.logic.processing.request_processor.empty_information.LogoutToAnonymous");
+		hashmap.put("CreateAccount","com.mytalk.server.logic.processing.request_processor.world_information.CreateAccount");
+		hashmap.put("DeleteAccount","com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount");
+		hashmap.put("Login","com.mytalk.server.logic.processing.request_processor.world_information.Login");
+		hashmap.put("LoginAsAnonymous","com.mytalk.server.logic.processing.request_processor.world_information.LoginAsAnonymous");
+		hashmap.put("Logout","com.mytalk.server.logic.processing.request_processor.empty_information.Logout");
+		hashmap.put("LogoutToAnonymous","com.mytalk.server.logic.processing.request_processor.empty_information.LogoutToAnonymous");
 		
-		hm.put("BlackListAdd","com.mytalk.server.logic.processing.request_processor.list_information.BlackListAdd");
-		hm.put("BlackListRemove","com.mytalk.server.logic.processing.request_processor.list_information.BlackListRemove");
-		hm.put("ListCreate","com.mytalk.server.logic.processing.request_processor.update_list_information.ListCreate");
-		hm.put("ListDelete","com.mytalk.server.logic.processing.request_processor.update_list_information.ListDelete");
-		hm.put("ListUserAdd","com.mytalk.server.logic.processing.request_processor.list_information.ListUserAdd");
-		hm.put("ListUserRemove","com.mytalk.server.logic.processing.request_processor.list_information.ListUserRemove");
-		hm.put("UpdateListName","com.mytalk.server.logic.processing.request_processor.update_list_information.UpdateListName");
+		hashmap.put("BlackListAdd","com.mytalk.server.logic.processing.request_processor.list_information.BlackListAdd");
+		hashmap.put("BlackListRemove","com.mytalk.server.logic.processing.request_processor.list_information.BlackListRemove");
+		hashmap.put("ListCreate","com.mytalk.server.logic.processing.request_processor.update_list_information.ListCreate");
+		hashmap.put("ListDelete","com.mytalk.server.logic.processing.request_processor.update_list_information.ListDelete");
+		hashmap.put("ListUserAdd","com.mytalk.server.logic.processing.request_processor.list_information.ListUserAdd");
+		hashmap.put("ListUserRemove","com.mytalk.server.logic.processing.request_processor.list_information.ListUserRemove");
+		hashmap.put("UpdateListName","com.mytalk.server.logic.processing.request_processor.update_list_information.UpdateListName");
 		
-		hm.put("AddCall","com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall");
-		hm.put("GetCalls","com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls");
+		hashmap.put("AddCall","com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall");
+		hashmap.put("GetCalls","com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls");
 
 	}
 		
 	public List<Message> processRequest(Message message){
 		
-		ARI pack=convert.convertJsonToJava(message.getJson());
-		if(pack.getAuth()!=null){
-			pack.getAuth().setIp(message.getIp());
+		ARI packInfo=convert.convertJsonToJava(message.getJson());
+		if(packInfo.getAuth()!=null){
+			packInfo.getAuth().setIp(message.getIp());
 		}
 		else{
-			pack.setAuth(new Authentication(null,null,message.getIp()));
+			packInfo.setAuth(new Authentication(null,null,message.getIp()));
 		}
-		String request=pack.getReq();
+		String request=packInfo.getReq();
 		ARI esito=null;
 		String ipToSend=null;
-		List<Message> response=new ArrayList<Message>();
+		List<Message> responseList=new ArrayList<Message>();
 		try{
-			String r= hm.get(request);
+			String r= hashmap.get(request);
 			Class<?> cl=Class.forName(r);
 			Object obj=cl.newInstance();
 			Method m= cl.getDeclaredMethod("manage", ARI.class);
-			esito=(ARI)m.invoke(obj, pack);	
+			esito=(ARI)m.invoke(obj, packInfo);	
 		}catch(ClassNotFoundException cnfe){
 			// TODO Auto-generated catch block
 			cnfe.printStackTrace();
@@ -115,14 +117,14 @@ public class Processor implements IProcessor{
 		
 		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
 			StateUpdate stateUpdate=new StateUpdate();
-			ARI ari=stateUpdate.manage(pack);
+			ARI ari=stateUpdate.manage(packInfo);
 			String jsonAri=convert.convertJavaToJson(ari);
-			response.add(new Message("broadcast",jsonAri));
+			responseList.add(new Message("broadcast",jsonAri));
 		}
 		if(!esito.getReq().equals("Logout") && !esito.getReq().equals("UnsuccessfulRefuseCall")){
 			String json=convert.convertJavaToJson(esito);
-			response.add(new Message(ipToSend,json));
+			responseList.add(new Message(ipToSend,json));
 		}
-		return response;
+		return responseList;
 	}
 }

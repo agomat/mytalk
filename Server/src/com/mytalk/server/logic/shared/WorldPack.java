@@ -5,9 +5,6 @@
 * Date: 2013-04-23
 *
 * Diary:
-*
-* Version |
-Date
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
 * 0.1	  |	2013-04-23 | NT        | [+] Creazione classe e costruttore

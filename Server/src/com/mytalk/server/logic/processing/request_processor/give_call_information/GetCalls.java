@@ -7,7 +7,9 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-01 |  MF       | [+] Inserimento classe, oggetti e costruttore     
+* 0.2	  |	2013-05-22 |   MF      | [+] Modifica dei nomi del metodo manage al fine di renderli
+* 									     più espressivi e di facile comprensione
+* 0.1	  |	2013-05-01 |   MF      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *

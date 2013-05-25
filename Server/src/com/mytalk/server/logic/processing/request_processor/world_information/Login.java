@@ -7,6 +7,10 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.3	  |	2013-05-22 |   MF      | [#] Modifica dei nomi del metodo manage al fine di renderli
+* 									     più espressivi e di facile comprensione
+* 0.2	  |	2013-05-15 |   MF      | [#] Ottimizzazione del metodo manage al fine di ridurre la 
+* 										 complessità
 * 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -44,7 +48,7 @@ public class Login extends GenericRequest{
 				response=new ARI(null,"CorruptedPack",null);
 			}else{
 				com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
-				OnlineUser o=new OnlineUser(ari.getAuth().getUser(), ari.getAuth().getIp());
+				OnlineUser onlineUser=new OnlineUser(ari.getAuth().getUser(), ari.getAuth().getIp());
 				List<com.mytalk.server.data.model.User> listOnlineServer=null;
 				List<com.mytalk.server.data.model.User> listOfflineServer=null;
 				List<User> listAllUsersClient=new ArrayList<User>();
@@ -60,7 +64,7 @@ public class Login extends GenericRequest{
 				List<com.mytalk.server.data.model.User> blackListUserServer=null;
 				List<Integer> blackListInteger=new ArrayList<Integer>();
 				try{
-					da.login(o, user);
+					da.login(onlineUser, user);
 					
 					listOnlineServer=da.getOnlineUsers(user);
 					listOfflineServer=da.getOfflineUsers(user);

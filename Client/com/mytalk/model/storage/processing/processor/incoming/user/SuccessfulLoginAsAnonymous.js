@@ -6,13 +6,13 @@ MyTalk.processor.SuccessfulLoginAsAnonymous = Ember.Object.extend(MyTalk.Abstrac
   	var ip = Ipart.worldPersonalData.pd.ip;
     // CORRECT MODE
 
-    var sideloadOK = Ipart.worldPersonalData; // cambiare pd -> personal_data
+    var sideloadOK = Ipart.worldPersonalData;
 
     // END
     var sideload = {
-	          "personal_data": { id:0, "ip":ip}
+	          "pd": { id:0, "ip":ip}
 	       };
-	  var store = DS.get("defaultStore");
+	  var store = DS.get('defaultStore');
 	  store.load(MyTalk.PersonalData, sideload);
 	  adapter = store.adapterForType(MyTalk.PersonalData);
 	  adapter.didFindRecord(store, MyTalk.PersonalData, sideload,0); 

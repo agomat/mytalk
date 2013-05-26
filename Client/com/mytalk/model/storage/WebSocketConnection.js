@@ -17,31 +17,29 @@
 * - Zucchetti SRL
 */
 
+
 MyTalk.WebSocketConnection = Ember.Mixin.create({
   resource: 'ws://'+window.location.hostname+':8887',
   socket: undefined,
 
-  getSocket: function() {
+  createSocket: function() {
     // Lazy creation
     if(!this.get('socket')) {
-      Ember.run.later( this, function() {
-        var ws = new WebSocket(this.get('resource'));
-        ws.onopen = function() {
-          console.log('[WS] Connection established');
-        };
-        ws.onclone = function() {
-          console.log('[WS] Connection closed');
-        };
-        ws.onmessage = function(msg) {
-          var ari = JSON.parse( msg.data );
-          var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-          var processor = ProcessorFactory.createProcessorProduct( ari.req );
-          processor.process( ari );
-        }
-        this.set('socket', ws);
-      }, 0);
+      var ws = new WebSocket(this.get('resource'));
+      ws.onopen = function() {
+        console.log('[WS] Connection established');
+      };
+      ws.onclone = function() {
+        console.log('[WS] Connection closed');
+      };
+      ws.onmessage = function(msg) {
+        var ari = JSON.parse( msg.data );
+        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = ProcessorFactory.createProcessorProduct( ari.req );
+        processor.process( ari ); // passagli l'originalRequest dell'history
+      }
+      this.set('socket', ws);
     }
-    return this.get('socket');
   },
 
 });

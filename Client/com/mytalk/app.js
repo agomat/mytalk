@@ -1,11 +1,6 @@
 MyTalk = Ember.Application.create({
-  LOG_TRANSITIONS: true,
+  LOG_TRANSITIONS: true
 });
-
-// Namespaces definition
-//MyTalk.model = Ember.Namespace.create({});
-//MyTalk.controller = Ember.Namespace.create({});
-//MyTalk.view = Ember.Namespace.create({});
 
 MyTalk.processor = Ember.Namespace.create({});
 
@@ -64,16 +59,16 @@ var json =      {
 	var adapter = store.adapterForType(MyTalk.List);
 	adapter.didFindMany(store, MyTalk.List, json);
 
-	json = {
-	          "personal_data": { id:0, "md5":"699b1b3f9c23e21f13b2ac9267942b01","username": "mattia", "password": "123", "name":"Mattia", "surname":"Agostinetto", "email":"agomat@gmail.com", "md5":"699b1b3f9c23e21f13b2ac9267942b01","ip":"196.168.168.168"}
+	/*json = {
+	          "personal_data": { id:0, "ip":"your IP here"}
 	       };
 
 	store.load(MyTalk.PersonalData, json);
 	adapter = store.adapterForType(MyTalk.PersonalData);
 	adapter.didFindRecord(store, MyTalk.PersonalData, json,0);  // function(store, type, payload, id)    
-
+*/
 	$("input[name=username]").val("mattia");
     $("input[name=username]").change()
     $("input[name=password]").val("mattia");
 	$("input[name=password]").change()
-}, 1000);
+}, 2000);

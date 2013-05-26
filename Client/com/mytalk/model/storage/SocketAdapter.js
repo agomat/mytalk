@@ -20,10 +20,9 @@
 
 DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, { 
   bulkCommit: true,
-  socket: undefined,
 
   init: function() {    
-    socket = this.getSocket();
+    this.createSocket();
     this._super();
   },
  
@@ -48,19 +47,29 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     var context = this;
     var processor = record.get('transaction').get('processor');
 
-    var onSent = function(processorName, success){ // da falciare immediatly
+    var onSent = function(processorName, success){
       if (success) {
-        context.didCreateRecord(store, type, record);
         console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta "Login in corso"
+        // TODO fare in modo che appaia una scritta per es "Login in corso"
       } else {        
-        context.didError(store, type, record);
         console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
         // TODO fare in modo che appaia una scritta "Connessione con il server persa"
       }
-    }; 
+    };
 
-    processor.sendToServer(this.get('socket'), record, onSent);
+    var onComplete = function(processorName, success){
+      if (success) {
+        context.didCreateRecord(store, type, record);
+        console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
+        // TODO fare in modo che appaia una scritta per es "Login in corso"
+      } else {        
+        context.didError(store, type, record, '');
+        console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
+        // TODO fare in modo che appaia una scritta "Connessione con il server persa"
+      }
+    };
+
+    processor.sendToServer(this.get('socket'), record, onSent, onComplete);
     
   },
 
@@ -93,5 +102,9 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
 });
 
+
+DS.SocketAdapter.configure('MyTalk.PersonalData', {
+    sideloadAs: 'pd'
+});
 
 

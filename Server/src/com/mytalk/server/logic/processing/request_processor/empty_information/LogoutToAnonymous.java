@@ -2,12 +2,14 @@
 * Filename: LogoutAsAnonymous.java
 * Package: com.mytalk.server.logic.processing.request_processor.empty_information
 * Author: Michael Ferronato
-* Date: 2013/05/17
+* Date: 2013-05-17
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013/05/17 |   MF      | [+] Inserimento classe, oggetti e costruttore     
+* 0.2	  |	2013-05-22 |   MF      | [+] Modifica dei nomi del metodo manage al fine di renderli
+* 									     più espressivi e di facile comprensione
+* 0.1	  |	2013-05-17 |   MF      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -34,9 +36,9 @@ public class LogoutToAnonymous extends GenericRequest {
 		if(!checkAuth){
 			response=new ARI(null,"CorruptedPack",null);
 		}else{
-			OnlineUser o=new OnlineUser(auth.getUser(), auth.getIp());
+			OnlineUser onlineUser=new OnlineUser(auth.getUser(), auth.getIp());
 			try {
-				da.logoutToAnonymous(o);
+				da.logoutToAnonymous(onlineUser);
 			} catch (LogoutException e) {
 			}	
 			finally{

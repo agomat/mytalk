@@ -16,6 +16,7 @@
     <script type="text/javascript" src="assets/lib/handlebars-1.0.0-rc.3.js"></script>
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.3.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
+    <script type="text/javascript" src="assets/lib/list-view.js"></script>
 
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/app.js"></script>
@@ -205,18 +206,18 @@
 
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
-        {{#each user in controller}}
+        {{#collection Ember.ListView contentBinding="controller" height=498 rowHeight=80}}
         {{#unless user.unmatched}}
           <li>
 
-            <div {{bindAttr class="user.online:online:offline"}}></div>
+            <div {{bindAttr class="online:online:offline"}}></div>
             <div class="avatar">
-             <img {{bindAttr src="user.avatarTiny"}} />
+             <img {{bindAttr src="avatarTiny"}} />
             </div>
 
-            <div>
-              <div>{{ user.name }} {{ user.surname }}</div>
-                {{ user.username }}
+            <div class="user_info">
+              <div><span>{{ name }} {{ surname }}</span></div>
+                {{ username }}
             </div>
 
             <ul {{bindAttr class="user.online:callEnebled:callDisabled"}}>
@@ -243,7 +244,7 @@
             {{/if}}
           </li>
           {{/unless}}
-        {{/each}}
+        {{/collection}}
       </ul>
       
        <div id="adduser" class="blanket">

@@ -7,6 +7,8 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2	  | 2013-05-13 |   NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli più espressivi
 * 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -37,12 +39,12 @@ public class CreateAccount extends GenericRequest{
 		if(!checkPack){
 			response=new ARI(null,"CorruptedPack",infoRequest);
 		}else{
-			PersonalData p=pack.getWorldPersonalData().getPersonalData();
-			String md5=MD5Converter.getHashMD5(p.getEmail());
-			String pwdHash=MD5Converter.getHashMD5(p.getPassword());
-			com.mytalk.server.data.model.User u=new com.mytalk.server.data.model.User(p.getUsername(), pwdHash,p.getEmail(), p.getName(), p.getSurname(),md5);
+			PersonalData personalData=pack.getWorldPersonalData().getPersonalData();
+			String md5=MD5Converter.getHashMD5(personalData.getEmail());
+			String pwdHash=MD5Converter.getHashMD5(personalData.getPassword());
+			com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(personalData.getUsername(), pwdHash,personalData.getEmail(), personalData.getName(), personalData.getSurname(),md5);
 			try{
-				da.createAccount(u);
+				da.createAccount(user);
 				ari.getAuth().setUser(pack.getWorldPersonalData().getPersonalData().getUsername());
 				ari.getAuth().setPwd(pack.getWorldPersonalData().getPersonalData().getPassword());
 				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", infoRequest);

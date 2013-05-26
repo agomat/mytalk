@@ -7,6 +7,8 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2	  | 2013-05-13 |   NT	   | [#] Modifica dei nomi di alcune variabili nel metodo manage al
+* 										 fine di renderli più espressivi ed eliminazione import superflui
 * 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.

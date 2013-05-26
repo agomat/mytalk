@@ -10,7 +10,8 @@ body{
   min-width: 800px;
   width: 80%;
   margin: 10px auto;
-  border-radius: 15px;  
+  border-radius: 15px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1,h2,h3,h4,h5,h6{ 

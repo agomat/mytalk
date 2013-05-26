@@ -4,7 +4,7 @@ $.fn.dropDownMenu = function() {
   $('#menu_label').unbind('click');
 
   $(document).click(function() {
-    $("#menu_area").slideUp(400);
+    $("#menu_area").slideUp(200);
   });
 
   $('#menu_area').click(function(e) {
@@ -14,9 +14,9 @@ $.fn.dropDownMenu = function() {
   $('#menu_label').click(function(e) {
     e.stopPropagation();
     if ($('#menu_area').css('display') == 'block')
-     $('#menu_area').slideUp(400);
+     $('#menu_area').slideUp(200);
     else
-     $('#menu_area').slideDown(400);
+     $('#menu_area').slideDown(200);
   });
 
   $('#menu_area a').click(function(e) {

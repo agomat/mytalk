@@ -14,7 +14,7 @@ MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
       id: 0,
       username: username,
       password: password,
-      ip: "//TODO"
+      ip: MyTalk.PersonalData.find(0).get('ip')
     });
 
   },

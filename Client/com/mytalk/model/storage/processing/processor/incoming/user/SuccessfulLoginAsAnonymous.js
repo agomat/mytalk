@@ -8,5 +8,9 @@ MyTalk.processor.SuccessfulLoginAsAnonymous = Ember.Object.extend(MyTalk.Abstrac
 	  store.load(MyTalk.PersonalData, sideload);
 	  adapter = store.adapterForType(MyTalk.PersonalData);
 	  adapter.didFindRecord(store, MyTalk.PersonalData, sideload,0); 
-  }
+  },
+  
+  getProcessorName: function () {
+  	return this.get('name');
+  } 
 });

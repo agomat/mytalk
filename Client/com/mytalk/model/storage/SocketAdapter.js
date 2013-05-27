@@ -102,9 +102,18 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
 });
 
+/*
+ * Mapping configuration for sideload and foreign keys
+ */
 
 DS.SocketAdapter.configure('MyTalk.PersonalData', {
     sideloadAs: 'pd'
 });
 
+DS.SocketAdapter.configure('MyTalk.List', {
+    sideloadAs: 'userList'
+});
 
+DS.SocketAdapter.configure('MyTalk.User', {
+    sideloadAs: 'list'
+});

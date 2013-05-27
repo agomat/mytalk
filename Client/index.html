@@ -210,6 +210,7 @@
 
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
+
         {{#collection Ember.ListView contentBinding="controller" height=498 rowHeight=80}}
         {{#unless unmatched}}
           <li>
@@ -224,16 +225,16 @@
                 {{ username }}
             </div>
 
-            <ul {{bindAttr class="user.online:callEnebled:callDisabled"}}>
+            <ul {{bindAttr class="online:callEnebled:callDisabled"}}>
             
 
-            {{#if controllers.list.blackList}}
+            {{#if controller.controllers.list.blackList}}
                 <li><a class="call_user" href="#" {{action "call" id }} ></a></li>
                 <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" id }}></a></li>
               </ul>
             {{else}}
-                {{#if controllers.list.generalList}}
+                {{#if controller.controllers.list.generalList}}
                   <li><a class="call_user" href="#" {{action "call" id }} ></a></li>
                   <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" id }}></a></li>

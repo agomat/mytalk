@@ -445,14 +445,11 @@
       
       <div id="chat">
         <ul id="messages">
-          <li class="received_message">Ciao</li>
-          <li class="sent_message">ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao cia coaicosj oaaoj</li>
-          <li class="received_message">ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao cia coaicosj oaaoj</li>
-          {{#each a in controller}}
-          {{#if a.sender}}
-          <li class="sent_message">{{a.text}}</li>
+          {{#each message in messages}}
+          {{#if message.sender}}
+          <li class="sent_message">{{message.text}}</li>
           {{else}}
-          <li class="received_message">{{a.text}}</li>
+          <li class="received_message">{{message.text}}</li>
           {{/if}}
           {{/each}}
         </ul>
@@ -461,18 +458,20 @@
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
             {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button type="submit" class="common_button"> Invia</button>
+            <button type="submit" class="common_button">Invia</button>
           </fieldset>
         {{/view}}
       </div>
       <div id="comunicazione">
           <video id="local" autoplay muted></video>
           <video id="remote" autoplay></video>
-          <a href="#" class="hangup_button"><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
+          <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
           <ul id="stats"> 
-            <li><span>Tempo trascorso:</span>3299329849038242</li>
-            <li><span>Byte ricevuti:</span>3299329849038242</li>
-            <li><span>Byte trasmessi:</span>3299329849038242</li>
+
+            <li><span>Tempo trascorso:</span>{{statistics.duration}}</li>
+            <li><span>Byte ricevuti:</span>{{statistics.receivedBytes}}</li>
+            <li><span>Byte trasmessi:</span>{{statistics.sentBytes}}</li>
+          
           </ul>
 
 

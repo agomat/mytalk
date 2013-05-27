@@ -7,7 +7,7 @@ MyTalk.processor = Ember.Namespace.create({});
 
 
 /* Parte di popolamento in assenza di un Server funzionante */
-
+/*
 Ember.run.later(this, function(){
 
 var json =      {
@@ -59,16 +59,17 @@ var json =      {
 	var adapter = store.adapterForType(MyTalk.List);
 	adapter.didFindMany(store, MyTalk.List, json);
 
-	/*json = {
-	          "personal_data": { id:0, "ip":"your IP here"}
-	       };
+	//json = {
+	//          "personal_data": { id:0, "ip":"your IP here"}
+	//       };
+    //
+	//store.load(MyTalk.PersonalData, json);
+	//adapter = store.adapterForType(MyTalk.PersonalData);
+	//adapter.didFindRecord(store, MyTalk.PersonalData, json,0);  // function(store, type, payload, id)    
 
-	store.load(MyTalk.PersonalData, json);
-	adapter = store.adapterForType(MyTalk.PersonalData);
-	adapter.didFindRecord(store, MyTalk.PersonalData, json,0);  // function(store, type, payload, id)    
-*/
 	$("input[name=username]").val("mattia");
     $("input[name=username]").change()
     $("input[name=password]").val("mattia");
 	$("input[name=password]").change()
 }, 2000);
+*/

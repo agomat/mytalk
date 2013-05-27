@@ -32,7 +32,6 @@ import com.mytalk.server.logic.processing.request_processor.list_information.Bla
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.ListPack;
-import com.mytalk.server.logic.shared.model_client.User;
 import com.mytalk.server.logic.shared.model_client.UserList;
 
 public class BlackListRemoveTest {

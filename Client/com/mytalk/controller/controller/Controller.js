@@ -135,9 +135,12 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   call: function(user){
     if(user.get('online')){
       console.log("call "+user.get('id'));
+      MyTalk.Router.router.transitionTo('call');
     }
     // TODO
   },
+
+
   
   loadSelect:function(){
     var temp=new Array();
@@ -228,4 +231,42 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       //blacklist.get('transaction').commit();
     } 
   }
+});
+
+
+
+MyTalk.CallController = Ember.ArrayController.extend({
+
+  needs:['users'],
+  messages:[],
+  statistics:Ember.Object.create({duration:null,sentBytes:null,receivedBytes:null}),
+
+  sendMessage:function(message){
+    var context=this.get('messages');
+    var temp=new Array();
+
+    if(context){
+      context.forEach(function(t){
+         temp.pushObject(t);
+      })
+      temp.pushObject(Ember.Object.create({sender:true,text:message}));
+      temp.pushObject(Ember.Object.create({sender:false,text:"messaggio prova"}));
+      this.set('messages',temp);
+    }
+    else{
+
+        temp.pushObject(Ember.Object.create({sender:true,text:message}));
+        temp.pushObject(Ember.Object.create({sender:false,text:"messaggio prova"}));
+        this.set('messages',temp);
+    }
+  },
+
+   closeCall:function(){
+
+    //MyTalk.Router.router.transitionTo('list');
+
+  },
+  
+
+
 });

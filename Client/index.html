@@ -10,6 +10,7 @@
     <link type="text/css" rel="stylesheet" href="assets/css/c3.css" media="screen" /> 
     <link type="text/css" rel="stylesheet" href="assets/css/c4.css" media="screen" /> 
     <link type="text/css" rel="stylesheet" href="assets/css/popup.css" media="screen" />
+    <link type="text/css" rel="stylesheet" href="assets/css/call.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/c4-logged.css" media="screen" />
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.0.min.js"></script>
@@ -32,7 +33,7 @@
     <script type="text/javascript" src="com/mytalk/view/templateview/RegisterFormView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/RegisterPassword.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/IPCall.js"></script>
-    
+    <script type="text/javascript" src="com/mytalk/view/templateview/CallView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateview/UsersView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateview/GuestView.js"></script>
     
@@ -43,6 +44,7 @@
     <script type="text/javascript" src="com/mytalk/view/templateview/RegisterView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/RegisterSurname.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateview/HeaderView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateview/MessageFormView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateview/IPFormView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/LoginUsername.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/LoginPassword.js"></script>
@@ -50,11 +52,13 @@
     <script type="text/javascript" src="com/mytalk/view/templateform/RegisterName.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/RegisterUsername.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/SearchView.js"></script>
+    <script type="text/javascript" src="com/mytalk/view/templateform/MessageText.js"></script>
     
     <!-- bootstrap Router -->
     <script type="text/javascript" src="com/mytalk/controller/router/Router.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/IndexRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/GuestRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/CallRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/LoggedRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/LoggedIndexRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/ListRoute.js"></script>
@@ -440,6 +444,46 @@
         <button id="ip_call_button" class="common_button" type="submit"><div></div>Chiama</button>
         </fieldset>
       {{/view}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="call">
+     <div id="call_content" class="scroll_content">
+      
+      <div id="chat">
+        <ul id="messages">
+          {{#each message in messages}}
+          {{#if message.sender}}
+          <li class="sent_message">{{message.text}}</li>
+          {{else}}
+          <li class="received_message">{{message.text}}</li>
+          {{/if}}
+          {{/each}}
+        </ul>
+        {{#view MyTalk.MessageFormView }}
+          <fieldset>
+            <legend hidden>Scrivi un messaggio</legend>
+            <label for="text_input" hidden>Scrivi un messaggio</label> 
+            {{view MyTalk.MessageText valueBinding='view.message'}}
+            <button type="submit" class="common_button">Invia</button>
+          </fieldset>
+        {{/view}}
+      </div>
+      <div id="comunicazione">
+          <video id="local" autoplay muted></video>
+          <video id="remote" autoplay></video>
+          <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
+          <ul id="stats"> 
+
+            <li><span>Tempo trascorso:</span>{{statistics.duration}}</li>
+            <li><span>Byte ricevuti:</span>{{statistics.receivedBytes}}</li>
+            <li><span>Byte trasmessi:</span>{{statistics.sentBytes}}</li>
+          
+          </ul>
+
+
+      </div>
+    </div>
+
     </script>
   </body>
 </html>

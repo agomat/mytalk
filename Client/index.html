@@ -103,6 +103,7 @@
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulLoginAsAnonymous.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulLogin.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/StateUpdate.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/AuthenticationFailLogin.js"></script>
     
     <!-- bootstrap Storage -->
     <script type="text/javascript" src="com/mytalk/model/storage/ARI.js"></script>
@@ -265,7 +266,7 @@
             <fieldset>
               <legend hidden>Aggungi ad una lista</legend>
               <div class="modal_content">
-                <p> Segli a quale lista aggiungere l'utente {{ controller.userName }}</p>
+                <p> Segli a quale lista aggiungere l`utente {{ controller.userName }}</p>
                 <label for="search_list" hidden>Scegli la lista</label>
                   {{view Ember.Select 
                     contentBinding="controller.selectArray"
@@ -441,7 +442,7 @@
     <script type="text/x-handlebars" data-template-name="_callip">
       {{#view MyTalk.IPFormView}}
         <fieldset>
-        <legend hidden>Chiama inserendo l'indirizzo IP</legend>
+        <legend hidden>Chiama inserendo l`indirizzo IP</legend>
         <label for="ip_call_text" hidden>Indirizzo IP</label> 
         {{view MyTalk.IPCall valueBinding='view.ip_call'}}
         <button id="ip_call_button" class="common_button" type="submit"><div></div>Chiama</button>

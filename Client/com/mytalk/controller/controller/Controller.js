@@ -11,10 +11,8 @@ MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
     processor.process({
-      id: 0,
       username: username,
-      password: password,
-      ip: MyTalk.PersonalData.find(0).get('ip')
+      password: password
     });
 
   },

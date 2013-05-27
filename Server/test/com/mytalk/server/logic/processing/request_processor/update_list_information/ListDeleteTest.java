@@ -20,9 +20,6 @@ package com.mytalk.server.logic.processing.request_processor.update_list_informa
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,9 +28,7 @@ import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.update_list_information.ListDelete;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
-import com.mytalk.server.logic.shared.ListPack;
 import com.mytalk.server.logic.shared.UpdateListPack;
-import com.mytalk.server.logic.shared.model_client.UserList;
 
 public class ListDeleteTest {
 

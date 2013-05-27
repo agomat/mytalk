@@ -23,18 +23,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
-import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.empty_information.LogoutToAnonymous;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
-import com.mytalk.server.logic.shared.WorldPack;
-import com.mytalk.server.logic.shared.model_client.PersonalData;
-import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
 
 public class LogoutToAnonymousTest {
 
 	private EnvironmentSetter envSetter=new EnvironmentSetter();
-	private Convert conv=new Convert();
 	
 	@Before
 	public void setTestEnvironment(){

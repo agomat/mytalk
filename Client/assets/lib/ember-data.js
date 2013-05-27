@@ -1,4 +1,4 @@
-// Last commit: 76b93ba (2013-05-16 10:35:14 -0700)
+// Last commit: 7c01dd5 (2013-05-24 18:29:49 -0700)
 
 
 (function() {
@@ -46,17 +46,7 @@ var define, requireModule;
   @static
 */
 
-window.DS = Ember.Namespace.create({
-  /**
-    Current API revision. See 
-    [BREAKING_CHANGES.md](https://github.com/emberjs/data/blob/master/BREAKING_CHANGES.md) 
-    for more information.
-
-    @property CURRENT_API_REVISION
-    @type Integer
-  */
-  CURRENT_API_REVISION: 12
-});
+window.DS = Ember.Namespace.create();
 
 })();
 
@@ -1020,7 +1010,7 @@ var transformMapValue = function(key, value) {
 
 DS._Mappable = Ember.Mixin.create({
   createInstanceMapFor: function(mapName) {
-    var instanceMeta = Ember.metaPath(this, ['DS.Mappable'], true);
+    var instanceMeta = getMappableMeta(this);
 
     instanceMeta.values = instanceMeta.values || {};
 
@@ -1040,7 +1030,7 @@ DS._Mappable = Ember.Mixin.create({
   },
 
   _copyMap: function(mapName, klass, instanceMap) {
-    var classMeta = Ember.metaPath(klass, ['DS.Mappable'], true);
+    var classMeta = getMappableMeta(klass);
 
     var classMap = classMeta[mapName];
     if (classMap) {
@@ -1067,7 +1057,8 @@ DS._Mappable = Ember.Mixin.create({
 
 DS._Mappable.generateMapFunctionFor = function(mapName, transform) {
   return function(key, value) {
-    var meta = Ember.metaPath(this, ['DS.Mappable'], true);
+    var meta = getMappableMeta(this);
+
     var map = meta[mapName] || Ember.MapWithDefault.create({
       defaultValue: function() { return {}; }
     });
@@ -1077,6 +1068,20 @@ DS._Mappable.generateMapFunctionFor = function(mapName, transform) {
     meta[mapName] = map;
   };
 };
+
+function getMappableMeta(obj) {
+  var meta = Ember.meta(obj, true),
+      keyName = 'DS.Mappable',
+      value = meta[keyName];
+
+  if (!value) { meta[keyName] = {}; }
+
+  if (!meta.hasOwnProperty(keyName)) {
+    meta[keyName] = Ember.create(meta[keyName]);
+  }
+
+  return meta[keyName];
+}
 
 })();
 
@@ -1183,13 +1188,6 @@ DS.Store = Ember.Object.extend(DS._Mappable, {
     The init method registers this store as the default if none is specified.
   */
   init: function() {
-    // Enforce API revisioning. See BREAKING_CHANGES.md for more.
-    var revision = get(this, 'revision');
-
-    if (revision !== DS.CURRENT_API_REVISION && !Ember.ENV.TESTING) {
-      throw new Error("Error: The Ember Data library has had breaking API changes since the last time you updated the library. Please review the list of breaking changes at https://github.com/emberjs/data/blob/master/BREAKING_CHANGES.md, then update your store's `revision` property to " + DS.CURRENT_API_REVISION);
-    }
-
     if (!get(DS, 'defaultStore') || get(this, 'isDefaultStore')) {
       set(DS, 'defaultStore', this);
     }
@@ -3498,6 +3496,7 @@ var retrieveFromCurrentState = Ember.computed(function(key, value) {
   @extends Ember.Object
   @constructor
 */
+
 DS.Model = Ember.Object.extend(Ember.Evented, LoadPromise, {
   isLoading: retrieveFromCurrentState,
   isLoaded: retrieveFromCurrentState,
@@ -3957,7 +3956,23 @@ var storeAlias = function(methodName) {
 };
 
 DS.Model.reopenClass({
-  isLoaded: storeAlias('recordIsLoaded'),
+
+  /** @private
+    Alias DS.Model's `create` method to `_create`. This allows us to create DS.Model
+    instances from within the store, but if end users accidentally call `create()`
+    (instead of `createRecord()`), we can raise an error.
+  */
+  _create: DS.Model.create,
+
+  /** @private
+
+    Override the class' `create()` method to raise an error. This prevents end users
+    from inadvertently calling `create()` instead of `createRecord()`. The store is
+    still able to create instances by calling the `_create()` method.
+  */
+  create: function() {
+    throw new Ember.Error("You should not call `create` on a model. Instead, call `createRecord` with the attributes you would like to set.");
+  },
 
   /**
     See {{#crossLink "DS.Store/find:method"}}`DS.Store.find()`{{/crossLink}}.
@@ -3993,12 +4008,6 @@ DS.Model.reopenClass({
     @return {DS.FilteredRecordArray}
   */
   filter: storeAlias('filter'),
-
-  _create: DS.Model.create,
-
-  create: function() {
-    throw new Ember.Error("You should not call `create` on a model. Instead, call `createRecord` with the attributes you would like to set.");
-  },
 
   /**
     See {{#crossLink "DS.Store/createRecord:method"}}`DS.Store.createRecord()`{{/crossLink}}.
@@ -8113,7 +8122,7 @@ DS.FixtureSerializer = DS.Serializer.extend({
 
   extractBelongsTo: function(type, hash, key) {
     var val = hash[key];
-    if (val !== null && val !== undefined) {
+    if (val != null) {
       val = val + '';
     }
     return val;

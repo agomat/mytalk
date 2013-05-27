@@ -151,8 +151,9 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   }.property('selectArray'),
 
   
-  addUser: function(user){
+  addUser: function(userId){
     document.getElementById('adduser').style.display='block';
+    var user = MyTalk.User.find(userId);
     var n=user.get('name')+" "+user.get('surname');
     this.set('userId',user.get('id'));
     this.set('userName',n);
@@ -198,8 +199,16 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     var confirmation = confirm("Sei sicuro di eliminare l'utente " + user.get('fullName') +" dalla lista?");
     if(confirmation){
       var listId = this.get('controllers.list.content.id');
-      var currentList = MyTalk.List.find(listId).get('users');
-      currentList.removeObject( user );
+      if(listId==1){
+        var currentList = MyTalk.List.find(listId).get('users');
+        var generalList = MyTalk.List.find(0).get('users');
+        currentList.removeObject( user );
+        generalList.addObject( user );
+      }
+      else{
+        var currentList = MyTalk.List.find(listId).get('users');
+        currentList.removeObject( user );
+      }
     }
   },
   userToBlacklist:function(userId){

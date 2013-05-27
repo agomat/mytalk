@@ -19,6 +19,7 @@ package com.mytalk.server.logic.shared.model_client;
 
 public class PersonalData{
 		
+	private Integer id=0;
 	private Integer userId;
 	private String username;
 	private String password;

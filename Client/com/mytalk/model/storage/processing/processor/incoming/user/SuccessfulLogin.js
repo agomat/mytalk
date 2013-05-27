@@ -10,6 +10,6 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractOutProcess
     // creazione lista generale
     MyTalk.List.createRecord({id:0, name:'Tutti i contatti'}).get('users').addObjects( MyTalk.User.find( ) );
     //MyTalk.List.find(0).get('transaction').commit(); // vedere se da problemi ai ragazzi del server
-    MyTalk.StateManager.login();
+    MyTalk.StateManager.send("login"); 
   }
 });

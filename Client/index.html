@@ -102,6 +102,7 @@
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/AbstractInProcessorProduct.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulLoginAsAnonymous.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulLogin.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/StateUpdate.js"></script>
     
     <!-- bootstrap Storage -->
     <script type="text/javascript" src="com/mytalk/model/storage/ARI.js"></script>
@@ -294,7 +295,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="_dashboard">
-      {{#if isAuthenticated}}
+      {{#if isAuthenticated}} Nuovo problema: non riesce più a prendersi il PersonalData (0)
         <div id="menu_container">
         {{#each me in model}}
         {{#if me.name}}

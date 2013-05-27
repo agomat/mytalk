@@ -36,8 +36,8 @@ public class Convert {
 	}
 	
 	//JSON -> Java per i pack
-	public Information convertJsonToJava(String stringJson,Class info){	
-		Information infoEntity=gson.fromJson(stringJson,info);
+	public Information convertJsonToJava(String stringJson,Class<?> info){	
+		Information infoEntity=(Information)gson.fromJson(stringJson,info);
 		return infoEntity;
 	}
 	

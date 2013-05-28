@@ -261,7 +261,7 @@
 .ember-list-item-view {
   width: 100% !important;
   position: absolute !important;
-  height: 60px !important;
+  /*height: 60px !important;  <----- MAX TE COPO! */
 }
 
 .ember-list-item-view ul li {

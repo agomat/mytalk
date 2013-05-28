@@ -6,7 +6,7 @@
 		<property name="hibernate.connection.driver_class"> com.mysql.jdbc.Driver </property> 
 		
 		<property name="hibernate.connection.url"> jdbc:mysql://localhost/MyTalk </property> 
-		<property name="hibernate.connection.username"> root </property> 
+		<property name="hibernate.connection.username"> mytalk </property> 
 		<property name="hibernate.connection.password"> mytalk </property> 
 		
 		<mapping resource="com/mytalk/server/data/xml/blacklists.hbm.xml"/> 

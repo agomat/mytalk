@@ -19,7 +19,9 @@
   
   <target name="dist" depends="compile" description="Create distribution directory">
     <mkdir dir="${dist}/lib"/>
-    <jar jarfile="${dist}/lib/MyTalk-${DSTAMP}.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/lib/MyTalk-${DSTAMP}.jar" basedir="${build}">
+      <manifest><attribute name="Main-Class" value="com.mytalk.server.communication.MainClass"/></manifest>
+    </jar>
   </target>
   
   <target name="clean" description="Clean up project">

@@ -20,7 +20,17 @@
   <target name="dist" depends="compile" description="Create distribution directory">
     <mkdir dir="${dist}/lib"/>
     <jar jarfile="${dist}/lib/MyTalk-${DSTAMP}.jar" basedir="${build}">
-      <manifest><attribute name="Main-Class" value="com.mytalk.server.communication.MainClass"/></manifest>
+      <manifest>
+        <attribute name="Main-Class" value="com.mytalk.server.communication.MainClass"/>
+      </manifest>
+      <zipgroupfileset dir="lib/" includes="**/*.jar" />
+      <zipfileset dir="${src}" includes="hibernate.cfg.xml" fullpath="hibernate.cfg.xml"/>
+      <zipfileset dir="${src}/com/mytalk/server/data/xml/" includes="blacklists.hbm.xml" fullpath="com/mytalk/server/data/xml/blacklists.hbm.xml"/>
+      <zipfileset dir="${src}/com/mytalk/server/data/xml/" includes="calls.hbm.xml" fullpath="com/mytalk/server/data/xml/calls.hbm.xml"/>
+      <zipfileset dir="${src}/com/mytalk/server/data/xml/" includes="list_names.hbm.xml" fullpath="com/mytalk/server/data/xml/list_names.hbm.xml"/>
+      <zipfileset dir="${src}/com/mytalk/server/data/xml/" includes="online_users.hbm.xml" fullpath="com/mytalk/server/data/xml/online_users.hbm.xml"/>
+      <zipfileset dir="${src}/com/mytalk/server/data/xml/" includes="user_lists.hbm.xml" fullpath="com/mytalk/server/data/xml/user_lists.hbm.xml"/>
+      <zipfileset dir="${src}/com/mytalk/server/data/xml/" includes="users.hbm.xml" fullpath="com/mytalk/server/data/xml/users.hbm.xml"/>
     </jar>
   </target>
   

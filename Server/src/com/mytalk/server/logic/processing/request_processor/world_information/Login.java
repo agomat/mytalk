@@ -78,9 +78,11 @@ public class Login extends GenericRequest{
 						if(userServer.getUsername().equals(user.getUsername())){
 							myData=userServer;
 						}
-						ip_user=da.getUserIp(userServer.getUsername());
-						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash(),ip_user,true);
-						listAllUsersClient.add(userClient);
+						else{
+							ip_user=da.getUserIp(userServer.getUsername());
+							userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash(),ip_user,true);
+							listAllUsersClient.add(userClient);
+						}			
 					}
 					
 					//aggiunta liste utente

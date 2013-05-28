@@ -60,8 +60,11 @@ public class LoginTest {
 		WorldPack packTest=(WorldPack)conv.convertJsonToJava(worldPackString, WorldPack.class);
 		
 		List<User> list=packTest.getWorldList().getList();
-		for(int i=0;i<list.size();i++){		
-			if(list.get(i).getUsername().equals("user0") || list.get(i).getUsername().equals("user1") || list.get(i).getUsername().equals("user2") || list.get(i).getUsername().equals("user3")){
+		for(int i=0;i<list.size();i++){	
+			if(list.get(i).getUsername().equals("user1")){
+				fail("E' presente anche lui stesso");
+			}
+			if(list.get(i).getUsername().equals("user0") || list.get(i).getUsername().equals("user2") || list.get(i).getUsername().equals("user3")){
 				assertTrue(list.get(i).getUsername(),list.get(i).getOnline());	
 			}
 			else{

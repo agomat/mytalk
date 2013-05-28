@@ -18,8 +18,8 @@
   </target>
   
   <target name="dist" depends="compile" description="Create distribution directory">
-    <mkdir dir="${dist}/lib"/>
-    <jar jarfile="${dist}/lib/MyTalk-${DSTAMP}.jar" basedir="${build}">
+    <mkdir dir="${dist}"/>
+    <jar jarfile="${dist}/MyTalk-Server.jar" basedir="${build}">
       <manifest>
         <attribute name="Main-Class" value="com.mytalk.server.communication.MainClass"/>
       </manifest>

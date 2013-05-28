@@ -29,71 +29,80 @@ MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
 
 });
 
-MyTalk.LoggedController = Ember.ObjectController.extend({
+MyTalk.LoggedController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   sortProperties: ['name'],
-  createList:function(){
+  createList:function makeListCreate(){
 
-    var newName = prompt("Digita il nome della nuova lista: ","Nome della lista");
-    if(newName!="Nome della lista") {
+    var newName = prompt("Digita il nome della nuova lista: ");
+    if(newName) {
       var list=this.get('content');
       var test=true;
 
       list.forEach(function(t){
-        console.debug(t.get('name'));
         if(t.get('name')==newName){
           test=false;
         }
       });
       
       if(test==true){
-            MyTalk.List.createRecord({id: MyTalk.List.find().get('length'), name: newName}).get('transaction').commit();
+        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+        processor.process({
+          id: MyTalk.List.find().get('length'),
+          name: newName
+        });
       }
-      else if(newName!=null){
+      else {
         alert("Esiste già una lista con questo nome");
       }
-    }
+    }  
   }
 });
 
 
-MyTalk.ListController = Ember.ObjectController.extend({
+MyTalk.ListController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   sortProperties: ['name'],
   
-  deleteList: function(){
-    var l=this.get('content').get('name');
-    var id=this.get('content').get('id');
-    
-    var r=confirm('Sei sicuro di voler eliminare la lista '+l+'?');
-      if(r==true){
-      
-        var list=MyTalk.List.find(0);
-        var context=this.get('target.router');
-        this.get('content').deleteRecord();
-        context.replaceWith('list', list);
-      }
+  deleteList: function makeListDelete(){
+    var listName = this.get('content').get('name');
+    var listId = this.get('content').get('id');
+    var response = confirm('Sei sicuro di voler eliminare la lista '+listName+'?');
+    if(response == true){
+      var context = this.get('target.router');
+      var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+      processor.process({
+        listId: listId,
+        name: listName
+      });
+      context.replaceWith('list', MyTalk.List.find(0) );
+    }
   },
-  renameList: function(){ 
-
-    var id = this.get('content').get('id');
-    var name = this.get('content').get('name');
+  renameList: function makeUpdateListName(){ 
+    var listId = this.get('content').get('id');
+    var listName = this.get('content').get('name');
     
-    var newName = prompt("Digita il  nuovo nome della lista: ","Nome della lista");
-    var list = MyTalk.List.find();
+    var newName = prompt("Digita il nuovo nome della lista:");
+    var lists = MyTalk.List.find();
     var test = true;
 
-
-      if(newName!="Nome della lista"){
-        list.forEach( function(t){
-          if(t.get('name') == newName){
-            test=false;
-           }
+    if(newName){
+      lists.forEach( function(t){
+        if(t.get('name') == newName){
+          test=false;
+        }
+      });
+      if(test==true){
+        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+        processor.process({
+          listId: listId,
+          newName: newName,
+          oldName: listName,
         });
-
-        if(test==true){
-          this.get('content').setProperties({name:newName});
       }
-    else if(newName!=null){
-      alert("Esiste già una lista con questo nome");
+    else {
+      alert("Esiste già una lista con quel nome");
       }
     }
   },
@@ -122,7 +131,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
 });
 
-MyTalk.UsersController = Ember.ArrayController.extend({
+MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
   sortProperties:['name'],
   needs: ['list'],
   selectArray: [],
@@ -152,7 +161,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   }.property('selectArray'),
 
   
-  addUser: function(userId){
+  addUser: function (userId){
     document.getElementById('adduser').style.display='block';
     var user = MyTalk.User.find(userId);
     var n=user.get('name')+" "+user.get('surname');
@@ -166,25 +175,16 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     this.set('userId',null);
     this.set('userName',null);
   },
-  doAddUser:function(){
+  doAddUser:function makeListUserAdd(){
     var currentListId=this.get('controllers.list.content.id');
     if(this.selectedValue!=null && this.selectedValue!=currentListId){
    
       if(currentListId!=1){
         var list=MyTalk.List.find(this.selectedValue);
         list.get('users').addObject(MyTalk.User.find(this.userId));
-        document.getElementById('adduser').style.display='none';
-        this.set('selectedValue',null);
-        this.set('userId',null);
-        this.set('userName',null);
-      }
-      else{
-        var list=MyTalk.List.find(this.selectedValue);
-        var generalList=MyTalk.List.find(0);
-        var blacklist=MyTalk.List.find(1);
-        list.get('users').addObject(MyTalk.User.find(this.userId));
-        generalList.get('users').addObject(MyTalk.User.find(this.userId));
-        blacklist.get('users').removeObject(MyTalk.User.find(this.userId));
+
+        //
+
         document.getElementById('adduser').style.display='none';
         this.set('selectedValue',null);
         this.set('userId',null);
@@ -212,21 +212,27 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       }
     }
   },
-  userToBlacklist:function(userId){
+  userToBlacklist: function makeBlackListAdd(userId){
     var confirmation = confirm("Sei sicuro di mettere l'utente " + MyTalk.User.find(userId).get('fullName') +" nella Blacklist?");
     if(confirmation){
       var lists = MyTalk.List.find();
       lists.forEach(function(list) {
         list.get('users').removeObject( MyTalk.User.find(userId) );
-        // per mattia: appena le richieste sono finite completare queste linee
-        //list.get('transaction').reopen({giu:2}); // passing some data here
-        //list.get('transaction').commit(); // Commit take non effects if user do not appears in current list `list`
+        /*
+        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+        processor.process({
+          listId: listId,
+          newName: newName,
+          oldName: listName,
+        });
+        */
       });
-      var blacklist = MyTalk.List.find(1);
-      blacklist.get('users').addObject(MyTalk.User.find(userId));
-      // per mattia: appena le richieste sono finite completare queste linee
-      //blacklist.get('transaction').reopen({giu:3});
-      //blacklist.get('transaction').commit();
+      var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+      processor.process({
+        userId: userId,
+      });
     } 
   }
 });

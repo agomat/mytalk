@@ -36,7 +36,7 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
         var ari = JSON.parse( msg.data );
         var ProcessorFactory = MyTalk.ProcessorFactory.create({});
         var processor = ProcessorFactory.createProcessorProduct( ari.req );
-        processor.process( ari ); // passagli l'originalRequest dell'history
+        processor.process( ari );
       }
       this.set('socket', ws);
     }

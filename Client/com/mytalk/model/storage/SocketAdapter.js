@@ -27,23 +27,23 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
  
   find: function (store, type, id) {
-    console.debug('find ' + id);    
+    console.debug('[Adapter] find ' + id);    
   },
 
   findQuery: function(store, type, query, recordArray) {
-    console.debug('findQuery'); 
+    console.debug('[Adapter] findQuery'); 
   },
 
   findMany: function(store, type, ids, query) {
-    console.debug('findQuery');  
+    console.debug('[Adapter] findQuery');  
   },
 
   findAll: function (store, type) { 
-    console.debug('findAll');  
+    console.debug('[Adapter] findAll');  
   },
 
   createRecord: function(store, type, record) {
-    console.debug('CreateRecord');
+    console.debug('[Adapter] CreateRecord');
     var context = this;
     var processor = record.get('transaction').get('processor');
 
@@ -64,23 +64,23 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
   createRecords: function(store, type, records) {
-    console.debug('CreateRecords');
+    console.debug('[Adapter] CreateRecords');
     return this.createRecord(store, type, records.list[0]); // single bulk commit
   },
 
   updateRecord: function(store, type, record) {
-    console.debug('updateRecord');
+    console.debug('[Adapter] updateRecord');
     var context = this;
     var processor = record.get('transaction').get('processor');
     
     var onSent = function(processorName, success){
       if (success) {
         context.didUpdateRecord(store, type, record);
-        console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
+        console.log("[Processor] The processor "+processorName+" has successfully sent the request to WebServer");
         // TODO fare in modo che appaia una scritta per es "Login in corso"
       } else {
         context.didError(store, type, record, '');      
-        console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
+        console.log("[Processor] The processor "+processorName+" was unable to sent the request to WebServer");
         // TODO fare in modo che appaia una scritta "Connessione con il server persa"
       }
     };
@@ -89,17 +89,32 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
   updateRecords: function(store, type, records) {
-    console.debug('updateRecords');
+    console.debug('[Adapter] updateRecords');
     return this.updateRecord(store, type, records.list[0]); // single bulk commit
   },
 
   deleteRecord: function(store, type, record) {
-    console.debug('deleteRecord');
-    this.didDeleteRecord(store,type,record);
+    console.debug('[Adapter] deleteRecord');
+    var context = this;
+    var processor = record.get('transaction').get('processor');
+    
+    var onSent = function(processorName, success){
+      if (success) {
+        context.didDeleteRecord(store,type,record);
+        console.log("[Processor] The processor "+processorName+" has successfully sent the request to WebServer");
+        // TODO fare in modo che appaia una scritta per es "Login in corso"
+      } else {
+        context.didError(store, type, record, '');      
+        console.log("[Processor] The processor "+processorName+" was unable to sent the request to WebServer");
+        // TODO fare in modo che appaia una scritta "Connessione con il server persa"
+      }
+    };
+
+    processor.sendToServer(this.get('socket'), record, onSent);
   },
 
   deleteRecords: function(store, type, records) {
-    console.debug('deleteRecords');
+    console.debug('[Adapter] deleteRecords');
     return this.deleteRecord(store, type, records.list[0]); // single bulk commit
   }
 

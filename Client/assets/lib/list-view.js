@@ -1,3 +1,6 @@
+// Last commit: 7f0eb30 (2013-05-28 04:29:58 -0700)
+
+
 (function() {
 Ember.ListViewHelper = {
   applyTransform: (function(){
@@ -272,9 +275,6 @@ function enableProfilingOutput() {
 
   function after (name, time, payload) {
     console.timeEnd(name);
-    if (payload) {
-      console.log(payload);
-    }
   }
 
   if (Ember.ENABLE_PROFILING) {
@@ -695,7 +695,7 @@ Ember.ListViewMixin = Ember.Mixin.create({
     var itemViewClass, childView;
 
     itemViewClass = get(this, 'itemViewClass');
-    childView = itemViewClass.create();
+    childView = this.createChildView(itemViewClass);
 
     this.pushObject(childView);
    },

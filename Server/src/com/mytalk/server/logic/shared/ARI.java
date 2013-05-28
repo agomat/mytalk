@@ -19,13 +19,10 @@ Date
 */
 package com.mytalk.server.logic.shared;
 
-import java.io.Serializable;
-
-public class ARI implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class ARI{
 	
-	private String req;
 	private Authentication auth;
+	private String req;
 	private String info;
 	
 	public ARI(){}
@@ -36,12 +33,6 @@ public class ARI implements Serializable{
 		info=i;
 	}
 	
-	public void setInfo(String i){
-		info=i;
-	}
-	public String getInfo(){
-		return info;
-	}
 	public void setAuth(Authentication a){
 		auth=a;
 	}
@@ -53,5 +44,11 @@ public class ARI implements Serializable{
 	}
 	public String getReq(){
 		return req;
+	}
+	public void setInfo(String i){
+		info=i;
+	}
+	public String getInfo(){
+		return info;
 	}
 }

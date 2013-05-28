@@ -2,7 +2,7 @@ MyTalk.processor.SuccessfulLoginAsAnonymous = Ember.Object.extend(MyTalk.Abstrac
   name: 'SuccessfulLoginAsAnonymous',
 
   process: function (ari) {
-  	var Ipart = JSON.parse(ari.info);
+    var Ipart = JSON.parse(ari.info);
     var sideload = Ipart.worldPersonalData;
     var store = DS.get("defaultStore");
 

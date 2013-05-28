@@ -2,7 +2,7 @@ MyTalk.List = DS.Model.extend({
   name: DS.attr('string'),
   users: DS.hasMany('MyTalk.User'),
 
-  blackList: Ember.computed.equal('name','Blacklist'),
+  blackList: Ember.computed.equal('name','BlackList'),
   generalList: Ember.computed.equal('name','Tutti i contatti'),
   notBlacklist: Ember.computed.not('blackList'),
   notGeneralList: Ember.computed.not('generalList'),

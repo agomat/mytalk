@@ -2,7 +2,7 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
   name: 'Login',
 
   process: function (params) {
-  	var record = MyTalk.Authentication.createRecord( params );
+    var record = MyTalk.Authentication.find( 0 ).setProperties( params );
     var transaction = record.get('transaction');
 
     transaction.reopen({

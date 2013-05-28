@@ -12,7 +12,7 @@ MyTalk.StateManager = Ember.StateManager.create({
     enter: function () {
       console.log("[StateManager] enter " + this.name);
     },
-    login: function (manager, credentials) {
+    login: function (manager) {
       manager.transitionTo('isAuthenticated');
       MyTalk.Router.router.transitionTo('logged.index');
     }

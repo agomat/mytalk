@@ -1,4 +1,4 @@
-MyTalk.PeerConnection = Ember.Object.extend({
+MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
     
     RTCPeerConnection: undefined,
     getUserMedia: undefined,
@@ -14,23 +14,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
     user: undefined,
     
     createSignalingChannel: function() {
-    var ws;
-    if(window.location.search.split('=')[1] == 1) {
-        ws = new WebSocket("ws://"+window.location.host+"/MyTalk/atmosphere/chat/all?X-Atmosphere-Transport=websocket");
-        ws.onopen=function() {
-            console.log('connected 1');
-        }
-    }
-    else {
-        ws = new WebSocket("ws://"+window.location.host+"/MyTalk/atmosphere/chat/user?X-Atmosphere-Transport=websocket");
-        ws.onopen=function() {
-            console.log('connected 2');
-        }
-    }
-    ws.onclose=function() {
-        console.log("houston we have a problem here!!!!");
-    }
-    return ws;
     
     },
     

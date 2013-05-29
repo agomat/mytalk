@@ -20,14 +20,19 @@ package com.mytalk.server.logic.processing.request_processor;
 import java.util.List;
 import com.mytalk.server.data.storage.DataAccess;
 import com.mytalk.server.data.storage.IDataAccess;
-import com.mytalk.server.logic.shared.*;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ConnectionPack;
+import com.mytalk.server.logic.shared.GiveCallPack;
+import com.mytalk.server.logic.shared.ListPack;
+import com.mytalk.server.logic.shared.UpdateListPack;
+import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.model_client.UserList;
 import com.mytalk.server.logic.processing.Convert;
 
 public abstract class GenericRequest {
 	
 	protected static IDataAccess da=new DataAccess();
-	
 	protected static Convert conv=new Convert();
 	
 	public GenericRequest(){};

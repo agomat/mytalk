@@ -58,7 +58,6 @@ public class Login extends GenericRequest{
 				List<UserList> listUserlist= new ArrayList<UserList>();
 				UserList userList=null;
 				List<com.mytalk.server.data.model.User> list=null;
-				List<Integer> listInteger=new ArrayList<Integer>();
 				String ip_user=null;
 				com.mytalk.server.data.model.User myData=null;
 				List<com.mytalk.server.data.model.User> blackListUserServer=null;
@@ -86,8 +85,9 @@ public class Login extends GenericRequest{
 					}
 					
 					//aggiunta liste utente
-					listName=da.userLists(user);
+					listName=da.userLists(user); 
 					for(int k=0;k<listName.size();k++){
+						List<Integer> listInteger=new ArrayList<Integer>();
 						list=da.getListUsers(listName.get(k), user);
 						for(int z=0;z<list.size();z++){
 							listInteger.add(list.get(z).getId());

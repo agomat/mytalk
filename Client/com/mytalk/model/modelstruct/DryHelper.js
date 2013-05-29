@@ -9,11 +9,11 @@ MyTalk.DryHelper = Ember.Mixin.create({
   }.property('name','surname'),
 
   avatarTiny: function() {
-    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=blank';
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=identicon';
   }.property('md5'),
 
   avatarBig: function() {
-    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=blank';
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=identicon';
   }.property('md5')
   
 });

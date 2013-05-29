@@ -76,6 +76,7 @@ public class GetCalls extends GenericRequest {
 						wrapperCall.increaseTotalDuration(callServer.getDuration());
 					}			
 				}
+				wrapperCall.setList(listCallClient);
 				giveCallPack=new GiveCallPack(wrapperCall);
 				infoResponse=conv.convertJavaToJson(giveCallPack);
 				response=new ARI(null,"GiveCalls",infoResponse);

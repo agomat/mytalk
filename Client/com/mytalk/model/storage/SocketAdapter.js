@@ -72,7 +72,6 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     console.debug('[Adapter] updateRecord');
     var context = this;
     var processor = record.get('transaction').get('processor');
-    
     var onSent = function(processorName, success){
       if (success) {
         context.didUpdateRecord(store, type, record);

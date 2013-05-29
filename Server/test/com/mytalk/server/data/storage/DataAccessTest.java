@@ -108,7 +108,7 @@ public class DataAccessTest{
 			String testUsername=testUser.getUsername();
 			User createdUser=ud.get(testUsername);
 			assertNotNull("L'utente non è stato creato",createdUser);
-			assertEquals("I campi dati degli utenti non sono stati creati correttamente",testUser,createdUser);
+			assertEquals("I campi dati degli utenti non sono stati creati correttamente",testUser.getUsername(),createdUser.getUsername());
 		}catch(UsernameAlreadyExisting exc){
 			fail("è stato creato un utente con un username già esistente");
 		}
@@ -132,7 +132,7 @@ public class DataAccessTest{
 			dataAccess.login(onUserTest, toAuth);
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser userToCheck=od.get(onUserTest.getIp());
-			assertEquals("non è stato autenticato l'utente valido",onUserTest,userToCheck);
+			assertEquals("non è stato autenticato l'utente valido",onUserTest.getUsername(),userToCheck.getUsername());
 		}catch(UsernameNotCorresponding exc){
 			fail("non è stata trovata la corrispondenza tra username autenticato e username da autenticare (ecc:UsernameNotExisting)");
 		}catch(IpNotLogged exc){

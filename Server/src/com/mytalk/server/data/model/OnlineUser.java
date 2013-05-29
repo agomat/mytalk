@@ -42,33 +42,4 @@ public class OnlineUser{
 	public void setIp(String s){
 		ip=s;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		OnlineUser other = (OnlineUser) obj;
-		if (ip == null) {
-			if (other.ip != null) {
-				return false;
-			}
-		} else if (!ip.equals(other.ip)) {
-			return false;
-		}
-		if (username == null) {
-			if (other.username != null) {
-				return false;
-			}
-		} else if (!username.equals(other.username)) {
-			return false;
-		}
-		return true;
-	}
 }

@@ -27,7 +27,6 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import com.mytalk.server.communication.buffer.BufferIncoming;
-import com.mytalk.server.communication.buffer.BufferOutgoing;
 import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.exceptions.IpNotFound;
 
@@ -38,7 +37,6 @@ public class Receiver extends WebSocketServer{
 	}
 	
 	private BufferIncoming bufferIn=BufferIncoming.getInstance();
-	private BufferOutgoing bufferOut=BufferOutgoing.getInstance();
 	
 	@Override
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
@@ -62,12 +60,7 @@ public class Receiver extends WebSocketServer{
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		System.out.println("WebsocketServer Error");
-		String wsIp=conn.getRemoteSocketAddress().toString();
-		wsIp=wsIp.substring(1);
-		String error="{\"auth\":null \"req\":\"ConnectionError\" \"info\":null}";
-		Message errorMsg=new Message(wsIp,error);
-		bufferOut.push(errorMsg);
+		ex.printStackTrace();
 	}
 
 	@Override

@@ -1,21 +1,17 @@
-MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
+MyTalk.PeerConnection = Ember.Object.extend({
     
     RTCPeerConnection: undefined,
     getUserMedia: undefined,
     attachMediaStream: undefined,
     reattachMediaStream: undefined,
     webrtcDetectedBrowser: undefined,
-    signalingChannel: undefined,
     pc: undefined,
     configuration: {iceServers: [{url: "stun:stun.l.google.com:19302"}]},
     isCaller: false,
     optsDataChann: {optional: [{RtpDataChannels: true}]},
     dataChannel: undefined,
-    user: undefined,
-    
-    createSignalingChannel: function() {
-    
-    },
+    mySDP: undefined,
+    myICE: [],
     
     trace: function(text) {
         // This function is used for logging.
@@ -27,29 +23,6 @@ MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
     
     init: function() {
         this._super();
-        
-        this.signalingChannel = this.createSignalingChannel();
-                
-        var context = this;
-
-        this.signalingChannel.onmessage = function (evt) {
-            if(evt.data == "user esce") {
-                return;
-            }
-            if(evt.data == "idie") {
-                document.getElementById('remote').src = "";
-                return;
-            }
-            console.log('onmessage'); 
-            if (typeof(context.pc) == 'undefined')
-                context.start(false);
-            
-            var signal = JSON.parse(evt.data);
-            if (signal.sdp)
-                context.pc.setRemoteDescription(new context.RTCSessionDescription(signal.sdp));
-            else if(signal.candidate)
-                context.pc.addIceCandidate(new context.RTCIceCandidate(signal.candidate));
-        };
         
         if (navigator.mozGetUserMedia) {
             console.log("This appears to be Firefox");
@@ -137,7 +110,15 @@ MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
         }
     },
     
-    getMedia: function(peerConn,signChann,isCaller) {
+    setSDP: function(sdp) {
+      this.pc.setRemoteDescription(new this.RTCSessionDescription(sdp));
+    },
+    
+    addICE: function(iceCandidate) {
+      this.pc.addIceCandidate(new this.RTCIceCandidate(iceCandidate));
+    },
+    
+    getMedia: function(peerConn, isCaller) {
         
         var context = this;
         
@@ -150,13 +131,13 @@ MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
             if(isCaller)
                 peerConn.createOffer(gotDescription);
             else {
-                console.log(peerConn.remoteDescription);
                 peerConn.createAnswer(gotDescription);
             }
             function gotDescription(desc) {
                 peerConn.setLocalDescription(desc);
-                console.log('send sdp');
-                signChann.send(JSON.stringify({ "sdp": desc }));
+                console.log('add sdp');
+                //context.send(JSON.stringify({ "sdp": desc })); call a processor
+                context.mySDP = desc;
             } 
         }
         function onError(e) {
@@ -168,8 +149,6 @@ MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
     start: function(bool) {
         this.isCaller = bool;
         this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
-        var signChann = this.signalingChannel;
-        this.user = "user "+window.location.search.split('=')[1];
         if(this.webrtcDetectedBrowser === "chrome") {
           this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {reliable: false});
           this.setChannelEvents(this.dataChannel, this.user);
@@ -179,7 +158,13 @@ MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
         // invia iceCandidate all'altro peer
         this.pc.onicecandidate = function(evt) {
             console.debug('send candidate');
-            signChann.send(JSON.stringify({ "candidate": evt.candidate }));
+            //signChann.send(JSON.stringify({ "candidate": evt.candidate })); call a processor
+            if(evt.candidate) {
+              context.myICE.push(evt.candidate);
+            }
+            else {
+              // sono arrivato all'ultimo, invoco il processor specifico per inviare al server
+            }
         };
 
         // visualizza lo stream remoto quando viene aggiunto
@@ -194,33 +179,33 @@ MyTalk.PeerConnection = Ember.Object.extend(MyTalk.WebSocketConnection, {
         }
 
         // get the local stream, show it in the local video element and send it
-        this.getMedia(this.pc,this.signalingChannel,this.isCaller);
+        this.getMedia(this.pc,this.isCaller);
     },
 
     setChannelEvents: function(channel, user) {
         
-        channel.onmessage = function (event) {
-            var msg = JSON.parse(event.data);
-            $('#messages').append('<li class="received_message">'+msg.message+'</li>');
-        };
-
-        channel.onopen = function () {
-            console.debug('RTCDataChannel connected.');
-        };
-        channel.onclose = function (e) {
-            console.error(e);
-        };
-        channel.onerror = function (e) {
-            console.error(e);
-        };
+//         channel.onmessage = function (event) {
+//             var msg = JSON.parse(event.data);
+//             $('#messages').append('<li class="received_message">'+msg.message+'</li>');
+//         };
+// 
+//         channel.onopen = function () {
+//             console.debug('RTCDataChannel connected.');
+//         };
+//         channel.onclose = function (e) {
+//             console.error(e);
+//         };
+//         channel.onerror = function (e) {
+//             console.error(e);
+//         };
     },
     
-    send: function(message) {
-        console.debug(message);
-        var msg = JSON.stringify({"message" : message});
-        this.dataChannel.send(msg);
-        $('#messages').append('<li class="sent_message">'+message+'</li>');
-    }
+//     send: function(message) {
+//         console.debug(message);
+//         var msg = JSON.stringify({"message" : message});
+//         this.dataChannel.send(msg);
+//         $('#messages').append('<li class="sent_message">'+message+'</li>');
+//     }
         
 });
 

@@ -1,6 +1,6 @@
 INSERT INTO Users VALUES 
   ("user0",1,md5('user0user0'),"Mattia","Agostinetto","agomat@gmail.com",md5("agomat@gmail.com")),
-	("user1",2,"24c9e15e52afc47c225b757e7bee1f9d","user1","user1","user1@mytalk.com","emailhash123123123"),
+	("user1",2,md5('user1user1'),"user1","user1","user1@mytalk.com","emailhash123123123"),
 	("user2",3,"7e58d63b60197ceb55a1c487989a3720","user2","user2","user2@mytalk.com","emailhash123123123"),
 	("user3",4,"92877af70a45fd6a2ed7fe81e1236b78","user3","user3","user3@mytalk.com","emailhash123123123"),
 	("user4",5,"3f02ebe3d7929b091e3d8ccfde2f3bc6","user4","user4","user4@mytalk.com","emailhash123123123"),

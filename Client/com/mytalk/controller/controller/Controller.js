@@ -31,6 +31,8 @@ MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
 
 MyTalk.LoggedController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   sortProperties: ['name'],
+  needs:['users'],
+    
   createList:function makeListCreate(){
 
     var newName = prompt("Digita il nome della nuova lista: ");
@@ -51,18 +53,20 @@ MyTalk.LoggedController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
           id: MyTalk.List.find().get('length'),
           name: newName
         });
+        this.get('controllers.users').set('newList',MyTalk.List.find().get('length'));
       }
       else {
         alert("Esiste già una lista con questo nome");
       }
     }  
-  }
+  },
+
 });
 
 
 MyTalk.ListController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   sortProperties: ['name'],
-  
+
   deleteList: function makeListDelete(){
     var listName = this.get('content').get('name');
     var listId = this.get('content').get('id');
@@ -100,6 +104,8 @@ MyTalk.ListController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
           newName: newName,
           oldName: listName,
         });
+
+        
       }
     else {
       alert("Esiste già una lista con quel nome");
@@ -127,13 +133,21 @@ MyTalk.ListController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
         entry.set('unmatched',false);
      });
     }
-  }
+  },
 
+  umatchedReset:function(){
+    this.get('content').get('users').forEach(function(entry){
+        entry.set('unmatched',false);
+     });
+  }.observes(this),
+
+  
 });
 
 MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
   sortProperties:['name'],
-  needs: ['list'],
+  needs: ['logged','list'], 
+  newList:null,
   selectArray: [],
   selectedValue: null,
   userId: null,
@@ -157,18 +171,6 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     // TODO
   },
 
-  loadSelect:function(){
-    var temp=new Array();
-      (MyTalk.List.find()).forEach(function(t){
-        if(t.get('id')!=0 && t.get('id')!=1 ){
-          temp.pushObject(Ember.Object.create({firstName: t.get('name'), id: t.get('id')}));
-        }
-
-     });
-    this.set('this.selectArray',temp);
-  }.property('selectArray'),
-
-  
   addUser: function (userId){
     document.getElementById('adduser').style.display='block';
     var user = MyTalk.User.find(userId);

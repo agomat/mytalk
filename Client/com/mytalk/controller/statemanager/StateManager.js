@@ -23,7 +23,34 @@ MyTalk.StateManager = Ember.StateManager.create({
     },
     free: function (manager, context) {
       manager.transitionTo('isNotBusy');
-    }
+    },
+    
+    isCall: Ember.State.create({
+      enter: function () {
+        console.log("[StateManager] enter " + this.name);
+        },
+      free: function (manager, context) {
+        manager.transitionTo('isNotBusy');
+      }
+    }),
+    
+    isConnected: Ember.State.create({
+      enter: function () {
+        console.log("[StateManager] enter " + this.name);
+      },
+      free: function (manager, context) {
+        manager.transitionTo('isNotBusy');
+      }
+    }),
+    
+    waitingConnection: Ember.State.create({
+      enter: function () {
+        console.log("[StateManager] enter " + this.name);
+      },
+      free: function (manager, context) {
+        manager.transitionTo('isNotBusy');
+      }
+    }),
   }),
   isNotBusy: Ember.State.create({
     enter: function () {

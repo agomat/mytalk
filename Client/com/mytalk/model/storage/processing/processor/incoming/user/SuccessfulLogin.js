@@ -28,7 +28,7 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractOutProcess
     MyTalk.StateManager.send("login"); 
   },
 
-   sendToServer: function (socket, record, onSent) {
+   sendToServer: function (socket, record, onSent) { // not override
      onSent( this.getProcessorName(), true );
    },
 

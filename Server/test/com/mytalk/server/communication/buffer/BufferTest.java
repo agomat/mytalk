@@ -1,13 +1,13 @@
 /**
 * Filename: BufferTest.java
 * Package: com.mytalk.server.communication.buffer
-* Author: Nicolò Mazzucato
+* Author: Armando Caprio
 * Date: 2013-05-22
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-22 |    NM     | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-22 |    AC     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -39,15 +39,47 @@ public class BufferTest {
 		public void run(){
 			for(int i=0; i < toPush.size(); i++){
 				BufferIncoming.getInstance().push(toPush.get(i));
+				System.out.println("Push("+toPush.get(i).getIp()+")");
 			}
 		}
+	}
+	
+	private class PullThread extends Thread{
+		private int numeroPull;
 		
+		public PullThread(int n){
+			numeroPull=n;
+		}
+				
+		public void run(){
+			for(int i=0; i<numeroPull; i++){
+				Message m = BufferIncoming.getInstance().pop();
+				System.out.println(" Pull("+m.getIp()+")");
+				assertEquals("Il PullThread ottiene un message (" + m.getIp() + ") nell'ordine sbagliato", m.getIp(), ""+i );
+			}
+		}
 	}
 	
 	
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void CheckRightOrder() {
+		System.out.println("Inizio stampa test sui Buffer");
+		int numeroMessaggi=10000;
+		PushThread pushThread = new PushThread();
+		PullThread pullThread = new PullThread(numeroMessaggi);
+		for(int i=0; i<numeroMessaggi; i++){
+			Message m = new Message(""+i, "");
+			pushThread.addMessage(m);
+		}
+		
+		pushThread.start();
+		pullThread.start();
+		
+		try{
+			pushThread.join();
+			pullThread.join();
+		}catch(InterruptedException e){ fail("Il main Thread è stato interrotto mentre era sospeso per la join");}
+		System.out.println("Fine stampa test sui Buffer");
 	}
 
 }

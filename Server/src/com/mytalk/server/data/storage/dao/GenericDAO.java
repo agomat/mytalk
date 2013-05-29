@@ -20,7 +20,7 @@ package com.mytalk.server.data.storage.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.mytalk.server.data.persistence.HibernateUtil;
+import com.mytalk.server.data.storage.HibernateUtil;
 
 public abstract class GenericDAO {
 	protected static Session session;

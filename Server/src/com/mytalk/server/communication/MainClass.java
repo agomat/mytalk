@@ -19,7 +19,8 @@
 package com.mytalk.server.communication;
 
 import java.net.InetSocketAddress;
-import com.mytalk.server.data.persistence.HibernateUtil;
+
+import com.mytalk.server.data.storage.HibernateUtil;
 
 public class MainClass {
 

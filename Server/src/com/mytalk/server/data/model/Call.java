@@ -81,52 +81,6 @@ public class Call{
 	public void setStartdate(String t){
 		startdate=t;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Call other = (Call) obj;
-		if (byteReceived != other.byteReceived) {
-			return false;
-		}
-		if (byteSent != other.byteSent) {
-			return false;
-		}
-		if (caller == null) {
-			if (other.caller != null) {
-				return false;
-			}
-		} else if (!caller.equals(other.caller)) {
-			return false;
-		}
-		if (duration != other.duration) {
-			return false;
-		}
-		if (id != other.id) {
-			return false;
-		}
-		if (receiver == null) {
-			if (other.receiver != null) {
-				return false;
-			}
-		} else if (!receiver.equals(other.receiver)) {
-			return false;
-		}
-		if (startdate == null) {
-			if (other.startdate != null) {
-				return false;
-			}
-		} else if (!startdate.equals(other.startdate)) {
-			return false;
-		}
-		return true;
-	}
 }
+
+	

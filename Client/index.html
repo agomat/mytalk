@@ -221,8 +221,7 @@
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
 
-        {{#collection Ember.ListView contentBinding="controller" height=498 rowHeight=80}}
-        {{#unless unmatched}}
+        {{#collection Ember.ListView contentBinding="controller.filteredUsers" height=498 rowHeight=80}}
           <li>
 
             <div {{bindAttr class="online:online:offline"}}></div>
@@ -258,7 +257,6 @@
                 {{/if}}
             {{/if}}
           </li>
-          {{/unless}}
         {{/collection}}
       </ul>
       

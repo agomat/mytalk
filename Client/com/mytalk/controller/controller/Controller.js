@@ -139,6 +139,21 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
   userId: null,
   userName: null,
     
+  goalChanged: function(){
+        alert(11);
+    }.observes("MyTalk.User"),
+
+  filteredUsers : function(){
+    var filteredUsers = [];
+    var items = this.get('content');
+    items.forEach(function(u){
+      console.log("user "+u+ " - "+u.get('unmatched'));
+      if(!u.get('unmatched'))
+        filteredUsers.push(u);
+    });
+    return filteredUsers;
+  }.property('content'),
+
   call: function(user){
     if(user.get('online')){
       console.log("call "+user.get('id'));

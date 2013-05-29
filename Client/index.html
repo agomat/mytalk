@@ -229,7 +229,6 @@
 
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
-
         {{#collection Ember.ListView contentBinding="controller.filteredUsers" height=498 rowHeight=80}}
           <li>
 
@@ -283,9 +282,9 @@
                 <p> Segli a quale lista aggiungere l`utente {{ controller.userName }}</p>
                 <label for="search_list" hidden>Scegli la lista</label>
                   {{view Ember.Select 
-                    contentBinding="controller.selectArray"
+                    contentBinding="controller.controllers.logged.content"
                     optionValuePath="content.id"
-                    optionLabelPath="content.firstName"
+                    optionLabelPath="content.name"
                     prompt="Seleziona un lista"
                     valueBinding="controller.selectedValue"
                   }}

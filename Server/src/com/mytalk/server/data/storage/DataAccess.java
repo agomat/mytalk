@@ -25,7 +25,6 @@ import java.util.List;
 import com.mytalk.server.data.model.*;
 import com.mytalk.server.data.storage.dao.*;
 import com.mytalk.server.exceptions.*;
-import com.mytalk.server.logic.MD5Converter;
 
 
 public class DataAccess implements IDataAccess{

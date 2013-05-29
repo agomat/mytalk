@@ -16,7 +16,7 @@
 */
 
 
-package com.mytalk.server.logic;
+package com.mytalk.server.data.storage;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;

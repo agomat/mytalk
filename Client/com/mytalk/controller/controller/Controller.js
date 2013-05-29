@@ -138,21 +138,16 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
   selectedValue: null,
   userId: null,
   userName: null,
-    
-  goalChanged: function(){
-        alert(11);
-    }.observes("MyTalk.User"),
 
   filteredUsers : function(){
     var filteredUsers = [];
     var items = this.get('content');
     items.forEach(function(u){
-      console.log("user "+u+ " - "+u.get('unmatched'));
-      if(!u.get('unmatched'))
+      if(u.get('unmatched') == false)
         filteredUsers.push(u);
     });
     return filteredUsers;
-  }.property('content'),
+  }.property('content.@each.unmatched').cacheable(),
 
   call: function(user){
     if(user.get('online')){
@@ -162,8 +157,6 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     // TODO
   },
 
-
-  
   loadSelect:function(){
     var temp=new Array();
       (MyTalk.List.find()).forEach(function(t){

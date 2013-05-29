@@ -4,3 +4,4 @@
 *~
 *.properties
 *.out
+node_modules/

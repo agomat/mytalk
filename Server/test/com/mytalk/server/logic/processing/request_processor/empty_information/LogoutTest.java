@@ -46,12 +46,12 @@ public class LogoutTest {
 		
 		ARI ari=new ARI(auth,"Logout",null);
 		ARI ariResult=logout.manage(ari);
-		assertEquals("Logout fallito nonostante dati coerenti","Logout",ariResult.getReq());
+		assertEquals("Logout fallito nonostante dati coerenti","SuccessfulLogout",ariResult.getReq());
 		
 		auth=new Authentication("user4","user4","123.123.123.4");
 		ari.setAuth(auth);
 		ariResult=logout.manage(ari);
-		assertEquals("Logout di un user non loggato","Logout",ariResult.getReq());
+		assertEquals("Logout di un user non loggato","UnsuccessfulLogout",ariResult.getReq());
 		
 		ari.getAuth().setIp(null);
 		ariResult=logout.manage(ari);

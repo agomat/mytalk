@@ -85,46 +85,47 @@ public class Processor implements IProcessor{
 			Method m= cl.getDeclaredMethod("manage", ARI.class);
 			esito=(ARI)m.invoke(obj, packInfo);	
 		}catch(ClassNotFoundException cnfe){
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			cnfe.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		if(esito.getAuth()!=null){
-			ipToSend=esito.getAuth().getIp();
+		if(!packInfo.getReq().equals("Logout") && !packInfo.getReq().equals("LogoutToAnonymous") && !esito.getReq().equals("UnsuccessfulRefuseCall")){
+			if(esito.getAuth()!=null){
+				ipToSend=esito.getAuth().getIp();
+			}
+			else{
+				ipToSend=message.getIp();
+			}
+			esito.setAuth(null);
+			String json=convert.convertJavaToJson(esito);
+			responseList.add(new Message(ipToSend,json));
 		}
-		else{
-			ipToSend=message.getIp();
-		}
-		esito.setAuth(null);
 		
-		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutAsAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
+		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutToAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
 			StateUpdate stateUpdate=new StateUpdate();
 			ARI ari=stateUpdate.manage(packInfo);
 			String jsonAri=convert.convertJavaToJson(ari);
 			responseList.add(new Message("broadcast",jsonAri));
 		}
-		if(!esito.getReq().equals("Logout") && !esito.getReq().equals("UnsuccessfulRefuseCall")){
-			String json=convert.convertJavaToJson(esito);
-			responseList.add(new Message(ipToSend,json));
-		}
+		
 		return responseList;
 	}
 }

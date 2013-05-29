@@ -56,24 +56,21 @@ public class AddCall extends GenericRequest {
 			int byteR=0;
 			int byteS=0;
 			try{
-				for(int i=0;i<listOfCall.size();i++){
-					callClient=listOfCall.get(i); //ottengo una chiamata
-					if(callClient.getCaller()){
-						caller=auth.getUser();
-					}
-					else{
-						
-						caller=(da.getUserById(callClient.getSpeaker())).getUsername();
-					}
-					receiver=(da.getUserById(callClient.getSpeaker())).getUsername();
-					duration=callClient.getDuration();
-					startdate=callClient.getStartDate();
-					byteR=callClient.getByteReceived();
-					byteS=callClient.getByteSent();
-					callServer=new com.mytalk.server.data.model.Call(caller,receiver,duration,startdate,byteR,byteS);
-					da.addCall(callServer,userAuth);
-					response=new ARI(null,"SuccessfulAddCall",infoRequest);
+				callClient=listOfCall.get(0); //ottengo una chiamata
+				if(callClient.getCaller()){
+					caller=auth.getUser();
 				}
+				else{	
+					caller=(da.getUserById(callClient.getSpeaker())).getUsername();
+				}
+				receiver=(da.getUserById(callClient.getSpeaker())).getUsername();
+				duration=callClient.getDuration();
+				startdate=callClient.getStartDate();
+				byteR=callClient.getByteReceived();
+				byteS=callClient.getByteSent();
+				callServer=new com.mytalk.server.data.model.Call(caller,receiver,duration,startdate,byteR,byteS);
+				da.addCall(callServer,userAuth);
+				response=new ARI(null,"SuccessfulAddCall",infoRequest);
 			}catch(AuthenticationFail af){
 				response=new ARI(null,"AuthenticationFailAddCall",infoRequest);
 			} catch (IdNotFound e) {

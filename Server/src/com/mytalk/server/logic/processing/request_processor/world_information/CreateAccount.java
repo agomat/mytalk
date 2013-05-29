@@ -20,8 +20,8 @@
 
 package com.mytalk.server.logic.processing.request_processor.world_information;
 
+import com.mytalk.server.data.storage.MD5Converter;
 import com.mytalk.server.exceptions.UsernameAlreadyExisting;
-import com.mytalk.server.logic.MD5Converter;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;

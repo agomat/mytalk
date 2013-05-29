@@ -17,7 +17,7 @@ Date
 * Software licensed to:
 * - Zucchetti SRL
 */
-package com.mytalk.server.data.persistence;
+package com.mytalk.server.data.storage;
 
 import org.hibernate.*;
 import org.hibernate.cfg.*;

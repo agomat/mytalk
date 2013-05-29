@@ -1,5 +1,5 @@
 .blanket {
-	position: absolute;
+	position: fixed;
 	display: none;
 	top: 0;
 	left: 0;
@@ -12,11 +12,11 @@
 
 .modal{
 	position: absolute;
-	width: 30%;
-    height: 200px;
+	width: 35%;
+    height: 250px;
     top: 50%;
     left: 50%;
-    margin-top: -100px;
+    margin-top: -125px;
     margin-left: -15%;
     background-color: #fff;
 
@@ -70,9 +70,13 @@
 
 .modal_content p{
 	padding: 5px 0;
+	font-size: 1.2em;
 }
 
-.modal_content input{
+.modal_content select{
+  cursor:pointer;
+  font-size:1em;
+  padding:3px;
 	
 }
 

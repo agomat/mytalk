@@ -31,6 +31,8 @@ public interface IDataAccess{
 			public boolean checkUserByIp(String ip);
 			
 			public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail;
+			
+			public String getUsernameByIp(String ip) throws LogoutException;
 		
 			public void login(OnlineUser user, User authenticate)throws AuthenticationFail,UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged;
 			

@@ -49,7 +49,6 @@ public class StateUpdate extends GenericRequest{
 			return new ARI(null,"StateUpdate",infoResponse);
 		}
 		try {
-			System.out.println("+++"+ari.getAuth().getUser()+"+++");
 			id = da.getIdFromUsername(ari.getAuth().getUser());
 			com.mytalk.server.data.model.User user=da.getUserById(id);
 			userClient=new User(id,user.getUsername(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),status);

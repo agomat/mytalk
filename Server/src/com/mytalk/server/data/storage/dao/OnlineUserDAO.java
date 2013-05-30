@@ -67,6 +67,21 @@ public class OnlineUserDAO extends GenericDAO{
 		return ip;
 	}
 	
+	//ritorna un username associato ad un ip
+	public String getUsernameByIp(String ip){
+		Transaction t=session.beginTransaction();
+		OnlineUser user=null;
+		SQLQuery query=session.createSQLQuery("SELECT * FROM OnlineUsers WHERE ip='"+ip+"'");
+		query=query.addEntity(OnlineUser.class);
+		user=(OnlineUser)query.uniqueResult();
+		String username=null;
+		if(user!=null){
+			username=user.getUsername();
+		}
+		t.commit();
+		return username;
+	}
+	
 	//ritorna gli user presenti anche nella tabella OnlineUsers
 	public List<OnlineUser> getOnlineUsers(){
 		Transaction t=session.beginTransaction();

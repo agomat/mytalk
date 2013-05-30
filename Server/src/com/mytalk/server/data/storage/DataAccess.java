@@ -82,6 +82,21 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
+	//restituisce l'username associato ad un ip
+	public String getUsernameByIp(String ip) throws LogoutException{
+		OnlineUserDAO od=new OnlineUserDAO();
+		boolean check=od.checkIpConnected(ip);
+		if(check){
+			String username=od.getUsernameByIp(ip);
+			GenericDAO.closeSession();
+			return username;
+		}
+		else{
+			GenericDAO.closeSession();
+			throw new LogoutException();
+		}
+	}
+	
 	//crea un account nel database
 	public void createAccount(User toCreate) throws UsernameAlreadyExisting{
 		UserDAO ud=new UserDAO();

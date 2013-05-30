@@ -13,7 +13,7 @@ Ember.run.later(this, function(){
     $("input[name=username]").change();
     $("input[name=password]").val("user0user0");
     $("input[name=password]").change();
-
+/*
     DS.get("defaultStore").adapter.serializer.keyForHasMany = function(type, name) {
 return "list";
     var key = this.keyForAttributeName(type, name);
@@ -24,7 +24,8 @@ return "list";
 
     return this.singularize(key) + "_ids";
   }
-}, 2000);
+  */
+}, 3000);
 
 /*
 Ember.run.later(this, function(){

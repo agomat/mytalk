@@ -248,21 +248,22 @@
                 <li>
                 {{#linkTo calling this class="call_user"}} 
                 {{/linkTo}}
+
                 </li>
-                <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
-                <li><a class="remove_user" href="#" {{action "deleteUser" id }}></a></li>
+                <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
+                <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
               </ul>
             {{else}}
                 {{#if controller.controllers.list.generalList}}
                   <li>{{#linkTo calling this class="call_user"}} {{/linkTo}}</li>
-                  <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
-                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" id }}></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
                 </ul>
                 {{else}}
-                  <li><a class="call_user" href="#" {{action "call" id }} ></a></li>
-                  <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
-                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" id }}></a></li>
-                  <li><a class="remove_user" href="#" {{action "deleteUser" id }}></a></li>
+                  <li><a class="call_user" href="#" {{action "call" this }} ></a></li>
+                  <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
+                  <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
                 </ul>
                 {{/if}}
             {{/if}}
@@ -477,6 +478,8 @@
           <li class="received_message">{{message.text}}</li>
           {{/if}}
           {{/each}}
+          <a {{action "test"}}> aaaaa</a>
+
         </ul>
         {{#view MyTalk.MessageFormView }}
           <fieldset>

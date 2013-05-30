@@ -163,9 +163,8 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     return filteredUsers;
   }.property('content.@each.unmatched').cacheable(),
 
-  addUser: function (userId){
+  addUser: function (user){
     document.getElementById('adduser').style.display='block';
-    var user = MyTalk.User.find(userId);
     var n=user.get('name')+" "+user.get('surname');
     this.set('userId',user.get('id'));
     this.set('userName',n);
@@ -183,7 +182,6 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
    
       if(currentListId!=1){
         var list=MyTalk.List.find(this.selectedValue);
-        //list.get('users').addObject(MyTalk.User.find(this.userId));
         var ProcessorFactory = MyTalk.ProcessorFactory.create({});
         var processor = ProcessorFactory.createProcessorProduct("ListUserAdd");
         processor.process({
@@ -201,8 +199,8 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
       alert('Selezionare una lista corretta');
     }
   },
-  deleteUser:function (userId){
-    var user = MyTalk.User.find(userId);
+  deleteUser:function (user){
+    var userId = user.get('id');
     var confirmation = confirm("Sei sicuro di eliminare l'utente " + user.get('fullName') +" dalla lista?");
     if(confirmation){
       var listId = this.get('controllers.list.content.id');
@@ -223,8 +221,9 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
       }
     }
   },
-  userToBlacklist: function makeBlackListAdd(userId){
-    var confirmation = confirm("Sei sicuro di mettere l'utente " + MyTalk.User.find(userId).get('fullName') +" nella Blacklist?");
+  userToBlacklist: function makeBlackListAdd(user){
+    var confirmation = confirm("Sei sicuro di mettere l'utente " + user.get('fullName') +" nella Blacklist?");
+    var userId = user.get('id');
     if(confirmation){
       var lists = MyTalk.List.find();
       lists.forEach(function(list) {
@@ -253,7 +252,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   statistics:Ember.Object.create({duration:null,sentBytes:null,receivedBytes:null}),
 
   test: function() {
-   alert(  this.get('content')  );
+   alert(  this.get('content.name')  );
+   this.set('statistics',Ember.Object.create({duration:5,sentBytes:5,receivedBytes:5}));
   },
 
   sendMessage:function(message){

@@ -27,7 +27,8 @@ import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 
 public class LogoutToAnonymous extends GenericRequest {
-	LogoutToAnonymous(){}
+	
+	public LogoutToAnonymous(){}
 	
 	public ARI manage(ARI ari){
 		ARI response=null;

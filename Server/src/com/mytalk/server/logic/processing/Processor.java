@@ -80,6 +80,7 @@ public class Processor implements IProcessor{
 		List<Message> responseList=new ArrayList<Message>();
 		try{
 			String r= hashmap.get(request);
+			System.out.println("***"+r+"---");
 			Class<?> cl=Class.forName(r);
 			Object obj=cl.newInstance();
 			Method m= cl.getDeclaredMethod("manage", ARI.class);

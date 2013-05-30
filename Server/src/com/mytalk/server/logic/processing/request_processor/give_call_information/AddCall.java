@@ -57,12 +57,7 @@ public class AddCall extends GenericRequest {
 			int byteS=0;
 			try{
 				callClient=listOfCall.get(0); //ottengo una chiamata
-				if(callClient.getCaller()){
-					caller=auth.getUser();
-				}
-				else{	
-					caller=(da.getUserById(callClient.getSpeaker())).getUsername();
-				}
+				caller=auth.getUser();
 				receiver=(da.getUserById(callClient.getSpeaker())).getUsername();
 				duration=callClient.getDuration();
 				startdate=callClient.getStartDate();

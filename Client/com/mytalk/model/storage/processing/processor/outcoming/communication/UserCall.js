@@ -25,7 +25,7 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
       myIp: myself.get('ip'),
       myUserId: myself.get('userId'),
       speakerIp: callee.get('ip'),
-      speakerUserId: callee.get('username'),
+      speakerUserId: callee.get('id'),
       RTCinfo: RTCinfo
     });
 

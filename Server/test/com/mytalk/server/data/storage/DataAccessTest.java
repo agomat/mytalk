@@ -98,6 +98,23 @@ public class DataAccessTest{
 	}
 	
 	@Test
+	public void checkGetUsernameByIp(){
+		String ip="123.123.123.0";
+		try {
+			String username=dataAccess.getUsernameByIp(ip);
+			assertEquals("L'username ritrovato non e` quello giusto","user0",username);
+		} catch (LogoutException e) {
+			fail("Non e` stato trovato l'ip passato");
+		}
+	}
+	
+	@Test(expected=LogoutException.class)
+	public void checkGetUsernameByIpFail()throws LogoutException{
+		String ip="123.123.123.123";
+		String username=dataAccess.getUsernameByIp(ip);
+	}
+	
+	@Test
 	public void checkCreateAccount(){
 		User testUser=new User("user10","user10","user10@mytalk.com","user10","user10","emailhash123123123");
 		

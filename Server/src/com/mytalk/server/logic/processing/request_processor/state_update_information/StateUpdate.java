@@ -43,7 +43,7 @@ public class StateUpdate extends GenericRequest{
 		}
 		if(ari.getReq().equals("DeleteAccount")){
 			packIn=(UserStatePack)conv.convertJsonToJava(ari.getInfo(), UserStatePack.class);
-			userClient=new User(packIn.getUser().getId(),packIn.getUser().getUsername(),packIn.getUser().getName(),packIn.getUser().getSurname(),packIn.getUser().getMd5(),ari.getAuth().getIp(),status);
+			userClient=new User(packIn.getList().getId(),packIn.getList().getUsername(),packIn.getList().getName(),packIn.getList().getSurname(),packIn.getList().getMd5(),ari.getAuth().getIp(),status);
 			packOut= new UserStatePack(userClient);
 			infoResponse=conv.convertJavaToJson(packOut);
 			return new ARI(null,"StateUpdate",infoResponse);

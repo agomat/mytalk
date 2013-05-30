@@ -42,13 +42,14 @@ public class LogoutTest {
 	@Test
 	public void testManage() {
 		Logout logout=new Logout();
-		Authentication auth=new Authentication("user1","user1","123.123.123.1");
+		Authentication auth=new Authentication(null,null,"123.123.123.2");
 		
 		ARI ari=new ARI(auth,"Logout",null);
 		ARI ariResult=logout.manage(ari);
 		assertEquals("Logout fallito nonostante dati coerenti","SuccessfulLogout",ariResult.getReq());
+		assertEquals("User sloggato errato","user2",ariResult.getAuth().getUser());
 		
-		auth=new Authentication("user4","user4","123.123.123.4");
+		auth.setIp("123.123.123.4");
 		ari.setAuth(auth);
 		ariResult=logout.manage(ari);
 		assertEquals("Logout di un user non loggato","UnsuccessfulLogout",ariResult.getReq());
@@ -56,6 +57,14 @@ public class LogoutTest {
 		ari.getAuth().setIp(null);
 		ariResult=logout.manage(ari);
 		assertEquals("Autenticazione mal formata","CorruptedPack",ariResult.getReq());
+		
+		auth.setIp("123.123.123.1");
+		ari=new ARI(auth,"Logout",null);
+		ariResult=logout.manage(ari);
+		assertEquals("Logout di un anonimo fallito nonostante dati coerenti","SuccessfulLogout",ariResult.getReq());
+		assertEquals("User sloggato errato",null,ariResult.getAuth().getUser());
+		
+		
 	}
 
 }

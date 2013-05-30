@@ -2,8 +2,6 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractOutProcessorPr
   name: 'StateUpdate',
   process: function(ari) {
     var info = JSON.parse(ari.info);
-    info.list = info.user;
-    delete info.user;
   	var username = info.list.username;
   	var status = info.list.online;
     var myUsername = MyTalk.PersonalData.find(0).get('username');

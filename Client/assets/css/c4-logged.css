@@ -223,13 +223,26 @@
 	box-shadow: none;
 }
 
-.avatar{
-	background-image: url(../img/mytalk_blank.png);
+.avatar48{
+	background-image: url(../img/mytalk_blank_48.png);
 	padding: 0 !important;
 }
-.avatar, .avatar img {
+.avatar48, .avatar48 img {
 	width: 48px;
 	height: 48px;
+	border-radius: 3px;
+}
+
+.avatar300{
+	background-image: url(../img/mytalk_blank_300.png);
+	padding: 0 !important;
+}
+.avatar300, .avatar300 img {
+	border:1px solid red;
+	margin:0 auto;
+	padding: 1.1em;
+	width: 300px;
+	height: 300px;
 	border-radius: 3px;
 }
 

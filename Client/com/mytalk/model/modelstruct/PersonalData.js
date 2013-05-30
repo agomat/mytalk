@@ -1,4 +1,5 @@
 MyTalk.PersonalData = DS.Model.extend({
+  userId: DS.attr('number'),
   username: DS.attr('string'),
   password: DS.attr('string'),
   name: DS.attr('string'),

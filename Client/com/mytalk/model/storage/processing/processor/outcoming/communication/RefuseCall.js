@@ -1,3 +1,3 @@
-MyTalk.processor.RefuseCall = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.RefuseCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
 
 });

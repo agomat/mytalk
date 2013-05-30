@@ -1,3 +1,3 @@
-MyTalk.processor.AcceptCall = Ember.Mixin.create(MyTalk.RequestManager,{
+MyTalk.processor.AcceptCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
 
 });

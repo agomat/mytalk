@@ -33,7 +33,6 @@
     <script type="text/javascript" src="com/mytalk/view/templateview/RegisterFormView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/RegisterPassword.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateform/IPCall.js"></script>
-    <script type="text/javascript" src="com/mytalk/view/templateview/CallView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateview/UsersView.js"></script>
     <script type="text/javascript" src="com/mytalk/view/templateview/GuestView.js"></script>
     
@@ -58,7 +57,7 @@
     <script type="text/javascript" src="com/mytalk/controller/router/Router.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/IndexRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/GuestRoute.js"></script>
-    <script type="text/javascript" src="com/mytalk/controller/router/CallRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/router/CallingRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/LoggedRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/LoggedIndexRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/ListRoute.js"></script>
@@ -233,7 +232,7 @@
           <li>
 
             <div {{bindAttr class="online:online:offline"}}></div>
-            <div class="avatar">
+            <div class="avatar48">
              <img {{bindAttr src="avatarTiny"}} />
             </div>
 
@@ -246,13 +245,16 @@
             
 
             {{#if controller.controllers.list.blackList}}
-                <li><a class="call_user" href="#" {{action "call" id }} ></a></li>
+                <li>
+                {{#linkTo calling this class="call_user"}} 
+                {{/linkTo}}
+                </li>
                 <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" id }}></a></li>
               </ul>
             {{else}}
                 {{#if controller.controllers.list.generalList}}
-                  <li><a class="call_user" href="#" {{action "call" id }} ></a></li>
+                  <li>{{#linkTo calling this class="call_user"}} {{/linkTo}}</li>
                   <li><a class="add_user" href="#" {{action "addUser" id }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" id }}></a></li>
                 </ul>
@@ -438,7 +440,7 @@
         <div id="ip_call">
           <h3> Chiama i tuoi amici </h3>
           <p>
-            Inserisci l'indirizzo IP di un amico e mettiti in contatto con lui!
+            Inserisci l`indirizzo IP di un amico e mettiti in contatto con lui!
           </p>
           {{ partial callip }}
         </div>
@@ -463,7 +465,7 @@
       {{/view}}
     </script>
 
-    <script type="text/x-handlebars" data-template-name="call">
+    <script type="text/x-handlebars" data-template-name="calling">
      <div id="call_content" class="scroll_content">
       
       <div id="chat">
@@ -485,20 +487,26 @@
           </fieldset>
         {{/view}}
       </div>
+
       <div id="comunicazione">
-          <video id="local" autoplay muted></video>
-          <video id="remote" autoplay></video>
-          <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
-          <ul id="stats"> 
-
-            <li><span>Tempo trascorso:</span>{{statistics.duration}}</li>
-            <li><span>Byte ricevuti:</span>{{statistics.receivedBytes}}</li>
-            <li><span>Byte trasmessi:</span>{{statistics.sentBytes}}</li>
-          
-          </ul>
-
-
+        <!--
+        <video id="local" autoplay muted></video>
+        <video id="remote" autoplay></video>
+        -->
+        <div id="remote" class="call_placeholder">
+          <div class="avatar300">
+           <img {{bindAttr src="avatarBig"}} />
+           <h2>Contattando {{name}} {{surname}}</h2>
+          </div>
+        </div>
+        <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
+        <ul id="stats"> 
+          <li><span>Tempo trascorso:</span>{{statistics.duration}}</li>
+          <li><span>Byte ricevuti:</span>{{statistics.receivedBytes}}</li>
+          <li><span>Byte trasmessi:</span>{{statistics.sentBytes}}</li>
+        </ul>
       </div>
+
     </div>
 
     </script>

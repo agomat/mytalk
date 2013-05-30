@@ -163,14 +163,6 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     return filteredUsers;
   }.property('content.@each.unmatched').cacheable(),
 
-  call: function(user){
-    if(user.get('online')){
-      console.log("call "+user.get('id'));
-      MyTalk.Router.router.transitionTo('call');
-    }
-    // TODO
-  },
-
   addUser: function (userId){
     document.getElementById('adduser').style.display='block';
     var user = MyTalk.User.find(userId);
@@ -254,11 +246,15 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
 
 
-MyTalk.CallController = Ember.ArrayController.extend({
+MyTalk.CallingController = Ember.ObjectController.extend({
 
   needs:['users'],
   messages:[],
   statistics:Ember.Object.create({duration:null,sentBytes:null,receivedBytes:null}),
+
+  test: function() {
+   alert(  this.get('content')  );
+  },
 
   sendMessage:function(message){
     var context=this.get('messages');

@@ -32,7 +32,6 @@ MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
 MyTalk.LoggedController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
   sortProperties: ['name'],
   needs:['users'],
-    
   createList:function makeListCreate(){
 
     var newName = prompt("Digita il nome della nuova lista: ");
@@ -60,7 +59,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
       }
     }  
   },
-
+  
 });
 
 
@@ -178,7 +177,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
   },
   doAddUser:function (){
     var currentListId=this.get('controllers.list.content.id');
-    if(this.selectedValue!=null && this.selectedValue!=currentListId){
+    if(this.selectedValue!=null && this.selectedValue!=currentListId && this.selectedValue>1){
    
       if(currentListId!=1){
         var list=MyTalk.List.find(this.selectedValue);
@@ -194,6 +193,8 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
         this.set('userId',null);
         this.set('userName',null);
       }
+      
+      
     }
     else{
       alert('Selezionare una lista corretta');
@@ -206,9 +207,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
       var listId = this.get('controllers.list.content.id');
       if(listId==1){
         var currentList = MyTalk.List.find(listId).get('users');
-        var generalList = MyTalk.List.find(0).get('users');
         currentList.removeObject( user );
-        generalList.addObject( user );
       }
       else{
         var list = MyTalk.List.find(listId);
@@ -227,12 +226,14 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     if(confirmation){
       var lists = MyTalk.List.find();
       lists.forEach(function(list) {
-        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = ProcessorFactory.createProcessorProduct("ListUserRemove");
-        processor.process({
-          userId: userId,
-          list: list 
-        });
+        if(list.get('id')!=0){
+          var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+          var processor = ProcessorFactory.createProcessorProduct("ListUserRemove");
+          processor.process({
+            userId: userId,
+            list: list 
+          });
+        }
       });
       var ProcessorFactory = MyTalk.ProcessorFactory.create({});
       var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );

@@ -250,8 +250,12 @@
 
             {{#if controller.controllers.list.blackList}}
                 <li>
-                {{#linkTo calling this class="call_user"}} 
-                {{/linkTo}}
+                {{#if online}}
+                  {{#linkTo calling this class="call_user"}}
+                  {{/linkTo}}
+                {{else}}
+                  <a class="call_user" href="#" {{ action "notCall" }}> </a>
+                {{/if}}
 
                 </li>
                 <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
@@ -259,12 +263,26 @@
               </ul>
             {{else}}
                 {{#if controller.controllers.list.generalList}}
-                  <li>{{#linkTo calling this class="call_user"}} {{/linkTo}}</li>
+                  <li>
+                  {{#if online}}
+                    {{#linkTo calling this class="call_user"}}
+                    {{/linkTo}}
+                  {{else}}
+                    <a class="call_user" href="#" {{ action "notCall" }} > </a>
+                  {{/if}}
+                  </li>
                   <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
                 </ul>
                 {{else}}
-                  <li><a class="call_user" href="#" {{action "call" this }} ></a></li>
+                  <li>
+                  {{#if online}}
+                    {{#linkTo calling this class="call_user"}}
+                    {{/linkTo}}
+                  {{else}}
+                    <a class="call_user" href="#" {{ action "notCall" }} > </a>
+                  {{/if}}
+                  </li>
                   <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
                   <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>

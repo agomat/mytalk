@@ -169,6 +169,10 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     this.set('userName',n);
   },
 
+  notCall:function(){
+    alert('Non puoi chiamare un utente offline');
+  },
+
   closeSelect:function(){
     document.getElementById('adduser').style.display='none';
     this.set('selectedValue',null);

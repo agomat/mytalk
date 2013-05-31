@@ -26,21 +26,20 @@ MyTalk.StateManager = Ember.StateManager.create({
   isBusy: Ember.State.create({
 
     callInfo: Ember.Object.create({ 
-      duration: "ciao",
-      sentBytes: 3,
-      receivedBytes: null
+      stats: {
+        duration: 10,
+        sentBytes: 11,
+        receivedBytes: 12,
+      },
+      RTCinfo: {
+        myIP: 'myIp',
+        myUserId: 'myUserId',
+        myRTCinfo: 'JSON di candidati e SDP',
+        speakerIp: 'speakerIp',
+        speakerUserId: 'speakerUserId',
+        speakerRTCinfo: 'JSON di candidati e SDP'
+      }
     }),
-        /* 
-            statistics -> {duration: int sentBytes: int ,receivedBytes: int}
-            RTCinfo ->  {
-                          myIP: ('string'),
-                          myUserId: ('string'),
-                          myRTCinfo: ('JSON di candidati e SDP'),
-                          speakerIp: ('string'),
-                          speakerUserId: ('string'),
-                          speakerRTCinfo: ('JSON di candidati e SDP')
-                        }
-        */
 
     enter: function () {
      

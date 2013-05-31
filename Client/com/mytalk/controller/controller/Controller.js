@@ -246,16 +246,9 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
 
 MyTalk.CallingController = Ember.ObjectController.extend({
-  callInfo:MyTalk.StateManager.get('isBusy').get('callInfo'),
-  //callInfoBinding: Ember.Binding("MyTalk.StateManager.get('isBusy').get('callInfo')"),
-
-  needs: ['users'],
+  //needs: ['users'], per cosa è utile?
+  callInfo: MyTalk.StateManager.get('isBusy').get('callInfo'), 
   messages: [],
-  statistics: Ember.Object.create({ // vedere se tenerli qui...!
-    duration: null,
-    sentBytes: null,
-    receivedBytes: null
-  }),
 
 });
 

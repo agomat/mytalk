@@ -508,9 +508,9 @@
         </div>
         <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
         <ul id="stats"> 
-          <li><span>Tempo trascorso:</span>{{callInfo.duration}}</li>
-          <li><span>Byte ricevuti:</span>{{callInfo.receivedBytes}}</li>
-          <li><span>Byte trasmessi:</span>{{callInfo.sentBytes}}</li>
+          <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>
+          <li><span>Byte ricevuti:</span>{{callInfo.stats.receivedBytes}}</li>
+          <li><span>Byte trasmessi:</span>{{callInfo.stats.sentBytes}}</li>
         </ul>
       </div>
 

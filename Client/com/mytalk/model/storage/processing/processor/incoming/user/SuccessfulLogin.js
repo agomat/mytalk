@@ -25,7 +25,7 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractOutProcess
     adapter = store.adapterForType(MyTalk.PersonalData);
     adapter.didFindMany(store, MyTalk.PersonalData, worldPersonalData);
 
-    MyTalk.StateManager.send("login"); 
+    MyTalk.AppState.send("beingAuthenticated"); 
   },
 
    sendToServer: function (socket, record, onSent) { // not override

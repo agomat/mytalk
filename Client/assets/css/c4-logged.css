@@ -234,16 +234,17 @@
 }
 
 .avatar300{
-	background-image: url(../img/mytalk_blank_300.png);
-	padding: 0 !important;
+  background: center no-repeat url(../img/mytalk_blank_300.png);
 }
 .avatar300, .avatar300 img {
-	border:1px solid red;
-	margin:0 auto;
-	padding: 1.1em;
-	width: 300px;
-	height: 300px;
-	border-radius: 3px;
+  margin: 0 auto;
+  padding: 1.1em;
+  width: 300px;
+  border-radius: 3px;
+}
+
+.avatar300 h2 {
+	margin-top: 20px;
 }
 
 .call_user{background: url("../img/phone_green.png") center center no-repeat;}

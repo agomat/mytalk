@@ -26,7 +26,7 @@ return "list";
 
 }
 
-}, 3000);
+}, 3500);
 
 /*
 Ember.run.later(this, function(){

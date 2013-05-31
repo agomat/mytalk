@@ -63,7 +63,8 @@
     <script type="text/javascript" src="com/mytalk/controller/router/ListRoute.js"></script>
 
     <!-- bootstrap StateManager -->
-    <script type="text/javascript" src="com/mytalk/controller/statemanager/StateManager.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/statemanager/AppState.js"></script>
+    <script type="text/javascript" src="com/mytalk/controller/statemanager/CallState.js"></script>
 
 
 
@@ -251,10 +252,9 @@
             {{#if controller.controllers.list.blackList}}
                 <li>
                 {{#if online}}
-                  {{#linkTo calling this class="call_user"}}
-                  {{/linkTo}}
+                  <a class="call_user" href="#" {{ action "call" this }}> </a>
                 {{else}}
-                  <a class="call_user" href="#" {{ action "notCall" }}> </a>
+                  <a class="call_user" href="#" {{ action "cantCall" this }}> </a>
                 {{/if}}
 
                 </li>
@@ -265,10 +265,9 @@
                 {{#if controller.controllers.list.generalList}}
                   <li>
                   {{#if online}}
-                    {{#linkTo calling this class="call_user"}}
-                    {{/linkTo}}
+                    <a class="call_user" href="#" {{ action "call" this }}> </a>
                   {{else}}
-                    <a class="call_user" href="#" {{ action "notCall" }} > </a>
+                    <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
                   {{/if}}
                   </li>
                   <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
@@ -277,10 +276,9 @@
                 {{else}}
                   <li>
                   {{#if online}}
-                    {{#linkTo calling this class="call_user"}}
-                    {{/linkTo}}
+                    <a class="call_user" href="#" {{ action "call" this }}> </a>
                   {{else}}
-                    <a class="call_user" href="#" {{ action "notCall" }} > </a>
+                    <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
                   {{/if}}
                   </li>
                   <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
@@ -490,7 +488,7 @@
 
     <script type="text/x-handlebars" data-template-name="calling">
      <div id="call_content" class="scroll_content">
-      
+     
       <div id="chat">
         <ul id="messages">
           {{#each message in messages}}
@@ -500,7 +498,6 @@
           <li class="received_message">{{message.text}}</li>
           {{/if}}
           {{/each}}
-          <a {{action "test"}}> aaaaa</a>
 
         </ul>
         {{#view MyTalk.MessageFormView }}
@@ -508,32 +505,47 @@
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
             {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button type="submit" class="common_button">Invia</button>
+            <button {{bindAttr class="isConnected:submit:disabled"}} class="common_button">Invia</button>
           </fieldset>
         {{/view}}
       </div>
 
       <div id="comunicazione">
-        <!--
-        <video id="local" autoplay muted></video>
-        <video id="remote" autoplay></video>
-        -->
-        <div id="remote" class="call_placeholder">
-          <div class="avatar300">
-           <img {{bindAttr src="avatarBig"}} />
-           <h2>Contattando {{name}} {{surname}}</h2>
+        
+        {{#if isConnected}}
+          <video id="local" autoplay muted></video>
+          <video id="remote" autoplay></video>
+        {{else}}
+          <div id="remote" class="call_placeholder">
+            <div class="avatar300">
+             <img {{bindAttr src="avatarBig"}} />
+
+             {{#if isIncomingCall}}
+               <h2><em>{{fullName}}</em> ti sta chiamando</h2>
+             {{else}}
+               <h2>Contattando <em>{{fullName}}</em></h2>
+             {{/if}}
+
+            </div>
           </div>
-        </div>
+        {{/if}}
+
+        {{#unless isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
+          <a {{action "acceptCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>
+        {{/unless}}
+
         <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
-        <ul id="stats"> 
-          <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>
-          <li><span>Byte ricevuti:</span>{{callInfo.stats.receivedBytes}}</li>
-          <li><span>Byte trasmessi:</span>{{callInfo.stats.sentBytes}}</li>
-        </ul>
+
+        {{#if isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
+          <ul id="stats"> 
+            <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>
+            <li><span>Byte ricevuti:</span>{{callInfo.stats.receivedBytes}}</li>
+            <li><span>Byte trasmessi:</span>{{callInfo.stats.sentBytes}}</li>
+          </ul>
+        {{/if}}
+
       </div>
-
     </div>
-
     </script>
   </body>
 </html>

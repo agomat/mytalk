@@ -3,20 +3,57 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractOutProc
 
   process: function (ari) {
   	/*
-			2) salvo il campo info all'interno di uno stato dello statemanager
+			1) salvo il campo info all'interno di uno stato dello statemanager
 			( myIp= obbligatorio
 			 	myUserId= obbligatorio se arriva da utente registrato altrimenti null
 				speakerIp= obbligatorio
 				speakerUserId= obbligatorio se arriva da utente registrato altrimenti null
 				RTCinfo= obbligatorio )
 
-			3) lo state manager deve provocare un cambiamento di vista mostrando "Nome Cognome ti sta chiamando"
+			2) lo state manager deve provocare un cambiamento di vista mostrando "Nome Cognome ti sta chiamando"
 
   	*/
 
   	var payload = JSON.parse( ari.info );
     var caller = MyTalk.User.find( payload.myUserId );
-    console.log( caller.get('fullName') );
+
+    // TODO vedere se sono impegnato in altra conversazione
+    MyTalk.CallState.send('beingBusy',{
+      path: 'isBusy.incomingCall',
+      RTCinfo: {
+        myIP: null, //           inutili!
+        myUserId: null,
+        myRTCinfo: null,
+        speakerIp: payload.myIP,
+        speakerUserId: payload.myUserId,
+        speakerRTCinfo: payload.myRTCinfo
+      }
+    });
+    
+
+
+/*
+
+Ember.Object.create({
+		  reason: null,
+      stats: {
+        duration: null,
+        sentBytes: null,
+        receivedBytes: null,
+      },
+      RTCinfo: {
+        myIP: null,
+        myUserId: null,
+        myRTCinfo: null,
+        speakerIp: null,
+        speakerUserId: null,
+        speakerRTCinfo: null
+      }
+    }),
+
+
+*/
+
 
   },
 

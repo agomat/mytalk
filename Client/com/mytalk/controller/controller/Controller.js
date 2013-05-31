@@ -1,5 +1,5 @@
 MyTalk.IndexController = Ember.ObjectController.extend(MyTalk.RequestHelper, {
-  appStateBinding: Ember.Binding.oneWay('MyTalk.StateManager.currentState.name'),
+  appStateBinding: Ember.Binding.oneWay('MyTalk.AppState.currentState.name'),
   appState: null,
 
   isAuthenticated: function () {
@@ -169,8 +169,37 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     this.set('userName',n);
   },
 
-  notCall:function(){
-    alert('Non puoi chiamare un utente offline');
+  call: function(user){
+
+    //TODO vedere se sono impegnato in altra conversazione
+
+    // crea un nuova peerConnection
+
+    var RTCmanager = MyTalk.PeerConnection.create({});
+
+    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = ProcessorFactory.createProcessorProduct("UserCall");
+    processor.process({
+      callee: user,
+      RTCinfo: "SDP E CANDIDATI TODO !!" 
+    });
+
+    MyTalk.CallState.send('beingBusy',{
+      path: 'isBusy.outcomingCall',
+      RTCinfo: {
+        myIP: null, //           inutili!
+        myUserId: null,
+        myRTCinfo: null,
+        speakerIp: user.get('ip'), // serve?
+        speakerUserId: user.get('id'),
+        speakerRTCinfo: "WTF inutility"  // serve?
+      }
+    });
+
+  },
+
+  cantCall: function(user){
+    alert('Non puoi chiamare '+ user.get('fullName') +' poiché è offline');
   },
 
   closeSelect:function(){
@@ -250,9 +279,20 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
 
 MyTalk.CallingController = Ember.ObjectController.extend({
-  //needs: ['users'], per cosa è utile?
-  callInfo: MyTalk.StateManager.get('isBusy').get('callInfo'), 
+  callInfo: MyTalk.CallState.get('isBusy').get('callInfo'),
+  callState: null,
+  callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
+  isIncomingCall: Ember.computed.equal('callState','incomingCall'),
+  isConnected: Ember.computed.equal('callState','isConnected'),
   messages: [],
+
+  acceptCall: function(){
+    // TODO
+  },
+
+  closeCall: function(){
+    // TODO
+  },
 
 });
 

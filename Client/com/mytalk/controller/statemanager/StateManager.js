@@ -27,7 +27,7 @@ MyTalk.StateManager = Ember.StateManager.create({
 
     callInfo: Ember.Object.create({ 
       duration: "ciao",
-      sentBytes: null,
+      sentBytes: 3,
       receivedBytes: null
     }),
         /* 

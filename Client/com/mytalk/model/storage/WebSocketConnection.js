@@ -20,6 +20,7 @@
 
 MyTalk.WebSocketConnection = Ember.Mixin.create({
   resource: 'ws://'+window.location.hostname+':8887',
+  //resource: 'ws://binarylab.info:8887',
   socket: undefined,
 
   createSocket: function() {

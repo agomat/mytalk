@@ -25,7 +25,11 @@ MyTalk.StateManager = Ember.StateManager.create({
 
   isBusy: Ember.State.create({
 
-    campoDatoStrutturato: "ciao",
+    callInfo: Ember.Object.create({ 
+      duration: "ciao",
+      sentBytes: null,
+      receivedBytes: null
+    }),
         /* 
             statistics -> {duration: int sentBytes: int ,receivedBytes: int}
             RTCinfo ->  {

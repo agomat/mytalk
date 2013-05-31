@@ -9,8 +9,6 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
 
   	*/
 
-
-
   	var callee = params.callee;
   	var RTCinfo = params.RTCinfo;
   	var myself = MyTalk.PersonalData.find(0);

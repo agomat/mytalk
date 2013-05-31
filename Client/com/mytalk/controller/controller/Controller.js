@@ -247,15 +247,20 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
 MyTalk.CallingController = Ember.ObjectController.extend({
 
-  needs:['users'],
-  messages:[],
-  statistics:Ember.Object.create({duration:null,sentBytes:null,receivedBytes:null}),
+  callInfoBinding: Ember.Binding.oneWay("MyTalk.StateManager.get('isBusy').get('callInfo')"),
 
-  test: function() {
-   alert(  this.get('content.name')  );
-   this.set('statistics',Ember.Object.create({duration:5,sentBytes:5,receivedBytes:5}));
-  },
+  needs: ['users'],
+  messages: [],
+  statistics: Ember.Object.create({ // vedere se tenerli qui...!
+    duration: null,
+    sentBytes: null,
+    receivedBytes: null
+  }),
 
+});
+
+
+/*
   sendMessage:function(message){
     var context=this.get('messages');
     var temp=new Array();
@@ -275,13 +280,4 @@ MyTalk.CallingController = Ember.ObjectController.extend({
         this.set('messages',temp);
     }
   },
-
-   closeCall:function(){
-
-    //MyTalk.Router.router.transitionTo('list');
-
-  },
-  
-
-
-});
+*/

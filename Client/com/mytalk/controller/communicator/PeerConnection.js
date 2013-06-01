@@ -151,7 +151,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
     },
     
-    start: function(onCandidatesCreation,onCandidatesReady,bool) {
+    start: function(beforeCandidatesCreation,onCandidatesReady,bool) {
         this.isCaller = bool;
         this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
         if(this.webrtcDetectedBrowser === "chrome") {
@@ -161,7 +161,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         var context = this;
         
         // invia iceCandidate all'altro peer
-        onCandidatesCreation(this);
+        beforeCandidatesCreation(this);
         this.pc.onicecandidate = function(evt) {
             if(evt.candidate) {
               context.myICE.push(evt.candidate);

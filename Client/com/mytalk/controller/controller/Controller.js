@@ -177,9 +177,10 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct("UserCall");
 
-    var onCandidatesCreation = function() {
+    var beforeCandidatesCreation = function() {
       MyTalk.CallState.send('beingBusy',{
         path: 'isBusy.outcomingCall',
+        RTCmanager: RTCmanager,
         RTCinfo: {
           myIP: null, //           inutili!
           myUserId: null,
@@ -198,7 +199,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
       });
     };
   
-    RTCmanager.start(onCandidatesCreation,onCandidatesReady,true);
+    RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,true);
   },
 
   cantCall: function(user){
@@ -282,7 +283,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
 
 MyTalk.CallingController = Ember.ObjectController.extend({
-  callInfo: MyTalk.CallState.get('isBusy').get('callInfo'),
+  RTCinfo: MyTalk.CallState.get('isBusy').get('RTCinfo'),
   callState: null,
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
@@ -293,16 +294,24 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var RTCmanager = MyTalk.PeerConnection.create({});
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct("AcceptCall");
+    var context = this;
 
-    var onCandidatesCreation = function(local) {
+    var beforeCandidatesCreation = function(local) {
       // adding caller ice candidates
-      var callInfo = MyTalk.CallState.get("isBusy").get('callInfo');
-      var RTCinfo = callInfo.RTCinfo.speakerRTCinfo;
+      //var RTCinfo = MyTalk.CallState.get("isBusy").get('RTCinfo'); // TODO ugly
+      //var RTCinfo = caRTCinfollInfo.RTCinfo.speakerRTCinfo; // TODO ugly
+      //alert(context.get('RTCinfo'));
+
+      var RTCinfo = MyTalk.CallState.get('isBusy').get('RTCinfo');
+      //alert(JSON.stringify(RTCinfo));
+
+      local.setSDP( RTCinfo.speakerRTCinfo.sdp );
+      //local.setSDP( context.get('RTCinfo').speakerRTCinfo.sdp );
+      //console.debug("ADD SDP "+ JSON.stringify(RTCinfo.speakerRTCinfo.sdp) );
       
-      local.setSDP( RTCinfo.sdp ); 
-      
-      for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
-       local.addICE( RTCinfo.ice[i] );
+      for(var i=0; i<RTCinfo.speakerRTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+       local.addICE( RTCinfo.speakerRTCinfo.ice[i] );
+       //console.debug("ADD ICE "+ JSON.stringify(RTCinfo.speakerRTCinfo.ice[i]) );
       }
 
       MyTalk.CallState.send('beingBusy',{ path: 'isBusy.isConnected' });
@@ -315,7 +324,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
     };
 
-    RTCmanager.start(onCandidatesCreation,onCandidatesReady);
+    RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,false);
   },
 
   closeCall: function(user){

@@ -21,6 +21,11 @@ MyTalk.CallState = Ember.StateManager.create({
         MyTalk.Router.router.transitionTo('calling', MyTalk.User.find(this.get('callInfo').RTCinfo.speakerUserId) );
     },
     
+    beingFree: function (manager, context) { //TODO vedere se spostare nei sottostati
+      manager.isBusy.set('callInfo',null);
+      manager.transitionTo( 'isNotBusy' );
+    },
+
     outcomingCall: Ember.State.create({
       enter: function () {
         

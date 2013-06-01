@@ -295,7 +295,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var processor = ProcessorFactory.createProcessorProduct("AcceptCall");
 
     var onCandidatesCreation = function(local) {
-      // adding sender ice candidates
+      // adding caller ice candidates
       var callInfo = MyTalk.CallState.get("isBusy").get('callInfo');
       var RTCinfo = callInfo.RTCinfo.speakerRTCinfo;
       
@@ -310,7 +310,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
     var onCandidatesReady = function(RTCinfo) {
       processor.process({
-        callee: user,
+        caller: user,
         RTCinfo: JSON.stringify(RTCinfo) 
       });
     };
@@ -319,9 +319,16 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
 
   closeCall: function(user){
+    /*
+    // TODO: rifiutare la chiamata
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct("RefuseCall");
     processor.process({});
+    */
+    // patch:
+
+    MyTalk.CallState.send('beingFree');
+    MyTalk.Router.router.transitionTo("list",MyTalk.List.find(0));
   },
 
 });

@@ -171,31 +171,34 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
   call: function(user){
 
-    //TODO vedere se sono impegnato in altra conversazione
-
-    // crea un nuova peerConnection
+    //TODO verificare se sono impegnato in altra conversazione
 
     var RTCmanager = MyTalk.PeerConnection.create({});
-
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct("UserCall");
-    processor.process({
-      callee: user,
-      RTCinfo: "SDP E CANDIDATI TODO !!" 
-    });
 
-    MyTalk.CallState.send('beingBusy',{
-      path: 'isBusy.outcomingCall',
-      RTCinfo: {
-        myIP: null, //           inutili!
-        myUserId: null,
-        myRTCinfo: null,
-        speakerIp: user.get('ip'), // serve?
-        speakerUserId: user.get('id'),
-        speakerRTCinfo: "WTF inutility"  // serve?
-      }
-    });
+    var onCandidatesCreation = function() {
+      MyTalk.CallState.send('beingBusy',{
+        path: 'isBusy.outcomingCall',
+        RTCinfo: {
+          myIP: null, //           inutili!
+          myUserId: null,
+          myRTCinfo: null,
+          speakerIp: user.get('ip'), // serve?
+          speakerUserId: user.get('id'),
+          speakerRTCinfo: "WTF inutility"  // serve?
+        }
+      });
+    };
 
+    var onCandidatesReady = function(RTCinfo) {
+      processor.process({
+        callee: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+    };
+  
+    RTCmanager.start(onCandidatesCreation,onCandidatesReady,true);
   },
 
   cantCall: function(user){
@@ -286,12 +289,39 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   isConnected: Ember.computed.equal('callState','isConnected'),
   messages: [],
 
-  acceptCall: function(){
-    // TODO
+  acceptCall: function(user){
+    var RTCmanager = MyTalk.PeerConnection.create({});
+    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = ProcessorFactory.createProcessorProduct("AcceptCall");
+
+    var onCandidatesCreation = function(local) {
+      // adding sender ice candidates
+      var callInfo = MyTalk.CallState.get("isBusy").get('callInfo');
+      var RTCinfo = callInfo.RTCinfo.speakerRTCinfo;
+      
+      local.setSDP( RTCinfo.sdp ); 
+      
+      for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+       local.addICE( RTCinfo.ice[i] );
+      }
+
+      MyTalk.CallState.send('beingBusy',{ path: 'isBusy.isConnected' });
+    };
+
+    var onCandidatesReady = function(RTCinfo) {
+      processor.process({
+        callee: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+    };
+
+    RTCmanager.start(onCandidatesCreation,onCandidatesReady);
   },
 
-  closeCall: function(){
-    // TODO
+  closeCall: function(user){
+    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = ProcessorFactory.createProcessorProduct("RefuseCall");
+    processor.process({});
   },
 
 });

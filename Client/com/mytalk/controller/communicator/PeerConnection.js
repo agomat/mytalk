@@ -125,7 +125,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         function onSuccess(stream) {
             var selfView = document.getElementById('local');
             //selfView.src = URL.createObjectURL(stream);
-            context.attachMediaStream(selfView,stream);
+            //context.attachMediaStream(selfView,stream);
             peerConn.addStream(stream);
 
             if(isCaller)
@@ -135,7 +135,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
             }
             function gotDescription(desc) {
                 peerConn.setLocalDescription(desc);
-                console.log('add sdp');
+                console.log('add sdp'+ desc.toString());
                 //context.send(JSON.stringify({ "sdp": desc })); call a processor
                 context.mySDP = desc;
             } 
@@ -146,7 +146,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
     },
     
-    start: function(bool) {
+    start: function(onCandidatesCreation,onCandidatesReady,bool) {
         this.isCaller = bool;
         this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
         if(this.webrtcDetectedBrowser === "chrome") {
@@ -156,14 +156,16 @@ MyTalk.PeerConnection = Ember.Object.extend({
         var context = this;
         
         // invia iceCandidate all'altro peer
+        onCandidatesCreation(this);
         this.pc.onicecandidate = function(evt) {
-            console.debug('send candidate');
-            //signChann.send(JSON.stringify({ "candidate": evt.candidate })); call a processor
             if(evt.candidate) {
               context.myICE.push(evt.candidate);
             }
             else {
-              // sono arrivato all'ultimo, invoco il processor specifico per inviare al server
+              var RTCinfo = new Object(); // max: sistemate meglio
+              RTCinfo.sdp = context.get('mySDP');
+              RTCinfo.ice = context.get('myICE');
+              onCandidatesReady( RTCinfo );
             }
         };
 

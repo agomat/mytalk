@@ -531,10 +531,10 @@
         {{/if}}
 
         {{#unless isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
-          <a {{action "acceptCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>
+          <a {{action "acceptCall" this}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>
         {{/unless}}
 
-        <a {{action "closeCall"}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
+        <a {{action "closeCall" this}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
 
         {{#if isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
           <ul id="stats"> 

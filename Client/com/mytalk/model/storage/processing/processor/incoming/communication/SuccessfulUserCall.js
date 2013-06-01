@@ -16,17 +16,17 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractOutProc
 
   	var payload = JSON.parse( ari.info );
     var caller = MyTalk.User.find( payload.myUserId );
-
+    window.DATA = JSON.parse(payload.RTCinfo); // TODO: rimuovere questa riga
     // TODO vedere se sono impegnato in altra conversazione
     MyTalk.CallState.send('beingBusy',{
       path: 'isBusy.incomingCall',
       RTCinfo: {
-        myIP: null, //           inutili!
-        myUserId: null,
-        myRTCinfo: null,
+        //myIP: null, //           inutili!
+        //myUserId: null,
+        //myRTCinfo: null,
         speakerIp: payload.myIP,
         speakerUserId: payload.myUserId,
-        speakerRTCinfo: payload.myRTCinfo
+        speakerRTCinfo: JSON.parse(payload.RTCinfo)
       }
     });
     

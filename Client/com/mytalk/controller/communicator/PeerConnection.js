@@ -123,9 +123,14 @@ MyTalk.PeerConnection = Ember.Object.extend({
         var context = this;
         
         function onSuccess(stream) {
-            var selfView = document.getElementById('local');
+            
             //selfView.src = URL.createObjectURL(stream);
-            //context.attachMediaStream(selfView,stream);
+            Ember.run.later(this,function(){
+                var selfView = document.getElementById('local');
+                console.debug("ATTACHED local "+selfView);
+                if(selfView) context.attachMediaStream(selfView,stream);
+            },30000);
+            
             peerConn.addStream(stream);
 
             if(isCaller)
@@ -171,8 +176,12 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
         // visualizza lo stream remoto quando viene aggiunto
         this.pc.onaddstream = function(evt) {
-            var remoteView = document.getElementById('remote');
-            context.attachMediaStream(remoteView,evt.stream);
+            
+            Ember.run.later(this,function(){
+                var remoteView = document.getElementById('remote');
+                console.debug("ATTACHED remote"+remoteView);
+                if(remoteView) context.attachMediaStream(remoteView,evt.stream);
+            },30000);
             //remoteView.src = URL.createObjectURL(evt.stream);
         };
         

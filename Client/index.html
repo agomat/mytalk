@@ -513,10 +513,22 @@
       </div>
 
       <div id="comunicazione">
+
+        <video id="local" autoplay muted {{bindAttr class="isConnected:show_video:hide_video"}}></video>
+        <video id="remote" autoplay {{bindAttr class="isConnected:show_video:hide_video"}}></video>
         
-        <!-- TODO: mostrare spash screen se stato non è isConnected -->
-        <video id="local" autoplay muted></video>
-        <video id="remote" autoplay></video>
+        {{#unless isConnected}}
+          <div id="remote" class="call_placeholder">
+            <div class="avatar300">
+             <img {{bindAttr src="avatarBig"}} />
+             {{#if isIncomingCall}}
+               <h2><em>{{fullName}}</em> ti sta chiamando</h2>
+             {{else}}
+               <h2>Contattando <em>{{fullName}}</em></h2>
+             {{/if}}
+            </div>
+          </div>
+        {{/unless}}
 
         {{#unless isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
           <a {{action "acceptCall" this}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>

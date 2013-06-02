@@ -21,6 +21,10 @@
     width:10%;
 }
 
+.hide_video {
+    display: none;
+}
+
 #comunicazione a{
     display: block;
     float:left;

@@ -169,7 +169,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     this.set('userName',n);
   },
 
-  call: function(user){
+  userCall: function(user){
 
     //TODO verificare se sono impegnato in altra conversazione
 
@@ -177,24 +177,21 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct("UserCall");
 
+    // callback 1
     var beforeCandidatesCreation = function() {
-      MyTalk.CallState.send('beingBusy',{
+      var callData = Ember.Object.create({
         path: 'isBusy.outcomingCall',
-        RTCmanager: RTCmanager,
-        RTCinfo: {
-          myIP: null, //           inutili!
-          myUserId: null,
-          myRTCinfo: null,
-          speakerIp: user.get('ip'), // serve?
-          speakerUserId: user.get('id'),
-          speakerRTCinfo: "WTF inutility"  // serve?
-        }
+        RTCmanager: RTCmanager, 
+        speaker: user,
       });
+
+      MyTalk.CallState.send('beingBusy',callData);
     };
 
+    // callback 2
     var onCandidatesReady = function(RTCinfo) {
       processor.process({
-        callee: user,
+        speaker: user,
         RTCinfo: JSON.stringify(RTCinfo) 
       });
     };
@@ -212,6 +209,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
     this.set('userId',null);
     this.set('userName',null);
   },
+
   doAddUser:function (){
     var currentListId=this.get('controllers.list.content.id');
     if(this.selectedValue!=null && this.selectedValue!=currentListId && this.selectedValue>1){
@@ -283,7 +281,7 @@ MyTalk.UsersController = Ember.ArrayController.extend(MyTalk.RequestHelper, {
 
 
 MyTalk.CallingController = Ember.ObjectController.extend({
-  RTCinfo: MyTalk.CallState.get('isBusy').get('RTCinfo'),
+  RTCinfo: MyTalk.CallState.get('isBusy').get('RTCinfo'), // TODO: sistemare con un binding?
   callState: null,
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
@@ -294,37 +292,32 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var RTCmanager = MyTalk.PeerConnection.create({});
     var ProcessorFactory = MyTalk.ProcessorFactory.create({});
     var processor = ProcessorFactory.createProcessorProduct("AcceptCall");
-    var context = this;
 
+    // callback 1
     var beforeCandidatesCreation = function(local) {
-      // adding caller ice candidates
-      //var RTCinfo = MyTalk.CallState.get("isBusy").get('RTCinfo'); // TODO ugly
-      //var RTCinfo = caRTCinfollInfo.RTCinfo.speakerRTCinfo; // TODO ugly
-      //alert(context.get('RTCinfo'));
-
-      var RTCinfo = MyTalk.CallState.get('isBusy').get('RTCinfo');
-      //alert(JSON.stringify(RTCinfo));
-
-      local.setSDP( RTCinfo.speakerRTCinfo.sdp );
-      //local.setSDP( context.get('RTCinfo').speakerRTCinfo.sdp );
-      //console.debug("ADD SDP "+ JSON.stringify(RTCinfo.speakerRTCinfo.sdp) );
+      var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
+      local.setSDP( RTCinfo.sdp );
       
-      for(var i=0; i<RTCinfo.speakerRTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
-       local.addICE( RTCinfo.speakerRTCinfo.ice[i] );
-       //console.debug("ADD ICE "+ JSON.stringify(RTCinfo.speakerRTCinfo.ice[i]) );
+      for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+       local.addICE( RTCinfo.ice[i] );
       }
 
-      MyTalk.CallState.send('beingBusy',{ path: 'isBusy.isConnected' });
+      var callData = Ember.Object.create({
+        isCaller: false
+      });
+
+      MyTalk.CallState.send('beingConnected',callData);
     };
 
+    // callback 2
     var onCandidatesReady = function(RTCinfo) {
       processor.process({
-        caller: user,
+        speaker: user,
         RTCinfo: JSON.stringify(RTCinfo) 
       });
     };
 
-    RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,false);
+    RTCmanager.start(beforeCandidatesCreation,onCandidatesReady);
   },
 
   closeCall: function(user){

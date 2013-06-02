@@ -2,24 +2,20 @@ MyTalk.processor.AcceptCall = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
   name: 'AcceptCall',
 
   process: function (params) {
-
-    var store = DS.get("defaultStore");
-
-    var caller = params.caller;
-    var RTCinfo = params.RTCinfo;
     var myself = MyTalk.PersonalData.find(0);
+    var speaker = params.speaker;
+    var RTCinfo = params.RTCinfo;
 
-    // ottengo l'id
-    var id = MyTalk.Call.find().get('length'); 
-    var record = MyTalk.Call.createRecord({id: id, speaker: caller, caller:false, startDate: new Date() });
+    var nextId = MyTalk.Call.find().get('length'); 
+    var record = MyTalk.Call.createRecord({id: nextId, speaker: speaker, caller: false, startDate: new Date() });
     var transaction = record.get('transaction');
 
     transaction.reopen({
       processor: this,
       myIp: myself.get('ip'),
       myUserId: myself.get('userId'),
-      speakerIp: caller.get('ip'),
-      speakerUserId: caller.get('id'),
+      speakerIp: speaker.get('ip'),
+      speakerUserId: speaker.get('id'),
       RTCinfo: RTCinfo
     });
 

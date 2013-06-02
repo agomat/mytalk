@@ -253,7 +253,7 @@
             {{#if controller.controllers.list.blackList}}
                 <li>
                 {{#if online}}
-                  <a class="call_user" href="#" {{ action "call" this }}> </a>
+                  <a class="call_user" href="#" {{ action "userCall" this }}> </a>
                 {{else}}
                   <a class="call_user" href="#" {{ action "cantCall" this }}> </a>
                 {{/if}}
@@ -266,7 +266,7 @@
                 {{#if controller.controllers.list.generalList}}
                   <li>
                   {{#if online}}
-                    <a class="call_user" href="#" {{ action "call" this }}> </a>
+                    <a class="call_user" href="#" {{ action "userCall" this }}> </a>
                   {{else}}
                     <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
                   {{/if}}
@@ -277,7 +277,7 @@
                 {{else}}
                   <li>
                   {{#if online}}
-                    <a class="call_user" href="#" {{ action "call" this }}> </a>
+                    <a class="call_user" href="#" {{ action "userCall" this }}> </a>
                   {{else}}
                     <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
                   {{/if}}
@@ -490,6 +490,7 @@
     <script type="text/x-handlebars" data-template-name="calling">
      <div id="call_content" class="scroll_content">
      
+     <!-- TODO: mostrare la chat disattivata quando lo stato non è isConnected -->
       <div id="chat">
         <ul id="messages">
           {{#each message in messages}}
@@ -506,30 +507,16 @@
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
             {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button {{bindAttr class="isConnected:submit:disabled"}} class="common_button">Invia</button>
+            <button class="common_button">Invia</button>
           </fieldset>
         {{/view}}
       </div>
 
       <div id="comunicazione">
         
-        {{#if isConnected}}
-          <video id="local" autoplay muted></video>
-          <video id="remote" autoplay></video>
-        {{else}}
-          <div id="remote" class="call_placeholder">
-            <div class="avatar300">
-             <img {{bindAttr src="avatarBig"}} />
-
-             {{#if isIncomingCall}}
-               <h2><em>{{fullName}}</em> ti sta chiamando</h2>
-             {{else}}
-               <h2>Contattando <em>{{fullName}}</em></h2>
-             {{/if}}
-
-            </div>
-          </div>
-        {{/if}}
+        <!-- TODO: mostrare spash screen se stato non è isConnected -->
+        <video id="local" autoplay muted></video>
+        <video id="remote" autoplay></video>
 
         {{#unless isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
           <a {{action "acceptCall" this}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>

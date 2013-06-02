@@ -2,28 +2,20 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   name: 'UserCall',
 
   process: function (params) {
-  	/*
-    	params ->
-    					oggetto user chiamato (callee)
-    					mio sdp + candidati   (RTCinfo)
-
-  	*/
-
-  	var callee = params.callee;
+    var myself = MyTalk.PersonalData.find(0);
+    var speaker = params.speaker;
   	var RTCinfo = params.RTCinfo;
-  	var myself = MyTalk.PersonalData.find(0);
 
-  	// ottengo l'id
-  	var id = MyTalk.Call.find().get('length'); ///////////////^
-    var record = MyTalk.Call.createRecord({id:id, speaker: callee, caller:true, startDate: new Date() });
+  	var nextId = MyTalk.Call.find().get('length');
+    var record = MyTalk.Call.createRecord({id: nextId, speaker: speaker, caller: true, startDate: new Date() });
     var transaction = record.get('transaction');
 
     transaction.reopen({
       processor: this,
       myIp: myself.get('ip'),
       myUserId: myself.get('userId'),
-      speakerIp: callee.get('ip'),
-      speakerUserId: callee.get('id'),
+      speakerIp: speaker.get('ip'),
+      speakerUserId: speaker.get('id'),
       RTCinfo: RTCinfo
     });
 

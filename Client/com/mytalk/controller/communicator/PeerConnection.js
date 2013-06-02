@@ -124,12 +124,9 @@ MyTalk.PeerConnection = Ember.Object.extend({
         
         function onSuccess(stream) {
             
-            //selfView.src = URL.createObjectURL(stream);
-            Ember.run.later(this,function(){
-                var selfView = document.getElementById('local');
-                console.debug("ATTACHED local "+selfView);
-                if(selfView) context.attachMediaStream(selfView,stream);
-            },30000);
+            var selfView = document.getElementById('local');
+            console.debug("ATTACHED local "+selfView);
+            if(selfView) context.attachMediaStream(selfView,stream);
             
             peerConn.addStream(stream);
 
@@ -141,7 +138,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
             function gotDescription(desc) {
                 peerConn.setLocalDescription(desc);
                 console.log('add sdp'+ desc.toString());
-                //context.send(JSON.stringify({ "sdp": desc })); call a processor
                 context.mySDP = desc;
             } 
         }
@@ -176,13 +172,9 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
         // visualizza lo stream remoto quando viene aggiunto
         this.pc.onaddstream = function(evt) {
-            
-            Ember.run.later(this,function(){
-                var remoteView = document.getElementById('remote');
-                console.debug("ATTACHED remote"+remoteView);
-                if(remoteView) context.attachMediaStream(remoteView,evt.stream);
-            },30000);
-            //remoteView.src = URL.createObjectURL(evt.stream);
+          var remoteView = document.getElementById('remote');
+          console.debug("ATTACHED remote"+remoteView);
+          if(remoteView) context.attachMediaStream(remoteView,evt.stream);
         };
         
         this.pc.onremovestream = function(evt) {

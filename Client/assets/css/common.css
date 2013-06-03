@@ -3,6 +3,7 @@ html, body{
   margin:0;
   font-size: 0.9em;
   color:#666;
+  font-family: 'RobotoRegular';
 }
 
 body{
@@ -16,6 +17,7 @@ body{
 
 h1,h2,h3,h4,h5,h6{ 
   margin: 0;
+  font-family: 'RobotoMedium';
 }
 
 form, form fieldset{
@@ -55,6 +57,7 @@ input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholde
   border:1px solid #009200;
   border-radius: 3px;
   color:#fff !important;
+  font-family: 'RobotoBoldCondensed';
   
   background: rgb(0,184,0); /* Old browsers */
   background: -moz-linear-gradient(top,  rgba(0,184,0,1) 41%, rgba(0,145,0,1) 69%); /* FF3.6+ */
@@ -103,6 +106,7 @@ input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholde
   color:#fff !important;
   border-radius: 3px;
   border:1px solid #800e00;
+  font-family: 'RobotoBoldCondensed';
 
   background: #e00e00; /* Old browsers */
   background: -moz-linear-gradient(top,  #e00e00 0%, #7f0000 100%); /* FF3.6+ */
@@ -135,6 +139,7 @@ input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholde
   color: #fff !important;
   border-radius: 3px;
   border:1px solid #348B18;
+  font-family: 'RobotoBoldCondensed';
 
   background: #0B9C10; /* Old browsers */
   background: -moz-linear-gradient(top,  #0FD616 0%, #0B9C10 100%); /* FF3.6+ */

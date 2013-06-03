@@ -62,13 +62,10 @@
     <script type="text/javascript" src="com/mytalk/controller/router/LoggedRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/LoggedIndexRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/router/ListRoute.js"></script>
-    <script type="text/javascript" src="com/mytalk/controller/router/IpcallRoute.js"></script>
 
     <!-- bootstrap StateManager -->
     <script type="text/javascript" src="com/mytalk/controller/statemanager/AppState.js"></script>
     <script type="text/javascript" src="com/mytalk/controller/statemanager/CallState.js"></script>
-
-
 
     <!-- bootstrap DS.Model -->
     
@@ -79,7 +76,6 @@
     <script type="text/javascript" src="com/mytalk/model/modelstruct/List.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/Call.js"></script>
     <script type="text/javascript" src="com/mytalk/model/modelstruct/WCall.js"></script>
-
 
     <!-- bootstrap Requests -->
 
@@ -93,12 +89,19 @@
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulLogin.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/AuthenticationFailLogin.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulLoginAsAnonymous.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/SuccessfulDeleteAccount.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/AuthenticationFailDeleteAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/IpAlreadyLoggedLoginAsAnonymous.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/UsernameCorrespondingExistingLogin.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/UserAlreadyLoggedLogin.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/IpNotLoggedLogin.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/user/UsernameAlreadyExistingCreateAccount.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/CorruptedPack.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/UnsuccessfulAcceptCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/UnsuccesfulUserCall.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/SuccessfulUserCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/IdNotFoundUserCall.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/SuccessfulRefuseCall.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/communication/SuccessfulAcceptCall.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/stats/AuthenticationFailGetCalls.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/stats/SuccessfulAddCall.js"></script>
@@ -121,6 +124,7 @@
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/UsernameNotCorrespondingListUserAdd.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/SuccessfulListUserAdd.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/AuthenticationFailListUserAdd.js"></script>
+    <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/IdNotFoundBlacklistAdd.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/SuccessfulListUserRemove.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/UserNotExistingBlacklistAdd.js"></script>
     <script type="text/javascript" src="com/mytalk/model/storage/processing/processor/incoming/list/ListAlreadyExistsRenameList.js"></script>

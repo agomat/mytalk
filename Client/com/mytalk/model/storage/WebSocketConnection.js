@@ -1,15 +1,15 @@
 /**
 * Filename: WebSocketConnection.js
-* Package: com.mytalk.client [...]
+* Package: com.mytalk.storage
+* Dependencies: com.mytalk.model.storage.processing.ProcessorFactory
 * Author: Mattia Agostinetto
-* Editor: Sublime Text 2
 * Date: 2013-04-26
 *
 * Diary:
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1   | 2013-05-01 | MA        | [+] Creazione Mixin WebSocketConnection
+* 0.1     | 2013-04-26 | MA        | [+] Creazione Mixin WebSocketConnection
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -20,7 +20,6 @@
 
 MyTalk.WebSocketConnection = Ember.Mixin.create({
   resource: 'ws://'+window.location.hostname+':8887',
-  //resource: 'ws://binarylab.info:8887',
   socket: undefined,
 
   createSocket: function() {

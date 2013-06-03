@@ -1,4 +1,24 @@
-MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
+/**
+* Filename: SuccessfulUserCall.js
+* Package: com.mytalk.storage.processing.processor.incoming.communication
+* Dependencies: com.mytalk.storage.processing.processor.incoming.AbstractInProcessorProduct
+*               com.mytalk.controller.statemanager.CallState
+* Author: Mattia Agostinetto
+* Date: 2013-05-01
+*
+* Diary:
+*
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1     | 2013-05-01 | MA        | [+] Stesura dell'intera classe
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProcessorProduct,{
   name: 'SuccessfulUserCall',
 
   process: function (ari) {

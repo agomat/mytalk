@@ -1,16 +1,16 @@
 /**
-* Filename: RequestManager.js
-* Package: com.mytalk.client [...]
+* Filename: AbstractOutProcessorProduct.js
+* Package: com.mytalk.storage.processing.processor.outcoming
+* Dependencies:
 * Author: Mattia Agostinetto
-* Editor: Sublime Text 2
-* Date: 2013-04-26
+* Date: 2013-05-01
 *
 * Diary:
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-01 | MA        | [+] Creazione del Mixin
-*		  |			   |           | [+] <scrivere>
+*	0.2     | 2013-05-03 | MA        | [+] Stesura metodo sendToServer
+* 0.1	    | 2013-05-01 | MA        | [+] Creazione del Mixin
 *
 * This software is distributed under GNU/GPL 2.0.
 *

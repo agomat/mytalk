@@ -514,10 +514,10 @@
 
       <div id="comunicazione">
 
-        <video id="local" autoplay muted {{bindAttr class="isConnected:show_video:hide_video"}}></video>
-        <video id="remote" autoplay {{bindAttr class="isConnected:show_video:hide_video"}}></video>
+        <video id="local" autoplay muted {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
+        <video id="remote" autoplay {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
         
-        {{#unless isConnected}}
+        {{#unless isConnected}} <!-- TODO: volendo usare anche qui bindAttr per regolare la visibilità  -->
           <div id="remote" class="call_placeholder">
             <div class="avatar300">
              <img {{bindAttr src="avatarBig"}} />
@@ -530,19 +530,16 @@
           </div>
         {{/unless}}
 
-        {{#unless isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
-          <a {{action "acceptCall" this}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>
-        {{/unless}}
+        <a {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}}
+ href="#" id="answer_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>
 
-        <a {{action "closeCall" this}} href="#" class="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
+        <a {{action "closeCall" this}} href="#" id="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
 
-        {{#if isConnected}} <!--TODO rimuovere questo if ed usare classBinding-->
-          <ul id="stats"> 
-            <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>
-            <li><span>Byte ricevuti:</span>{{callInfo.stats.receivedBytes}}</li>
-            <li><span>Byte trasmessi:</span>{{callInfo.stats.sentBytes}}</li>
-          </ul>
-        {{/if}}
+        <ul id="stats" {{bindAttr class="isConnected:display_yes:display_none"}}> 
+          <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>
+          <li><span>Byte ricevuti:</span>{{callInfo.stats.receivedBytes}}</li>
+          <li><span>Byte trasmessi:</span>{{callInfo.stats.sentBytes}}</li>
+        </ul>
 
       </div>
     </div>

@@ -1,8 +1,0 @@
-In produzione, sul proprio pc
--> make per compilare
--> ./run per eseguire
-
-Per il deply sul server binarylab.info
-1 -> usare BL-deploy
-2 -> connettersi via shh e dare:
-     $ killall java && cd MyTalk && ./run_forever 

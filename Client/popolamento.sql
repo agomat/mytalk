@@ -66,10 +66,10 @@ CREATE TABLE IF NOT EXISTS OnlineUsers
 ALTER TABLE ListNames AUTO_INCREMENT = 2;
 
 
-source popolamento/popolamentoTestUsers.sql; 
-source popolamento/popolamentoTestBlacklists.sql;
-source popolamento/popolamentoTestCalls.sql;
-source popolamento/popolamentoTestListNames.sql;
-source popolamento/popolamentoTestOnlineUsers.sql;
-source popolamento/popolamentoTestUserLists.sql;
+source .popolamento/popolamentoTestUsers.sql; 
+source .popolamento/popolamentoTestBlacklists.sql;
+source .popolamento/popolamentoTestCalls.sql;
+source .popolamento/popolamentoTestListNames.sql;
+source .popolamento/popolamentoTestOnlineUsers.sql;
+source .popolamento/popolamentoTestUserLists.sql;
 

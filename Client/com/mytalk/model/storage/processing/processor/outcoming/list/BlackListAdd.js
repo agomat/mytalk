@@ -1,3 +1,25 @@
+/**
+* Filename: BlackListAdd.js
+* Package: com.mytalk.storage.processing.processor.outcoming.communication
+* Dependencies:  com.mytalk.storage.processing.processor.outcoming.AbstractOutProcessorProduct
+*                com.mytalk.model.modelstruct.List
+*                com.mytalk.model.modelstruct.Authentication
+*                com.mytalk.model.modelstruct.User
+* Author: Mattia Agostinetto
+* Date: 2013-05-01
+*
+* Diary:
+*
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1     | 2013-05-01 | MA        | [+] Stesura dell'intera classe
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
 MyTalk.processor.BlackListAdd = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
   name: 'BlackListAdd',
 
@@ -27,7 +49,7 @@ MyTalk.processor.BlackListAdd = Ember.Object.extend(MyTalk.AbstractOutProcessorP
     ARI.info = new Object();
 
      var inner = new Object();
-     inner.id = 0; // sentire mike
+     inner.id = 0; 
      inner.name = "Blacklist";
      inner.list = [record.get('transaction').get('userId')];
 

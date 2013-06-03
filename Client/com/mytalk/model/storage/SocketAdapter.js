@@ -1,8 +1,8 @@
 /**
 * Filename: SocketAdapter.js
-* Package: com.mytalk.client [...]
+* Package: com.mytalk.model.storage
+* Dependencies:  com.mytalk.model.storage.WebSocketConnection
 * Author: Mattia Agostinetto
-* Editor: Sublime Text 2
 * Date: 2013-04-26
 *
 * Diary:

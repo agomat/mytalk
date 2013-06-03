@@ -1,3 +1,22 @@
+/**
+* Filename: ARI.js
+* Package: com.mytalk.model.storage
+* Dependencies: 
+* Author: Massimo Griggio
+* Date: 2013-04-23
+*
+* Diary:
+*
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1     | 2013-04-23 | MG        | [+] Scrittura classe
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
 MyTalk.ARI = Ember.Object.extend({
   auth: undefined,
   req: undefined,
@@ -11,27 +30,27 @@ MyTalk.ARI = Ember.Object.extend({
   },
 
   getAuth: function() {
-  	return this.get('auth');
+    return this.get('auth');
   },
   
   getReq: function() {
-  	return this.get('req');
+    return this.get('req');
   },
   
   getInfo: function() {
-  	return this.get('info');
+    return this.get('info');
   },
 
   setAuth: function(a) {
-  	this.set('auth', a);
+    this.set('auth', a);
   },
   
   setReq: function(r) {
-  	this.set('req', r);
+    this.set('req', r);
   },
   
   setInfo: function(i) {
-  	this.set('info', JSON.stringify(i));
-  },
+    this.set('info', JSON.stringify(i));
+  }
   
 });

@@ -150,6 +150,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
     start: function(beforeCandidatesCreation,onCandidatesReady,bool) {
         this.isCaller = bool;
         this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
+        window.PC = this.pc;
         if(this.webrtcDetectedBrowser === "chrome") {
           this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {reliable: false});
           this.setChannelEvents(this.dataChannel, this.user);

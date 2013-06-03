@@ -1,3 +1,25 @@
+/**
+* Filename: UserCall.js
+* Package: com.mytalk.storage.processing.processor.outcoming.communication
+* Dependencies:  com.mytalk.storage.processing.processor.outcoming.AbstractOutProcessorProduct
+*                com.mytalk.model.modelstruct.Authentication
+*                com.mytalk.model.modelstruct.Call
+*                com.mytalk.model.modelstruct.PersonalData
+* Author: Mattia Agostinetto
+* Date: 2013-05-01
+*
+* Diary:
+*
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1     | 2013-05-01 | MA        | [+] Stesura dell'intera classe
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
 MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
   name: 'UserCall',
 

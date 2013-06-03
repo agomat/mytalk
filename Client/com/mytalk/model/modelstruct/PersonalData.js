@@ -1,3 +1,22 @@
+/**
+* Filename: PersonalData.js
+* Package: com.mytalk.model.modelstruct
+* Dependencies: 
+* Author: Mattia Agostinetto
+* Date: 2013-04-20
+*
+* Diary:
+*
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1     | 2013-04-20 | MA        | [+] Scrittura classe del Model
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
 MyTalk.PersonalData = DS.Model.extend({
   userId: DS.attr('number'),
   username: DS.attr('string'),
@@ -11,10 +30,5 @@ MyTalk.PersonalData = DS.Model.extend({
   avatarTiny: function() {
     return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=identicon';
   }.property('md5'),
-  /*
-  potrebbe essere utile quando la chiamata viene inizializzata
-  avatarBig: function() {
-    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=identicon';
-  }.property('md5')
-  */
+
 });

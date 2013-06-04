@@ -63,16 +63,11 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
     }
     else{
-      context.get('content').get('users').forEach(function(entry){
-        entry.set('unmatched',false);
-     });
+      context.get('content').get('users').setEach('unmatched',false);
     }
   },
 
   umatchedReset:function(){
-    this.get('content').get('users').forEach(function(entry){
-        entry.set('unmatched',false);
-     });
-  }.observes(this),
-
+    this.get('content').get('users').setEach('unmatched',false);
+  }.observes(this)
 });

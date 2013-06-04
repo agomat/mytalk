@@ -299,7 +299,6 @@
                 </li>
                 <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
-              </ul>
             {{else}}
                 {{#if controller.controllers.list.generalList}}
                   <li>
@@ -311,7 +310,6 @@
                   </li>
                   <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
                   <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
-                </ul>
                 {{else}}
                   <li>
                   {{#if online}}
@@ -321,11 +319,11 @@
                   {{/if}}
                   </li>
                   <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
-                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
                   <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
-                </ul>
+                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
                 {{/if}}
             {{/if}}
+            </ul>
           </li>
         {{/collection}}
       </ul>

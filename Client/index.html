@@ -272,8 +272,8 @@
 
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
-        {{#collection Ember.ListView contentBinding="controller.content" height=498 rowHeight=60}}
-          <li>
+        {{#collection Ember.ListView contentBinding="controller.filteredUsers" height=498 rowHeight=60}}
+         <li>
 
             <div {{bindAttr class="online:online:offline"}}></div>
             <div class="avatar48">

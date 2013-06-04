@@ -1,6 +1,6 @@
 MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
-  needs:['users'],
+
   createList:function (){
 
     var newName = prompt("Digita il nome della nuova lista: ");
@@ -21,7 +21,6 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
           id: MyTalk.List.find().get('length'),
           name: newName
         });
-        this.get('controllers.users').set('newList',MyTalk.List.find().get('length'));
       }
       else {
         alert("Esiste già una lista con questo nome");

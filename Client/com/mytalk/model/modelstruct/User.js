@@ -1,7 +1,7 @@
 /**
 * Filename: User.js
 * Package: com.mytalk.model.modelstruct
-* Dependencies: 
+* Dependencies: com.mytalk.model.modelstruct.List
 * Author: Mattia Agostinetto
 * Date: 2013-04-20
 *

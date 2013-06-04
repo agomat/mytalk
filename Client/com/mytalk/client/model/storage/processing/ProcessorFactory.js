@@ -1,6 +1,6 @@
 /**
 * Filename: ProcessorFactory.js
-* Package: com.mytalk.client.model.storage.processing
+* Package: c.mytalk.client.model.storage.processing
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.incoming.communication.*
 *                com.mytalk.client.model.storage.processing.processor.incoming.list.*
 *                com.mytalk.client.model.storage.processing.processor.incoming.stats.*

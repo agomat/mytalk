@@ -1,7 +1,7 @@
 /**
 * Filename: UsernameNotCorrespondingListUserAdd.js
-* Package: com.mytalk.storage.processing.processor.incoming.list
-* Dependencies: com.mytalk.storage.processing.processor.incoming.AbstractInProcessorProduct
+* Package: com.mytalk.client.model.storage.processing.processor.incoming.list
+* Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
 * Author: Mattia Agostinetto
 * Date: 2013-05-01
 *

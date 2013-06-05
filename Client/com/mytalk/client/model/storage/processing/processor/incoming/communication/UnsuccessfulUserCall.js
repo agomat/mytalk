@@ -1,5 +1,5 @@
 /**
-* Filename: UnsuccesfulUserCall.js
+* Filename: UnsuccessfulUserCall.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.user
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
 * Author: Mattia Agostinetto

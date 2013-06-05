@@ -2,7 +2,7 @@
 * Filename: LoggedIndexRoute.js
 * Package: com.mytalk.client.controller.router
 * Dependencies: com.mytalk.client.model.modelstruct.List
-* Author: Stefano Campese
+* Author: Campese Stefano
 * Date: 2013-04-28
 *
 * Diary:

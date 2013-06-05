@@ -1,6 +1,6 @@
 /**
 * Filename: PeerConnection.js
-* Package: com.mytalk.client.comunicator
+* Package: com.mytalk.client.communicator
 * Dependencies: 
 * Author: Griggio Massimo
 * Date: 2013-04-23

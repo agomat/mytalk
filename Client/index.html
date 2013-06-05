@@ -176,6 +176,7 @@
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ListController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/UsersController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/CallingController.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/controller/IpcallController.js"></script>
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
@@ -514,7 +515,7 @@
           <p>
             Fornisci ai tuoi amici questo indirizzo IP. Sarai repereribile da qualsiasi utente che conosca il tuo IP senza doversi registrare nel sistema!
           </p>
-          <h4 id="ip_address">{{ model.ip }}</h4>
+          <h4 id="ip_address"> {{ controller.myIP }} {{ controller.content.ip }} </h4>
         </div>
       </div>
     </script>

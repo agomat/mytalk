@@ -1,3 +1,28 @@
+/**
+* Filename: UsersController.js
+* Package: com.mytalk.client.controller.controller
+* Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
+*               com.mytalk.client.controller.statemanager.CallState
+*               com.mytalk.client.controller.comunicator.PeerConnection
+*               com.mytalk.client.controller.controller.LoggedController
+*               com.mytalk.client.controller.controller.ListController
+*               com.mytalk.client.model.modelstruct.List
+*               com.mytalk.client.model.modelstruct.User
+* Author: Campese Stefano
+* Date: 2013-04-23
+*
+* Diary:
+*
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1     | 2013-04-23 | SC        | [+] Scrittura classe
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
 MyTalk.UsersController = Ember.ArrayController.extend({
   sortProperties:['name'],
   needs: ['logged','list'], 

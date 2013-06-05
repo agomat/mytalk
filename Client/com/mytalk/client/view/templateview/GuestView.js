@@ -2,7 +2,7 @@
 * Filename: GuestView.js
 * Package: com.mytalk.client.view.templateview
 * Dependencies:
-* Author: Stefano Campese
+* Author: Campese Stefano
 * Date: 2013-04-26
 *
 * Diary:

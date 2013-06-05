@@ -2,7 +2,7 @@
 * Filename: IPFormView.js
 * Package: com.mytalk.client.view.templateview
 * Dependencies:com.mytalk.client.controller.controller.IndexController
-* Author: Stefano Campese
+* Author: Campese Stefano
 * Date: 2013-04-26
 *
 * Diary:

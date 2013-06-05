@@ -17,7 +17,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
     }
   },
 
-  renameList: function makeUpdateListName(){ 
+  renameList: function (){ 
     var listId = this.get('content').get('id');
     var listName = this.get('content').get('name');
     
@@ -33,7 +33,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
       });
       if(test==true){
         var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = ProcessorFactory.createProcessorProduct( this.computeRequestName( arguments ) );
+        var processor = ProcessorFactory.createProcessorProduct( "UpdateListName" );
         processor.process({
           listId: listId,
           newName: newName,

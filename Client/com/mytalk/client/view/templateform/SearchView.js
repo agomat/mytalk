@@ -3,7 +3,6 @@ MyTalk.SearchView = Ember.TextField.extend({
   type: 'text',
   placeholder: 'Filtra per nome o cognome',
   valueDidChange: function(element,property,value) {
-            this.get('controller').filter(this.value);
-            //alert(this.get('controller'));
-        }.observes('value')
+    this.get('controller').filter(this.value);
+  }.observes('value')
  });

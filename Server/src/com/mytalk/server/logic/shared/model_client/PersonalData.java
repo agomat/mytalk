@@ -20,7 +20,7 @@ package com.mytalk.server.logic.shared.model_client;
 public class PersonalData{
 		
 	private Integer id=0;
-	private Integer userId;
+	private Integer user_id;
 	private String username;
 	private String password;
 	private String name;
@@ -32,7 +32,7 @@ public class PersonalData{
 	public PersonalData(){}
 	
 	public PersonalData(Integer ui,String us, String pwd, String n, String s,String mail, String m,String ip_user){
-		userId=ui;
+		user_id=ui;
 		username=us;
 		password=pwd;
 		email=mail;
@@ -43,11 +43,11 @@ public class PersonalData{
 	}
 	
 	public Integer getUserId(){
-		return userId;
+		return user_id;
 	}
 	
 	public void setUserId(Integer ui){
-		userId=ui;
+		user_id=ui;
 	}
 	
 	public String getUsername(){

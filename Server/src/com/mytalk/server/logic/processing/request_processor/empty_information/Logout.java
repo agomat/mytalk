@@ -39,11 +39,12 @@ public class Logout extends GenericRequest{
 		else{
 			OnlineUser onlineUser=new OnlineUser(auth.getUser(), auth.getIp());
 			try {
+				auth.setUser(da.getUsernameByIp(auth.getIp()));
 				da.logout(onlineUser);
-				response=new ARI(null, "SuccessfulLogout", null);
+				response=new ARI(auth, "SuccessfulLogout", null);
 			} catch (LogoutException e) {
 				response=new ARI(null, "UnsuccessfulLogout", null);
-			}
+			} 
 		}	
 		return response;
 	}

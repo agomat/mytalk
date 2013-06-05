@@ -21,17 +21,17 @@ package com.mytalk.server.logic.shared;
 import com.mytalk.server.logic.shared.model_client.User;
 
 public class UserStatePack extends Information {
-	private User user;
+	private User list;
 	
 	public UserStatePack(User u){
-		user=u;
+		list=u;
 	}
 	
-	public User getUser(){
-		return user;
+	public User getList(){
+		return list;
 	}
 	
-	public void setUser(User u){
-		user=u;
+	public void setList(User u){
+		list=u;
 	}
 }

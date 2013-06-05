@@ -223,14 +223,28 @@
 	box-shadow: none;
 }
 
-.avatar{
-	background-image: url(../img/mytalk_blank.png);
+.avatar48{
+	background-image: url(../img/mytalk_blank_48.png);
 	padding: 0 !important;
 }
-.avatar, .avatar img {
+.avatar48, .avatar48 img {
 	width: 48px;
 	height: 48px;
 	border-radius: 3px;
+}
+
+.avatar300{
+  background: center no-repeat url(../img/mytalk_blank_300.png);
+}
+.avatar300, .avatar300 img {
+  margin: 0 auto;
+  padding: 1.1em;
+  width: 300px;
+  border-radius: 3px;
+}
+
+.avatar300 h2 {
+	margin-top: 20px;
 }
 
 .call_user{background: url("../img/phone_green.png") center center no-repeat;}
@@ -258,7 +272,6 @@
 .ember-list-item-view {
   width: 100% !important;
   position: absolute !important;
-  /*height: 60px !important;  <----- MAX TE COPO! */
 }
 
 .ember-list-item-view ul li {

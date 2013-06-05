@@ -21,8 +21,11 @@
     width:10%;
 }
 
+.display_none {
+    display: none;
+}
+
 #comunicazione a{
-    display: block;
     float:left;
     margin-left: 20px;
     text-decoration: none;

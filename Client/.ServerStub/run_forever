@@ -1,2 +1,0 @@
-#!/bin/sh
-cd bin && nohup java info.mytalk.core.Server &

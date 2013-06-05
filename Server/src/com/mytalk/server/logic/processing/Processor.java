@@ -80,6 +80,7 @@ public class Processor implements IProcessor{
 		List<Message> responseList=new ArrayList<Message>();
 		try{
 			String r= hashmap.get(request);
+			System.out.println("***"+r+"---");
 			Class<?> cl=Class.forName(r);
 			Object obj=cl.newInstance();
 			Method m= cl.getDeclaredMethod("manage", ARI.class);
@@ -109,6 +110,9 @@ public class Processor implements IProcessor{
 		
 		if(!packInfo.getReq().equals("Logout") && !packInfo.getReq().equals("LogoutToAnonymous") && !esito.getReq().equals("UnsuccessfulRefuseCall")){
 			if(esito.getAuth()!=null){
+				if(esito.getAuth().getUser()!=null){
+					packInfo.getAuth().setUser(esito.getAuth().getUser());
+				}
 				ipToSend=esito.getAuth().getIp();
 			}
 			else{
@@ -120,11 +124,17 @@ public class Processor implements IProcessor{
 		}
 		
 		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutToAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
-			StateUpdate stateUpdate=new StateUpdate();
-			ARI ari=stateUpdate.manage(packInfo);
-			String jsonAri=convert.convertJavaToJson(ari);
-			responseList.add(new Message("broadcast",jsonAri));
+			if(packInfo.getAuth().getUser()!=null){
+				StateUpdate stateUpdate=new StateUpdate();
+				ARI ari=stateUpdate.manage(packInfo);
+				String jsonAri=convert.convertJavaToJson(ari);
+				responseList.add(new Message("broadcast",jsonAri));
+			}
 		}
+		
+		
+		
+		
 		
 		return responseList;
 	}

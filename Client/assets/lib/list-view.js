@@ -13,7 +13,16 @@ Ember.ListViewHelper = {
 
         element.style.webkitTransform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
       };
-    }else{
+    }
+    else if('MozTransform' in element.style) {
+      return function(element, position) {
+        var x = position.x,
+            y = position.y;
+        
+        element.style.MozTransform = 'translate(' + x + 'px, ' + y + 'px)';
+      }
+    }
+    else{
       return function(element, position){
         var x = position.x,
             y = position.y;

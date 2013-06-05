@@ -57,7 +57,7 @@ public class StateUpdateTest {
 		ARI esito=stateUpdate.manage(ari);
 		String stringEsito=esito.getInfo();
 		UserStatePack userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
-		User userEsito=userStatePack.getUser();
+		User userEsito=userStatePack.getList();
 		User user=new User(4,"user3","user3","user3","emailhash123123123","123.123.123.3",true);
 		
 		assertEquals(userEsito.getId(),user.getId());
@@ -73,7 +73,7 @@ public class StateUpdateTest {
 		esito=stateUpdate.manage(ari);
 		stringEsito=esito.getInfo();
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
-		userEsito=userStatePack.getUser();
+		userEsito=userStatePack.getList();
 		assertFalse(userEsito.getOnline());
 		
 		ari.setReq("DeleteAccount");
@@ -84,7 +84,7 @@ public class StateUpdateTest {
 		esito=stateUpdate.manage(ari);
 		stringEsito=esito.getInfo();
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
-		userEsito=userStatePack.getUser();
+		userEsito=userStatePack.getList();
 		assertEquals(u.getId(),userEsito.getId());
 		assertEquals(u.getUsername(),userEsito.getUsername());
 		assertEquals(u.getName(),userEsito.getName());

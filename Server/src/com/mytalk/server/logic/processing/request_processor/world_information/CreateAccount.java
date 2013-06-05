@@ -45,9 +45,7 @@ public class CreateAccount extends GenericRequest{
 			com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(personalData.getUsername(), pwdHash,personalData.getEmail(), personalData.getName(), personalData.getSurname(),md5);
 			try{
 				da.createAccount(user);
-				ari.getAuth().setUser(pack.getWorldPersonalData().getPersonalData().getUsername());
-				ari.getAuth().setPwd(pack.getWorldPersonalData().getPersonalData().getPassword());
-				response=new ARI(ari.getAuth(), "SuccessfulCreateAccount", infoRequest);
+				response=new ARI(null, "SuccessfulCreateAccount", infoRequest);
 			}catch(UsernameAlreadyExisting uae){
 				response=new ARI(null, "UsernameAlreadyExistingCreateAccount", infoRequest);
 			}

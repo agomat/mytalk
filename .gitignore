@@ -5,3 +5,4 @@
 *.properties
 *.out
 node_modules/
+.directory

@@ -20,11 +20,39 @@
 MyTalk.processor.CreateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
   name: 'CreateAccount',
 
-  process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+  process: function (params) {
+    var record = MyTalk.PersonalData.find(0).setProperties(params);
+    var transaction = record.get('transaction');
+
+    transaction.reopen({
+      processor: this
+    });
+
+    transaction.commit();
   },
-  
+
+  sendToServer: function (socket, record, onSent) {
+    var ARI = new Object();
+
+    ARI.auth = null;
+    ARI.req = this.get('name');
+    
+    var info = new Object();
+    info.worldPersonalData = new Object();
+    info.worldPersonalData.pd = new Object();
+    info.worldPersonalData.pd.username = record.get('username');
+    info.worldPersonalData.pd.password = record.get('password');
+    info.worldPersonalData.pd.name = record.get('name');
+    info.worldPersonalData.pd.surname = record.get('surname');
+    info.worldPersonalData.pd.email = record.get('email');
+    
+    ARI.info = JSON.stringify(info);
+    
+    var wasSent = socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), wasSent );
+  },
+
   getProcessorName: function () {
     return this.get('name');
-  }
+  } 
 });

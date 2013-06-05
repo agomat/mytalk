@@ -22,5 +22,9 @@ MyTalk.IpcallController = Ember.ObjectController.extend({
   myIP: function() {
     var me = MyTalk.PersonalData.find(0);
     this.set('content', me);
-  }.property('content')
+  }.property('content'),
+  ipCall: function(ip) {
+    console.log('controller ipCAll: '+ip);
+    // TODO
+  }
 });

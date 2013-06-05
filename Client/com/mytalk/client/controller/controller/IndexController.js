@@ -35,16 +35,6 @@ MyTalk.IndexController = Ember.ObjectController.extend({
       password: password
     });
 
-  },
-
-  register:function(name, surname, username, email, password1, password2){
-    console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password1 +" "+ password2);
-    // TODO
-  },
-
-  ipCall:function(ip) {
-    console.log('controller ipCAll: '+ip);
-    // TODO
   }
 
 });

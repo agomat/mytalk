@@ -39,7 +39,6 @@ public class BufferTest {
 		public void run(){
 			for(int i=0; i < toPush.size(); i++){
 				BufferIncoming.getInstance().push(toPush.get(i));
-				System.out.println("Push("+toPush.get(i).getIp()+")");
 			}
 		}
 	}
@@ -53,9 +52,23 @@ public class BufferTest {
 				
 		public void run(){
 			for(int i=0; i<numeroPull; i++){
-				Message m = BufferIncoming.getInstance().pop();
-				System.out.println(" Pull("+m.getIp()+")");
+				Message m = BufferOutgoing.getInstance().pop();
 				assertEquals("Il PullThread ottiene un message (" + m.getIp() + ") nell'ordine sbagliato", m.getIp(), ""+i );
+			}
+		}
+	}
+	
+	private class DispatcherThread extends Thread{
+		private int numeroOperazioni;
+		
+		public DispatcherThread(int n){
+			numeroOperazioni=n;
+		}
+		
+		public void run(){
+			for (int i=0; i<numeroOperazioni; i++){
+				Message m = BufferIncoming.getInstance().pop();
+				BufferOutgoing.getInstance().push(m);
 			}
 		}
 	}
@@ -63,10 +76,11 @@ public class BufferTest {
 	
 	@Test
 	public void CheckRightOrder() {
-		System.out.println("Inizio stampa test sui Buffer");
-		int numeroMessaggi=10000;
+		int numeroMessaggi=500000;
 		PushThread pushThread = new PushThread();
 		PullThread pullThread = new PullThread(numeroMessaggi);
+		DispatcherThread dispatcherThread = new DispatcherThread(numeroMessaggi);
+		
 		for(int i=0; i<numeroMessaggi; i++){
 			Message m = new Message(""+i, "");
 			pushThread.addMessage(m);
@@ -74,12 +88,7 @@ public class BufferTest {
 		
 		pushThread.start();
 		pullThread.start();
-		
-		try{
-			pushThread.join();
-			pullThread.join();
-		}catch(InterruptedException e){ fail("Il main Thread è stato interrotto mentre era sospeso per la join");}
-		System.out.println("Fine stampa test sui Buffer");
+		dispatcherThread.start();
 	}
 
 }

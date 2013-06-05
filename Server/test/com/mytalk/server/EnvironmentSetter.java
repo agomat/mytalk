@@ -92,7 +92,7 @@ public class EnvironmentSetter {
 			executeQuery(query);
 			
 			
-		}catch(IOException exc){fail("file non trovato");}
+		}catch(IOException exc){fail("File per la inizializzazione del DB non trovato");}
 		
 	}
 }

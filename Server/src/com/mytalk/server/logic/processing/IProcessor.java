@@ -21,10 +21,11 @@ package com.mytalk.server.logic.processing;
 
 import java.util.List;
 
+import com.google.gson.JsonSyntaxException;
 import com.mytalk.server.communication.buffer.Message;
 
 public interface IProcessor {
 	
-	public List<Message> processRequest(Message message);
+	public List<Message> processRequest(Message message) throws JsonSyntaxException;
 	
 }

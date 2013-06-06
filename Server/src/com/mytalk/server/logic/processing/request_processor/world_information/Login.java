@@ -72,6 +72,7 @@ public class Login extends GenericRequest{
 						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash() ,null,false);
 						listAllUsersClient.add(userClient);
 					}
+					
 					for(int j=0;j<listOnlineServer.size();j++){
 						userServer=listOnlineServer.get(j);
 						if(userServer.getUsername().equals(user.getUsername())){

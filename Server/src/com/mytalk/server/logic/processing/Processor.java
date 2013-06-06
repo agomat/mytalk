@@ -22,6 +22,7 @@ Date
 
 package com.mytalk.server.logic.processing;
 
+import com.google.gson.JsonSyntaxException;
 import com.mytalk.server.communication.buffer.Message;
 import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
 import com.mytalk.server.logic.shared.ARI;
@@ -37,6 +38,7 @@ public class Processor implements IProcessor{
 	//comunica la richiesta alla GenericRequest
 	private Map<String, String> hashmap;
 	private Convert convert=new Convert();
+	private StateUpdate stateUpdate=new StateUpdate();
 	
 	public Processor(){
 		hashmap = new HashMap<String, String>();
@@ -65,9 +67,8 @@ public class Processor implements IProcessor{
 
 	}
 		
-	public List<Message> processRequest(Message message){
-		
-		ARI packInfo=convert.convertJsonToJava(message.getJson());
+	public List<Message> processRequest(Message message) throws JsonSyntaxException {
+		ARI packInfo=convert.convertJsonToJava(message.getJson());			
 		if(packInfo.getAuth()!=null){
 			packInfo.getAuth().setIp(message.getIp());
 		}
@@ -80,7 +81,6 @@ public class Processor implements IProcessor{
 		List<Message> responseList=new ArrayList<Message>();
 		try{
 			String r= hashmap.get(request);
-			System.out.println("***"+r+"---");
 			Class<?> cl=Class.forName(r);
 			Object obj=cl.newInstance();
 			Method m= cl.getDeclaredMethod("manage", ARI.class);
@@ -125,17 +125,11 @@ public class Processor implements IProcessor{
 		
 		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutToAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
 			if(packInfo.getAuth().getUser()!=null){
-				StateUpdate stateUpdate=new StateUpdate();
 				ARI ari=stateUpdate.manage(packInfo);
 				String jsonAri=convert.convertJavaToJson(ari);
 				responseList.add(new Message("broadcast",jsonAri));
 			}
 		}
-		
-		
-		
-		
-		
 		return responseList;
 	}
 }

@@ -20,6 +20,7 @@ package com.mytalk.server.communication;
 
 import java.util.List;
 
+import com.google.gson.JsonSyntaxException;
 import com.mytalk.server.communication.buffer.BufferIncoming;
 import com.mytalk.server.communication.buffer.BufferOutgoing;
 import com.mytalk.server.communication.buffer.Message;
@@ -36,15 +37,19 @@ public class Dispatcher implements Runnable {
 	public void run() {
 		while(true){
 			Message request=bufferIn.pop();
-			List<Message> response=processor.processRequest(request);
-			for(int i=0;i<response.size();i++){
-				Message msg=response.get(i);
-				String newIp=msg.getIp();
-				newIp="/".concat(newIp);
-				msg.setIp(newIp);
-				bufferOut.push(msg);
+			try{
+				List<Message> response=processor.processRequest(request);
+				for(int i=0;i<response.size();i++){
+					Message msg=response.get(i);
+					String newIp=msg.getIp();
+					newIp="/".concat(newIp);
+					msg.setIp(newIp);
+					bufferOut.push(msg);
+				}
+			}catch(JsonSyntaxException e){
+				// Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
-
 }

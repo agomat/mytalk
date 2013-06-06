@@ -55,7 +55,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     var onDataChannelMessage = function(message) {
-      context.msgs.push(message);
+      context.msgs.push(message.data);
+      var m = context.get('msgs');
+      alert(JSON.stringify(m));
     }
     
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
@@ -90,8 +92,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     var onDataChannelMessage = function(message) {
-      context.msgs.push(message);
-      var m = this.get('msgs');
+      context.msgs.push(message.data);
+      var m = context.get('msgs');
       alert(JSON.stringify(m));
     }
 

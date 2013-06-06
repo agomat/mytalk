@@ -527,7 +527,7 @@
      <!-- TODO: mostrare la chat disattivata quando lo stato non è isConnected -->
       <div id="chat">
         <ul id="messages">
-          {{#each message in controller.messages}}
+          {{#each message in controller.msgs}}
           {{#if message}}
           <li class="sent_message">{{ message }}</li>
           {{else}}

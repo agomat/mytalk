@@ -53,8 +53,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
         RTCinfo: JSON.stringify(RTCinfo) 
       });
     };
-  
-    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,this.onMessage,true);
+
+    var onDataChannelMessage = function(message) {
+      context.msgs.push(message);
+    }
+    
+    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
   },
   acceptCall: function(user){
     this.RTCmanager = MyTalk.PeerConnection.create();
@@ -85,7 +89,13 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
     };
 
-    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,this.onMessage,false);
+    var onDataChannelMessage = function(message) {
+      context.msgs.push(message);
+      var m = this.get('msgs');
+      alert(JSON.stringify(m));
+    }
+
+    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
   },
 
   closeCall: function(user){
@@ -110,14 +120,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
   
   sendMessage: function(message) {
-    this.onMessage(message);
+    this.msgs.push(message);
     this.RTCmanager.send(message);
-  },
-  
-  onMessage: function(message) {
-    var context = this;
-    window.ciao = context.msgs;
-    context.msgs.push(message);
   }
 
 });

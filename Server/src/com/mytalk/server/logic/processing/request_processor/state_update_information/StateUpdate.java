@@ -56,10 +56,10 @@ public class StateUpdate extends GenericRequest{
 			infoResponse=conv.convertJavaToJson(packOut);
 			response=new ARI(null,"StateUpdate",infoResponse);
 		} catch (UserNotExisting e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		} catch (IdNotFound e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}	
 		return response;

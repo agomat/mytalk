@@ -2,7 +2,6 @@
 * Filename: LoggedController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
-*               com.mytalk.client.model.modelstruct.List
 * Author: Campese Stefano
 * Date: 2013-04-23
 *
@@ -35,10 +34,10 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
       });
       
       if(test==true){
-        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = ProcessorFactory.createProcessorProduct( "ListCreate" );
+        var processorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = processorFactory.createProcessorProduct( "ListCreate" );
         processor.process({
-          id: MyTalk.List.find().get('length'),
+          id: list.get('length'),
           name: newName
         });
       }

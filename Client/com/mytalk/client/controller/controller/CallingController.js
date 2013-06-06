@@ -4,7 +4,8 @@
 * Dependencies: com.mytalk.client.controller.statemanager.CallState
 *               com.mytalk.client.controller.comunicator.PeerConnection
 *               com.mytalk.client.model.storage.processing.ProcessorFactory
-*               com.mytalk.client.model.modelstruct.List
+*               com.mytalk.client.model.modelstruct.WCall
+*               com.mytalk.client.model.modelstruct.Call
 * Author: Agostinetto Mattia
 * Date: 2013-04-23
 *
@@ -21,7 +22,6 @@
 */
 
 MyTalk.CallingController = Ember.ObjectController.extend({
-  RTCinfo: MyTalk.CallState.get('isBusy').get('RTCinfo'), // TODO: sistemare con un binding?
   callState: null,
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
@@ -29,9 +29,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   messages: [],
 
   acceptCall: function(user){
+    alert(this.get('content'));
     var RTCmanager = MyTalk.PeerConnection.create({});
-    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = ProcessorFactory.createProcessorProduct("AcceptCall");
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("AcceptCall");
 
     // callback 1
     var beforeCandidatesCreation = function(local) {
@@ -63,14 +64,14 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   closeCall: function(user){
     /*
     // TODO: rifiutare la chiamata
-    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = ProcessorFactory.createProcessorProduct("RefuseCall");
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("RefuseCall");
     processor.process({});
     */
     // patch:
 
     MyTalk.CallState.send('beingFree');
-    MyTalk.Router.router.transitionTo("list",MyTalk.List.find(0));
+    MyTalk.Router.router.transitionTo("list",MyTalk.List.find(0)); // IMPORTANTE! SPOSTARE QST DIPENDENZA
   },
 
 });

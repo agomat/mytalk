@@ -1,6 +1,6 @@
 /**
 * Filename: WebSocketConnection.js
-* Package: com.mytalk.storage
+* Package: com.mytalk.client.model.storage
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
 * Author: Mattia Agostinetto
 * Date: 2013-04-26
@@ -35,8 +35,8 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
         };
         ws.onmessage = function(msg) {
           var ari = JSON.parse( msg.data );
-          var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-          var processor = ProcessorFactory.createProcessorProduct( ari.req );
+          var processorFactory = MyTalk.ProcessorFactory.create({});
+          var processor = processorFactory.createProcessorProduct( ari.req );
           processor.process( ari );
         }
         this.set('socket', ws);

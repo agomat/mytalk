@@ -26,8 +26,8 @@ MyTalk.processor.SuccessfulCreateAccount = Ember.Object.extend(MyTalk.AbstractIn
     var personalData = info.worldPersonalData;
     var user = personalData.pd;
     
-    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = ProcessorFactory.createProcessorProduct( "Login" );
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct( "Login" );
     processor.process({
       username: user.username,
       password: user.password

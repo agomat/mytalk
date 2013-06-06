@@ -17,8 +17,8 @@
 * - Zucchetti SRL
 */
 
-MyTalk.processor.UnsuccesfulUserCall = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
-  name: 'UnsuccesfulUserCall',
+MyTalk.processor.UnsuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+  name: 'UnsuccessfulUserCall',
 
   process: function (ari) {
     console.error("Processor "+this.get('name')+" non esistente TODO");

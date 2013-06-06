@@ -23,13 +23,14 @@ MyTalk.ListController = Ember.ObjectController.extend({
   sortProperties: ['name'],
 
   deleteList: function (){
+    alert(this.get('content').get('name'));
     var listName = this.get('content').get('name');
     var listId = this.get('content').get('id');
     var response = confirm('Sei sicuro di voler eliminare la lista '+listName+'?');
     if(response == true){
       var context = this.get('target.router');
-      var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-      var processor = ProcessorFactory.createProcessorProduct( "ListDelete" );
+      var processorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = processorFactory.createProcessorProduct( "ListDelete" );
       processor.process({
         listId: listId,
         name: listName
@@ -53,8 +54,8 @@ MyTalk.ListController = Ember.ObjectController.extend({
         }
       });
       if(test==true){
-        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = ProcessorFactory.createProcessorProduct( "UpdateListName" );
+        var processorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = processorFactory.createProcessorProduct( "UpdateListName" );
         processor.process({
           listId: listId,
           newName: newName,

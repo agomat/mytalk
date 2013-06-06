@@ -54,8 +54,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     //TODO verificare se sono impegnato in altra conversazione
 
     var RTCmanager = MyTalk.PeerConnection.create({});
-    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = ProcessorFactory.createProcessorProduct("UserCall");
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("UserCall");
 
     // callback 1
     var beforeCandidatesCreation = function() {
@@ -96,8 +96,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    
       if(currentListId!=1){
         var list=MyTalk.List.find(this.selectedValue);
-        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = ProcessorFactory.createProcessorProduct("ListUserAdd");
+        var processorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = processorFactory.createProcessorProduct("ListUserAdd");
         processor.process({
           userId: this.userId,
           list: list 
@@ -126,8 +126,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       }
       else{
         var list = MyTalk.List.find(listId);
-        var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = ProcessorFactory.createProcessorProduct("ListUserRemove");
+        var processorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = processorFactory.createProcessorProduct("ListUserRemove");
         processor.process({
           userId: userId,
           list: list 
@@ -142,15 +142,15 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       var lists = MyTalk.List.find().toArray();
       lists = lists.rejectProperty('id',0);
       lists.forEach(function(list) {
-          var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-          var processor = ProcessorFactory.createProcessorProduct("ListUserRemove");
+          var processorFactory = MyTalk.ProcessorFactory.create({});
+          var processor = processorFactory.createProcessorProduct("ListUserRemove");
           processor.process({
             userId: userId,
             list: list 
           });
       });
-      var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-      var processor = ProcessorFactory.createProcessorProduct( "BlackListAdd" );
+      var processorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = processorFactory.createProcessorProduct( "BlackListAdd" );
       processor.process({
         userId: userId,
       });

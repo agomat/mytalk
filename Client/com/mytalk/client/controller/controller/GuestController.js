@@ -20,9 +20,8 @@
 
 MyTalk.GuestController = Ember.ObjectController.extend({
   register:function(name, surname, username, email, password1, password2){
-    console.log('controller register: '+name +" "+ surname +" "+ username +" "+ email +" "+ password1 +" "+ password2);
-    var ProcessorFactory = MyTalk.ProcessorFactory.create();
-    var processor = ProcessorFactory.createProcessorProduct("CreateAccount");
+    var processorFactory = MyTalk.ProcessorFactory.create();
+    var processor = processorFactory.createProcessorProduct("CreateAccount");
     processor.process({
       name: name,
       surname: surname,

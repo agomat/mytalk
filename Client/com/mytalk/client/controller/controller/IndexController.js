@@ -28,8 +28,8 @@ MyTalk.IndexController = Ember.ObjectController.extend({
 
   login: function (username, password) {
     
-    var ProcessorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = ProcessorFactory.createProcessorProduct( "Login" );
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct( "Login" );
     processor.process({
       username: username,
       password: password

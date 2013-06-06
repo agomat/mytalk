@@ -2,8 +2,6 @@
 * Filename: UsersController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
-*               com.mytalk.client.controller.statemanager.CallState
-*               com.mytalk.client.controller.comunicator.PeerConnection
 *               com.mytalk.client.controller.controller.LoggedController
 *               com.mytalk.client.controller.controller.ListController
 *               com.mytalk.client.model.modelstruct.List
@@ -50,33 +48,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   userCall: function(user){
-
-    //TODO verificare se sono impegnato in altra conversazione
-
-    var RTCmanager = MyTalk.PeerConnection.create({});
-    var processorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = processorFactory.createProcessorProduct("UserCall");
-
-    // callback 1
-    var beforeCandidatesCreation = function() {
-      var callData = Ember.Object.create({
-        path: 'isBusy.outcomingCall',
-        RTCmanager: RTCmanager, 
-        speaker: user,
-      });
-
-      MyTalk.CallState.send('beingBusy',callData);
-    };
-
-    // callback 2
-    var onCandidatesReady = function(RTCinfo) {
-      processor.process({
-        speaker: user,
-        RTCinfo: JSON.stringify(RTCinfo) 
-      });
-    };
-  
-    RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,true);
+    this.transitionToRoute('calling', user);
   },
 
   cantCall: function(user){

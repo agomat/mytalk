@@ -527,11 +527,11 @@
      <!-- TODO: mostrare la chat disattivata quando lo stato non è isConnected -->
       <div id="chat">
         <ul id="messages">
-          {{#each message in messages}}
-          {{#if message.sender}}
-          <li class="sent_message">{{message.text}}</li>
+          {{#each message in controller.messages}}
+          {{#if message}}
+          <li class="sent_message">{{ message }}</li>
           {{else}}
-          <li class="received_message">{{message.text}}</li>
+          <li class="received_message">{{ message }}</li>
           {{/if}}
           {{/each}}
 
@@ -552,7 +552,7 @@
         <video id="remote" autoplay {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
         
         {{#unless isConnected}} <!-- TODO: volendo usare anche qui bindAttr per regolare la visibilità  -->
-          <div id="remote" class="call_placeholder">
+          <div class="call_placeholder">
             <div class="avatar300">
              <img {{bindAttr src="avatarBig"}} />
              {{#if isIncomingCall}}
@@ -564,10 +564,8 @@
           </div>
         {{/unless}}
 
-        <a {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}}
- href="#" id="answer_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</a>
-
-        <a {{action "closeCall" this}} href="#" id="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</a>
+        <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</button>
+        <button {{action "closeCall" this}} id="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</button>
 
         <ul id="stats" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>

@@ -25,6 +25,7 @@ MyTalk.AppState = Ember.StateManager.create({
   isAuthenticated: Ember.State.create({
     beingNotAuthenticated: function (manager, context) {
       manager.transitionTo('isNotAuthenticated');
+      MyTalk.Router.router.transitionTo('guest');
     },
   }),
 

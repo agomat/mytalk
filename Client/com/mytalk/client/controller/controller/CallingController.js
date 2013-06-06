@@ -26,11 +26,38 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
   isConnected: Ember.computed.equal('callState','isConnected'),
-  messages: [],
+  msgs: [],
+  RTCmanager: undefined,
+  
+  call: function(user) {
+    //TODO verificare se sono impegnato in altra conversazione
+    this.RTCmanager = MyTalk.PeerConnection.create();
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("UserCall");
 
+    // callback 1
+    var context = this;
+    var beforeCandidatesCreation = function() {
+      var callData = Ember.Object.create({
+        path: 'isBusy.outcomingCall',
+        RTCmanager: context.RTCmanager, 
+        speaker: user,
+      });
+      MyTalk.CallState.send('beingBusy', callData);
+    };
+
+    // callback 2
+    var onCandidatesReady = function(RTCinfo) {
+      processor.process({
+        speaker: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+    };
+  
+    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,this.onMessage,true);
+  },
   acceptCall: function(user){
-    alert(this.get('content'));
-    var RTCmanager = MyTalk.PeerConnection.create({});
+    this.RTCmanager = MyTalk.PeerConnection.create();
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct("AcceptCall");
 
@@ -58,7 +85,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
     };
 
-    RTCmanager.start(beforeCandidatesCreation,onCandidatesReady);
+    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,this.onMessage,false);
   },
 
   closeCall: function(user){
@@ -69,10 +96,29 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     processor.process({});
     */
     // patch:
-
-    MyTalk.CallState.send('beingFree');
-    MyTalk.Router.router.transitionTo("list",MyTalk.List.find(0)); // IMPORTANTE! SPOSTARE QST DIPENDENZA
+    if(this.get('isConnected')) {
+      this.RTCmanager.closeConnection(this.onClose);
+    }
+    else {
+      //GESTIRE RIFIUTA CHIAMATA
+    }
   },
+  
+  onClose: function() {
+    context.msgs = [];
+    MyTalk.CallState.send('beingFree');
+  },
+  
+  sendMessage: function(message) {
+    this.onMessage(message);
+    this.RTCmanager.send(message);
+  },
+  
+  onMessage: function(message) {
+    var context = this;
+    window.ciao = context.msgs;
+    context.msgs.push(message);
+  }
 
 });
 

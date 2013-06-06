@@ -26,6 +26,5 @@ MyTalk.MessageFormView = Ember.View.extend({
     event.preventDefault();
     var message = this.get('message');
     this.get('controller').sendMessage(message);
-    
   }
 });

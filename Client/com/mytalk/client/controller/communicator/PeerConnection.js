@@ -29,6 +29,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
     isCaller: false,
     optsDataChann: {optional: [{RtpDataChannels: true}]},
     dataChannel: undefined,
+    myStream: undefined,
     mySDP: undefined,
     myICE: [],
     
@@ -60,13 +61,11 @@ MyTalk.PeerConnection = Ember.Object.extend({
             this.attachMediaStream = function(element, stream) {
                 console.log("Attaching media stream");
                 element.mozSrcObject = stream;
-                element.play();
             };
 
             this.reattachMediaStream = function(to, from) {
                 console.log("Reattaching media stream");
                 to.mozSrcObject = from.mozSrcObject;
-                to.play();
             };
 
             MediaStream.prototype.getVideoTracks = function() {
@@ -137,12 +136,25 @@ MyTalk.PeerConnection = Ember.Object.extend({
       this.pc.addIceCandidate(new this.RTCIceCandidate(iceCandidate));
     },
     
+    closeConnection: function(onClose) {
+      this.myStream.stop();
+      this.pc.close();
+      this.myStream = undefined;
+      this.pc = undefined;
+      this.isCaller = false;
+      this.dataChannel = undefined;
+      this.mySDP = undefined;
+      this.myICE = [];
+      onClose();
+    },
+    
     getMedia: function(peerConn, isCaller) {
         
         var context = this;
         
         function onSuccess(stream) {
             
+            context.myStream = stream;
             var selfView = document.getElementById('local');
             console.debug("ATTACHED local "+selfView);
             if(selfView) context.attachMediaStream(selfView,stream);
@@ -166,13 +178,13 @@ MyTalk.PeerConnection = Ember.Object.extend({
         this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
     },
     
-    start: function(beforeCandidatesCreation,onCandidatesReady,bool) {
+    start: function(beforeCandidatesCreation,onCandidatesReady,onClose,onDataChannelMessage,bool) {
         this.isCaller = bool;
         this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
         window.PC = this.pc;
         if(this.webrtcDetectedBrowser === "chrome") {
           this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {reliable: false});
-          this.setChannelEvents(this.dataChannel, this.user);
+          this.setChannelEvents(this.dataChannel, onDataChannelMessage);
         }        
         var context = this;
         
@@ -197,38 +209,36 @@ MyTalk.PeerConnection = Ember.Object.extend({
           if(remoteView) context.attachMediaStream(remoteView,evt.stream);
         };
         
-        this.pc.onremovestream = function(evt) {
-            document.getElementById("remote").src = "";
-        }
+        this.pc.oniceconnectionstatechange = function(evt) {
+          if(evt.target.iceConnectionState == "disconnected") {
+            context.closeConnection(onClose);
+          }
+        };
 
         // get the local stream, show it in the local video element and send it
         this.getMedia(this.pc,this.isCaller);
     },
 
-    setChannelEvents: function(channel, user) {
+    setChannelEvents: function(channel, onDataChannelMessage) {
         
-//         channel.onmessage = function (event) {
-//             var msg = JSON.parse(event.data);
-//             $('#messages').append('<li class="received_message">'+msg.message+'</li>');
-//         };
-// 
-//         channel.onopen = function () {
-//             console.debug('RTCDataChannel connected.');
-//         };
-//         channel.onclose = function (e) {
-//             console.error(e);
-//         };
-//         channel.onerror = function (e) {
-//             console.error(e);
-//         };
+        channel.onmessage = function(msg) {
+            onDataChannelMessage(msg);
+        };
+
+        channel.onopen = function () {
+            console.debug('RTCDataChannel connected.');
+        };
+        channel.onclose = function (e) {
+            console.debug(e);
+        };
+        channel.onerror = function (e) {
+            console.error(e);
+        };
     },
     
-//     send: function(message) {
-//         console.debug(message);
-//         var msg = JSON.stringify({"message" : message});
-//         this.dataChannel.send(msg);
-//         $('#messages').append('<li class="sent_message">'+message+'</li>');
-//     }
+    send: function(message) {
+      this.dataChannel.send(message);
+    }
         
 });
 

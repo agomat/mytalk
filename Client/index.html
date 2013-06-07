@@ -540,7 +540,7 @@
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
             {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button class="common_button">Invia</button>
+            <button {{bindAttr class="isConnected:common_button:button_inactive"}}>Invia</button>
           </fieldset>
         {{/view}}
       </div>
@@ -563,8 +563,8 @@
           </div>
         {{/unless}}
 
-        <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><img alt="" src="assets/img/phone_hangup.png" />Rispondi</button>
-        <button {{action "closeCall" this}} id="hangup_button" ><img alt="" src="assets/img/phone_hangup.png" />Riaggancia</button>
+        <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><div></div> Rispondi</button>
+        <button {{action "closeCall" this}} id="hangup_button" ><div></div>Riaggancia</button>
 
         <ul id="stats" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>

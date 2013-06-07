@@ -23,7 +23,6 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProce
 
   process: function (ari) {
     var payload = JSON.parse( ari.info );
-
     // TODO vedere se sono impegnato in altra conversazione
 
     var callData = Ember.Object.create({

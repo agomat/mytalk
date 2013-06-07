@@ -75,6 +75,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
   },
+  
   acceptCall: function(user){
     this.RTCmanager = MyTalk.PeerConnection.create();
     var processorFactory = MyTalk.ProcessorFactory.create({});
@@ -86,8 +87,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
       local.setSDP( RTCinfo.sdp );
       
-      for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
-       local.addICE( RTCinfo.ice[i] );
+      if(RTCinfo.ice) {
+        for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+          local.addICE( RTCinfo.ice[i] );
+        }
       }
 
       var callData = Ember.Object.create({
@@ -133,6 +136,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     // patch:
     if(this.get('isConnected')) {
       this.RTCmanager.closeConnection(this.onClose);
+      this.set('messages',[]);
+      MyTalk.CallState.send('beingFree');
     }
     else {
       //GESTIRE RIFIUTA CHIAMATA
@@ -140,8 +145,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
   
   onClose: function() {
-    //context.set('messages',[]);
-    MyTalk.CallState.send('beingFree');
+//     this.set('messages',[]);
+//     MyTalk.CallState.send('beingFree');
   },
 
   sendMessage:function(message){

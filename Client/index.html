@@ -15,6 +15,7 @@
     <link rel="shortcut icon" href="assets/img/mytalk.ico" />
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="assets/lib/moment.min.js"></script>
     <script type="text/javascript" src="assets/lib/handlebars-1.0.0-rc.3.js"></script>
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.3.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
@@ -176,6 +177,7 @@
     <script type="text/javascript" src="com/mytalk/client/controller/controller/LoggedController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ListController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/UsersController.js"></script>
+     <script type="text/javascript" src="com/mytalk/client/controller/controller/ChatMessage.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/CallingController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/IpcallController.js"></script>
 
@@ -527,12 +529,9 @@
      <!-- TODO: mostrare la chat disattivata quando lo stato non è isConnected -->
       <div id="chat">
         <ul id="messages">
-          {{#each message in controller.msgs}}
-          {{#if message}}
-          <li class="sent_message">{{ message }}</li>
-          {{else}}
-          <li class="received_message">{{ message }}</li>
-          {{/if}}
+          {{#each message in controller.messages}}
+          <li {{bindAttr class="message.sent:sent_message:received_message"}} >
+          {{ message.text }}<div class="date"> {{ date message.date }}</div></li>
           {{/each}}
 
         </ul>

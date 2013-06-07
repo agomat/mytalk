@@ -123,3 +123,8 @@
     background-color: rgba(50,155,255,0.5);
     border: 1px solid #000090;
 }
+
+.date{
+    color:#a2a2a2;
+    font-size:0.73em;
+}

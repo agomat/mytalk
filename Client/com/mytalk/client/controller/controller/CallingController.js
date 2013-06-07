@@ -26,7 +26,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
   isConnected: Ember.computed.equal('callState','isConnected'),
-  msgs: [],
+  messages: [],
   RTCmanager: undefined,
   
   call: function(user) {
@@ -55,10 +55,18 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     var onDataChannelMessage = function(message) {
-      context.msgs.push(message.data);
-      var m = context.get('msgs');
-      alert(JSON.stringify(m));
-    }
+      
+      var msg=context.get('messages');
+      var temp=[];
+
+      msg.forEach(function(t){
+           temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
+  
+    };
+    
     
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
   },
@@ -66,6 +74,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     this.RTCmanager = MyTalk.PeerConnection.create();
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct("AcceptCall");
+    var context = this;
 
     // callback 1
     var beforeCandidatesCreation = function(local) {
@@ -92,10 +101,16 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     var onDataChannelMessage = function(message) {
-      context.msgs.push(message.data);
-      var m = context.get('msgs');
-      alert(JSON.stringify(m));
-    }
+      var msg=context.get('messages');
+      var temp=[];
+
+      msg.forEach(function(t){
+           temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
+  
+    };
 
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
   },
@@ -117,36 +132,30 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
   
   onClose: function() {
-    context.msgs = [];
+    //context.set('messages',[]);
     MyTalk.CallState.send('beingFree');
   },
-  
-  sendMessage: function(message) {
-    this.msgs.push(message);
-    this.RTCmanager.send(message);
+
+  sendMessage:function(message){
+    var context=this.get('messages');
+    var temp=[];
+
+    if(context){
+      context.forEach(function(t){
+        temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
+      this.RTCmanager.send(message);
+      this.set('messages',temp);
+    } else {
+      temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
+      this.RTCmanager.send(message);
+      this.set('messages',temp);
+    }
   }
 
 });
 
-
-/*
-  sendMessage:function(message){
-    var context=this.get('messages');
-    var temp=new Array();
-
-    if(context){
-      context.forEach(function(t){
-         temp.pushObject(t);
-      })
-      temp.pushObject(Ember.Object.create({sender:true,text:message}));
-      temp.pushObject(Ember.Object.create({sender:false,text:"messaggio prova"}));
-      this.set('messages',temp);
-    }
-    else{
-
-        temp.pushObject(Ember.Object.create({sender:true,text:message}));
-        temp.pushObject(Ember.Object.create({sender:false,text:"messaggio prova"}));
-        this.set('messages',temp);
-    }
-  },
-*/
+Ember.Handlebars.registerBoundHelper('date',function(date){
+  return date.format("HH:mm:ss");
+});

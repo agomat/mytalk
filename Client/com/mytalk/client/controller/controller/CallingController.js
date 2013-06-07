@@ -1,6 +1,7 @@
 /**
 * Filename: CallingController.js
 * Package: com.mytalk.client.controller.controller
+* Dependencies: com.mytalk.client.controller.controller.ChatMessage
 * Dependencies: com.mytalk.client.controller.statemanager.CallState
 *               com.mytalk.client.controller.comunicator.PeerConnection
 *               com.mytalk.client.model.storage.processing.ProcessorFactory
@@ -13,6 +14,7 @@
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2     | 2013-06-07 | SC        | [+] Aggiunta funzionalità chat
 * 0.1     | 2013-04-23 | MA        | [+] Scrittura classe
 *
 * This software is distributed under GNU/GPL 2.0.

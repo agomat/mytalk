@@ -540,7 +540,7 @@
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
             {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button class="common_button">Invia</button>
+            <button {{bindAttr class="isConnected:common_button:button_inactive"}}>Invia</button>
           </fieldset>
         {{/view}}
       </div>

@@ -9,7 +9,7 @@
 *                com.mytalk.client.model.storage.processing.processor.outcoming.list.*
 *                com.mytalk.client.model.storage.processing.processor.outcoming.stats.*
 *                com.mytalk.client.model.storage.processing.processor.outcoming.user.*
-* Author: Mattia Agostinetto
+* Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
 * Diary:

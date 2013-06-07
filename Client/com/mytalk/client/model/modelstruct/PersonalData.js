@@ -2,7 +2,7 @@
 * Filename: PersonalData.js
 * Package: com.mytalk.client.model.modelstruct
 * Dependencies: 
-* Author: Mattia Agostinetto
+* Author: Agostinetto Mattia
 * Date: 2013-04-20
 *
 * Diary:

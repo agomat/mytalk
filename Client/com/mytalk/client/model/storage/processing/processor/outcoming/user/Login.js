@@ -3,7 +3,7 @@
 * Package: com.mytalk.client.model.storage.processing.processor.outcoming.communication
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
 *                com.mytalk.model.modelstruct.Authentication
-* Author: Mattia Agostinetto
+* Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
 * Diary:

@@ -2,7 +2,7 @@
 * Filename: WebSocketConnection.js
 * Package: com.mytalk.client.model.storage
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
-* Author: Mattia Agostinetto
+* Author: Agostinetto Mattia
 * Date: 2013-04-26
 *
 * Diary:

@@ -5,7 +5,7 @@
 *                com.mytalk.client.model.modelstruct.List
 *                com.mytalk.client.model.modelstruct.Authentication
 *                com.mytalk.client.model.modelstruct.PersonalData
-* Author: Mattia Agostinetto
+* Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
 * Diary:

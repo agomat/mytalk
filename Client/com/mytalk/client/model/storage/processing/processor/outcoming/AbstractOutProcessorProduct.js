@@ -2,7 +2,7 @@
 * Filename: AbstractOutProcessorProduct.js
 * Package: com.mytalk.client.model.storage.processing.processor.outcoming
 * Dependencies:
-* Author: Mattia Agostinetto
+* Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
 * Diary:

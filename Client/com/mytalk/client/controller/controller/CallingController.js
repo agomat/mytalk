@@ -66,6 +66,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
       temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
       context.set('messages',temp);
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
   
     };
     
@@ -111,6 +114,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
       temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
       context.set('messages',temp);
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
   
     };
 
@@ -153,7 +159,11 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
       this.RTCmanager.send(message);
       this.set('messages',temp);
+      
     }
+     $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
   }
 
 });

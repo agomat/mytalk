@@ -4,6 +4,10 @@
     min-height: 500px;
 }
 
+.call_placeholder{
+    margin-bottom: 20px;
+}
+
 #comunicazione{
     height: 100%;
     width:63%;
@@ -25,20 +29,10 @@
     display: none;
 }
 
-#comunicazione a{
-    float:left;
-    margin-left: 20px;
-    text-decoration: none;
-    text-align: center;
-    font-size: 1.2em;
-    width: 100px;
-    padding: 8px 0;
-}
-
 #comunicazione ul{
     font-size: 1.1em;
     padding: 0;
-    margin:0 0 0 200px;
+    margin-top:20px;
 }
 
 #comunicazione ul li{
@@ -80,9 +74,9 @@
     max-width: 60%;
     margin: 5px;
     padding: 10px;
-    border-radius: 1.2em;
+    border-radius: 5px;
     list-style-type: none;
-    min-width: 15%;
+    min-width: 25%;
     font-size: 1.2em;
  }
 
@@ -92,7 +86,6 @@
 }
 
 #chat textarea{
-    font-family: 'RobotoRegular';
     font-size: 1.1em;
     float:left;
     resize:none;

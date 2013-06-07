@@ -234,16 +234,16 @@
 }
 
 .avatar300{
-  background: center no-repeat url(../img/mytalk_blank_300.png);
+  background: top center no-repeat url(../img/mytalk_blank_300.png);
 }
 .avatar300, .avatar300 img {
   margin: 0 auto;
-  padding: 1.1em;
   width: 300px;
   border-radius: 3px;
 }
 
 .avatar300 h2 {
+  text-align: center;
   margin-top: 20px;
 }
 

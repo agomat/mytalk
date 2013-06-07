@@ -28,10 +28,6 @@ MyTalk.processor = Ember.Namespace.create({});
 /* Parte di popolamento in assenza di un Server funzionante */
 
 Ember.run.later(this, function(){
-    $("input[name=username]").val("user0");
-    $("input[name=username]").change();
-    $("input[name=password]").val("user0user0");
-    $("input[name=password]").change();
 
     DS.get("defaultStore").adapter.serializer.keyForHasMany = function(type, name) {
 return "list";

@@ -2,7 +2,7 @@
 * Filename: ARI.js
 * Package: com.mytalk.client.model.storage
 * Dependencies: 
-* Author: Massimo Griggio
+* Author: Griggio Massimo
 * Date: 2013-04-23
 *
 * Diary:

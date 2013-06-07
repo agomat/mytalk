@@ -25,6 +25,6 @@ MyTalk.processor.ListAlreadyExistsRenameList = Ember.Object.extend(MyTalk.Abstra
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

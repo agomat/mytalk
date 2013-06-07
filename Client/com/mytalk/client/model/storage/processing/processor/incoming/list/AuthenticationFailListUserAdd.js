@@ -25,6 +25,6 @@ MyTalk.processor.AuthenticationFailListUserAdd = Ember.Object.extend(MyTalk.Abst
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

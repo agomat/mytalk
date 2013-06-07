@@ -25,6 +25,6 @@ MyTalk.processor.AuthenticationFailRenameList = Ember.Object.extend(MyTalk.Abstr
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

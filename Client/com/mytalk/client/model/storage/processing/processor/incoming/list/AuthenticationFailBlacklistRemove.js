@@ -25,6 +25,6 @@ MyTalk.processor.AuthenticationFailBlacklistRemove = Ember.Object.extend(MyTalk.
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

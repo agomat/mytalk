@@ -25,6 +25,6 @@ MyTalk.processor.AuthenticationFailBlacklistAdd = Ember.Object.extend(MyTalk.Abs
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

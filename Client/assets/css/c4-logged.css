@@ -1,41 +1,41 @@
 #logged_content{
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	height: 600px;
-	width: 100%;
-	background-color: rgb(252, 252, 252);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 600px;
+  width: 100%;
+  background-color: rgb(252, 252, 252);
 } 
 
 #logged_content a{
-	text-decoration: none;
-	color:#666;
+  text-decoration: none;
+  color:#666;
 }
 
 #logged_content ul, #logged_content li{
-	margin:0;
-	padding: 0;
+  margin:0;
+  padding: 0;
 }
 
 .logged {
-	margin-top:14px !important;
+  margin-top:14px !important;
 }
 
 #liste{
   display: block;
-	width: 30%;
-	height:100%;
-	float:left;
+  width: 30%;
+  height:100%;
+  float:left;
 }
 
 #utenti{
   display: block;
-	width:70%;
-	height:100%;
+  width:70%;
+  height:100%;
   float: right;
 }
 
 #liste .header, #liste .content{
-	width:99.9%;
+  width:99.9%;
   border-right: 3px double #909090;
 }
 
@@ -44,126 +44,126 @@
 }
 
 .header{
-	height: 16.9%;
-	border-bottom: 1px solid #909090;
+  height: 16.9%;
+  border-bottom: 1px solid #909090;
 }
 
 .header h5{
-	padding: 10px 5px 10px 10px;
-	font-size: 2em;
+  padding: 10px 5px 10px 10px;
+  font-size: 2em;
 }
 
 #liste .header h5{
-	text-align: center;
-	font-variant: small-caps;
+  text-align: center;
+  font-variant: small-caps;
 }
 
 #current_online{
-	margin-right: 2%;
-	float: right;
-	font-variant: small-caps;
+  margin-right: 2%;
+  float: right;
+  font-variant: small-caps;
 }
 
 #liste .header a, #list_button a{
-	display: inline-block;
-	font-size: 1.2em;
-	padding: 11px 5px 0 5px;
-	text-align:center;
-	height: 27px;
+  display: inline-block;
+  font-size: 1.2em;
+  padding: 11px 5px 0 5px;
+  text-align:center;
+  height: 27px;
 }
 
 #liste .header a{
-	margin:2px 12% 0 12%;
-	width: 75%;	
+  margin:2px 12% 0 12%;
+  width: 75%;  
 }
 
 #list_button{
-	margin-left: 10px;
+  margin-left: 10px;
 }
 
 #list_button a{
-	width: 80px;
+  width: 80px;
 }
 
 #search_bar{
-	float:right;
-	font-size: 1.5em;
-	height:20px;
-	margin-right: 20px;
-	width: 45%;
-	border-radius: 40px;
-	padding:10px 37px 10px 20px;
-	background: #fff url("../img/search.png") right 15px center no-repeat; 
+  float:right;
+  font-size: 1.5em;
+  height:20px;
+  margin-right: 20px;
+  width: 45%;
+  border-radius: 40px;
+  padding:10px 37px 10px 20px;
+  background: #fff url("../img/search.png") right 15px center no-repeat; 
 }
 
 .content{
-	height:83%;
+  height:83%;
 }
 
 .content a{
-	display:block;
-	cursor: pointer;
+  display:block;
+  cursor: pointer;
 }
 
 #liste .content a{
-	width:80%;
-	font-size: 1.2em;
-	height: 2em;
-	padding: 3px 10px;
-	margin: 5px 0 5px 5%;
-	border:1px solid rgb(252, 252, 252);
-	border-radius: 4px;
-	overflow: hidden;
+  width:80%;
+  font-size: 1.2em;
+  height: 2em;
+  padding: 3px 10px;
+  margin: 5px 0 5px 5%;
+  border:1px solid rgb(252, 252, 252);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 #liste .content a:hover{
-	background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 
 #liste .content a:active, #liste .content .active{
-	color: white;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-	background-color: rgb(0,194,0) !important;
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgb(0,194,0) !important;
 }
 
 #liste .content .list_name{
-	margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
 #liste .content .online_user{
-	float: right;
-	clear: both;
-	text-align: center;
+  float: right;
+  clear: both;
+  text-align: center;
   font-size: 0.8em;
 }
 
 #blacklist a{
-	background-image: url("../img/Pdelete_user.png");
-	background-repeat: no-repeat;
-	background-position: left 12px center;
+  background-image: url("../img/Pdelete_user.png");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
 }
 #blacklist div:nth-child(2){
-	padding-left:26px;
+  padding-left:26px;
 }
 
 #allcontacs a{
-	background-image: url("../img/allcontacts.png");
-	background-repeat: no-repeat;
-	background-position: left 12px center;
+  background-image: url("../img/allcontacts.png");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
 }
 #allcontacs div:nth-child(2){
-	padding-left:26px;
+  padding-left:26px;
 }
 
 #utenti .content  ul li{
-	margin-left: 3px;
-	padding: 5px 10px;
-	overflow: hidden;
-	position: relative;
+  margin-left: 3px;
+  padding: 5px 10px;
+  overflow: hidden;
+  position: relative;
 }
 
 #userlist>li:nth-child(odd){
-	background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .online{
@@ -187,50 +187,50 @@
 }
 
 #utenti .content ul li>ul>li, #utenti .content ul li img, #utenti .content ul li>div{
-	display:inline-block;
+  display:inline-block;
 }
 
 #utenti .content ul li>ul{
-	float: right;
+  float: right;
 }
 
 #utenti .content ul li>div{
-	padding: 0 25px;
-	font-size: 1.1em;
-	
+  padding: 0 25px;
+  font-size: 1.1em;
+  
 }
 
 #utenti .content ul li>div>div{
-	font-size: 1.6em;
+  font-size: 1.6em;
 }
 
 #utenti .content ul li>ul li{
-	padding-right: 8px;
-	padding-left: 4px;
+  padding-right: 8px;
+  padding-left: 4px;
 }
 
 #utenti .content ul li>ul li a{
-	height: 40px;
-	width: 40px;
-	border:1px solid #aaa;
-	border-radius: 40px;
-	cursor: pointer;
-	background-color: #fff;
-	box-shadow: 1px 1px 0 0 #00ba00 ;
+  height: 40px;
+  width: 40px;
+  border:1px solid #aaa;
+  border-radius: 40px;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 1px 1px 0 0 #00ba00 ;
 }
 
 #utenti .content ul li>ul li a:active{
-	box-shadow: none;
+  box-shadow: none;
 }
 
 .avatar48{
-	background-image: url(../img/mytalk_blank_48.png);
-	padding: 0 !important;
+  background-image: url(../img/mytalk_blank_48.png);
+  padding: 0 !important;
 }
 .avatar48, .avatar48 img {
-	width: 48px;
-	height: 48px;
-	border-radius: 3px;
+  width: 48px;
+  height: 48px;
+  border-radius: 3px;
 }
 
 .avatar300{
@@ -244,7 +244,7 @@
 }
 
 .avatar300 h2 {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .call_user{background: url("../img/phone_green.png") center center no-repeat;}

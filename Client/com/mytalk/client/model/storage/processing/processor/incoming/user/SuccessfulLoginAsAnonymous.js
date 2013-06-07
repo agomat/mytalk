@@ -36,6 +36,6 @@ MyTalk.processor.SuccessfulLoginAsAnonymous = Ember.Object.extend(MyTalk.Abstrac
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

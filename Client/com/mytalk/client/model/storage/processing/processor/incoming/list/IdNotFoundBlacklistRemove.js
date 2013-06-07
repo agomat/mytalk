@@ -25,6 +25,6 @@ MyTalk.processor.IdNotFoundBlacklistRemove = Ember.Object.extend(MyTalk.Abstract
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

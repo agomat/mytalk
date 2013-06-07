@@ -55,10 +55,10 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
     document.cookie='mytalk-auth' + "=" + c_value;
 
     var wasSent = socket.send( JSON.stringify(ARI) );
-  	onSent( this.getProcessorName(), wasSent );
+    onSent( this.getProcessorName(), wasSent );
   },
 
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

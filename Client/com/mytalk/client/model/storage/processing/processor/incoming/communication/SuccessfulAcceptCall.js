@@ -22,7 +22,7 @@ MyTalk.processor.SuccessfulAcceptCall = Ember.Object.extend(MyTalk.AbstractInPro
   name: 'SuccessfulAcceptCall',
 
   process: function (ari) {
-  	var payload = JSON.parse( ari.info );
+    var payload = JSON.parse( ari.info );
 
     var callData = Ember.Object.create({
       isCaller: true,
@@ -32,6 +32,6 @@ MyTalk.processor.SuccessfulAcceptCall = Ember.Object.extend(MyTalk.AbstractInPro
   },
 
   getProcessorName: function() {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

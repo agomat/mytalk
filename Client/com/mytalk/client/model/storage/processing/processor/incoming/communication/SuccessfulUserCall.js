@@ -36,6 +36,6 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProce
   },
 
   getProcessorName: function() {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

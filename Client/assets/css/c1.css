@@ -6,10 +6,10 @@
 }
 
 #logo h1{
-	background-image: url(../img/mytalk.png);
-	width: 209px;
-	height: 100px;
-	margin: 0 auto;
-	font-size: 1px;
-	text-indent:-999em;
+  background-image: url(../img/mytalk.png);
+  width: 209px;
+  height: 100px;
+  margin: 0 auto;
+  font-size: 1px;
+  text-indent:-999em;
 }

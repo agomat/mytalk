@@ -25,6 +25,6 @@ MyTalk.processor.IdNotFoundListUserAdd = Ember.Object.extend(MyTalk.AbstractInPr
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

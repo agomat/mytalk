@@ -25,6 +25,6 @@ MyTalk.processor.IdNotFoundListUserRemove = Ember.Object.extend(MyTalk.AbstractI
   },
   
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

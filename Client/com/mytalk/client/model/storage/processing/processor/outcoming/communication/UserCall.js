@@ -26,9 +26,9 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   process: function (params) {
     var myself = MyTalk.PersonalData.find(0);
     var speaker = params.speaker;
-  	var RTCinfo = params.RTCinfo;
+    var RTCinfo = params.RTCinfo;
 
-  	var nextId = MyTalk.Call.find().get('length');
+    var nextId = MyTalk.Call.find().get('length');
     var record = MyTalk.Call.createRecord({id: nextId, speaker: speaker, caller: true, startDate: new Date() });
     var transaction = record.get('transaction');
 
@@ -67,10 +67,10 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
     ARI.info = JSON.stringify( ARI.info );
 
     var wasSent = socket.send( JSON.stringify(ARI) );
-  	onSent( this.getProcessorName(), wasSent );
+    onSent( this.getProcessorName(), wasSent );
   },
 
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

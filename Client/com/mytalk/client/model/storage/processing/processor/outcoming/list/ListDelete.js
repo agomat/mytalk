@@ -53,10 +53,10 @@ MyTalk.processor.ListDelete = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
     ARI.info = JSON.stringify( ARI.info );
 
     var wasSent = socket.send( JSON.stringify(ARI) );
-  	onSent( this.getProcessorName(), wasSent );
+    onSent( this.getProcessorName(), wasSent );
   },
 
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

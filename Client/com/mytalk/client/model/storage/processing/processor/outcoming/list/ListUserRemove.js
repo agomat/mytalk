@@ -24,7 +24,7 @@ MyTalk.processor.ListUserRemove = Ember.Object.extend(MyTalk.AbstractOutProcesso
   name: 'ListUserRemove',
 
   process: function (params) {
-  	var record = params.list;
+    var record = params.list;
     var transaction = record.get('transaction');
     record.get('users').removeObject( MyTalk.User.find(params.userId) );
 
@@ -60,10 +60,10 @@ MyTalk.processor.ListUserRemove = Ember.Object.extend(MyTalk.AbstractOutProcesso
     ARI.info = JSON.stringify( ARI.info );
 
     var wasSent = socket.send( JSON.stringify(ARI) );
-  	onSent( this.getProcessorName(), wasSent );
+    onSent( this.getProcessorName(), wasSent );
   },
 
   getProcessorName: function () {
-  	return this.get('name');
+    return this.get('name');
   } 
 });

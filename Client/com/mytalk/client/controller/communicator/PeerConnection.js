@@ -165,25 +165,23 @@ MyTalk.PeerConnection = Ember.Object.extend({
             if(context.webrtcDetectedBrowser === "firefox") {
               console.log('datachannel');
               context.dataChannel = context.pc.createDataChannel('RTCDataChannel', {});
+              context.dataChannel.binaryType = 'blob';
               context.setChannelEvents(context.dataChannel, onDataChannelMessage);
             }
 
-            if(isCaller)
-                peerConn.createOffer(gotDescription);
-            else {
-                peerConn.createAnswer(gotDescription);
-            }
+            if(isCaller) peerConn.createOffer(gotDescription,function(){console.error("Failed to create rtc offer.");});
+            else peerConn.createAnswer(gotDescription, function() {console.error("Failed to create rtc answer.");});
+            
             function gotDescription(desc) {
                 peerConn.setLocalDescription(desc);
                 console.log('add sdp'+ desc.toString());
                 context.mySDP = desc;
-                if(context.webrtcDetectedBrowser === "firefox") {
-                  console.log("sendig firefox candidates");
-                  var RTCinfo = new Object();
-                  RTCinfo.sdp = context.get('mySDP');
-                  onCandidatesReady( RTCinfo );
-                }
-                window.mysdp = desc;
+                // if(context.webrtcDetectedBrowser === "firefox") {
+                  // console.log("sendig firefox candidates");
+                  // var RTCinfo = new Object();
+                  // RTCinfo.sdp = context.get('mySDP');
+                  // onCandidatesReady( RTCinfo );
+                // }
             } 
         }
         function onError(e) {

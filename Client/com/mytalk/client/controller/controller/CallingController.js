@@ -87,11 +87,11 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
       local.setSDP( RTCinfo.sdp );
       
-      if(RTCinfo.ice) {
-        for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
-          local.addICE( RTCinfo.ice[i] );
-        }
+      
+      for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+        local.addICE( RTCinfo.ice[i] );
       }
+      
 
       var callData = Ember.Object.create({
         isCaller: false

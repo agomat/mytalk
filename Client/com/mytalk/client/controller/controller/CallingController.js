@@ -66,6 +66,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
       temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
       context.set('messages',temp);
+      
+      Ember.run.later(this, function(){
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
   
     };
     
@@ -84,11 +90,11 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
       local.setSDP( RTCinfo.sdp );
       
-      if(RTCinfo.ice) {
-        for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
-          local.addICE( RTCinfo.ice[i] );
-        }
+      
+      for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+        local.addICE( RTCinfo.ice[i] );
       }
+      
 
       var callData = Ember.Object.create({
         isCaller: false
@@ -114,6 +120,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
       temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
       context.set('messages',temp);
+      
+      Ember.run.later(this, function(){
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
   
     };
 
@@ -158,7 +170,15 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
       this.RTCmanager.send(message);
       this.set('messages',temp);
+      
     }
+    
+    Ember.run.later(this, function(){
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+    }, 300);
+     
   }
 
 });

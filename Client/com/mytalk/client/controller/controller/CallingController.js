@@ -2,7 +2,7 @@
 * Filename: CallingController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.controller.controller.ChatMessage
-* Dependencies: com.mytalk.client.controller.statemanager.CallState
+*               com.mytalk.client.controller.statemanager.CallState
 *               com.mytalk.client.controller.comunicator.PeerConnection
 *               com.mytalk.client.model.storage.processing.ProcessorFactory
 *               com.mytalk.client.model.modelstruct.WCall

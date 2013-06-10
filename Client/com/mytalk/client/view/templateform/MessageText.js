@@ -15,13 +15,64 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta la $textarea$ per l'inserimento del testo del messaggio nella chat.
+*
 */
 
 MyTalk.MessageText = Ember.TextArea.extend({
+
+  /**
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
+
   attributeBindings: ["required"],
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * @property +required           
+   * @type {Boolean}                   
+   *
+  */
+
   required: true,
+
+  /**
+   * Proprietà necessaria per settare il nome della text area
+   * @property +name           
+   * @type {String}                   
+   *
+  */
+  
   name: 'text_input',
+  
+  /**
+   * Proprietà necessaria per settare l'id della text area
+   * @property +id          
+   * @type {String}                   
+   *
+  */
+
   id: 'text_input',
+
+  /**
+   * Proprietà necessaria per settare a $text$ il tipo di dato della text area
+   * @property +type           
+   * @type {String}                   
+   *
+  */
+
   type: 'text',
+  
+  /**
+   * Proprietà necessaria per settare il placeholder della text area
+   * @property +palceholder           
+   * @type {String}                   
+   *
+  */
+
   placeholder: 'Scrivi un messaggio'
 });

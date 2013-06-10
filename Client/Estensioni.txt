@@ -8,3 +8,6 @@ DS.RESTAdapter
 Ember.View               http://emberjs.com/api/classes/Ember.View.html
 Ember.TextField          http://emberjs.com/api/classes/Ember.TextField.html
 Ember.TextArea	         http://emberjs.com/api/classes/Ember.TextArea.html
+
+Da sistemare la descrizione dei metodi aceptCall e call del CallingController
+Da sistemare la descrizione del metodo renderTemplate del CallingRoute

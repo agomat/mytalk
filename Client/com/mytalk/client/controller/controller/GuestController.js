@@ -23,7 +23,8 @@
 
 MyTalk.GuestController = Ember.ObjectController.extend({
   /**
-   * Questo metodo è deputato alla registrazione dell'utente nell'applicazione
+   * Questo metodo è deputato alla registrazione dell'utente nell'applicazione. Il metodo crea un'istanza del processore delegato di eseguire la creazione di un nuovo account.
+   * Il metodo passa al processore tutti i parametri che riceve in ingresso.
    *
    * @method +register               
    * @param {String} nome dell'utente che si registra                     

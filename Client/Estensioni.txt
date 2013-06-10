@@ -1,10 +1,10 @@
-Ember.ObjectController
-Ember.Object
-Ember.ArrayController
-Ember.Route
+Ember.Object             http://emberjs.com/api/classes/Ember.Object.html
+Ember.ObjectController   http://emberjs.com/api/classes/Ember.ObjectController.html
+Ember.ArrayController    http://emberjs.com/api/classes/Ember.ArrayController.html
+Ember.Route              http://emberjs.com/api/classes/Ember.Route.html
 DS.Model
 DS.Store
 DS.RESTAdapter
-Ember.View
-Ember.TextField
-Ember.TextArea
+Ember.View               http://emberjs.com/api/classes/Ember.View.html
+Ember.TextField          http://emberjs.com/api/classes/Ember.TextField.html
+Ember.TextArea	         http://emberjs.com/api/classes/Ember.TextArea.html

@@ -15,11 +15,41 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta la vista associata al template $index$
+*
 */
 
 MyTalk.IndexView = Ember.View.extend({
+  
+  /**
+   * Proprietà necessaria per settare il nome del template associato alla vista
+   * @property -templateName          
+   * @type {String}                   
+   *
+  */
+
   templateName: "index",
+
+
+  /**
+   * Proprietà necessaria per settare il nome della vista
+   * @property -name          
+   * @type {String}                   
+   *
+  */
+
   name: "index",
+
+
+  /**
+   * Questo metodo di occupa di attivare alcuyne funzioni JQuery per la vista.
+   *
+   * @method -didInsertElement            
+   * @return {Void} 
+   * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
+  */
+
   didInsertElement: function() {
     Ember.run.later(this, function(){
       $.fn.videoTutorial();

@@ -31,7 +31,7 @@ MyTalk.RegisterEmail = Ember.TextField.extend({
   
   attributeBindings: ["required"],
    
-   /**
+  /**
    * Proprietà necessaria per settare l'attributo $required$ a $true$
    * @property +required           
    * @type {Boolean}                   

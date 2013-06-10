@@ -15,19 +15,102 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta la vista che rappresenta la form di registrazione nel portale.
+*
 */
 
 MyTalk.RegisterFormView = Ember.View.extend({
+
+  /**
+   * Proprietà necessaria per settare il tipo di vista 
+   * @property -tagName          
+   * @type {String}                   
+   *
+  */
+
   tagName: 'form',
+  
+  /**
+   * Proprietà necessaria per la gestione della form, aggiunge l'attributo $method$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
+
   attributeBindings: ["method"],
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $method$ a $post$ 
+   * @property +method          
+   * @type {String}                   
+   *
+  */
+
   method: 'post',
+
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $name$  della form
+   * @property -name          
+   * @type {String}                   
+   *
+  */
+
   name: null,
+  
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $surname$  della form
+   * @property -surname          
+   * @type {String}                   
+   *
+  */
+
   surname: null,
+
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $username$  della form
+   * @property -username          
+   * @type {String}                   
+   *
+  */
+  
   username: null,
+
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $email$  della form
+   * @property -email          
+   * @type {String}                   
+   *
+  */
+
   email: null,
+  
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $password$  della form
+   * @property -password          
+   * @type {String}                   
+   *
+  */
+
   password: null,
+  
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $password_conf$  della form
+   * @property -password_conf         
+   * @type {String}                   
+   *
+  */
+
   password_conf: null,
   
+  /**
+   * Questo metodo viene richiamato dal $submit$ della form e attiva il metodo di registrazione di un nuovo utente nel controller associato.
+   *
+   * @method +submit              
+   * @param {Object} event è l'evento di $submit$ effettuato sulla form               
+   * @return {Void} 
+  */
+
   submit: function(event) {
     event.preventDefault();
     var name = this.get('name');

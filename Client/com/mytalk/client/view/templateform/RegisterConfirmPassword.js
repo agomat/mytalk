@@ -1,5 +1,5 @@
 /**
-* Filename: LoginPassword.js
+* Filename: RegisterConfirmPassword.js
 * Package: com.mytalk.client.view.templateform
 * Dependencies:
 * Author: Campese Stefano
@@ -46,6 +46,7 @@ MyTalk.RegisterConfirmPassword = Ember.TextField.extend({
    * @type {String}                   
    *
   */
+  
   name: 'password_conf',
 
   /**

@@ -15,13 +15,64 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta il $textfield$ per l'inserimento del nome per la registrazione.
+*
 */
 
 MyTalk.RegisterName = Ember.TextField.extend({
+  
+  /**
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
+  
   attributeBindings: ["required"],
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * @property +required           
+   * @type {Boolean}                   
+   *
+  */
+  
   required: true,
+  
+  /**
+   * Proprietà necessaria per settare il nome dell'input area
+   * @property +name           
+   * @type {String}                   
+   *
+  */
+  
   name: 'name',
+
+  /**
+   * Proprietà necessaria per settare l'id dell'input area
+   * @property +id          
+   * @type {String}                   
+   *
+  */
+  
   id: 'name',
+  
+ /**
+   * Proprietà necessaria per settare a $text$ il tipo di dato dell'input area
+   * @property +type           
+   * @type {String}                   
+   *
+  */
+
   type: 'text',
+
+  /**
+   * Proprietà necessaria per settare il placeholder dell'input area
+   * @property +palceholder           
+   * @type {String}                   
+   *
+  */
+  
   placeholder: 'Nome'
 });

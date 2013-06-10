@@ -16,9 +16,24 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Controller per la gestione della registrazione dell'utente nel sistema e per la gestione del template $"guest"$
+*
 */
 
 MyTalk.GuestController = Ember.ObjectController.extend({
+  /**
+   * Questo metodo è deputato alla registrazione dell'utente nell'applicazione
+   *
+   * @method +register               
+   * @param {String} nome dell'utente che si registra                     
+   * @param {String} cognome dell'utente che si registra
+   * @param {String} username dell'utente che si registra                 
+   * @param {String} email dell'utente che si registra                    
+   * @param {String} password1 dell'utente che si registra                
+   * @param {String} password2 dell'utente che si registra                
+   * @return {Void} 
+  */
   register:function(name, surname, username, email, password1, password2){
     var processorFactory = MyTalk.ProcessorFactory.create();
     var processor = processorFactory.createProcessorProduct("CreateAccount");

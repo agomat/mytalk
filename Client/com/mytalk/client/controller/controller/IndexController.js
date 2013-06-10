@@ -16,16 +16,51 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Controller per la gestione del login e per la gestione del template $"index"$
+*
 */
 
 MyTalk.IndexController = Ember.ObjectController.extend({
-  appStateBinding: Ember.Binding.oneWay('MyTalk.AppState.currentState.name'),
-  appState: null,
+  
+  /**
+   * Proprietà necessaria per la gestione dello stato dell'applicazione 
+   * @property -appStateBinding           
+   * @type {Binding}                   
+   *
+  */    
 
+  appStateBinding: Ember.Binding.oneWay('MyTalk.AppState.currentState.name'),
+
+  /**
+   * Proprietà necessaria per immagazzinare lo stato corrente 
+   * @property -appState           
+   * @type {String}                   
+   *
+  */    
+
+  appState: null,
+  
+  /**
+   * Questo metodo è deputato all controllo dello stato dell'applicazione
+   *
+   * @method +isAuthenticated                                      
+   * @return {Boolean} 
+  */
+ 
   isAuthenticated: function () {
     return (this.get('appState') == 'isAuthenticated');
   }.property('appState'),
-
+ 
+  /**
+   * Questo metodo è deputato all'esecuzione del login nell'applicazione
+   *
+   * @method +login               
+   * @param {String} username dell'utente che effetua il login                                   
+   * @param {String} password dell'utente che effettua il login                        
+   * @return {Void} 
+  */
+ 
   login: function (username, password) {
     
     var processorFactory = MyTalk.ProcessorFactory.create({});

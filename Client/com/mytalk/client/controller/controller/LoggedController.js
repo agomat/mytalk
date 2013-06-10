@@ -15,10 +15,20 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Controller per visualizzazione delle liste dell'utente che ha effettuato il login.
+*
 */
 
 MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
+
+  /**
+   * Questo metodo è deputato alla creazione di una nuova lista.
+   *
+   * @method +createList                                     
+   * @return {Void} 
+  */
 
   createList:function (){
 

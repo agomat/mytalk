@@ -21,16 +21,73 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Controller deputato alla gestione di una chiamata e della chat realativa, gestisce in oltra il template $calling$
+*
 */
 
 MyTalk.CallingController = Ember.ObjectController.extend({
+
+   /**
+   * Proprietà necessaria per immagazzinare lo stato corrente  della chiamata
+   * @property -callState           
+   * @type {String}                   
+   *
+  */  
+
   callState: null,
+  /**
+   * Proprietà necessaria per la gestione dello stato dell'applicazione durante la chiamata 
+   * @property -callStateBinding           
+   * @type {Binding}                   
+   *
+  */ 
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
+  
+  /**
+   * Proprietà necessaria determinare se si e meno in questo sottostato 
+   * @property -isIncomingCall           
+   * @type {Boolean}                   
+   *
+  */ 
+
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
+  
+  /**
+   * Proprietà necessaria determinare se si e meno in questo sottostato 
+   * @property - isConnected           
+   * @type {Boolean}                   
+   *
+  */
+
   isConnected: Ember.computed.equal('callState','isConnected'),
+  
+  /**
+   * Proprietà necessaria al contenimento dei messaggi scambiati in chat 
+   * @property +messages           
+   * @type {Array<ChatMessage>}                   
+   *
+  */
+
   messages: [],
+
+  /**
+   * Proprietà che contiente la connessione peer
+   * @property -RTCmanager          
+   * @type {PeerConnection}                   
+   *
+  */
+
   RTCmanager: undefined,
   
+  /**
+   * Questo metodo si occupa di gestire la chiamata all'utente selezioanto settando i cnali di comunicazione
+   *
+   * @method +call
+   * @param {User} user è l'oggetto utente che si sta chiamando.
+   * @return {Void} 
+  */
+
   call: function(user) {
     //TODO verificare se sono impegnato in altra conversazione
     this.RTCmanager = MyTalk.PeerConnection.create();
@@ -79,6 +136,14 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
   },
   
+  /**
+   * Questo metodo si occupa gestire l'accetazione di una chiamata da un altro utente settando i canli di comunicazione opportuni.
+   *
+   * @method +acceptCall 
+   * @param {User} user è l'oggetto utente che ci sta contattando.
+   * @return {Void} 
+  */
+
   acceptCall: function(user){
     this.RTCmanager = MyTalk.PeerConnection.create();
     var processorFactory = MyTalk.ProcessorFactory.create({});
@@ -132,6 +197,14 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
   },
 
+  /**
+   * Questo metodo si occupa di chiudere una chiamata.
+   *
+   * @method +closeCall 
+   * @param {User} user è l'oggetto utente che ci sta contattando.
+   * @return {Void} 
+  */
+
   closeCall: function(user){
     /*
     // TODO: rifiutare la chiamata
@@ -154,6 +227,14 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 //     this.set('messages',[]);
 //     MyTalk.CallState.send('beingFree');
   },
+
+  /**
+   * Questo metodo si occupa di inviare i messaggi scritti nella chat e di gestire il comportamento della vista della chat.
+   *
+   * @method +sendMessage 
+   * @param {String} message è il testo del messaggio inviato.
+   * @return {Void} 
+  */
 
   sendMessage:function(message){
     var context=this.get('messages');

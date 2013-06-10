@@ -15,9 +15,28 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta la vista associata al template $dashboard$
+*
 */
 
 MyTalk.DashboardView = Ember.View.extend({
+    
+  /**
+   * Proprietà necessaria per settare il nome del template associato alla vista
+   * @property -templateName          
+   * @type {String}                   
+   *
+  */
+
   templateName: "dashboard",
+
+  /**
+   * Proprietà necessaria per settare il nome della vista
+   * @property -name          
+   * @type {String}                   
+   *
+  */
+
   name: "dashboard"
 });

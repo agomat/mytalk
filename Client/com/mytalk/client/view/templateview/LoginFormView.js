@@ -15,17 +15,76 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta la vista che rappresenta la form per effettuare il login.
+*
 */
 
 MyTalk.LoginFormView = Ember.View.extend({
   needs: ['IndexView.controller'],
-  indexBinding: "controller.index",
-  tagName: 'form',
-  attributeBindings:["method"],
-  method: 'post',
-  email: null,
-  password: null,
 
+  /**
+   * Proprietà necessaria per settare il Controller della vista a $IndexController$
+   * @property -indexBinding          
+   * @type {Binding}                   
+   *
+  */
+  
+  indexBinding: "controller.index",
+ 
+  /**
+   * Proprietà necessaria per settare il tipo di vista 
+   * @property -tagName          
+   * @type {String}                   
+   *
+  */
+
+  tagName: 'form',
+  
+  /**
+   * Proprietà necessaria per la gestione della form, aggiunge l'attributo $method$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
+
+  attributeBindings: ["method"],
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $method$ a $post$ 
+   * @property +method          
+   * @type {String}                   
+   *
+  */
+
+  method: 'post',
+  
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $email$  della form
+   * @property -email          
+   * @type {String}                   
+   *
+  */
+  
+  email: null,
+  
+  /**
+   * Proprietà necessaria per ottenere il valore inserito nel campo dati $password$  della form
+   * @property -password          
+   * @type {String}                   
+   *
+  */
+  
+  password: null,
+ 
+  /**
+   * Questo metodo viene richiamato dal $submit$ della form e attiva il metodo, nel controller associato, per ieffetturare il login.
+   *
+   * @method +submit              
+   * @param {Object} event è l'evento di $submit$ effettuato sulla form               
+   * @return {Void} 
+  */
+  
   submit: function(event) {
     event.preventDefault();
     var username = this.get('username');

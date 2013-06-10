@@ -230,6 +230,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   /**
    * Questo metodo si occupa di inviare i messaggi scritti nella chat e di gestire il comportamento della vista della chat.
+   * Il metodo si occupa di aggiornare l'array messages del controller inserendo i messaggi inviati e inoltre si occupa invocare il metodo $send$ dell'RTCmanager necessario ad inviare il messaggio all'utente con il quale si sta comunicando.
+   * Il metodo inoltre si occupa di effettuare lo scroll della chat una volta aggiornato l'array message al fine di avere sempre in primo piano l'utlimo messaggio.
    *
    * @method +sendMessage 
    * @param {String} message è il testo del messaggio inviato.

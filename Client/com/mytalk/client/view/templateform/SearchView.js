@@ -15,12 +15,50 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta il $textfield$ per l'inserimento dell nome dell'utente da cercare.
+*
 */
 
 MyTalk.SearchView = Ember.TextField.extend({
+  
+  /**
+   * Proprietà necessaria per settare il nome dell'input area
+   * @property +name           
+   * @type {String}                   
+   *
+  */
+
   name: 'search',
+
+  /**
+   * Proprietà necessaria per settare a $text$ il tipo di dato dell'input area
+   * @property +type           
+   * @type {String}                   
+   *
+  */
+
   type: 'text',
+
+  /**
+   * Proprietà necessaria per settare il placeholder dell'input area
+   * @property +palceholder           
+   * @type {String}                   
+   *
+  */
+
   placeholder: 'Filtra per nome o cognome',
+
+  /**
+   * Questo metodo osserva il $value$ dell'input e lancia la ricerca ogni volta che questo cambia al fine di affinare la ricerca di un utente su una lista.
+   *
+   * @method +valueDidChange
+   * @param {Object} element è l'oggetto della view        
+   * @param {Key} property è la proprietà che viene cambiata    
+   * @param {String} value è contiene il valore effettivo sul quale effettuare la ricerca.                                 
+   * @return {Void} 
+  */
+
   valueDidChange: function(element,property,value) {
     this.get('controller').filter(this.value);
   }.observes('value')

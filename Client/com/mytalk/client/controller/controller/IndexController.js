@@ -42,7 +42,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   appState: null,
   
   /**
-   * Questo metodo è deputato all controllo dello stato dell'applicazione
+   * Questo metodo è deputato all controllo dello stato dell'applicazione ritorna $true$ nel caso in cui lo stato sia $isAuthenticated$, false altrimenti
    *
    * @method +isAuthenticated                                      
    * @return {Boolean} 
@@ -53,7 +53,8 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }.property('appState'),
  
   /**
-   * Questo metodo è deputato all'esecuzione del login nell'applicazione
+   * Questo metodo è deputato all'esecuzione del login nell'applicazione. Il metodo crea un'istanza del processore delegato di eseguire il login.
+   * Il metodo passa al processore tutti i parametri che riceve in ingresso.
    *
    * @method +login               
    * @param {String} username dell'utente che effetua il login                                   

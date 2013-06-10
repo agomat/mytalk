@@ -1,0 +1,10 @@
+Ember.ObjectController
+Ember.Object
+Ember.ArrayController
+Ember.Route
+DS.Model
+DS.Store
+DS.RESTAdapter
+Ember.View
+Ember.TextField
+Ember.TextArea

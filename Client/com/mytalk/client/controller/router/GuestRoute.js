@@ -15,20 +15,19 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Gestisce la visualizzazione del template (Handelbar) per questo tipo di risorsa.
+*
 */
 
 MyTalk.GuestRoute = Ember.Route.extend({
+	/**
+   * Questo metodo è deputato alla renderizzazione del template $guest$ all'interno della pagina HTML.
+   *
+   * @method -renderTemplate                                     
+   * @return {Void} 
+  */
   renderTemplate: function() {
     this.render('guest', { into: 'index', outlet: 'content' });
   }
-//   model: function() {
-//     /*
-//     var store = DS.get("defaultStore");
-//     var adapter = store.adapterForType(MyTalk.PersonalData);
-//     var json = {"personal_data": { id:0, 'ip':'0.0.0.0:0000'}};
-//     store.load(MyTalk.PersonalData, json);
-//     adapter.didFindRecord(store, MyTalk.PersonalData, json,0);
-//     */ 
-//     return MyTalk.PersonalData.find(0);
-//   }
 });

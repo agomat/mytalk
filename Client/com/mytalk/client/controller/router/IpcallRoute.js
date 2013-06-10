@@ -18,6 +18,12 @@
 */
 
 MyTalk.IpcallRoute = Ember.Route.extend({
+  /**
+   * Questo metodo è deputato alla renderizzazione del template $ipcall$ all'interno della pagina HTML.
+   *
+   * @method -renderTemplate                                     
+   * @return {Void} 
+  */
   renderTemplate: function() {
     this.render('ipcall', { into: 'index', outlet: 'content' });
   }

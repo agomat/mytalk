@@ -15,6 +15,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
 MyTalk.WCall = DS.Model.extend({
@@ -23,4 +25,40 @@ MyTalk.WCall = DS.Model.extend({
   totalByteReceived: DS.attr('integer'),
   totalDuration: DS.attr('integer')
   
-}); 
+});
+
+/**
+* Descrizione di list
+* 
+* @property -list
+* @type {Array<Call>}
+* @private 
+*
+*/
+
+/**
+* Descrizione di totalByteSent
+* 
+* @property -totalByteSent
+* @type {number}
+* @private 
+*
+*/
+
+/**
+* Descrizione di totalByteReceived
+* 
+* @property -totalByteReceived
+* @type {number}
+* @private 
+*
+*/
+
+/**
+* Descrizione di totalDuration
+* 
+* @property -totalDuration
+* @type {number}
+* @private 
+*
+*/

@@ -15,6 +15,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_ 
 */
 
 MyTalk.User = DS.Model.extend( {
@@ -45,4 +47,100 @@ MyTalk.User = DS.Model.extend( {
 
 });
 
+
+/**
+* Descrizione di username
+* 
+* @property -username
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di lists
+* 
+* @property -lists
+* @type {Array<List>}
+*
+*/
+
+/**
+* Descrizione di name
+* 
+* @property -name
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di surname
+* 
+* @property -surname
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di md5
+* 
+* @property -md5
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di ip
+* 
+* @property -ip
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di online
+* 
+* @property -online
+* @type {boolean}
+*
+*/
+
+/**
+* Descrizione di unmatched
+* 
+* @property -unmatched
+* @type {boolean}
+*
+*/
+
+/**
+* Descrizione di fullName
+* 
+* @property -fullName
+* @return {string}
+*
+*/
+
+/**
+* Descrizione di fullNameConc
+* 
+* @property -fullNameConc
+* @return {string}
+*
+*/
+
+/**
+* Descrizione di avatarTiny
+* 
+* @property -avatarTiny
+* @return {string}
+*
+*/
+
+/**
+* Descrizione di avatarBig
+* 
+* @property -avatarBig
+* @return {string}
+*
+*/
 

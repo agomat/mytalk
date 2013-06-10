@@ -16,32 +16,101 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
-DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, { 
+DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
+  /**
+  * bulkCommit consente di ... scrivere
+  * 
+  * @property -bulkCommit
+  * @type {boolean}
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L79}{RESTAdapter}
+  *
+  */
   bulkCommit: true,
 
-  init: function() {    
+  /**
+  * Descizione del costruttore init
+  *
+  * @method +init
+  * @constructor
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L84}{API RESTAdapter}
+  * @return {Object}
+  */
+  init: function() {
     this.createSocket();
     this._super();
   },
  
+ /**
+  * Descizione del metodo find
+  *
+  * @method -find
+  * @param {DS.Store} aaaaaaaaaaaaaa
+  * @param {string} ee
+  * @param {number} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L252}{RESTAdapter}
+  * @return {Void}
+  */
   find: function (store, type, id) {
     console.debug('[Adapter] find ' + id);    
   },
 
+ /**
+  * Descizione del metodo findQuery
+  *
+  * @method -findQuery
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Object} 
+  * @param {Array di Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L274}{RESTAdapter}
+  * @return {Void}
+  */
   findQuery: function(store, type, query, recordArray) {
     console.debug('[Adapter] findQuery'); 
   },
 
+ /**
+  * Descizione del metodo findMany
+  *
+  * @method -findMany
+  * @param {DS.Store} desc1
+  * @param {string} desc2
+  * @param {Array di number} desc3
+  * @param {Object} desc4
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L285}{RESTAdapter}
+  * @return {Void}
+  */
   findMany: function(store, type, ids, query) {
     console.debug('[Adapter] findQuery');  
   },
 
+ /**
+  * Descizione del metodo findAll
+  *
+  * @method -findAll
+  * @param {DS.Store} 
+  * @param {string} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L261}{RESTAdapter}
+  * @return {Void}
+  */
   findAll: function (store, type) { 
-    console.debug('[Adapter] findAll');  
+    console.debug('[Adapter] findAll' + type);  
   },
 
+ /**
+  * Descizione del metodo createRecord
+  *
+  * @method -createRecord
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L125}{RESTAdapter}
+  * @return {Void}
+  */
   createRecord: function(store, type, record) {
     console.debug('[Adapter] CreateRecord');
     var context = this;
@@ -63,11 +132,31 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     
   },
 
+ /**
+  * Descizione del metodo createRecords
+  *
+  * @method -createRecords
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L142}{RESTAdapter}
+  * @return {Void}
+  */
   createRecords: function(store, type, records) {
     console.debug('[Adapter] CreateRecords');
-    return this.createRecord(store, type, records.list[0]); // single bulk commit
+    this.createRecord(store, type, records.list[0]); // single bulk commit
   },
 
+ /**
+  * Descizione del metodo updateRecord
+  *
+  * @method -updateRecord
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L165}{RESTAdapter}
+  * @return {Void}
+  */
   updateRecord: function(store, type, record) {
     console.debug('[Adapter] updateRecord');
     var context = this;
@@ -87,11 +176,31 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     processor.sendToServer(this.get('socket'), record, onSent);
   },
 
+ /**
+  * Descizione del metodo updateRecords
+  *
+  * @method -updateRecords
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Array di Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L185}{RESTAdapter}
+  * @return {Void}
+  */
   updateRecords: function(store, type, records) {
     console.debug('[Adapter] updateRecords');
-    return this.updateRecord(store, type, records.list[0]); // single bulk commit
+    this.updateRecord(store, type, records.list[0]); // single bulk commit
   },
 
+ /**
+  * Descizione del metodo deleteRecord
+  *
+  * @method -deleteRecord
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L211}{RESTAdapter}
+  * @return {Void}
+  */
   deleteRecord: function(store, type, record) {
     console.debug('[Adapter] deleteRecord');
     var context = this;
@@ -112,25 +221,36 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
     processor.sendToServer(this.get('socket'), record, onSent);
   },
 
+ /**
+  * Descizione del metodo deleteRecords
+  *
+  * @method -deleteRecords
+  * @return {tipo} desc
+  * @param {DS.Store} 
+  * @param {string} 
+  * @param {Array di Object} 
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L226}{RESTAdapter}
+  * @return {Void}
+  */
   deleteRecords: function(store, type, records) {
     console.debug('[Adapter] deleteRecords');
-    return this.deleteRecord(store, type, records.list[0]); // single bulk commit
+    this.deleteRecord(store, type, records.list[0]); // single bulk commit
   }
 
 });
 
 /*
- * Mapping configuration for sideload and foreign keys
+ * Mapping configuration for sideload
  */
 
 DS.SocketAdapter.configure('MyTalk.PersonalData', {
-    sideloadAs: 'pd'
+  sideloadAs: 'pd'
 });
 
 DS.SocketAdapter.configure('MyTalk.List', {
-    sideloadAs: 'userList'
+  sideloadAs: 'userList'
 });
 
 DS.SocketAdapter.configure('MyTalk.User', {
-    sideloadAs: 'list'
+  sideloadAs: 'list'
 });

@@ -15,6 +15,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
 MyTalk.PersonalData = DS.Model.extend({
@@ -32,3 +34,75 @@ MyTalk.PersonalData = DS.Model.extend({
   }.property('md5'),
 
 });
+
+/**
+* Descrizione di userId
+* 
+* @property -userId
+* @type {number}
+*
+*/
+
+/**
+* Descrizione di username
+* 
+* @property -username
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di password
+* 
+* @property -password
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di name
+* 
+* @property -name
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di surname
+* 
+* @property -surname
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di email
+* 
+* @property -email
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di md5
+* 
+* @property -md5
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di ip
+* 
+* @property -ip
+* @type {string}
+*
+*/
+
+/**
+* Descrizione di avatarTiny
+* 
+* @property -avatarTiny
+* @return {string}
+*
+*/

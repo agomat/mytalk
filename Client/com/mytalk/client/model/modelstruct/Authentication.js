@@ -15,6 +15,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
 MyTalk.Authentication = DS.Model.extend({
@@ -23,3 +25,30 @@ MyTalk.Authentication = DS.Model.extend({
   ip: DS.attr('string')
   
 });
+
+/**
+* Descrizione di username
+* 
+* @property -username
+* @type {string}
+* @private 
+*
+*/
+
+/**
+* Descrizione di password
+* 
+* @property -password
+* @type {string}
+* @private 
+*
+*/
+
+/**
+* Descrizione di ip
+* 
+* @property -ip
+* @type {string}
+* @private 
+*
+*/

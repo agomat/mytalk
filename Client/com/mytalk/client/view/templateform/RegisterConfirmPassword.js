@@ -1,6 +1,5 @@
 MyTalk.RegisterConfirmPassword = Ember.TextField.extend({
-  attributeBindings: ['pattern'],
-  attributeBindings: ["required"],
+  attributeBindings: ['pattern','required'],
   required: true,
   name: 'password_conf',
   id: 'password_conf',

@@ -5,6 +5,7 @@
 *                com.mytalk.client.model.modelstruct.Authentication
 *                com.mytalk.client.model.modelstruct.Call
 *                com.mytalk.client.model.modelstruct.PersonalData
+*                com.mytalk.client.model.storage.ARI
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *

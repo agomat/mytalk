@@ -16,8 +16,20 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
 MyTalk.Store = DS.Store.extend({
+  /**
+  * adapter ......... scrivere!
+  * 
+  * @property -adapter
+  * @type {SocketAdapter}
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/system/store.js#L184}{Store}
+  *
+  */
   adapter: DS.SocketAdapter.create({})
 });
+
+

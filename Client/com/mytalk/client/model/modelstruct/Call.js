@@ -15,6 +15,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
 MyTalk.Call = DS.Model.extend({
@@ -25,3 +27,57 @@ MyTalk.Call = DS.Model.extend({
   byteSent: DS.attr('number'),
   byteReceived: DS.attr('number')
 });
+
+/**
+* Descrizione di speaker
+* 
+* @property -speaker
+* @type {User}
+* @private 
+*
+*/
+
+/**
+* Descrizione di caller
+* 
+* @property -caller
+* @type {boolean}
+* @private 
+*
+*/
+
+/**
+* Descrizione di startDate
+* 
+* @property -startDate
+* @type {string}
+* @private 
+*
+*/
+
+/**
+* Descrizione di duration
+* 
+* @property -duration
+* @type {number}
+* @private 
+*
+*/
+
+/**
+* Descrizione di byteSent
+* 
+* @property -byteSent
+* @type {number}
+* @private 
+*
+*/
+
+/**
+* Descrizione di byteReceived
+* 
+* @property -byteReceived
+* @type {number}
+* @private 
+*
+*/

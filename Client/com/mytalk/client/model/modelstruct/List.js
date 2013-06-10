@@ -15,6 +15,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione della _classe_
 */
 
 MyTalk.List = DS.Model.extend({
@@ -49,3 +51,76 @@ MyTalk.List = DS.Model.extend({
 });
 
 
+/**
+* Descrizione di name
+* 
+* @property -name
+* @type {String}
+*
+*/
+
+/**
+* Descrizione di users
+* 
+* @property -users
+* @type {Array<User>}
+*
+*/
+
+/**
+* Descrizione di blackList
+* 
+* @property -blackList
+* @type {Boolean}
+*
+*/
+
+/**
+* Descrizione di generalList
+* 
+* @property -generalList
+* @type {Boolean}
+*
+*/
+
+/**
+* Descrizione di notBlacklist
+* 
+* @property -notBlacklist
+* @type {Boolean}
+*
+*/
+
+/**
+* Descrizione di notGeneralList
+* 
+* @property -notGeneralList
+* @type {Boolean}
+*
+*/
+
+/**
+* Descrizione di customList
+* 
+* @property -customList
+* @type {Boolean}
+*
+*/
+
+/**
+* Descrizione di online
+* 
+* @property -online
+* @type {number}
+* @return {String}
+*
+*/
+
+/**
+* Descrizione di total
+* 
+* @property -total
+* @type {number}
+* @return {Void}
+*
+*/

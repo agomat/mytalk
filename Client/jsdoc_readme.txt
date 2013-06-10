@@ -1,5 +1,5 @@
 _ciao_ -> PVerb (attaccato! Non _ ciao_)
-``'' -> double quotes
+$ciao -> \emph{ciao} 
 \\ -> new line
 
 /**

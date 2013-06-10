@@ -17,10 +17,20 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Controller deputato alla gestione delle liste di utenti
+*
 */
 
 MyTalk.ListController = Ember.ObjectController.extend({
-  sortProperties: ['name'],
+  //sortProperties: ['name'], TODO
+
+  /**
+   * Questo metodo è deputato all'eliminazione di una lista.
+   *
+   * @method +deleteList                                     
+   * @return {Void} 
+  */
 
   deleteList: function (){
     alert(this.get('content').get('name'));
@@ -38,6 +48,13 @@ MyTalk.ListController = Ember.ObjectController.extend({
       context.replaceWith('list', MyTalk.List.find(0) );
     }
   },
+
+  /**
+   * Questo metodo è deputato alla rinominazione di una lista
+   *
+   * @method +renameList                                     
+   * @return {Void} 
+  */
 
   renameList: function (){ 
     var listId = this.get('content').get('id');
@@ -69,6 +86,14 @@ MyTalk.ListController = Ember.ObjectController.extend({
     }
   },
 
+   /**
+   * Questo metodo è deputato al filtraggio degli utenti, secondo la ricerca effettuata, all'interno della lista corrente.
+   *
+   * @method +filter
+   * @param {String} value contiene la stringa con cui fare la ricerca degli nutenti all'interno della lista.
+   * @return {Void} 
+  */
+
   filter:function(value){
     var context=this;
     var fcontent=[];
@@ -88,6 +113,13 @@ MyTalk.ListController = Ember.ObjectController.extend({
       context.get('content').get('users').setEach('unmatched',false);
     }
   },
+
+  /**
+   * Questo metodo è deputato al reset della ricerca delgli utenti  nella lista corrente.
+   *
+   * @method -umatchedReset                                     
+   * @return {Void} 
+  */
 
   umatchedReset:function(){
     this.get('content').get('users').setEach('unmatched',false);

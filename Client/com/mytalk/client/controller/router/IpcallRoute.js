@@ -15,9 +15,18 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Gestisce la visualizzazione del template (Handelbar) per questo tipo di risorsa.
+*
 */
 
 MyTalk.IpcallRoute = Ember.Route.extend({
+  /**
+   * Questo metodo è deputato alla renderizzazione del template $ipcall$ all'interno della pagina HTML.
+   *
+   * @method -renderTemplate                                     
+   * @return {Void} 
+  */
   renderTemplate: function() {
     this.render('ipcall', { into: 'index', outlet: 'content' });
   }

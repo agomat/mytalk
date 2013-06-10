@@ -15,13 +15,25 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Descrizione: Controller deputato alla gestione di una chiamata da indirizzo IP diretto e del proprio indirizzo IP 
+*
 */ 
 
 MyTalk.IpcallController = Ember.ObjectController.extend({
+  
+  /**
+   * Questo metodo è deputato all'ottenimento del proprio indirizzo IP
+   *
+   * @method +myIP                                     
+   * @return {Void} 
+  */
+
   myIP: function() {
     var me = MyTalk.PersonalData.find(0);
     this.set('content', me);
   }.property('content'),
+  
   ipCall: function(ip) {
     console.log('controller ipCAll: '+ip);
     // TODO

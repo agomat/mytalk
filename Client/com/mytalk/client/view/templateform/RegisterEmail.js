@@ -15,13 +15,63 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta il $textfield$ per l'inserimento della email per la registrazione.
+*
 */
 
 MyTalk.RegisterEmail = Ember.TextField.extend({
+  
+  /**
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
+  
   attributeBindings: ["required"],
+   
+   /**
+   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * @property +required           
+   * @type {Boolean}                   
+   *
+  */
+  
   required: true,
+
+  /**
+   * Proprietà necessaria per settare il nome dell'input area
+   * @property +name           
+   * @type {String}                   
+   *
+  */
   name: 'email',
+
+  /**
+   * Proprietà necessaria per settare l'id dell'input area
+   * @property +id          
+   * @type {String}                   
+   *
+  */
+
   id: 'email',
+
+  /**
+   * Proprietà necessaria per settare a $email$ il tipo di dato dell'input area
+   * @property +type           
+   * @type {String}                   
+   *
+  */
+
   type: 'email',
+
+  /**
+   * Proprietà necessaria per settare il placeholder dell'input area
+   * @property +palceholder           
+   * @type {String}                   
+   *
+  */
+
   placeholder: 'Email'
 });

@@ -19,16 +19,48 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Controller deputato alla gestione degli utenti presenti in una lista e alla gestione del template $users$
+*
 */
 
 MyTalk.UsersController = Ember.ArrayController.extend({
   sortProperties:['name'],
   needs: ['logged','list'], 
-  newList:null,
-  selectArray: [],
+ 
+  /**
+   * Proprietà necessaria per memorizzare l'id della lista selezionata nella quale aggiungere l'utente. 
+   * @property +selectedValue           
+   * @type {Number}                   
+   *
+  */ 
+  
   selectedValue: null,
+  
+  /**
+   * Proprietà necessaria per la memorizzazione dell'id dell'utente da aggiungere in una lista.
+   * @property -userId           
+   * @type {Number}                   
+   *
+  */ 
+  
   userId: null,
+  
+  /**
+   * Proprietà necessaria per la memorizzazione del nome dell'utente da aggiungere in una lista.
+   * @property -userName           
+   * @type {String}                   
+   *
+  */ 
+
   userName: null,
+
+  /**
+   * Questo metodo è deputato al filtraggio effettivo degli utenti in base alla ricerca.
+   *
+   * @method +filteredUsers                                     
+   * @return {Array<User>} 
+  */
 
   filteredUsers : function(){
     var filteredUsers = [];
@@ -39,6 +71,14 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     });
     return filteredUsers;
   }.property('content.@each.unmatched').cacheable(),
+  
+  /**
+   * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utenta ad una nuova lista, mostrando la select contente le liste nelle quali poter aggiungere l'utente e settando i campi userId e userName.
+   *
+   * @method +addUsers 
+   * @param {User} user è l'oggetto utente che si vuole aggiungere alla lista.
+   * @return {Void} 
+  */
 
   addUser: function (user){
     document.getElementById('adduser').style.display='block';
@@ -47,13 +87,36 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     this.set('userName',n);
   },
 
+  /**
+   * Questo metodo si occupa di transitare nel template $calling$ dove inzierà il processo di chiamata all'utente selezionato.
+   *
+   * @method +userCall 
+   * @param {User} user è l'oggetto utente che si vuole contattare.
+   * @return {Void} 
+  */
+
   userCall: function(user){
     this.transitionToRoute('calling', user);
   },
 
+  /**
+   * Questo metodo si occupa di bloccare il tentativo di contattare un utente offline mostrando un messaggio di errore.
+   *
+   * @method +userCall 
+   * @param {User} user è l'oggetto utente che si vuole contattare.
+   * @return {Void} 
+  */
+
   cantCall: function(user){
     alert('Non puoi chiamare '+ user.get('fullName') +' poiché è offline');
   },
+
+  /**
+   * Questo metodo si occupa di chiudere il popup che gestisce l'aggiunta dell'utente ad una lista settando in campi userId e userName e selectedValue a NULL.
+   *
+   * @method +closeSelect 
+   * @return {Void} 
+  */
 
   closeSelect:function(){
     document.getElementById('adduser').style.display='none';
@@ -61,6 +124,13 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     this.set('userId',null);
     this.set('userName',null);
   },
+
+  /**
+   * Questo metodo si occupa di eseguire l'aggiunta vera e propria dell'utente all lista selezionata controllando che quest'ultima sia una lista valida (non deve essere vuota, Blacklist o Tutti i contatti) terminata l'aggiunta di occupa dsi settare a NULL i campi userId, userName e selectedValue.
+   *
+   * @method +doAddUser 
+   * @return {Void} 
+  */
 
   doAddUser:function (){
     var currentListId=this.get('controllers.list.content.id');
@@ -87,6 +157,15 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       alert('Selezionare una lista corretta');
     }
   },
+
+  /**
+   * Questo metodo si occupa di eliminare dalla lista corrente l'utente selezionato.
+   *
+   * @method +deleteUser 
+   * @param {User} user è l'oggetto utente che si vuole eliminare.
+   * @return {Void} 
+  */
+
   deleteUser:function (user){
     var userId = user.get('id');
     var confirmation = confirm("Sei sicuro di eliminare l'utente " + user.get('fullName') +" dalla lista?");
@@ -107,6 +186,15 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       }
     }
   },
+
+  /**
+   * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist, il metodo inoltre rimuove l'utente dalle altre liste tranne che in $Tutti i contatti.
+   *
+   * @method +userCall 
+   * @param {User} user è l'oggetto utente che si vuole contattare.
+   * @return {Void} 
+  */
+
   userToBlacklist: function (user){
     var confirmation = confirm("Sei sicuro di mettere l'utente " + user.get('fullName') +" nella Blacklist?");
     var userId = user.get('id');

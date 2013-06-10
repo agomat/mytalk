@@ -15,15 +15,81 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Classe che rappresenta il $textfield$ per l'inserimento della password per il login.
+*
 */
 
 MyTalk.LoginPassword = Ember.TextField.extend({
+  
+  /**
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$, $onchange$, $pattern$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
+
   attributeBindings: ["required","pattern","onchange"],
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * @property +required           
+   * @type {Boolean}                   
+   *
+  */
+
   required: true,
+  
+  /**
+   * Proprietà necessaria per settare il nome dell'input area
+   * @property +name           
+   * @type {String}                   
+   *
+  */
+
   name: 'password',
+
+  /**
+   * Proprietà necessaria per settare l'id dell'input area
+   * @property +id          
+   * @type {String}                   
+   *
+  */
+
   id: 'password',
+  
+  /**
+   * Proprietà necessaria per settare a $password$ iòl tipo di dato dell'input area
+   * @property +type           
+   * @type {String}                   
+   *
+  */
+
   type: 'password',
+  
+  /**
+   * Proprietà necessaria per settare il placeholder dell'input area
+   * @property +palceholder           
+   * @type {String}                   
+   *
+  */
+
   placeholder: 'Password',
+  /**
+   * Proprietà necessaria per settare l'attributo $onchange$ con la funzione relativa allo scatenamento dell'evento
+   * @property +onchange           
+   * @type {String}                   
+   *
+  */
+
   onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'La password deve contenere almeno sei caratteri' : '');",
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $pattern$ con il pattern necessario alla verifica della password.
+   * @property +pattern           
+   * @type {String}                   
+   *
+  */
+
   pattern:'\\w{6,}'
 });

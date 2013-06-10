@@ -15,9 +15,18 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description:  Gestisce la visualizzazione del template (Handelbar) e il collegamento del Model al Controller.
+*
 */
 
 MyTalk.LoggedIndexRoute = Ember.Route.extend({
+  /**
+   *  Questo metodo permette di mostrare il template $list$ in modo tale che una volta loggati si mostri subito la lista $"Tutti i contatti"$ e il suo contenuto.
+   *
+   * @method -rdirect                                     
+   * @return {Void} 
+  */
   redirect: function() {
     this.replaceWith('list', MyTalk.List.find(0));
   }

@@ -15,13 +15,31 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Description: Gestisce la visualizzazione del template (Handelbar) e il collegamento del Model al Controller.
+*
 */
 
 MyTalk.IndexRoute = Ember.Route.extend({
+  /**
+   * Questo metodo è deputato alla renderizzazione del template $header$ all'interno della pagina HTML.
+   *
+   * @method -renderTemplate                                     
+   * @return {Void} 
+  */
+
   renderTemplate: function(controller, model) { 
     this._super();
     this.render('header', { into: 'index', outlet: 'head' });
   },
+  
+  /**
+   * Questo metodo è deputato al collegamento tra Model $PersonalData$ e e il relativo Controller.
+   *
+   * @method -model                                     
+   * @return {RecordArray} 
+  */
+
   model: function() {
     return MyTalk.PersonalData.find();
   }

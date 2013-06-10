@@ -16,7 +16,8 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_
+* Model per la rappresentazione dei dati personali dell'utente autenticato al sistema.
+* Parte dei campi dati in esso definiti potranno essere modificato o aggiornato dall'utente.
 */
 
 MyTalk.PersonalData = DS.Model.extend({
@@ -36,7 +37,7 @@ MyTalk.PersonalData = DS.Model.extend({
 });
 
 /**
-* Descrizione di userId
+* Campo dati per memorizzare l'identificativo numerico dell'utente autenticato nel sistema
 * 
 * @property -userId
 * @type {number}
@@ -44,7 +45,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di username
+* Campo dati per memorizzare l'username dell'utente autenticato nel sistema
 * 
 * @property -username
 * @type {string}
@@ -52,7 +53,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di password
+* Campo dati per memorizzare la password dell'utente autenticato nel sistema
 * 
 * @property -password
 * @type {string}
@@ -60,7 +61,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di name
+* Campo dati per memorizzare il nome dell'utente autenticato nel sistema
 * 
 * @property -name
 * @type {string}
@@ -68,7 +69,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di surname
+* Campo dati per memorizzare il cognome dell'utente autenticato nel sistema
 * 
 * @property -surname
 * @type {string}
@@ -76,7 +77,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di email
+* Campo dati per memorizzare l'indirizzo email dell'utente autenticato nel sistema
 * 
 * @property -email
 * @type {string}
@@ -84,7 +85,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di md5
+* Campo dati per memorizzare l'indirizzo l'hash MD5 dell'email dell'utente autenticato nel sistema
 * 
 * @property -md5
 * @type {string}
@@ -92,7 +93,7 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di ip
+* Campo dati per memorizzare l'indirizzo l'indirizzo IP dell'utente autenticato nel sistema
 * 
 * @property -ip
 * @type {string}
@@ -100,9 +101,9 @@ MyTalk.PersonalData = DS.Model.extend({
 */
 
 /**
-* Descrizione di avatarTiny
-* 
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} che combina la URI di Gravatar con l'hash MD5 del campo _md5_ al fine di ottenere la URL dell'avatar del contatto in formato piccolo
+*
 * @property -avatarTiny
-* @return {string}
+* @type {string}
 *
 */

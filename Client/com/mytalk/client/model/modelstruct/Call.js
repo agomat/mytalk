@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_
+* Model per la rappresentazione dei dati di una chiamata effettuata
 */
 
 MyTalk.Call = DS.Model.extend({
@@ -29,55 +29,49 @@ MyTalk.Call = DS.Model.extend({
 });
 
 /**
-* Descrizione di speaker
+* Contiene l'oggetto $User$ che rappresenta l'interlocutore della chiamata
 * 
 * @property -speaker
 * @type {User}
-* @private 
 *
 */
 
 /**
-* Descrizione di caller
+* Valore booleano; $true$ se l'utente loggato è il chiamante, $false$ altrimenti
 * 
 * @property -caller
 * @type {boolean}
-* @private 
 *
 */
 
 /**
-* Descrizione di startDate
+* Memorizza la data nella quale la chiamata è cominciata
 * 
 * @property -startDate
-* @type {string}
-* @private 
+* @type {Date}
 *
 */
 
 /**
-* Descrizione di duration
+* Memorizza la durata dell'intera conversazione
 * 
 * @property -duration
 * @type {number}
-* @private 
 *
 */
 
 /**
-* Descrizione di byteSent
+* Memorizza il numero di $Byte$ inviati dall'utente loggato al suo interlocutore
 * 
 * @property -byteSent
 * @type {number}
-* @private 
 *
 */
 
 /**
-* Descrizione di byteReceived
+* Memorizza il numero di $Byte$ ricevuti dall'interlocutore
 * 
 * @property -byteReceived
 * @type {number}
-* @private 
 *
 */

@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_
+* Model per la rappresentazione di una lista personale dell'utente autenticato al sistema
 */
 
 MyTalk.List = DS.Model.extend({
@@ -52,7 +52,7 @@ MyTalk.List = DS.Model.extend({
 
 
 /**
-* Descrizione di name
+* Contiene il nome della lista
 * 
 * @property -name
 * @type {String}
@@ -60,7 +60,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di users
+* Lista di riferimenti di $User$ che rappresentano i contatti che l'utente loggato ha aggiunto alla lista 
 * 
 * @property -users
 * @type {Array<User>}
@@ -68,7 +68,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di blackList
+* Valore booleano generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}}; $true$ la lista è la $BlackList$, $false$ altrimenti
 * 
 * @property -blackList
 * @type {Boolean}
@@ -76,7 +76,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di generalList
+* Valore booleano generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}}; $true$ la lista è la lista $Tutti i contatti$, $false$ altrimenti
 * 
 * @property -generalList
 * @type {Boolean}
@@ -84,7 +84,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di notBlacklist
+* Valore booleano generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}}; $true$ la lista non è la $Blacklist$, $false$ altrimenti
 * 
 * @property -notBlacklist
 * @type {Boolean}
@@ -92,7 +92,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di notGeneralList
+* Valore booleano generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}}; $true$ la lista non è la lista $Tutti i contatti$, $false$ altrimenti
 * 
 * @property -notGeneralList
 * @type {Boolean}
@@ -100,7 +100,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di customList
+* Valore booleano generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}}; $true$ la lista è una lista personale, $false$ altrimenti
 * 
 * @property -customList
 * @type {Boolean}
@@ -108,19 +108,16 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Descrizione di online
-* 
+* Valore intero generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} per calcolare il numero degli utenti online della lista
 * @property -online
 * @type {number}
-* @return {String}
 *
 */
 
 /**
-* Descrizione di total
+* Valore intero generato da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} per calcolare il totale degli utenti della lista
 * 
 * @property -total
 * @type {number}
-* @return {Void}
 *
 */

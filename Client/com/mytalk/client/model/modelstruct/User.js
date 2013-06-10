@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_ 
+* Model per la rappresentazione degli utenti generici registrati al sistema
 */
 
 MyTalk.User = DS.Model.extend( {
@@ -49,7 +49,7 @@ MyTalk.User = DS.Model.extend( {
 
 
 /**
-* Descrizione di username
+* Campo dati per memorizzare l'username del contatto
 * 
 * @property -username
 * @type {string}
@@ -57,15 +57,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di lists
-* 
-* @property -lists
-* @type {Array<List>}
-*
-*/
-
-/**
-* Descrizione di name
+* Campo dati per memorizzare il nome del contatto
 * 
 * @property -name
 * @type {string}
@@ -73,7 +65,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di surname
+* Campo dati per memorizzare il cognome del contatto
 * 
 * @property -surname
 * @type {string}
@@ -81,7 +73,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di md5
+* Campo dati per memorizzare l'hash MD5 dell'email del contatto
 * 
 * @property -md5
 * @type {string}
@@ -89,7 +81,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di ip
+* Campo dati per memorizzare l'indirizzo IP del contatto
 * 
 * @property -ip
 * @type {string}
@@ -97,7 +89,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di online
+* Valore booleano per identificare se il contatto è online oppure offline
 * 
 * @property -online
 * @type {boolean}
@@ -105,7 +97,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di unmatched
+* Proprietà che determina se il contatto appartiene al filtro della ricerca che l'utente sta eseguendo
 * 
 * @property -unmatched
 * @type {boolean}
@@ -113,34 +105,33 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Descrizione di fullName
-* 
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} come concatenazione di _name_, _surname_, _username_ la quale potrà essere usata come stringa per la ricerca dei contatti nella lista
 * @property -fullName
-* @return {string}
+* @type {String}
 *
 */
 
 /**
-* Descrizione di fullNameConc
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} come concatenazione di _name_, _surname_ per poter evitare la concatenazione a livello di template (Handlebar)
 * 
 * @property -fullNameConc
-* @return {string}
+* @type {string}
 *
 */
 
 /**
-* Descrizione di avatarTiny
-* 
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} che combina la URI di Gravatar con l'hash MD5 del campo _md5_ al fine di ottenere la URL dell'avatar del contatto in formato piccolo
+*
 * @property -avatarTiny
-* @return {string}
+* @type {string}
 *
 */
 
 /**
-* Descrizione di avatarBig
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} che combina la URI di Gravatar con l'hash MD5 del campo _md5_ al fine di ottenere la URL dell'avatar del contatto in formato grande
 * 
 * @property -avatarBig
-* @return {string}
+* @type {string}
 *
 */
 

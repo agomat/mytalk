@@ -188,7 +188,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist, il metodo inoltre rimuove l'utente dalle altre liste tranne che in $Tutti i contatti.
+   * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist, il metodo inoltre rimuove l'utente dalle altre liste tranne che in $Tutti i contatti$.
    *
    * @method +userCall 
    * @param {User} user è l'oggetto utente che si vuole contattare.

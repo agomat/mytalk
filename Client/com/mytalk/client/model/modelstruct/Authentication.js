@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_
+* Model per la rappresentazione dei dati di autenticazione dell'utente collegato al sistema
 */
 
 MyTalk.Authentication = DS.Model.extend({
@@ -27,28 +27,25 @@ MyTalk.Authentication = DS.Model.extend({
 });
 
 /**
-* Descrizione di username
+* Campo dati per memorizzare l'username dell'utente
 * 
 * @property -username
 * @type {string}
-* @private 
 *
 */
 
 /**
-* Descrizione di password
+* Campo dati per memorizzare la password dell'utente
 * 
 * @property -password
 * @type {string}
-* @private 
 *
 */
 
 /**
-* Descrizione di ip
+* Campo dati per memorizzare l'indirizzo IP dell'utente
 * 
 * @property -ip
 * @type {string}
-* @private 
 *
 */

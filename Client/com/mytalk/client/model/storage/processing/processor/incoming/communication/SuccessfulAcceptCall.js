@@ -16,11 +16,32 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando l'utente riceve il messaggio ARI di conferma chiamata da un altro peer.
+*
 */
 
 MyTalk.processor.SuccessfulAcceptCall = Ember.Object.extend(MyTalk.AbstractInProcessorProduct,{
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  *
+  */
   name: 'SuccessfulAcceptCall',
 
+  /**
+  * Il metodo deve convertire la stringa in un oggetto mediante il metodo _JSON.parse_.
+  * Deve poi creare un hash da passare allo StateManager _CallState_ redirezionando allo stato "beingConnected".
+  * L'hash deve indicare il fatto che l'utente attuale sia il chiamante e deve passare
+  * le informazioni WebRTC allo StateManager
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function (ari) {
     var payload = JSON.parse( ari.info );
 
@@ -31,6 +52,13 @@ MyTalk.processor.SuccessfulAcceptCall = Ember.Object.extend(MyTalk.AbstractInPro
     MyTalk.CallState.send('beingConnected', callData);
   },
 
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   getProcessorName: function() {
     return this.get('name');
   } 

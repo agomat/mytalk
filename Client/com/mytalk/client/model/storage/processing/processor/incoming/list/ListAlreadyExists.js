@@ -15,15 +15,41 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando il server rileva che la lista che si vuole creare ha lo stesso
+* nome di una lista già esistente. Il client
+* deve ignorare questo tipo di richiesta e di conseguenza il metodo _process_ deve avere corpo vuoto
+*
 */
 
 MyTalk.processor.ListAlreadyExists = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'ListAlreadyExists',
 
+  /**
+  * Il metodo deve avere corpo vuoto
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function (ari) {
     console.error("Processor "+this.get('name')+" non esistente TODO");
   },
-  
+
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

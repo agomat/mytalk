@@ -1,6 +1,6 @@
 /**
 * Filename: ListCreate.js
-* Package: com.mytalk.client.model.storage.processing.processor.outcoming.communication
+* Package: com.mytalk.client.model.storage.processing.processor.outcoming.list
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
 *                com.mytalk.client.model.modelstruct.Authentication
 *                com.mytalk.client.model.modelstruct.PersonalData

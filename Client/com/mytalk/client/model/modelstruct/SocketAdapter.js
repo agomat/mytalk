@@ -17,7 +17,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Questa classe ridefinisce il _\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js}{RESTAdapter}_ di _ember-data_ in modo che possa interfacciarsi cottettamente
+* Questa classe ridefinisce il {\color{blue}\href{http://goo.gl/izGuA}{RESTAdapter}} di _ember-data_ in modo che possa interfacciarsi correttamente
 * attraverso una connessione WebSocket, per eseguire operazioni CRUD. _RESTAdapter_ permette di comunicare
 * con un server HTTP per trasmettere i dati via JSON. I metodi della classe che si andranno a 
 * ridefinire saranno invocati automaticamente da Ember.js ogni qual volta avvenga una modifica
@@ -39,7 +39,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * Questa proprietà se settata a $true$ permette di generare tante richieste
   * da inviare al server in caso di modifica di più record alla volta all'interno di una data
   * transazione. La documentazione su questa proprietà è inesistente. Si rimanda secondo quanto
-  * descritto a questo \href{https://github.com/emberjs/data/blob/master/packages/ember-data/tests/unit/rest_adapter_test.js#L856}{test di unità}.
+  * descritto a questo \href{http://goo.gl/TWZXK}{test di unità}.
   * 
   * @property -bulkCommit
   * @type {boolean}
@@ -64,11 +64,11 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
  
  /**
-  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{find} su un Model che deriva
+  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_find_} su un Model che deriva
   * da DS.Model. Questo metodo deve avere corpo vuoto
   *
   * @method -find
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {number} l'identificativo univoco del record interessato dalla operazione CRUD
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L252}{RESTAdapter}
@@ -79,11 +79,11 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
  /**
-  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{findQuery} su un Model che deriva
+  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_findQuery_} su un Model che deriva
   * da DS.Model. Questo metodo deve avere corpo vuotogit add 
   *
   * @method -findQuery
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Object} oggetto JSON contenente i parametri della query da soddisfare su tale Model
   * @param {Array di Object} array di record che soddisfano al risultato della query
@@ -95,11 +95,11 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
  /**
-  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{findMany} su un Model che deriva
+  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_findMany_} su un Model che deriva
   * da DS.Model. Questo metodo deve avere corpo vuotogit add 
   *
   * @method -findMany
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Array di number} array di id dei record interessati dalla operazione CRUD
   * @param {Object} oggetto JSON contenente i parametri della query da soddisfare su tale Model
@@ -111,11 +111,11 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
  /**
-  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{findAll} su un Model che deriva
+  * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_findAll_} su un Model che deriva
   * da DS.Model. Questo metodo deve avere corpo vuotogit add 
   *
   * @method -findAll
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L261}{RESTAdapter}
   * @return {Void}
@@ -133,7 +133,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * riuscito a inviare la modifica al server
   *
   * @method -createRecord
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Object} riferimento del record appena creato
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L125}{RESTAdapter}
@@ -163,10 +163,10 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
  /**
   * Questo metodo viene invocato quando, nella stessa transazione, vengono costruiti più record. 
   * Il parametro $bulkCommit$ descritto in precedenza non evita la chiamata di questo metodo a causa
-  * di un bug di $ember-data$. Il metodo dovrà contenere una singola istruzione: \\ _this.createRecord(store, type, records.list[0])_
+  * di un bug di _ember-data_. Il metodo dovrà contenere una singola istruzione: \\ _this.createRecord(store, type, records.list[0])_
   *
   * @method -createRecords
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Array di Object} array di riferimenti dei record appena creati
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L142}{RESTAdapter}
@@ -186,7 +186,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * riuscito a inviare la modifica al server
   *
   * @method -updateRecord
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Object} riferimento al record appena modificato
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L165}{RESTAdapter}
@@ -214,10 +214,10 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
  /**
   * Questo metodo viene invocato quando, nella stessa transazione, vengono aggiornati più record. 
   * Il parametro $bulkCommit$ descritto in precedenza non evita la chiamata di questo metodo a causa
-  * di un bug di $ember-data$. Il metodo dovrà contenere una singola istruzione: \\ _this.updateRecord(store, type, records.list[0]);_
+  * di un bug di _ember-data_. Il metodo dovrà contenere una singola istruzione: \\ _this.updateRecord(store, type, records.list[0]);_
   *
   * @method -updateRecords
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Array di Object} array di riferimenti dei record appena creati
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L185}{RESTAdapter}
@@ -237,7 +237,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * riuscito a inviare la modifica al server
   *
   * @method -deleteRecord
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Object} riferimento al record appena cancellato
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L211}{RESTAdapter}
@@ -266,10 +266,10 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
  /**
   * Questo metodo viene invocato quando, nella stessa transazione, vengono cancellati più record. 
   * Il parametro $bulkCommit$ descritto in precedenza non evita la chiamata di questo metodo a causa
-  * di un bug di $ember-data$. Il metodo dovrà contenere una singola istruzione: \\ _this.deleteRecord(store, type, records.list[0]);_
+  * di un bug di _ember-data_. Il metodo dovrà contenere una singola istruzione: \\ _this.deleteRecord(store, type, records.list[0]);_
   *
   * @method -deleteRecords
-  * @param {DS.Store} riferimento allo Store di $ember-data$ usato dall'applicazione corrente
+  * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
   * @param {string} il nome del Model su cui Ember.js ha rilevato una operazione CRUD
   * @param {Array di Object} array di riferimenti dei record appena cancellati
   * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L226}{RESTAdapter}

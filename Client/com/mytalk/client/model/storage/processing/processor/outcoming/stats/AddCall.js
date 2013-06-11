@@ -1,6 +1,6 @@
 /**
 * Filename: AddCall.js
-* Package: com.mytalk.client.model.storage.processing.processor.outcoming.communication
+* Package: com.mytalk.client.model.storage.processing.processor.outcoming.stats
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
 *                com.mytalk.client.model.storage.ARI
 * Author: Agostinetto Mattia

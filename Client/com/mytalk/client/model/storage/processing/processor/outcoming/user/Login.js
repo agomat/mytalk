@@ -1,6 +1,6 @@
 /**
 * Filename: Login.js
-* Package: com.mytalk.client.model.storage.processing.processor.outcoming.communication
+* Package: com.mytalk.client.model.storage.processing.processor.outcoming.user
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
 *                com.mytalk.model.modelstruct.Authentication
 *                com.mytalk.client.model.storage.ARI

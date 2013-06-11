@@ -104,7 +104,9 @@ MyTalk.RegisterFormView = Ember.View.extend({
   password_conf: null,
   
   /**
-   * Questo metodo viene richiamato dal $submit$ della form e attiva il metodo di registrazione di un nuovo utente nel controller associato.
+   * Questo metodo viene richiamato dal $submit$ della form.
+   * Il metodo si occupa di attivare, nel controller associato, il metodo _register()_ necessatio per procedere
+   * con la registrazione di un nuovo utente.
    *
    * @method +submit              
    * @param {Object} event è l'evento di $submit$ effettuato sulla form               

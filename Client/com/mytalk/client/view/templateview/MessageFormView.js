@@ -59,7 +59,9 @@ MyTalk.MessageFormView = Ember.View.extend({
   message: null,
 
   /**
-   * Questo metodo viene richiamato dal $submit$ della form e attiva il metodo, nel controller associato, per inviare il messaggio scritto nella chat.
+   * Questo metodo viene richiamato dal $submit$ della form.
+   * Il metodo si occupa di attivare, nel controller associato, il metodo _sendMessage()_ necessario 
+   * per inviare il messaggio scritto nella chat.
    *
    * @method +submit              
    * @param {Object} event è l'evento di $submit$ effettuato sulla form               

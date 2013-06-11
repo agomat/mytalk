@@ -59,7 +59,9 @@ MyTalk.IPFormView = Ember.View.extend({
   ip_call: null,
 
   /**
-   * Questo metodo viene richiamato dal $submit$ della form e attiva il metodo, nel controller associato, per contattare l'indirizzo ip scritto.
+   * Questo metodo viene richiamato dal $submit$ della form. 
+   * Il metodo si occupa di attivare, nel controller associato, il metodo _ipCall()_ necessario 
+   * per contattare l'indirizzo ip scritto.
    *
    * @method +submit              
    * @param {Object} event è l'evento di $submit$ effettuato sulla form               

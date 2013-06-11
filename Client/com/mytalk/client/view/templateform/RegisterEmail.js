@@ -68,7 +68,7 @@ MyTalk.RegisterEmail = Ember.TextField.extend({
 
   /**
    * Proprietà necessaria per settare il placeholder dell'input area
-   * @property +palceholder           
+   * @property +placeholder           
    * @type {String}                   
    *
   */

@@ -78,7 +78,8 @@ MyTalk.LoginFormView = Ember.View.extend({
   password: null,
  
   /**
-   * Questo metodo viene richiamato dal $submit$ della form e attiva il metodo, nel controller associato, per ieffetturare il login.
+   * Questo metodo viene richiamato dal $submit$ della form.
+   * Il metodo si occupa di attivare, nel controller associato, il metodo _login()_ necessario per effetturare il login.
    *
    * @method +submit              
    * @param {Object} event è l'evento di $submit$ effettuato sulla form               

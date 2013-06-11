@@ -21,12 +21,14 @@
 */
 
 MyTalk.ListRoute = Ember.Route.extend({
+  
   /**
    * Questo metodo è deputato alla renderizzazione del template $list$ all'interno della pagina HTML.
    *
    * @method -renderTemplate                                     
    * @return {Void} 
   */
+  
   renderTemplate: function() {
     this.render('list', { into: 'logged', outlet: 'list' });
   },

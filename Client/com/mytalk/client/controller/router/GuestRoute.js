@@ -21,12 +21,14 @@
 */
 
 MyTalk.GuestRoute = Ember.Route.extend({
-	/**
+
+  /**
    * Questo metodo è deputato alla renderizzazione del template $guest$ all'interno della pagina HTML.
    *
    * @method -renderTemplate                                     
    * @return {Void} 
   */
+  
   renderTemplate: function() {
     this.render('guest', { into: 'index', outlet: 'content' });
   }

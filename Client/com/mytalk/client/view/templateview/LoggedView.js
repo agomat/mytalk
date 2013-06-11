@@ -41,7 +41,7 @@ MyTalk.LoggedView = Ember.View.extend({
   name: "logged",
   
   /**
-   * Questo metodo di occupa di attivare alcuyne funzioni JQuery per la vista.
+   * Questo metodo di occupa di attivare alcune funzioni JQuery per la vista.
    *
    * @method -didInsertElement            
    * @return {Void} 

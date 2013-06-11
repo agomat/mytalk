@@ -16,12 +16,11 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Processore che viene eseguito quando il server ha rinominato con successo una lista. Il client
+* Processore che viene eseguito quando il server rileva che l'utente che si vuole togliere dalla $BlackList$ non è in
+* $BlackList$. Il client
 * deve ignorare questo tipo di richiesta e di conseguenza il metodo _process_ deve avere corpo vuoto
 *
 */
-
-
 
 
 MyTalk.processor.UserNotBlacklisted = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {

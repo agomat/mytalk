@@ -16,7 +16,8 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Processore che viene eseguito quando il server ha rinominato con successo una lista. Il client
+* Processore che viene eseguito quando il server rileva che l'utente che si vuole aggiungere alla lista
+* è già in quella lista. Il client
 * deve ignorare questo tipo di richiesta e di conseguenza il metodo _process_ deve avere corpo vuoto
 *
 */

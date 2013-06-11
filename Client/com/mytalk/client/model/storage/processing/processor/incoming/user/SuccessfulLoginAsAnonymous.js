@@ -15,11 +15,28 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando il server ha registrato la presenza di un utente ospite
+*
 */
 
 MyTalk.processor.SuccessfulLoginAsAnonymous = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'SuccessfulLoginAsAnonymous',
-
+ /**
+  * Il metodo deve popolare il model _DS.PersonalData_ con solamente il campo dati IP che corrisponde
+  * all'indirizzo IP che il server ha assegnato al client
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function (ari) {
     var Ipart = JSON.parse(ari.info);
     var sideload = Ipart.worldPersonalData;
@@ -34,7 +51,13 @@ MyTalk.processor.SuccessfulLoginAsAnonymous = Ember.Object.extend(MyTalk.Abstrac
     adapter = store.adapterForType(MyTalk.Authentication);
     adapter.didFindRecord(store, MyTalk.Authentication, sideload,0); 
   },
-  
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

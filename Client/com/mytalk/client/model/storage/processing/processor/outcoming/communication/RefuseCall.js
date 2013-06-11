@@ -16,15 +16,37 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando l'utente sceglie di rifiutare una chiamata in arrivo
+*
 */
 
 MyTalk.processor.RefuseCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'RefuseCall',
-
+ /**
+  * Il metodo deve inviare al server un ARI avente richiesta _RefuseCall_
+  *
+  * @method +process
+  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   process: function (ari) {
     console.error("Processor "+this.get('name')+" non esistente TODO");
   },
-  
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   }

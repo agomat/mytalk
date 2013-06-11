@@ -15,10 +15,27 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando il server invia al client un cambiamento di stato di qualche contatto
+*
 */
 
 MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'StateUpdate',
+ /**
+  * Il metodo deve avere caricare nel model _DS.User_ gli utenti che il server gli ha inviato
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function(ari) {
     var info = JSON.parse(ari.info);
     var username = info.list.username;
@@ -32,7 +49,13 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
     }
 
   },
-
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

@@ -15,15 +15,38 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando utente prova registrarsi al sistema con un username già
+* assegnato ad un altro utente
+*
 */
 
 MyTalk.processor.UsernameAlreadyExistingCreateAccount = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'UsernameAlreadyExistingCreateAccount',
-
+ /**
+  * Il metodo deve notificare l'utente del fatto che l'username non è disponibile
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function (ari) {
     console.error("Processor "+this.get('name')+" non esistente TODO");
   },
-  
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   }

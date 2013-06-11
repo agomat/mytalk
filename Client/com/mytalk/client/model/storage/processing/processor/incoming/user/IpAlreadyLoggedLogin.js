@@ -15,6 +15,9 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* Processore che viene eseguito quando il server rileva che l'utente con quell'IP è già loggato nel sistema. Il client
+* deve ignorare questo tipo di richiesta e di conseguenza il metodo _process_ deve avere corpo vuoto
+*
 */
 
 MyTalk.processor.IpAlreadyLoggedLogin = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
@@ -28,3 +31,26 @@ MyTalk.processor.IpAlreadyLoggedLogin = Ember.Object.extend(MyTalk.AbstractInPro
     return this.get('name');
   }
 });
+
+
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
+ /**
+  * Il metodo deve avere corpo vuoto
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */

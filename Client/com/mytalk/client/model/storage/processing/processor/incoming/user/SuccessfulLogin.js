@@ -16,11 +16,29 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando il server ha correttamente autenticato l'utente
+*
 */
 
 MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'SuccessfulLogin',
 
+ /**
+  * Il metodo deve salvare nel model _DS.User_ la lista di tutti i contatti registrati nel sistema
+  * e nel model _DS.PersonalData_ i dati personali che l'utente che si è appena autnticato
+  *
+  * @method +process
+  * @param {String} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function (ari) {
     var store = DS.get("defaultStore");
     
@@ -52,6 +70,13 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractInProcesso
      onSent( this.getProcessorName(), true );
    },
 
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

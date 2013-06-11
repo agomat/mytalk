@@ -19,11 +19,27 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando l'utente sceglie di rifiutare una chiamata in arrivo
+*
 */
 
 MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'UserCall',
-
+ /**
+  * Il metodo deve creare un nuovo record nel model _DS.Call_ inserendo i propri e la propria configurazione WebRTC
+  *
+  * @method +process
+  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   process: function (params) {
     var myself = MyTalk.PersonalData.find(0);
     var speaker = params.speaker;
@@ -44,7 +60,17 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
 
     transaction.commit();
   },
-
+ /**
+  * Il metodo deve inviare al server un ARI avente richiesta _UserCall_ fornendo i propri dati personali e la 
+  * propria configurazione WebRTC
+  *
+  * @method +sendToServer
+  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {Object} record Call da inviare al server
+  * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   sendToServer: function (socket, record, onSent) {
     var ARI = new Object();
 
@@ -70,7 +96,13 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
     var wasSent = socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), wasSent );
   },
-
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

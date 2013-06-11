@@ -19,9 +19,43 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando l'utente sceglie di aggiornare il nome di una lista personalizzata
+*
 */
 
 MyTalk.processor.UpdateListName = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
+ /**
+  * Il metodo deve selezionare il record che corrisponde alla lista da rinominare e rinominarla
+  *
+  * @method +process
+  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
+ /**
+  * Il metodo deve inviare al server un ARI avente richiesta _UpdateListName_ 
+  *
+  * @method +sendToServer
+  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {Object} record Call da inviare al server
+  * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   name: 'UpdateListName',
 
   process: function (params) {

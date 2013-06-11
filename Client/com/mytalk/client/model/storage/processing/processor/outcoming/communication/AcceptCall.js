@@ -19,11 +19,27 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando il client accetta la chiamata in arrivo proveniente da un altro peer
+*
 */
 
 MyTalk.processor.AcceptCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'AcceptCall',
-
+ /**
+  * Il metodo deve creare un nuovo record nel model _DS.Call_ inserendo i dati del chiamante e la sua configurazione WebRTC
+  *
+  * @method +process
+  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
+  */
   process: function (params) {
     var myself = MyTalk.PersonalData.find(0);
     var speaker = params.speaker;
@@ -44,7 +60,17 @@ MyTalk.processor.AcceptCall = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
 
     transaction.commit();
   },
-  
+ /**
+  * Il metodo deve inviare al server un ARI avente richiesta _AcceptCall_ passando i propri dati
+  * di autentificazione e la propria configurazione WebRTC
+  *
+  * @method +sendToServer
+  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {Object} record Call da inviare al server
+  * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   sendToServer: function (socket, record, onSent) {
     var ARI = new Object();
 
@@ -70,7 +96,13 @@ MyTalk.processor.AcceptCall = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
     var wasSent = socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), wasSent );
   },
-
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

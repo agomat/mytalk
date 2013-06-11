@@ -224,7 +224,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     if(this.get('isConnected')) {
       this.RTCmanager.closeConnection(this.onClose);
       this.set('messages',[]);
-      MyTalk.CallState.send('beingFree');
+//       MyTalk.CallState.send('beingFree');
     }
     else {
       //GESTIRE RIFIUTA CHIAMATA
@@ -233,7 +233,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   
   onClose: function() {
 //     this.set('messages',[]);
-//     MyTalk.CallState.send('beingFree');
+    MyTalk.CallState.send('beingFree');
   },
 
   /**

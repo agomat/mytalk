@@ -17,13 +17,14 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller per la gestione della registrazione dell'utente nel sistema e per la gestione del template $"guest"$
+*  Controller deputato alla gestione della registrazione dell'utente nel sistema e alla gestione del template $"guest"$
 *
 */
 
 MyTalk.GuestController = Ember.ObjectController.extend({
   /**
-   * Questo metodo è deputato alla registrazione dell'utente nell'applicazione. Il metodo crea un'istanza del processore delegato di eseguire la creazione di un nuovo account.
+   * Questo metodo è deputato alla registrazione dell'utente nell'applicazione. 
+   * Il metodo crea un'istanza del processore delegato di eseguire la creazione di un nuovo account.
    * Il metodo passa al processore tutti i parametri che riceve in ingresso.
    *
    * @method +register               

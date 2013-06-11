@@ -22,13 +22,14 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller deputato alla gestione di una chiamata e della chat realativa, gestisce in oltra il template $calling$
+* Controller deputato alla gestione di una chiamata e della chat realativa, 
+* gestisce in oltra il template $calling$
 *
 */
 
 MyTalk.CallingController = Ember.ObjectController.extend({
 
-   /**
+  /**
    * Proprietà necessaria per immagazzinare lo stato corrente  della chiamata
    * @property -callState           
    * @type {String}                   
@@ -45,7 +46,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   
   /**
-   * Proprietà necessaria determinare se si e meno in questo sottostato 
+   * Proprietà necessaria determinare se si è o meno in questo sottostato 
    * @property -isIncomingCall           
    * @type {Boolean}                   
    *
@@ -54,7 +55,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
   
   /**
-   * Proprietà necessaria determinare se si e meno in questo sottostato 
+   * Proprietà necessaria determinare se si è o meno in questo sottostato 
    * @property - isConnected           
    * @type {Boolean}                   
    *
@@ -63,7 +64,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   isConnected: Ember.computed.equal('callState','isConnected'),
   
   /**
-   * Proprietà necessaria al contenimento dei messaggi scambiati in chat 
+   * Proprietà che contiene tutti i messaggi scambiati in chat 
    * @property +messages           
    * @type {Array<ChatMessage>}                   
    *
@@ -204,7 +205,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
 
   /**
-   * Questo metodo si occupa di chiudere una chiamata.
+   * Questo metodo si occupa di terminare una chiamata chiudendo la connessione peer e svuotando l'array $messages$ 
+   * contenente i messaggi scambiati in chat.
    *
    * @method +closeCall 
    * @param {User} user è l'oggetto utente che ci sta contattando.
@@ -236,8 +238,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   /**
    * Questo metodo si occupa di inviare i messaggi scritti nella chat e di gestire il comportamento della vista della chat.
-   * Il metodo si occupa di aggiornare l'array messages del controller inserendo i messaggi inviati e inoltre si occupa invocare il metodo $send$ dell'RTCmanager necessario ad inviare il messaggio all'utente con il quale si sta comunicando.
-   * Il metodo inoltre si occupa di effettuare lo scroll della chat una volta aggiornato l'array message al fine di avere sempre in primo piano l'utlimo messaggio.
+   * Il metodo si occupa di: aggiornare l'array messages del controller inserendo i messaggi inviati,  
+   * invocare il metodo $send$ dell'RTCmanager necessario ad inviare il messaggio all'utente con il quale si sta comunicando e
+   * di effettuare lo scroll automatico della chat una volta aggiornato l'array message.
+   * Lo scroll automatico viene eseguito al fine di avere sempre in primo piano l'utlimo messaggio.
    *
    * @method +sendMessage 
    * @param {String} message è il testo del messaggio inviato.

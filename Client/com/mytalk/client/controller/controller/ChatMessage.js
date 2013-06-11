@@ -23,25 +23,29 @@
 MyTalk.ChatMessage = Ember.Object.extend({
   
   /**
-   * Proprietà necessaria contenente il testo vero e proprio del messaggio inviato/ricevuto.
+   * Proprietà deputata al contenimento del testo vero e proprio del messaggio inviato/ricevuto.
    * @property -text           
    * @type {String}                   
    *
   */    
 
   text: null,
+  
   /**
-   * Proprietà necessaria che determina se un messaggio e ricevuto o inviato. 
+   * Proprietà che permette di determinare se un messaggio è ricevuto o inviato. 
    * @property -sent           
    * @type {Boolean}                   
    *
   */    
+  
   sent: null,
+  
   /**
    * Proprietà contenente la data di invio o riezione del messaggio 
    * @property -date           
    * @type {Date}                   
    *
   */    
+  
   date: null
 }); 

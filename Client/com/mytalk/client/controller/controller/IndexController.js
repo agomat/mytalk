@@ -17,7 +17,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller per la gestione del login e per la gestione del template $"index"$
+*  Controller deputato alla gestione del login e alla gestione del template $"index"$
 *
 */
 
@@ -33,7 +33,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   appStateBinding: Ember.Binding.oneWay('MyTalk.AppState.currentState.name'),
 
   /**
-   * Proprietà necessaria per immagazzinare lo stato corrente 
+   * Proprietà necessaria per memorizzare lo stato corrente 
    * @property -appState           
    * @type {String}                   
    *
@@ -42,7 +42,8 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   appState: null,
   
   /**
-   * Questo metodo è deputato all controllo dello stato dell'applicazione ritorna $true$ nel caso in cui lo stato sia $isAuthenticated$, false altrimenti
+   * Questo metodo è deputato al controllo dello stato dell'applicazione.
+   * Il metodo ritorna $true$ nel caso in cui lo stato sia $isAuthenticated$ false altrimenti.
    *
    * @method +isAuthenticated                                      
    * @return {Boolean} 
@@ -53,8 +54,9 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }.property('appState'),
  
   /**
-   * Questo metodo è deputato all'esecuzione del login nell'applicazione. Il metodo crea un'istanza del processore delegato di eseguire il login.
-   * Il metodo passa al processore tutti i parametri che riceve in ingresso.
+   * Questo metodo è deputato all'esecuzione del login nell'applicazione. 
+   * Il metodo crea un'istanza del processore delegato di eseguire il login
+   * passandogli tutti i parametri ricevuti in ingresso.
    *
    * @method +login               
    * @param {String} username dell'utente che effetua il login                                   

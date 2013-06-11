@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller per visualizzazione delle liste dell'utente che ha effettuato il login.
+*  Controller deputato alla visualizzazione delle liste dell'utente che ha effettuato il login.
 *
 */
 
@@ -25,9 +25,12 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
 
   /**
    * Questo metodo è deputato alla creazione di una nuova lista.
-   * Il metodo si occupa di controllare che il nome della nuova lista che si intende creare sia valido (il nome non deve essere nullo o esistere già).
-   * Nel caso il nome sia valido ilo metodo crea un'istanza del processore adeguato al quale sarà delegato il lavoro di creare la nuova lista.
-   * Nel caso in cui il nome non sia valido il metodo ritorna un messaggio di errore tramite un alert di javascript.
+   * Il metodo si occupa di controllare che il nome della nuova lista che si intende creare sia valido 
+   * (il nome non deve essere nullo o esistere già).
+   * Nel caso il nome sia valido il metodo crea un'istanza del processore adeguato 
+   * al quale sarà delegato il lavoro di creare la nuova lista.
+   * Nel caso in cui il nome non sia valido il metodo 
+   * mostra un messaggio di errore tramite un alert di javascript.
    *
    * @method +createList                                     
    * @return {Void} 

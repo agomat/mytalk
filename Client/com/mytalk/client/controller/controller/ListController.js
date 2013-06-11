@@ -26,10 +26,12 @@ MyTalk.ListController = Ember.ObjectController.extend({
   //sortProperties: ['name'], TODO
 
   /**
-   * Questo metodo è deputato all'eliminazione di una lista. Il metodo crea un'istanza del processore delegato all'eliminazione della lista
-   * Il metodo prima di procedere con l'eliminazione si occupa di chiedere la conferma all'utente, in caso l'utente confermi la decisione , il metodo provvede all'eliminazione della lista 
-   * invocando l'istanza del processore creata in precedenza e delegtata dell'eliminazione della lista.
-   * Terminata l'operazione di eliminazione della lista il metodo aggiorna i template mostrando la lista $Tutti i contatti$.
+   * Questo metodo è deputato all'eliminazione di una lista. 
+   * Il metodo crea un'istanza del processore delegato all'eliminazione della lista,
+   * prima di procedere con l'eliminazione si occupa di chiedere la conferma all'utente, in caso l'utente confermi la decisione , 
+   * il metodo con l'eliminazione della lista invocando l'istanza del processore creata in precedenza e 
+   * delegtata dell'eliminazione della lista.
+   * Terminata l'operazione il metodo aggiorna il template mostrando la lista $Tutti i contatti$.
    *
    * @method +deleteList                                     
    * @return {Void} 
@@ -52,9 +54,12 @@ MyTalk.ListController = Ember.ObjectController.extend({
   },
 
   /**
-   * Questo metodo è deputato alla rinominazione di una lista. Il metodo dopo aver ottenuto id e nome della lista aspetta di ricevere dal $prompt$ javascript il nuovo nome da assegnare alla lista in questione.
-   * Una volta verificato che il nome inserito sia valido, il metodo si occupa di creare un'istanza del processore delegato alla rinomizione della lista.
-   * nel caso in cui il nuovo nome inserito non sia valido (il nome esiste già o è nullo) il metodo ritorna un messaggio di errore con alert javascript
+   * Questo metodo è deputato alla rinominazione di una lista. 
+   * Il metodo dopo aver ottenuto id e nome della lista mostra
+   * un $prompt$ javascript  nel quale l'utente dovrà inserire il nuovo nome da assegnare alla lista in questione.
+   * Prima di procedere con l'operazione il metodo verifica che il nome inserito sia valido, 
+   * in caso affermativo il metodo si occupa di creare un'istanza del processore delegato alla rinominazione della lista. 
+   * Nel caso in cui il nuovo nome inserito non sia valido (il nome esiste già o è nullo) viene mostrato all'utente un messaggio d'errore con un alert javascript
    * impedendo cosi il proseguimento dell'operazione.
    *
    * @method +renameList                                     
@@ -92,9 +97,10 @@ MyTalk.ListController = Ember.ObjectController.extend({
   },
 
    /**
-   * Questo metodo è deputato al filtraggio degli utenti, secondo la ricerca effettuata, all'interno della lista corrente.
-   * Per effettuare tale operazione il metodo scorre tutti gli utenti della lista e controlla che la stringa di ricerca sia uguale alla proprietà $fullNameConc$ degli utenti.
-   * In caso affermativo il metodo setta il campo $unmatched$ degli utenti a false e quindi nella view saranno poi mostrati tali utenti.
+   * Questo metodo è deputato al filtraggio degli utenti, all'interno della lista corrente, in base alla ricerca effettuata.
+   * Per effettuare tale operazione il metodo scorre tutti gli utenti della lista e controlla che la stringa di 
+   * ricerca sia uguale alla proprietà $fullNameConc$ degli utenti.
+   * In caso affermativo il metodo setta il campo $unmatched$ degli utenti a false.
    * In caso negativo o nel caso in cui la stringa sia vuota il metodo setta la propietà $unmatched$ a true.
    *
    * @method +filter
@@ -123,7 +129,9 @@ MyTalk.ListController = Ember.ObjectController.extend({
   },
 
   /**
-   * Questo metodo è deputato al reset della ricerca delgli utenti  nella lista corrente, tale metodo setta la proprietà $unmatched$ degli utenti a $false$.
+   * Questo metodo è deputato al reset della ricerca delgli utenti nella lista corrente, 
+   * tale metodo setta la proprietà $unmatched$ degli utenti a $false$ in modo tale 
+   * che tutti gli utenti della lista siano mostrati.
    *
    * @method -umatchedReset                                     
    * @return {Void} 

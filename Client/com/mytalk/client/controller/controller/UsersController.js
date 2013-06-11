@@ -56,9 +56,11 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   userName: null,
 
   /**
-   * Questo metodo è deputato al filtraggio effettivo degli utenti in base alla ricerca.
-   * Il metodo preleva, dal content del controller,  tutti gli utenti la cui proprietà $unmatched$ è settata a $false$ mettendo tali utenti un array
-   * chiamato fileteredUsers, tale array viene ritornato alla vista che mostrandolo, espone il risultato della ricerca
+   * Questo metodo è necessatio al fine di mostrare gli utenti di una lista
+   * Il metodo preleva, dal $content$ del $controller$,  
+   * tutti gli utenti la cui proprietà $unmatched$ è settata a $false$ mettendo tali utenti in un array
+   * chiamato _fileteredUsers_, tale array viene ritornato alla vista che mostrandolo, 
+   * stampa l'elenco degli utenti della lista corrente.
    *
    * @method +filteredUsers                                     
    * @return {Array<User>} 
@@ -75,9 +77,11 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   }.property('content.@each.unmatched').cacheable(),
   
   /**
-   * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utente ad una nuova lista,
-   * inoltre si occupa di mostrare la select contente l'elenco delle liste nelle quali poter aggiungere l'utente selezionato.
-   * Il metodo si occupa di settare i campi $userId$ e $userName$ rispettivamente con l'id e il nome dell'utente preso in considerazione
+   * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utente ad una nuova listaò
+   * Il meetodo occupa di mostrare il pop-up con una select HTML contenente l'elenco delle liste 
+   * nelle quali poter aggiungere l'utente selezionato.
+   * Il metodo si occupa di settare i campi $userId$ e $userName$ 
+   * rispettivamente con l'id e il nome dell'utente preso in considerazione
    *
    * @method +addUsers 
    * @param {User} user è l'oggetto utente che si vuole aggiungere alla lista.
@@ -92,7 +96,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di transitare nel template $calling$ dove inzierà il processo di chiamata all'utente selezionato.
+   * Questo metodo si occupa di transitare nel template $calling$ dove inzierà 
+   * il processo di chiamata all'utente selezionato.
    *
    * @method +userCall 
    * @param {User} user è l'oggetto utente che si vuole contattare.
@@ -104,7 +109,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di bloccare il tentativo di contattare un utente offline mostrando un messaggio di errore tramite alert di javascript
+   * Questo metodo si occupa di bloccare il tentativo di contattare un utente offline 
+   * mostrando un messaggio di errore tramite alert di javascript
    *
    * @method +userCall 
    * @param {User} user è l'oggetto utente che si vuole contattare.
@@ -116,7 +122,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di chiudere il popup che gestisce l'aggiunta dell'utente ad una lista settando in campi $userId$ e $userName$ e $selectedValue$ a $NULL$
+   * Questo metodo si occupa di chiudere il pop-up che gestisce l'aggiunta 
+   * dell'utente ad una lista, settando, inoltre,  i campi $userId$, $userName$ e $selectedValue$ a $NULL$.
    *
    * @method +closeSelect 
    * @return {Void} 
@@ -130,9 +137,11 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di eseguire l'aggiunta vera e propria dell'utente all lista selezionata controllando che quest'ultima sia una lista valida (non deve essere: ne vuota ne Blacklist ne Tutti i contatti ne la lista corrente) 
-   * Una volta controllato che la lista nella quale si vuole aggiungere l'utente sia valida il meto crea un'istanza del processore delegato dell'operazione di aggiungere l'untente alla lista. 
-   * Terminata l'aggiunta si occupa di settare a NULL i campi $userId$, $userName$ e $selectedValue$.
+   * Questo metodo si occupa di eseguire l'aggiunta vera e propria dell'utente all lista selezionata.
+   * Come prima cosa viene controllato che la lista nella quale si vuole aggiungere l'utente sia una lista valida,
+   * (non deve essere: ne vuota ne Blacklist ne Tutti i contatti ne la lista corrente) ,
+   * Terminato il controllo il metodo crea un'istanza del processore necessario per svolgere l'operazione di aggiunta. 
+   * Terminata l'aggiunta, il metodo, si occupa di settare a $NULL$ i campi $userId$, $userName$ e $selectedValue$.
    * Nel caso in cui la lista selezionata non sia valida viene mostrato un messaggio di errore tramite alert di javascript
    *
    * @method +doAddUser 
@@ -167,8 +176,9 @@ MyTalk.UsersController = Ember.ArrayController.extend({
 
   /**
    * Questo metodo si occupa di eliminare dalla lista corrente l'utente selezionato.
-   * Prima di procedere alla creazione dell'istanza del processore delegato a tale operaziuone il metodo chiede conferma all'utente tramite il confirm di javascript, 
-   * in caso affermativo l'operazione viene eseguita
+   * Prima di procedere alla creazione dell'istanza del processore delegato a tale operazione,
+   * il metodo chiede conferma all'utente tramite il confirm di javascript, nel caso in cui l'utente
+   * confermi tale operazione l'utente viene eliminato.
    *
    * @method +deleteUser 
    * @param {User} user è l'oggetto utente che si vuole eliminare.
@@ -197,10 +207,10 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist, il metodo inoltre rimuove 
-   * l'utente dalle altre liste tranne che nella lista  $Tutti i contatti$.
-   * Prima di procedere alla creazione dei processori delegati di tale lavoro il metodo chiede conferma all'utente tramite 
-   * un confirm di javascript
+   * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist e di rimuove 
+   * tale utente da tutte le altre liste meno la lista $Tutti i contatti$.
+   * Prima di procedere alla creazione dei processori delegati di tale lavoro,
+   * il metodo chiede conferma all'utente tramite un confirm di javascript.
    *
    * @method +userCall 
    * @param {User} user è l'oggetto utente che si vuole contattare.

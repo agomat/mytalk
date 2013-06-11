@@ -23,7 +23,8 @@
 MyTalk.IpcallController = Ember.ObjectController.extend({
   
   /**
-   * Questo metodo è deputato all'ottenimento del proprio indirizzo IP. Il metodo riceve i dati dal model $PersonalData$ e setta il $content$ del controller con l'indirizzo IP.
+   * Questo metodo è deputato all'ottenimento dell'indirizzo IP dell'utente attuale dell'applicazione. 
+   * Il metodo ottiene i dati dal model $PersonalData$ e setta il $content$ del controller con l'indirizzo IP.
    *
    * @method +myIP                                     
    * @return {Void} 

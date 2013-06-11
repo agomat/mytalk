@@ -16,12 +16,12 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*La classe si occupa di interfacciarsi con le APIs WebRTC. Fornisce dei metodi per gestire 
-*la connessione peer to peer tra i client. Inoltre agisce da adattatore per permettere sia
-*al browser Google Chrome che a Mozilla Firefox di utilizzare l'applicazione, scegliendo in
-*base al browser identificato i metodi corretti di WebRTC da invocare, dato che le APIs non 
-*sono ancora stabili e non sono state implementate secondo lo standard definito, ma in modo 
-*diverso da ogni browser.
+* La classe si occupa di interfacciarsi con le APIs WebRTC. Fornisce dei metodi per gestire 
+* la connessione peer to peer tra i client. Inoltre agisce da adattatore per permettere sia
+* al browser Google Chrome che a Mozilla Firefox di utilizzare l'applicazione, scegliendo in
+* base al browser identificato i metodi corretti di WebRTC da invocare, dato che le APIs non 
+* sono ancora stabili e non sono state implementate secondo lo standard definito, ma in modo 
+* diverso da ogni browser.
 */
 
 MyTalk.PeerConnection = Ember.Object.extend({

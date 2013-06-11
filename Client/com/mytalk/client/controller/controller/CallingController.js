@@ -81,7 +81,11 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   RTCmanager: undefined,
   
   /**
-   * Questo metodo si occupa di gestire la chiamata all'utente selezioanto settando i cnali di comunicazione
+   * Viene invocato all'ingresso dell'utente nel route CallingRoute se isIncomingCall è falso, quindi se l'utente 
+   * è il chiamante. Crea il processo UserCall che trasmette al server i dati necessari ad avviare la comunicazione
+   * come l'utente da chiamare e i propri "Session Description Protocol" e "ICE candidates". Definisce le funzioni 
+   * che inviano i pacchetti al server e che gestiscono l'arrivo di un messaggio nel canale dati. Infine chiama il 
+   * metodo start di PeerConnection.
    *
    * @method +call
    * @param {User} user è l'oggetto utente che si sta chiamando.
@@ -137,7 +141,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
   
   /**
-   * Questo metodo si occupa gestire l'accetazione di una chiamata da un altro utente settando i canli di comunicazione opportuni.
+   * Molto simile al metodo call. Gestisce l'arrivo di una chiamata da parte di un altro utente. Genera il processo AcceptCall.
+   * Definisce una funzione che chiama i metodi setSDP e addICE di PeerConnection per aggiungere i pacchetti ricevuti. Invia
+   * i dati locali. Chiama il metodo start di PeerConnection ma qui con il booleano a false.
    *
    * @method +acceptCall 
    * @param {User} user è l'oggetto utente che ci sta contattando.

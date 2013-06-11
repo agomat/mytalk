@@ -16,15 +16,49 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* Processore che viene eseguito quando l'utente sceglie di chiedere al server la lista dello storico delle chiamate
+*
 */
 
 MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,{
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'GetCalls',
-
+ /**
+  * Il metodo deve inserire nel model _DS.WCall_ il JSON contenente la lista dello storico delle chiamate
+  *
+  * @method +process
+  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   process: function (ari) {
     console.error("Processor "+this.get('name')+" non esistente TODO");
   },
-  
+ /**
+  * Il metodo deve inviare al server un ARI avente richiesta _GetCalls_ 
+  *
+  * @method +sendToServer
+  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {Object} record Call da inviare al server
+  * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
+
+// TODO FARE METODO
+
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   }

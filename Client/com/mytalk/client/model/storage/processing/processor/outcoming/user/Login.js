@@ -17,11 +17,27 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Processore che viene eseguito quando l'utente sceglie di cancellare il proprio account dal sistema
+*
 */
 
 MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct, {
+  /**
+  * Memorizza il nome del processore
+  * 
+  * @property -name
+  * @type {String}
+  */
   name: 'Login',
-
+ /**
+  * Il metodo deve creare un record con ID 0 nel model _DS.Authentication_
+  *
+  * @method +process
+  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   process: function (params) {
     var record = MyTalk.Authentication.find( 0 ).setProperties( params );
     var transaction = record.get('transaction');
@@ -32,7 +48,16 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
 
     transaction.commit();
   },
-
+ /**
+  * Il metodo deve inviare al server un ARI avente richiesta _Login_ per autenticarsi nel sistema
+  *
+  * @method +sendToServer
+  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {Object} record Call da inviare al server
+  * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
+  * @return {Void}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   sendToServer: function (socket, record, onSent) {
     var ARI = new Object();
 
@@ -58,7 +83,13 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
     var wasSent = socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), wasSent );
   },
-
+  /**
+  * Il metodo deve ritornare l'attributo _name_
+  *
+  * @method +getProcessorName
+  * @return {String}
+  * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
+  */
   getProcessorName: function () {
     return this.get('name');
   } 

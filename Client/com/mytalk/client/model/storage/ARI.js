@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Definisce la struttura del pacchetto di comunicazione scambiato con il server.
+* Definisce la struttura del pacchetto di comunicazione scambiato con il server.
 *
 */
 

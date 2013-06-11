@@ -17,7 +17,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Controller per la gestione della registrazione dell'utente nel sistema e per la gestione del template $"guest"$
+*  Controller per la gestione della registrazione dell'utente nel sistema e per la gestione del template $"guest"$
 *
 */
 

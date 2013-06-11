@@ -60,7 +60,7 @@ MyTalk.List = DS.Model.extend({
 */
 
 /**
-* Lista di riferimenti di $User$ che rappresentano i contatti che l'utente loggato ha aggiunto alla lista 
+* Lista di riferimenti di $User$ che rappresentano i contatti che l'utente autenticato ha aggiunto alla lista 
 * 
 * @property -users
 * @type {Array<User>}

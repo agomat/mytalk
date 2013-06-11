@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta la vista che rappresenta la form per l'inserimento di un indirizzo ip da contattare.
+* Classe che rappresenta la vista che rappresenta la form per l'inserimento di un indirizzo ip da contattare.
 *
 */
 

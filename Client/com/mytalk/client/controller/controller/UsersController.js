@@ -20,7 +20,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Controller deputato alla gestione degli utenti presenti in una lista e alla gestione del template $users$
+*  Controller deputato alla gestione degli utenti presenti in una lista e alla gestione del template $users$
 *
 */
 

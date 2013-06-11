@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Gestisce la visualizzazione del template (Handelbar) per questo tipo di risorsa.
+*  Gestisce la visualizzazione del template (Handelbar) per questo tipo di risorsa.
 *
 */
 

@@ -15,13 +15,47 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* Questa classe è un _\href{http://emberjs.com/api/classes/Ember.Mixin.html}{Ember.Mixin}_. 
+* Incapsula una connessione WebSocket per poter essere utilizzata, mediante composizione, delle altre classi
+* È un Singleton
 */
 
 
 MyTalk.WebSocketConnection = Ember.Mixin.create({
+  /**
+  * Contiene la URL della connessione WebSocket
+  * 
+  * @property -resource
+  * @type {String}
+  *
+  */
   resource: 'ws://'+window.location.hostname+':8887',
+
+  /**
+  * Contiene la connessione WebSocket
+  * 
+  * @property -socket
+  * @type {WebSocket}
+  *
+  */
   socket: undefined,
 
+  /**
+  * Metodo getInstance del pattern Singleton. Crea una nuova connessione WebSocket se l'attributo
+  * _socket_ è nullo e lo salva in _socket_ rendendo l'atributo _socket_ 
+  * disponibile a tutte le classi che vogliano usare questo Mixin. 
+  * \\
+  * Il metodo, oltre a creare la connessione, deve fornire la callback _onmessage_ all'oggetto
+  * WebSocket appena creato. La callback riceve come parametro la stringa del messaggio ricevuto
+  * dal server. Dal messaggio va estratta la parte $richiesta$ (_req_) di _ARI_ per passarla
+  * ad un oggetto _ProcessorFactory_ creato immediatamente prima. L'oggetto ritornerà il processore
+  * atto a gestire la richiesta. Andrà invocato su di esso il metodo _process_ passandogli il
+  * messaggio ricevuto dal server
+  *
+  * @method +createSocket
+  * @return {Void}
+  */
   createSocket: function() {
     // Lazy creation
     if(!this.get('socket')) {

@@ -1,5 +1,5 @@
 _ciao_ -> PVerb (attaccato! Non _ ciao_)
-$ciao -> \emph{ciao} 
+$ciao$ -> \emph{ciao} 
 \\ -> new line
 
 /**

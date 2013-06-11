@@ -1,5 +1,5 @@
 /**
-* Filename: ResgisterSurname.js
+* Filename: RegisterSurname.js
 * Package: com.mytalk.client.view.templateform
 * Dependencies:
 * Author: Griggio Massimo
@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta il $textfield$ per l'inserimento del cognome per la registrazione.
+* Classe che rappresenta il $textfield$ per l'inserimento del cognome per la registrazione.
 *
 */
 
@@ -69,7 +69,7 @@ MyTalk.RegisterSurname = Ember.TextField.extend({
   
   /**
    * Proprietà necessaria per settare il placeholder dell'input area
-   * @property +palceholder           
+   * @property +placeholder           
    * @type {String}                   
    *
   */

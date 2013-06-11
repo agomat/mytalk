@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta il $textfield$ per l'inserimento dell'indirizzo IP da contattare.
+*  Classe che rappresenta il $textfield$ per l'inserimento dell'indirizzo IP da contattare.
 *
 */
 

@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta la $textarea$ per l'inserimento del testo del messaggio nella chat.
+*  Classe che rappresenta la $textarea$ per l'inserimento del testo del messaggio nella chat.
 *
 */
 

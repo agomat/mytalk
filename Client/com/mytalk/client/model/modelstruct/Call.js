@@ -37,7 +37,7 @@ MyTalk.Call = DS.Model.extend({
 */
 
 /**
-* Valore booleano; $true$ se l'utente loggato è il chiamante, $false$ altrimenti
+* Valore booleano; $true$ se l'utente autenticato è il chiamante, $false$ altrimenti
 * 
 * @property -caller
 * @type {boolean}
@@ -61,7 +61,7 @@ MyTalk.Call = DS.Model.extend({
 */
 
 /**
-* Memorizza il numero di $Byte$ inviati dall'utente loggato al suo interlocutore
+* Memorizza il numero di $Byte$ inviati dall'utente autenticato al suo interlocutore
 * 
 * @property -byteSent
 * @type {number}

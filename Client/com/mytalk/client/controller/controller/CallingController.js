@@ -22,7 +22,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Controller deputato alla gestione di una chiamata e della chat realativa, gestisce in oltra il template $calling$
+*  Controller deputato alla gestione di una chiamata e della chat realativa, gestisce in oltra il template $calling$
 *
 */
 

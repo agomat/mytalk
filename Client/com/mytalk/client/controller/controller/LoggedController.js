@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Controller per visualizzazione delle liste dell'utente che ha effettuato il login.
+*  Controller per visualizzazione delle liste dell'utente che ha effettuato il login.
 *
 */
 

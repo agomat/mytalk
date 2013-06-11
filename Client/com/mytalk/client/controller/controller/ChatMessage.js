@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: La classe rappresenta un messaggio inviato nella chat durante una conversazione.
+*  La classe rappresenta un messaggio inviato nella chat durante una conversazione.
 *
 */
 

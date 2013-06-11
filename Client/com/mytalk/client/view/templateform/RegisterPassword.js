@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta il $textfield$ per l'inserimento della password per la registrazione.
+* Classe che rappresenta il $textfield$ per l'inserimento della password per la registrazione.
 *
 */
 

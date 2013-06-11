@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Definisce il mapping tra gli hash della url e risorse (``Route'') dell'applicazione.
+*  Definisce il mapping tra gli hash della url e risorse (``Route'') dell'applicazione.
 *
 */
 

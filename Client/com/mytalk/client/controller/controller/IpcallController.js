@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione: Controller deputato alla gestione di una chiamata da indirizzo IP diretto e del proprio indirizzo IP 
+* Controller deputato alla gestione di una chiamata da indirizzo IP diretto e del proprio indirizzo IP 
 *
 */ 
 

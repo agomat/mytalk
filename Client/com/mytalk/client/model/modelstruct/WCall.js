@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_
+* Model per la rappresentazione di uno storico di chiamate che l'utente autenticato ha eseguito
 */
 
 MyTalk.WCall = DS.Model.extend({
@@ -28,37 +28,33 @@ MyTalk.WCall = DS.Model.extend({
 });
 
 /**
-* Descrizione di list
+* Lista di riferimenti di $Call$ che rappresentano le chiamate che l'utente autenticato ha eseguito
 * 
 * @property -list
 * @type {Array<Call>}
-* @private 
 *
 */
 
 /**
-* Descrizione di totalByteSent
+* Memorizza il numero di $Byte$ inviati dall'utente autenticato da quando si è registrato al sistema
 * 
 * @property -totalByteSent
-* @type {number}
-* @private 
+* @type {number} 
 *
 */
 
 /**
-* Descrizione di totalByteReceived
+* Memorizza il numero di $Byte$ recevuti dall'utente autenticato da quando si è registrato al sistema
 * 
 * @property -totalByteReceived
 * @type {number}
-* @private 
 *
 */
 
 /**
-* Descrizione di totalDuration
+* Memorizza la durata delle chiamate effettuate e ricevute dell'utente autenticato da quando si è registrato al sistema
 * 
 * @property -totalDuration
 * @type {number}
-* @private 
 *
 */

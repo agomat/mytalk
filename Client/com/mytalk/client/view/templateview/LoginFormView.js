@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta la vista che rappresenta la form per effettuare il login.
+* Classe che rappresenta la vista che rappresenta la form per effettuare il login.
 *
 */
 

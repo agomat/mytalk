@@ -18,7 +18,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Controller deputato alla gestione delle liste di utenti
+*  Controller deputato alla gestione delle liste di utenti
 *
 */
 

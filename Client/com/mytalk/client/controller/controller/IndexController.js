@@ -17,7 +17,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Controller per la gestione del login e per la gestione del template $"index"$
+*  Controller per la gestione del login e per la gestione del template $"index"$
 *
 */
 

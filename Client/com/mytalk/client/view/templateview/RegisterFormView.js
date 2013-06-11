@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta la vista che rappresenta la form di registrazione nel portale.
+* Classe che rappresenta la vista che rappresenta la form di registrazione nel portale.
 *
 */
 

@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Description: Classe che rappresenta la vista associata al template $lists$
+* Classe che rappresenta la vista associata al template $lists$
 *
 */
 

@@ -17,12 +17,12 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Descrizione della _classe_
+* Questa classe crea lo Store di _ember-data_ associandogli l'adapter
 */
 
 MyTalk.Store = DS.Store.extend({
   /**
-  * adapter ......... scrivere!
+  * crea l'adapter _SocketAdapter_ e lo assegna a questa proprietà
   * 
   * @property -adapter
   * @type {SocketAdapter}

@@ -15,12 +15,37 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
+* fornisce metodi per entrare o uscire dallo stato di ``autentificazione''
+*
 */
 
 MyTalk.AppState = Ember.StateManager.create({
+
+  /**
+   * Proprietà che abilita iul login
+   * @property -enableLoggin           
+   * @type {Boolean}                   
+   *
+  */ 
   
   enableLogging: true,
+  
+  /**
+   * Proprietà che contiene il nome dello stato attuale dell'applicazione, di default è settato a $"isNotAuthenticated"$.
+   * @property -initialState           
+   * @type {String}                   
+   *
+  */
+
   initialState: "isNotAuthenticated",
+
+  /**
+   * Proprietà che rappresenta l'oggetto $Ember State$ che definisce lo stato corrente dell'applicazione e le operazioni associate a tale stato.
+   * @property +isAuthenticated           
+   * @type {Ember.State}                   
+   *
+  */
 
   isAuthenticated: Ember.State.create({
     beingNotAuthenticated: function (manager, context) {
@@ -28,6 +53,13 @@ MyTalk.AppState = Ember.StateManager.create({
       MyTalk.Router.router.transitionTo('guest');
     },
   }),
+
+  /**
+   * Proprietà che rappresenta l'oggetto $Ember State$ che definisce lo stato corrente dell'applicazione e le operazioni associate a tale stato.
+   * @property +isNotAuthenticated           
+   * @type {Ember.State}                   
+   *
+  */
 
   isNotAuthenticated: Ember.State.create({
     beingAuthenticated: function (manager, context) {

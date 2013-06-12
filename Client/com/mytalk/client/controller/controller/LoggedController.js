@@ -22,6 +22,7 @@
 
 MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
+  lastListId: null,
 
   /**
    * Questo metodo è deputato alla creazione di una nuova lista.
@@ -35,6 +36,12 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * @method +createList                                     
    * @return {Void} 
   */
+
+  updateLastListId:function(){
+    var list=this.get('content');
+    this.set('lastListId',list.get('length'));
+    console.log(this.get('lastListId'));
+  }.observes(this),
 
   createList:function (){
 
@@ -50,10 +57,12 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
       });
       
       if(test==true){
+        var id=this.get('lastListId')+1;
+        this.set('lastListId',id);
         var processorFactory = MyTalk.ProcessorFactory.create({});
         var processor = processorFactory.createProcessorProduct( "ListCreate" );
         processor.process({
-          id: list.get('length'),
+          id: id,
           name: newName
         });
       }

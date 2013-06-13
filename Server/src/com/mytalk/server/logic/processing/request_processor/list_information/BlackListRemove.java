@@ -49,7 +49,7 @@ public class BlackListRemove extends GenericRequest {
 		}	
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);			
-			List<UserList> listUserList=pack.getList(); 
+			List<UserList> listUserList=pack.getUserIds(); 
 			UserList userList=null;
 			com.mytalk.server.data.model.Blacklist blacklist=null;
 			List<Integer> listUser=null;

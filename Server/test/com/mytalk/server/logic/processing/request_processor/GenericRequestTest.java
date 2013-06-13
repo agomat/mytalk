@@ -142,12 +142,12 @@ public class GenericRequestTest {
 		esito=GenericRequest.checkListPackWellFormed(pack2);
 		assertFalse("esito negativo",esito);
 		
-		pack.setList(null);
+		pack.setUserIds(null);
 		esito=GenericRequest.checkListPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
 		userList.setList(null);
-		pack.setList(listUserList);
+		pack.setUserIds(listUserList);
 		esito=GenericRequest.checkListPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 	}
@@ -165,7 +165,7 @@ public class GenericRequestTest {
 		esito=GenericRequest.checkListPackWellFormed(pack2);
 		assertFalse("esito negativo",esito);
 		
-		pack.setList(null);
+		pack.setUserIds(null);
 		esito=GenericRequest.checkListPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 	}

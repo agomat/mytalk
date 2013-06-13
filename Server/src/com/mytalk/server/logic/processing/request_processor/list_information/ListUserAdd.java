@@ -47,7 +47,7 @@ public class ListUserAdd extends GenericRequest{
 			response=new ARI(null,"CorruptedPack",infoRequest);
 		}	
 		else{	
-			List<UserList> listUserList=pack.getList();
+			List<UserList> listUserList=pack.getUserIds();
 			UserList userList=null;
 			com.mytalk.server.data.model.ListName listName=null;
 			List<Integer> listString=null;

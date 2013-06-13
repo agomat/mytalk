@@ -23,9 +23,8 @@ MyTalk = Ember.Application.create({
 
 MyTalk.processor = Ember.Namespace.create({});
 
+/*
 
-
-/* Parte di popolamento in assenza di un Server funzionante */
 
 Ember.run.later(this, function(){
 
@@ -42,3 +41,5 @@ return "list";
 }
 
 }, 3500);
+
+*/

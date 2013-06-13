@@ -43,6 +43,7 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
     var myUsername = MyTalk.PersonalData.find(0).get('username');
     if (myUsername && myUsername != username) {
       var store = DS.get("defaultStore");
+      console.log(ari.info);
       store.loadMany(MyTalk.User, info);
       var adapter = store.adapterForType(MyTalk.User);
       adapter.didFindMany(store, MyTalk.User, info);

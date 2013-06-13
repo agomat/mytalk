@@ -25,18 +25,18 @@ import com.mytalk.server.logic.shared.model_client.UserList;
 
 public class ListPack extends Information{
 	
-	private List<UserList> list;
+	private List<UserList> user_ids;
 	
 	public ListPack(){}
 	
 	public ListPack(List<UserList> l){
-		list=l;
+		user_ids=l;
 	}
 	
 	public List<UserList> getList(){
-		return list;
+		return user_ids;
 	}
 	public void setList(List<UserList> l){
-		list=l;
+		user_ids=l;
 	}
 }

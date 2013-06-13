@@ -23,12 +23,12 @@ public class UserList{
 	
 	private Integer id;
 	private String name;
-	private List<Integer> list; 
+	private List<Integer> user_ids; 
 	
 	public UserList(){}
 	
 	public UserList( Integer i,String n,List<Integer> c){
-		list=c;
+		user_ids=c;
 		name=n;
 		id=i;
 	}
@@ -49,9 +49,9 @@ public class UserList{
 	}
 	
 	public List<Integer> getList(){
-		return list;
+		return user_ids;
 	}
 	public void setList(List<Integer> c){
-		list=c;
+		user_ids=c;
 	}
 }

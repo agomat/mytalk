@@ -191,8 +191,13 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     if(confirmation){
       var listId = this.get('controllers.list.content.id');
       if(listId==1){
-        var currentList = MyTalk.List.find(listId).get('users');
-        currentList.removeObject( user );
+        var list = MyTalk.List.find(listId);
+        var processorFactory = MyTalk.ProcessorFactory.create({});
+        var processor = processorFactory.createProcessorProduct("BlackListRemove");
+        processor.process({
+          userId: userId,
+          list: list 
+        });
       }
       else{
         var list = MyTalk.List.find(listId);

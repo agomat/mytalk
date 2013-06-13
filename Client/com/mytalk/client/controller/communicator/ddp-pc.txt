@@ -1,0 +1,153 @@
+/**
+*La classe si occupa di interfacciarsi con le APIs WebRTC. Fornisce dei metodi per gestire 
+*la connessione peer to peer tra i client. Inoltre agisce da adattatore per permettere sia
+*al browser Google Chrome che a Mozilla Firefox di utilizzare l'applicazione, scegliendo in
+*base al browser identificato i metodi corretti di WebRTC da invocare, dato che le APIs non 
+*sono ancora stabili e non sono state implementate secondo lo standard definito, ma in modo 
+*diverso da ogni browser.
+*/
+
+/**
+* Rappresenta il costruttore con il nome standard "RTCPeerConnection", a cui Chrome si riferisce
+* con il nome "webkitRTCPeerConnection" mentre Firefox con "mozRTCPeerConnection". Crea un'istanza 
+* di connessione peer to peer.
+* 
+* @property -RTCPeerConnection
+* @type {function}
+* 
+* 
+* Rappresenta il metodo con il nome standard "getUserMedia", implementato da Chrome come "webkitGetUserMedia"
+* e da Firefox come "mozGetUserMedia". Chiede all'utente il permesso di utilizzare le periferiche di 
+* acquisizione audio e video.
+* 
+* @property -getUserMedia
+* @type {function}
+* 
+* 
+* Funzione che consente di inserire uno stream video all'interno di un tag "<video>" HTML5. Necessaria 
+* dato che ogni browser fornisce questa funzionalità in modo diverso, sarà quindi diversa a seconda del 
+* browser identificato.
+* 
+* @method -attachMediaStream
+* @param {html video element} Riferimento all'elemento in cui inserire lo stream
+* @param {video stream} Lo stream video da inserire
+* @return {void}
+* 
+* 
+* Il nome del browser identificato.
+* 
+* @param -webrtcDetectedBrowser
+* @type {string}
+* 
+* 
+* La connessione peer to peer attiva viene salvata in questa proprietà.
+* 
+* @property -pc
+* @type {RTCPeerConnection}
+* 
+* 
+* Contiene i parametri da passare al costruttore RTCPeerConnection, che sono differenti a seconda del 
+* browser.
+* 
+* @property -configuration
+* @type {JSON anonymous object}
+* 
+* 
+* Consente di sapere se l'utente che sta accedendo ai metodi è il chiamante o il chiamato. In base a questa
+* proprietà si deciderà se chiamare il metodo WebRTC "createOffer" o "createAnswer".
+* 
+* @property -isCaller
+* @type {boolean}
+* 
+* 
+* Contiene i parametri per la costruzione del canale dati, da passare al costruttore RTCPeerConnection.
+* 
+* @property -optsDataChann
+* @type {JSON anonymous object}
+* 
+* 
+* In questa proprietà viene salvato il canale dati attivo. Il canale dati ("RTCDataChannel") consente ai browser
+* di scambiarsi uno stream di dati oltre a quelli audio e video.
+* 
+* @property -dataChannel
+* @type {RTCDataChannel}
+* 
+* 
+* Memorizza un riferimento allo stream video ottenuto dalla videocamera locale.
+* 
+* @property -myStream
+* @type {video stream}
+* 
+* 
+* Contiene il "Session Description Protocol" locale. Sarà poi inviato all'altro peer per iniziare la comunicazione.
+* 
+* @property -mySDP
+* @type {RTCSessionDescription}
+* 
+* 
+* Contiene gli "ICE candidates" generati che verranno poi inviati all'altro peer.
+* 
+* @property -myICE
+* @type {Array<RTCIceCandidate>}
+* 
+* 
+* Costruttore della classe PeerConnection. Per prima cosa identifica il browser dell'utente. Poi, in base al browser
+* identificato, assegna alle proprietà della classe le funzioni corrette da invocare, quindi ad esempio "RTCPeerConnection"
+* conterrà "mozRTCPeerConnection" nel caso di Firefox e "webkitRTCPeerConnection" nel caso di Chrome.
+* 
+* @method +init
+* @constructor
+* @return {void}
+* 
+* 
+* Inserisce un SDP come descrizione del peer remoto, chiamando il metodo corretto di RTCPeerConnection.
+* 
+* @method +setSDP
+* @param {RTCSessionDescription}
+* @return {void}
+* 
+* Aggiunge alla connessione peer to peer gli ICE candidates del peer remoto.
+* 
+* @method +addICE
+* @param {RTCIceCandidate}
+* @return {void}
+* 
+* Chiude la connessione e rilascia l'accesso alle periferiche di acquisizione audio e video dell'utente. Richiama poi una 
+* funzione del controller (passata per parametro) che comunica il termine della chiamata e modifica la vista.
+* 
+* @method +closeConnection
+* @param {function}
+* @return {void}
+* 
+* Chiede all'utente il permesso di accedere alle periferiche di acquisizione. Ottenuto il permesso inserisce lo stream video 
+* locale nella pagina chiamando il metodo attachMediaStream. Poi procede a creare l'offerta (o la risposta nel caso isCaller 
+* sia false) da trasmettere all'altro peer.
+* 
+* @method -getMedia
+* @return {void}
+* 
+* Chiama il costruttore RTCPeerConnection per istanziare una nuova connessione, la configura e apre il canale dati. Quando gli 
+* ICE candidates sono pronti lo comunica al controller tramite la funzione onCandidatesReady. In seguito invoca il metodo getMedia.
+* 
+* @method +start
+* @param {function} Funzione che comunica al controller che il pacchetto da inviare all'altro peer è pronto
+* @param {function} Funzione che verrà chiamata alla chiusura della connessione
+* @param {function} Funzione da chiamare all'arrivo di un messaggio nel canale dati
+* @param {boolean} Rappresenta lo stato dell'utente (Chiamante | Chiamato). isCaller viene inizializzato con questo valore
+* @return {void}
+* 
+* 
+* Configura il canale dati definendo le azioni da compiere per i quattro possibili eventi "onmessage", "onopen", "onerror" ed "onclose".
+* 
+* @method -setChannelEvents
+* @param {RTCDataChannel}
+* @param {function} Funzione del controller da invocare in seguito all'evento "onmessage".
+* @return {void}
+* 
+* 
+* Invia un messaggio attraverso il canale dati.
+* 
+* @method +send
+* @param {string}
+* @return {void}
+*/

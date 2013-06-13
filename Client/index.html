@@ -12,6 +12,7 @@
     <link type="text/css" rel="stylesheet" href="assets/css/popup.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/call.css" media="screen" />
     <link type="text/css" rel="stylesheet" href="assets/css/c4-logged.css" media="screen" />
+    <link type="text/css" rel="stylesheet" href="assets/css/profile.css" media="screen" />
     <link rel="shortcut icon" href="assets/img/mytalk.ico" />
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.2.min.js"></script>
@@ -37,6 +38,7 @@
     <script type="text/javascript" src="com/mytalk/client/view/templateform/IPCall.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateview/UsersView.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateview/GuestView.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateview/ProfileView.js"></script>
     
     
  
@@ -55,6 +57,7 @@
     <script type="text/javascript" src="com/mytalk/client/view/templateform/SearchView.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateform/MessageText.js"></script>
     
+    
     <!-- bootstrap Router -->
     <script type="text/javascript" src="com/mytalk/client/controller/router/Router.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/IndexRoute.js"></script>
@@ -64,7 +67,9 @@
     <script type="text/javascript" src="com/mytalk/client/controller/router/LoggedIndexRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/ListRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/IpcallRoute.js"></script>
-
+    <script type="text/javascript" src="com/mytalk/client/controller/router/ProfileRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/router/StatsRoute.js"></script>
+    
     <!-- bootstrap StateManager -->
     <script type="text/javascript" src="com/mytalk/client/controller/statemanager/AppState.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/statemanager/CallState.js"></script>
@@ -301,7 +306,6 @@
                 {{/if}}
 
                 </li>
-                <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
                 <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
             {{else}}
                 {{#if controller.controllers.list.generalList}}
@@ -393,15 +397,15 @@
                   <li>{{ me.email }}</li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="assets/img/settings.png" alt="" /> <a href="#"> Modifica Profilo </a></li>
-                  <li><img src="assets/img/stats.png" alt="" /> <a href="#"> Statistiche sulle chiamate </a></li>
+                  <li><img src="assets/img/settings.png" alt="" /> {{#linkTo 'profile'}}Modifica Profilo {{/linkTo}}</li>
+                  <li><img src="assets/img/stats.png" alt="" /> {{#linkTo 'stats'}} Statistiche delle chiamate {{/linkTo}}</li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="assets/img/allcontacts.png" alt="" /> <a href="#/ip"> Chiama un IP globale </a></li>
-                  <li><img src="assets/img/users.png" alt="" /> <a href="#/lists"> Visualizza i miei contatti </a></li>
+                  <li><img src="assets/img/allcontacts.png" alt="" /> {{#linkTo 'ipcall'}} Chiama un IP globale {{/linkTo}}</li>
+                  <li><img src="assets/img/users.png" alt="" /> {{#linkTo 'list'}} Visualizza i miei contatti {{/linkTo}}</li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="assets/img/door_out.png" alt=""/> <a href="/">Esci</a></li>
+                  <li><img src="assets/img/door_out.png" alt=""/> <a href=".">Esci</a></li>
                 </ul>
               </div>
             </div>
@@ -431,7 +435,7 @@
                       {{view MyTalk.LoginPassword valueBinding='view.password' }}
                     </li>
                   </ul>
-                  <button type="submit" id="button_login" class="common_button" >Accedi</button>
+                  <button type="submit" id="button_login" class="common_button">Accedi</button>
                 </fieldset>
                 {{/view}}
             </div>
@@ -527,7 +531,7 @@
      <div id="call_content" class="scroll_content">
      
      <!-- TODO: mostrare la chat disattivata quando lo stato non è isConnected -->
-      <div id="chat">
+      <div id="chat" {{bindAttr class="isConnected:visible:hidden"}}>
         <ul id="messages">
           {{#each message in controller.messages}}
           <li {{bindAttr class="message.sent:sent_message:received_message"}} >
@@ -540,7 +544,7 @@
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
             {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button {{bindAttr class="isConnected:common_button:button_inactive"}}>Invia</button>
+            <button>Invia</button>
           </fieldset>
         {{/view}}
       </div>
@@ -574,6 +578,53 @@
 
       </div>
     </div>
+    <audio id="ring" src="assets/sounds/ring.mp3" preload></audio>
+    <audio id="modem-dial" src="assets/sounds/modem-dial.mp3" preload></audio>
+    <audio id="closeCall" src="assets/sounds/close.mp3" preload></audio>
+    <audio id="busy" src="assets/sounds/busy.mp3" preload></audio>
     </script>
+    
+    <script type="text/x-handlebars" data-template-name="profile">
+      <div id="me">
+        {{#view MyTalk.ProfileView}}
+            <fieldset>
+              <legend hidden>Modifica Profilo</legend>
+              <ul id="newdata">
+                <li>
+                  <label for="name">Nuovo nome</label>
+                  <span>{{view MyTalk.RegisterName valueBinding='view.name' }}</span>
+                </li>
+                <li>
+                  <label for="surname" >Nuovo cognome</label>
+                  <span>{{view MyTalk.RegisterSurname valueBinding='view.surname' }}</span>
+                </li>
+                <li>
+                  <label for="username" >Nuovo username</label>
+                  <span>{{view MyTalk.RegisterUsername valueBinding='view.username' }}</span>
+                </li>
+                <li>
+                  <label for="email" >Nuova email</label>
+                  <span>{{view MyTalk.RegisterEmail valueBinding='view.email' }}</span>
+                </li>
+                <li>
+                  <label for="password" >Nuova password</label>
+                  <span>{{view MyTalk.RegisterPassword valueBinding='view.password' }}</span>
+                </li>
+                <li>
+                  <label for="password_conf" >Conferma la password</label>
+                  <span>{{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}</span>
+                </li>
+                <li>
+                  <button type="submit"class="common_button" id="button_signup">Salva</button>
+                </li>
+              </ul>
+            </fieldset>
+          {{/view}}
+      </div>
+    </script>
+    
+    <script type="text/x-handlebars" data-template-name="stats">
+    </script>
+    
   </body>
 </html>

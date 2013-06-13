@@ -112,6 +112,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
     // callback 2
     var onCandidatesReady = function(RTCinfo) {
+      document.getElementById('modem-dial').play();
       processor.process({
         speaker: user,
         RTCinfo: JSON.stringify(RTCinfo) 
@@ -137,7 +138,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   
     };
     
-    
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
   },
   
@@ -152,6 +152,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   acceptCall: function(user){
+    MyTalk.CallState.get('isBusy').set('accepted', true);
+    document.getElementById('ring').pause();
     this.RTCmanager = MyTalk.PeerConnection.create();
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct("AcceptCall");
@@ -221,6 +223,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     processor.process({});
     */
     // patch:
+    MyTalk.CallState.get('isBusy').set('accepted', true);
     if(this.get('isConnected')) {
       this.RTCmanager.closeConnection(this.onClose);
       this.set('messages',[]);
@@ -228,11 +231,20 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     }
     else {
       //GESTIRE RIFIUTA CHIAMATA
+      var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
+      var processorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = processorFactory.createProcessorProduct("RefuseCall");
+      processor.process({
+        speaker: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+      this.onClose();
     }
   },
   
   onClose: function() {
 //     this.set('messages',[]);
+    document.getElementById('closeCall').play();
     MyTalk.CallState.send('beingFree');
   },
 

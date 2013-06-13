@@ -122,6 +122,10 @@
     font-size:0.73em;
 }
 
-.button_inactive {
+.visible {
+  display: block;
+}
+
+.hidden {
   display:none;
 }

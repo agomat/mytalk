@@ -40,7 +40,10 @@ MyTalk.processor.SuccessfulRefuseCall = Ember.Object.extend(MyTalk.AbstractInPro
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    document.getElementById('busy').play();
+    RTCmanager = MyTalk.CallState.get('isBusy').get('callData').RTCmanager;
+    RTCmanager.closeConnection(function(){});
+    MyTalk.CallState.send('beingFree');
   },
   
   /**

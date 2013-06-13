@@ -68,7 +68,8 @@ MyTalk.CallState = Ember.StateManager.create({
 
   isBusy: Ember.State.create({
     callData: Ember.Object.create({}),
-    
+    accepted: false,
+                             
     beingConnected: function (manager, context) {
       var lastContext = manager.isBusy.get('callData');
       context.reopen( lastContext ); 
@@ -105,6 +106,25 @@ MyTalk.CallState = Ember.StateManager.create({
     incomingCall: Ember.State.create({
       enter: function (manager) {
         MyTalk.Router.router.transitionTo('calling', manager.isBusy.get('callData').speaker );
+        
+        Ember.run.later(this, function() {
+          document.getElementById('ring').play();
+        }, 300);
+        
+        Ember.run.later(this, function() {
+          console.debug(MyTalk.CallState.get('isBusy').get('accepted'));
+          if(!MyTalk.CallState.get('isBusy').get('accepted')) {
+            var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
+            var processorFactory = MyTalk.ProcessorFactory.create({});
+            var processor = processorFactory.createProcessorProduct("RefuseCall");
+            processor.process({
+              speaker: MyTalk.CallState.get('isBusy').get('callData').speaker,
+              RTCinfo: JSON.stringify(RTCinfo) 
+            });
+            MyTalk.CallState.send('beingFree');
+          }
+        }, 20000);
+
       },
 
     }),
@@ -116,6 +136,7 @@ MyTalk.CallState = Ember.StateManager.create({
   */
     isConnected: Ember.State.create({
       enter: function (manager) {
+        document.getElementById('modem-dial').pause();
         var callData = manager.isBusy.get('callData');
         
         if ( callData.isCaller ) {

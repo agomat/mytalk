@@ -37,8 +37,48 @@ MyTalk.processor.RefuseCall = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
   * @return {Void}
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
-  process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+  process: function (params) {
+    var myself = MyTalk.PersonalData.find(0);
+    var speaker = params.speaker;
+    var RTCinfo = params.RTCinfo;
+
+    var nextId = MyTalk.Call.find().get('length'); 
+    var record = MyTalk.Call.createRecord({id: nextId, speaker: speaker, caller: false, startDate: new Date() });
+    var transaction = record.get('transaction');
+
+    transaction.reopen({
+      processor: this,
+      myIp: myself.get('ip'),
+      myUserId: myself.get('userId'),
+      speakerIp: speaker.get('ip'),
+      speakerUserId: speaker.get('id'),
+      RTCinfo: RTCinfo
+    });
+
+    transaction.commit();
+  },
+  
+  sendToServer: function(socket, record, onSent) {
+    var ARI = new Object();
+
+    var auth = null;
+
+    ARI.auth = auth;
+    ARI.req = this.get('name');
+
+
+
+    ARI.info = new Object();
+     ARI.info.myIp = record.get('transaction').get('myIp');
+     ARI.info.myUserId = record.get('transaction').get('myUserId');
+     ARI.info.speakerIp = record.get('transaction').get('speakerIp');
+     ARI.info.speakerUserId = record.get('transaction').get('speakerUserId');
+     ARI.info.RTCinfo = record.get('transaction').get('RTCinfo');
+    
+    ARI.info = JSON.stringify( ARI.info );
+
+    var wasSent = socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), wasSent );
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

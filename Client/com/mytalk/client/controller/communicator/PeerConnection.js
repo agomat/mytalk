@@ -35,6 +35,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
     configuration: {iceServers: [{url: "stun:stun.l.google.com:19302"}]},
     isCaller: false,
     optsDataChann: {optional: [{RtpDataChannels: true}]},
+    optional: {optional: [{DtlsSrtpKeyAgreement: true}]},
     dataChannel: undefined,
     myStream: undefined,
     mySDP: undefined,
@@ -169,26 +170,14 @@ MyTalk.PeerConnection = Ember.Object.extend({
             if(selfView) context.attachMediaStream(selfView,stream);
             
             peerConn.addStream(stream);
-            if(context.webrtcDetectedBrowser === "firefox") {
-              console.log('datachannel');
-              context.dataChannel = context.pc.createDataChannel('RTCDataChannel', {});
-              context.dataChannel.binaryType = 'blob';
-              context.setChannelEvents(context.dataChannel, onDataChannelMessage);
-            }
 
-            if(isCaller) peerConn.createOffer(gotDescription,function(){console.error("Failed to create rtc offer.");});
-            else peerConn.createAnswer(gotDescription, function() {console.error("Failed to create rtc answer.");});
+            if(isCaller) peerConn.createOffer(gotDescription,function(){ console.error("Failed to create rtc offer."); });
+            else peerConn.createAnswer(gotDescription, function() { console.error("Failed to create rtc answer."); });
             
             function gotDescription(desc) {
                 peerConn.setLocalDescription(desc);
                 console.log('add sdp'+ desc.toString());
                 context.mySDP = desc;
-                // if(context.webrtcDetectedBrowser === "firefox") {
-                  // console.log("sendig firefox candidates");
-                  // var RTCinfo = new Object();
-                  // RTCinfo.sdp = context.get('mySDP');
-                  // onCandidatesReady( RTCinfo );
-                // }
             } 
         }
         function onError(e) {
@@ -199,12 +188,14 @@ MyTalk.PeerConnection = Ember.Object.extend({
     
     start: function(beforeCandidatesCreation,onCandidatesReady,onClose,onDataChannelMessage,bool) {
         this.isCaller = bool;
-        this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann);
-        window.PC = this.pc;
+        this.pc = new this.RTCPeerConnection(this.configuration, this.optsDataChann, this.optional);
         if(this.webrtcDetectedBrowser === "chrome") {
           this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {reliable: false});
           this.setChannelEvents(this.dataChannel, onDataChannelMessage);
-        }        
+        }
+
+        window.PC = this.pc;
+
         var context = this;
         
         // invia iceCandidate all'altro peer
@@ -216,6 +207,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
             }
             else {
               console.log('candidato nullo');
+              window.CN = context.get('myICE');
               var RTCinfo = new Object(); // max: sistemate meglio
               RTCinfo.sdp = context.get('mySDP');
               RTCinfo.ice = context.get('myICE');
@@ -231,6 +223,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         };
         
         this.pc.oniceconnectionstatechange = function(evt) {
+          console.log(evt.target.iceConnectionState);
           if(evt.target.iceConnectionState == "disconnected") {
             context.closeConnection(onClose);
           }
@@ -238,6 +231,13 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
         // get the local stream, show it in the local video element and send it
         this.getMedia(this.pc,this.isCaller,onCandidatesReady,onDataChannelMessage);
+        
+        if(context.webrtcDetectedBrowser === "firefox") {
+          console.log('datachannel');
+          this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {});
+          this.dataChannel.binaryType = 'blob';
+          this.setChannelEvents(this.dataChannel, onDataChannelMessage);
+        }
     },
 
     setChannelEvents: function(channel, onDataChannelMessage) {

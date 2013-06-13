@@ -717,7 +717,7 @@ public class DataAccessTest{
 	public void checkGetUserById(){
 		int id=2;
 		
-		//test di rinomina di una lista con un nome già usato
+		//test di ricerca di un user con id valido
 		try{
 			User u=dataAccess.getUserById(id);
 			assertNotNull("non e` stato ritornato nessun oggetto User",u);

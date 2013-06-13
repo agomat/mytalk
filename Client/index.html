@@ -543,8 +543,8 @@
           <fieldset>
             <legend hidden>Scrivi un messaggio</legend>
             <label for="text_input" hidden>Scrivi un messaggio</label> 
-            {{view MyTalk.MessageText valueBinding='view.message'}}
-            <button class="common_button">Invia</button>
+            {{view MyTalk.MessageText attributeBinding='id' valueBinding='view.message'}}
+            <button class="common_button" id="submitMessage">Invia</button>
           </fieldset>
         {{/view}}
       </div>

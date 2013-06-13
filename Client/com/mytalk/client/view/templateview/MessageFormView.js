@@ -71,6 +71,23 @@ MyTalk.MessageFormView = Ember.View.extend({
   submit: function(event) {
     event.preventDefault();
     var message = this.get('message');
+    this.set('message','');
     this.get('controller').sendMessage(message);
+  },
+
+  /**
+   * Questo metodo di occupa di attivare alcune funzioni JQuery che permettodo di catturare
+   * la pressione del tasto $Invio$ esguendo l'invio del messaggio di testo all'altro peer
+   *
+   * @method -didInsertElement            
+   * @return {Void} 
+   * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
+  */
+
+  didInsertElement: function() {
+    Ember.run.later(this, function(){
+      $.fn.bindEnterKeyPressed();
+    }, 500);
   }
+
 });

@@ -37,3 +37,10 @@ $.fn.videoTutorial = function() {
   });
 }
 
+$.fn.bindEnterKeyPressed = function() { 
+  $("#chat textarea").keyup(function(event){
+    if(event.keyCode == 13){
+      $("#submitMessage").click();
+    }
+  });
+}

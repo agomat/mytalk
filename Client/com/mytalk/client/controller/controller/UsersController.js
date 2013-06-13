@@ -110,7 +110,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
 
   /**
    * Questo metodo si occupa di bloccare il tentativo di contattare un utente offline 
-   * mostrando un messaggio di errore tramite alert di javascript
    *
    * @method +userCall 
    * @param {User} user è l'oggetto utente che si vuole contattare.
@@ -118,7 +117,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   */
 
   cantCall: function(user){
-    alert('Non puoi chiamare '+ user.get('fullName') +' poiché è offline');
+
   },
 
   /**
@@ -190,26 +189,21 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     var confirmation = confirm("Sei sicuro di eliminare l'utente " + user.get('fullName') +" dalla lista?");
     if(confirmation){
       var listId = this.get('controllers.list.content.id');
-      if(listId==1){
-        var list = MyTalk.List.find(listId);
-        var processorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = processorFactory.createProcessorProduct("BlackListRemove");
-        processor.process({
-          userId: userId,
-          list: list 
-        });
+      var requestName;
+      if(listId == 1){
+        requestName = "BlackListRemove";
+      } else {
+        requestName = "ListUserRemove";
       }
-      else{
-        var list = MyTalk.List.find(listId);
-        var processorFactory = MyTalk.ProcessorFactory.create({});
-        var processor = processorFactory.createProcessorProduct("ListUserRemove");
-        processor.process({
-          userId: userId,
-          list: list 
-        });
-      }
+      var list = MyTalk.List.find(listId);
+      var processorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = processorFactory.createProcessorProduct(requestName);
+      processor.process({
+        userId: userId,
+        list: list 
+      });
     }
-  },
+  }, 
 
   /**
    * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist e di rimuove 

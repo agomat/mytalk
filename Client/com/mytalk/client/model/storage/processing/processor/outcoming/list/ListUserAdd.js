@@ -86,7 +86,7 @@ MyTalk.processor.ListUserAdd = Ember.Object.extend(MyTalk.AbstractOutProcessorPr
      var inner = new Object();
      inner.id = record.get('id');
      inner.name = record.get('name');
-     inner.list = [record.get('transaction').get('userId')];
+     inner.user_ids = [record.get('transaction').get('userId')];
 
      ARI.info.list = [];
      ARI.info.list.pushObject(inner);

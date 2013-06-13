@@ -16,6 +16,10 @@
   padding: 0;
 }
 
+#logged_content li{
+  list-style-type: none;
+}
+
 .logged {
   margin-top:14px !important;
 }
@@ -298,6 +302,6 @@
 
 @media all and (max-width: 1230px) {
   .user_info {
-    width: 40%;
+    width: 35%;
   }
 }

@@ -38,8 +38,11 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   */
 
   updateLastListId:function(){
+    
     var list=this.get('content');
-    this.set('lastListId',list.get('length'));
+    var r = list.getEach('id');
+    r.sort(); 
+    this.set('lastListId',r.get('lastObject'));
     console.log(this.get('lastListId'));
   }.observes(this),
 

@@ -61,5 +61,9 @@ MyTalk.SearchView = Ember.TextField.extend({
 
   valueDidChange: function(element,property,value) {
     this.get('controller').filter(this.value);
-  }.observes('value')
+  }.observes('value'),
+
+  resetValue:function(){
+    this.set('value',"");
+  }.observes('controller.list.id')
  });

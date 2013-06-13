@@ -298,6 +298,6 @@
 
 @media all and (max-width: 1230px) {
   .user_info {
-    width: 150px;
+    width: 40%;
   }
 }

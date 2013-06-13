@@ -221,16 +221,6 @@ MyTalk.UsersController = Ember.ArrayController.extend({
     var confirmation = confirm("Sei sicuro di mettere l'utente " + user.get('fullName') +" nella Blacklist?");
     var userId = user.get('id');
     if(confirmation){
-      var lists = MyTalk.List.find().toArray();
-      lists = lists.rejectProperty('id',0);
-      lists.forEach(function(list) {
-          var processorFactory = MyTalk.ProcessorFactory.create({});
-          var processor = processorFactory.createProcessorProduct("ListUserRemove");
-          processor.process({
-            userId: userId,
-            list: list 
-          });
-      });
       var processorFactory = MyTalk.ProcessorFactory.create({});
       var processor = processorFactory.createProcessorProduct( "BlackListAdd" );
       processor.process({

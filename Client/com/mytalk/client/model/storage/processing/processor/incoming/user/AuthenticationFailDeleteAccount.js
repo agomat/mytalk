@@ -25,7 +25,7 @@ MyTalk.processor.AuthenticationFailDeleteAccount = Ember.Object.extend(MyTalk.Ab
   name: 'AuthenticationFailDeleteAccount',
 
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   getProcessorName: function () {

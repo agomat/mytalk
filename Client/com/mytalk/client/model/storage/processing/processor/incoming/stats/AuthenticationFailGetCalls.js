@@ -48,7 +48,7 @@ MyTalk.processor.AuthenticationFailGetCalls = Ember.Object.extend(MyTalk.Abstrac
   name: 'AuthenticationFailGetCalls',
 
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   getProcessorName: function () {

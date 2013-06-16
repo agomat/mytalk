@@ -47,7 +47,7 @@ MyTalk.processor.IdNotFoundAddCall = Ember.Object.extend(MyTalk.AbstractInProces
   name: 'IdNotFoundAddCall',
 
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   getProcessorName: function () {

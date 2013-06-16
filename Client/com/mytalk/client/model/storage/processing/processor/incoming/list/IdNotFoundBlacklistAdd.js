@@ -38,7 +38,7 @@ MyTalk.processor.IdNotFoundBlacklistAdd = Ember.Object.extend(MyTalk.AbstractInP
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   /**

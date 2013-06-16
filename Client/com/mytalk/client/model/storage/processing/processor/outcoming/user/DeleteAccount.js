@@ -38,7 +38,7 @@ MyTalk.processor.DeleteAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _DeleteAccount_ per poter eliminare permanenetemente

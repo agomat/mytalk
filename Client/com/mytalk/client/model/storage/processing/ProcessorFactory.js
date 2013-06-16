@@ -121,7 +121,7 @@ MyTalk.ProcessorFactory = Ember.Object.extend({
     if( processor ) {
       return processor.create({});
     } else {
-      console.error('Processor ' + requestName + ' does not exists');
+      console.debug('Processor ' + requestName + ' does not exists');
       return null;
     }
   }

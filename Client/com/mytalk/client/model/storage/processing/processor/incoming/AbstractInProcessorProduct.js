@@ -34,7 +34,7 @@ MyTalk.AbstractInProcessorProduct = Ember.Mixin.create({
   * @return {Void}
   */
   process: function (ari) {
-    console.error('The method process [com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct] cannot be called beacuse it is abstract');
+    console.debug('The method process [com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct] cannot be called beacuse it is abstract');
   },
   
   /**
@@ -44,7 +44,7 @@ MyTalk.AbstractInProcessorProduct = Ember.Mixin.create({
   * @return {String}
   */
   getProcessorName: function () {
-    console.error('The method getProcessorName [com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct] cannot be called beacuse it is abstract');
+    console.debug('The method getProcessorName [com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct] cannot be called beacuse it is abstract');
   } 
 
 });

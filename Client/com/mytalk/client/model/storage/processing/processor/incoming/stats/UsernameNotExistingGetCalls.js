@@ -48,7 +48,7 @@ MyTalk.processor.UsernameNotExistingGetCalls = Ember.Object.extend(MyTalk.Abstra
   name: 'UsernameNotExistingGetCalls',
 
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   getProcessorName: function () {

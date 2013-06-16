@@ -24,7 +24,7 @@ MyTalk.processor.IpAlreadyLoggedLogin = Ember.Object.extend(MyTalk.AbstractInPro
   name: 'IpAlreadyLoggedLogin',
 
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   getProcessorName: function () {

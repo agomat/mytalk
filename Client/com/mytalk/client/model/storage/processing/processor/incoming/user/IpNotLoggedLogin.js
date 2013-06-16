@@ -25,7 +25,7 @@ MyTalk.processor.IpNotLoggedLogin = Ember.Object.extend(MyTalk.AbstractInProcess
   name: 'IpNotLoggedLogin',
 
   process: function (ari) {
-    console.error("Processor "+this.get('name')+" non esistente TODO");
+    console.debug("Processor "+this.get('name')+" non esistente TODO");
   },
   
   getProcessorName: function () {

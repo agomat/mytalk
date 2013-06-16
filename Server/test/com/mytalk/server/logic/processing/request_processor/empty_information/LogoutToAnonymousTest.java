@@ -44,12 +44,12 @@ public class LogoutToAnonymousTest {
 		
 		ARI ari=new ARI(auth,"LogoutAsAnonymous",null);
 		ARI ariResult=logoutAsAnonymous.manage(ari);
-		assertEquals("Logout fallito nonostante dati coerenti","Logout",ariResult.getReq());
+		assertEquals("Logout fallito nonostante dati coerenti","SuccessfulLogoutToAnonymous",ariResult.getReq());
 		
 		auth=new Authentication("user4","user4","123.123.123.4");
 		ari.setAuth(auth);
 		ariResult=logoutAsAnonymous.manage(ari);
-		assertEquals("Logout di un user non loggato","Logout",ariResult.getReq());
+		assertEquals("Logout di un user non loggato","UnsuccessfulLogoutToAnonymous",ariResult.getReq());
 		
 		ari.getAuth().setUser(null);
 		ariResult=logoutAsAnonymous.manage(ari);

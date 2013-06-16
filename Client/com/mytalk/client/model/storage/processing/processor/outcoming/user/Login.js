@@ -75,11 +75,6 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
     ARI.req = this.get('name');
     ARI.info = null;//JSON.stringify(credenzials);
     
-    var exdate=new Date();
-    exdate.setDate(exdate.getDate() + 30);
-    var c_value=auth.username+'::'+auth.password;
-    document.cookie='mytalk-auth' + "=" + c_value;
-
     var wasSent = socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), wasSent );
   },

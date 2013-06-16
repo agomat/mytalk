@@ -120,6 +120,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
         else{
           entry.set('unmatched',true);
         }
+        entry.get('stateManager').goToState('saved');
       });
 
     }

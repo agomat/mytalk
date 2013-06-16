@@ -1,11 +1,8 @@
 INSERT INTO Users VALUES 
-  ("user0",1,md5('user0user0'),"Mattia","Agostinetto","agomat@gmail.com",md5("agomat@gmail.com")),
-	("user1",2,md5('user1user1'),"user1","user1","user1@mytalk.com","emailhash123123123"),
-	("user2",3,"7e58d63b60197ceb55a1c487989a3720","user2","user2","user2@mytalk.com","emailhash123123123"),
-	("user3",4,"92877af70a45fd6a2ed7fe81e1236b78","user3","user3","user3@mytalk.com","emailhash123123123"),
-	("user4",5,"3f02ebe3d7929b091e3d8ccfde2f3bc6","user4","user4","user4@mytalk.com","emailhash123123123"),
-	("user5",6,"a791842f52a0acfbb3a783378c066b8","user5","user5","user5@mytalk.com","emailhash123123123"),
-	("user6",7,"affec3b64cf90492377a8114c86fc093","user6","user6","user6@mytalk.com","emailhash123123123"),
-	("user7",8,"3e0469fb134991f8f75a2760e409c6ed","user7","user7","user7@mytalk.com","emailhash123123123"),
-	("user8",9,"7668f673d5669995175ef91b5d171945","user8","user8","user8@mytalk.com","emailhash123123123"),
-	("user9",10,"8808a13b854c2563da1a5f6cb2130868","user9","user9","user9@mytalk.com","emailhash123123123");
+  ("agomat",1,md5('password'),"Mattia","Agostinetto","agomat@gmail.com",md5("agomat@gmail.com")),
+  ("campa",2,md5('password'),"Stefano","Campese","stefano.campese.90@gmail.com",md5("stefano.campese.90@gmail.com")),
+  ("max",3,md5('password'),"Massimo","Griggio","great_max@hotmail.it",md5("great_max@hotmail.it")),
+  ("mazzu",4,md5('password'),"Nicolò","Mazzucato","nikomazzu@gmail.com",md5("nikomazzu@gmail.com")),
+  ("ehimike",5,md5('password'),"Michael","Ferronato","michael.ferronato@gmail.com",md5("michael.ferronato@gmail.com")),
+  ("thenikles ",6,md5('password'),"Nicolò","Toso","thenikles60@gmail.com",md5("thenikles60@gmail.com")),
+  ("arm",7,md5('password'),"Armando","Caprio","armando.caprio@gmail.com",md5("armando.caprio@gmail.com"))

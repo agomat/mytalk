@@ -223,7 +223,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
         };
         
         this.pc.oniceconnectionstatechange = function(evt) {
-          console.log(evt.target.iceConnectionState);
           if(evt.target.iceConnectionState == "disconnected") {
             context.closeConnection(onClose);
           }
@@ -232,12 +231,12 @@ MyTalk.PeerConnection = Ember.Object.extend({
         // get the local stream, show it in the local video element and send it
         this.getMedia(this.pc,this.isCaller,onCandidatesReady,onDataChannelMessage);
         
-        if(context.webrtcDetectedBrowser === "firefox") {
-          console.log('datachannel');
-          this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {});
-          this.dataChannel.binaryType = 'blob';
-          this.setChannelEvents(this.dataChannel, onDataChannelMessage);
-        }
+//         if(context.webrtcDetectedBrowser === "firefox") {
+//           console.log('datachannel');
+//           this.dataChannel = this.pc.createDataChannel('RTCDataChannel', {});
+//           this.dataChannel.binaryType = 'blob';
+//           this.setChannelEvents(this.dataChannel, onDataChannelMessage);
+//         }
     },
 
     setChannelEvents: function(channel, onDataChannelMessage) {

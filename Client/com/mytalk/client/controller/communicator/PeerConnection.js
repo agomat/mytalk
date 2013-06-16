@@ -243,22 +243,23 @@ MyTalk.PeerConnection = Ember.Object.extend({
     setChannelEvents: function(channel, onDataChannelMessage) {
         
         channel.onmessage = function(msg) {
-            onDataChannelMessage(msg);
+          onDataChannelMessage(msg);
         };
 
         channel.onopen = function () {
-            console.debug('RTCDataChannel connected.');
+          console.debug('RTCDataChannel connected.');
         };
         channel.onclose = function (e) {
-            console.debug(e);
+          console.debug('RTCDataChannel closed.');
         };
         channel.onerror = function (e) {
-            console.error(e);
+          window.DCerror = e;
+          console.error('RTCDataChannel error. Channel closed.');
         };
     },
     
-    send: function(message) {
-      this.dataChannel.send(message);
+    send: function(msg) {
+      this.dataChannel.send(msg);
     }
         
 });

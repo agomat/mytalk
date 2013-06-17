@@ -65,6 +65,18 @@ CREATE TABLE IF NOT EXISTS OnlineUsers
 
 ALTER TABLE ListNames AUTO_INCREMENT = 2;
 
+DELIMITER //
+DROP PROCEDURE IF EXISTS popolamento;
+CREATE PROCEDURE popolamento (p INT, s INT)
+BEGIN
+        DECLARE i INT DEFAULT s;
+        ciclo: WHILE i < p DO
+          INSERT INTO Users VALUES 
+              (CONCAT("user",i),i,md5(CONCAT("user",i,"user",i)),CONCAT("user",i),CONCAT("user",i),"agomat@gmail.com",md5("agomat@gmail.com"));
+          SET i = i + 1;
+        END WHILE ciclo;
+END; //
+DELIMITER ;
 
 source .popolamento/popolamentoTestUsers.sql; 
 source .popolamento/popolamentoTestBlacklists.sql;

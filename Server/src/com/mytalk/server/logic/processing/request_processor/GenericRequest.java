@@ -66,8 +66,8 @@ public abstract class GenericRequest {
 	public static boolean checkListPackWellFormed(ListPack pack){
 		boolean check=false;
 		
-		if(pack!=null && pack.getUserIds()!=null){
-			List<UserList> listUserList=pack.getUserIds();
+		if(pack!=null && pack.getList()!=null){
+			List<UserList> listUserList=pack.getList();
 			if(listUserList.get(0)!=null && listUserList.get(0).getList()!=null && listUserList.get(0).getName()!=null){
 				check=true;
 			}	
@@ -77,7 +77,7 @@ public abstract class GenericRequest {
 	
 	public static boolean checkPartialListPackWellFormed(ListPack pack){
 		boolean check=false;		
-		if(pack!=null && pack.getUserIds()!=null && pack.getUserIds().size()!=0){
+		if(pack!=null && pack.getList()!=null && pack.getList().size()!=0){
 			check=true;
 		}
 		return check;

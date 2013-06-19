@@ -2,6 +2,8 @@
 * Filename: StateUpdate.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.user
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
+*               com.mytalk.client.model.modelstruct.PersonalData
+*               com.mytalk.client.model.modelstruct.User
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
@@ -39,7 +41,6 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
   process: function(ari) {
     var info = JSON.parse(ari.info);
     var username = info.list.username;
-    var status = info.list.online;
     var myUsername = MyTalk.PersonalData.find(0).get('username');
     if (myUsername && myUsername != username) {
       var store = DS.get("defaultStore");

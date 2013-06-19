@@ -34,7 +34,7 @@ MyTalk.User = DS.Model.extend( {
   }.property('name','surname'),
 
   fullNameConc: function() {
-    return this.get('name').toLowerCase() + this.get('surname').toLowerCase() + this.get('username').toLowerCase() + "_" + this.get('id');
+    return this.get('name').toLowerCase() + ' ' + this.get('surname').toLowerCase() + ' ' + this.get('username').toLowerCase() + "_" + this.get('id');
   }.property('name','surname','username'),
 
   avatarTiny: function() {

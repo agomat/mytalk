@@ -66,13 +66,15 @@ CREATE TABLE IF NOT EXISTS OnlineUsers
 ALTER TABLE ListNames AUTO_INCREMENT = 2;
 
 DELIMITER //
-DROP PROCEDURE IF EXISTS popolamento;
-CREATE PROCEDURE popolamento (p INT, s INT)
+DROP PROCEDURE IF EXISTS fill;
+CREATE PROCEDURE fill (n INT)
 BEGIN
-        DECLARE i INT DEFAULT s;
-        ciclo: WHILE i < p DO
-          INSERT INTO Users VALUES 
-              (CONCAT("user",i),i,md5(CONCAT("user",i,"user",i)),CONCAT("user",i),CONCAT("user",i),"agomat@gmail.com",md5("agomat@gmail.com"));
+        DECLARE i INT DEFAULT 0;
+        DECLARE r INT;
+        ciclo: WHILE i < n DO
+          SET r = ROUND(RAND()*1000000);
+          INSERT INTO Users (username,password,name,surname,email,emailhash) VALUES 
+              (CONCAT("user",r),MD5("password"),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),"agomat@gmail.com",md5("agomat@gmail.com"));
           SET i = i + 1;
         END WHILE ciclo;
 END; //
@@ -84,4 +86,3 @@ source .popolamento/popolamentoTestCalls.sql;
 source .popolamento/popolamentoTestListNames.sql;
 source .popolamento/popolamentoTestOnlineUsers.sql;
 source .popolamento/popolamentoTestUserLists.sql;
-

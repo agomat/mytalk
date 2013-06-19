@@ -1,5 +1,5 @@
 /**
-* Filename: app.js
+* Filename: MyTalk.js
 * Package: com.mytalk.client
 * Dependencies:
 * Author: Griggio Massimo

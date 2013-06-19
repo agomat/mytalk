@@ -49,6 +49,7 @@ public class Sender implements Runnable {
 					WebSocket ws=receiver.searchConnection(ip);
 					String json=pack.getJson();
 					ws.send(json);
+					System.out.println("Risposta inviata");
 				}
 			}catch(IpNotFound exc){
 				exc.printStackTrace();

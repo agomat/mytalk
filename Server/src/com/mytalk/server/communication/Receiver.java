@@ -20,6 +20,9 @@
 package com.mytalk.server.communication;
 
 import java.net.InetSocketAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 
 import org.java_websocket.WebSocket;
@@ -65,7 +68,9 @@ public class Receiver extends WebSocketServer{
 
 	@Override
 	public void onMessage(WebSocket conn, String msg) {
-		System.out.println("New message Received");
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println(dateFormat.format(cal.getTime())+"New message Received");
 		String wsIp=conn.getRemoteSocketAddress().toString();
 		wsIp=wsIp.substring(1);
 		Message newMsg=new Message(wsIp,msg);

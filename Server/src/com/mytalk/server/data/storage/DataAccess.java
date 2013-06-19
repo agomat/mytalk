@@ -117,6 +117,7 @@ public class DataAccess implements IDataAccess{
 			String onlineUsername=user.getUsername();
 			String authUsername=authenticate.getUsername();
 			if(!onlineUsername.equals(authUsername)){ //username di authenticate e di user non corrispondenti
+				GenericDAO.closeSession();
 				throw new UsernameNotCorresponding();
 			}else{
 				OnlineUserDAO od=new OnlineUserDAO();
@@ -645,6 +646,7 @@ public class DataAccess implements IDataAccess{
 		if(checkUser!=null){
 			result=true;
 		}
+		GenericDAO.closeSession();
 		return result;
 	}
 }

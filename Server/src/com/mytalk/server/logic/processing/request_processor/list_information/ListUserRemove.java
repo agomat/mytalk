@@ -50,7 +50,7 @@ public class ListUserRemove extends GenericRequest {
 			response=new ARI(null,"CorruptedPack",infoRequest);
 		}	
 		else{		
-			List<UserList> listUserList=pack.getUserIds(); // userlist contiene nome lista e lista interi
+			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista interi
 			UserList userList=null;
 			com.mytalk.server.data.model.ListName listName=null;
 			List<Integer> listString=null;

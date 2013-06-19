@@ -33,10 +33,10 @@ public class ListPack extends Information{
 		list=l;
 	}
 	
-	public List<UserList> getUserIds(){
+	public List<UserList> getList(){
 		return list;
 	}
-	public void setUserIds(List<UserList> l){
+	public void setList(List<UserList> l){
 		list=l;
 	}
 }

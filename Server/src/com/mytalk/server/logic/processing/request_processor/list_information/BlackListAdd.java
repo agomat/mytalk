@@ -48,7 +48,7 @@ public class BlackListAdd extends GenericRequest {
 		}	
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
-			List<UserList> listUserList=pack.getUserIds(); // userlist contiene nome lista e lista di stringhe
+			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista di stringhe
 			UserList userList=null;
 			com.mytalk.server.data.model.Blacklist blacklist=null;
 			List<Integer> listUser=null;

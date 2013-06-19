@@ -20,7 +20,7 @@
 *
 */
 
-MyTalk.IpcallRoute = Ember.Route.extend({
+MyTalk.StatsRoute = Ember.Route.extend({
   /**
    * Questo metodo è deputato alla renderizzazione del template $stats$ all'interno della pagina HTML.
    *

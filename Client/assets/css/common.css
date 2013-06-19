@@ -180,7 +180,7 @@ a{ color:#009000;}
 a:hover{ color:#00b900;}
 
 
- ::-webkit-scrollbar{
+::-webkit-scrollbar{
   width: 10px;
   background: #e5e5e5;
   border: 1px solid #909090;

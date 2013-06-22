@@ -45,7 +45,9 @@ public class Receiver extends WebSocketServer{
 	public void onOpen(WebSocket conn, ClientHandshake hs) {
 		String wsIp=conn.getRemoteSocketAddress().toString();
 		wsIp=wsIp.substring(1);
-		System.out.println("Client connected with IP: "+wsIp);
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println("["+dateFormat.format(cal.getTime())+"] Client connected with IP: "+wsIp);
 		String loginAnonymous="{'auth':{'username':null,'password':null, ip:'"+wsIp+"'},'req':'LoginAsAnonymous','info':null}";
 		Message openMsg=new Message(wsIp,loginAnonymous);
 		bufferIn.push(openMsg);
@@ -55,7 +57,9 @@ public class Receiver extends WebSocketServer{
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
 		String wsIp=conn.getRemoteSocketAddress().toString();
 		wsIp=wsIp.substring(1);
-		System.out.println("Client with IP: "+wsIp+" disconnected");
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println("["+dateFormat.format(cal.getTime())+"] Client with IP "+wsIp+" disconnected");
 		String logout="{'auth':{'username':null,'password':null, ip:'"+wsIp+"'},'req':'Logout','info':null}";
 		Message closeMsg=new Message(wsIp,logout);
 		bufferIn.push(closeMsg);
@@ -70,7 +74,7 @@ public class Receiver extends WebSocketServer{
 	public void onMessage(WebSocket conn, String msg) {
 		Calendar cal = Calendar.getInstance();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		System.out.println(dateFormat.format(cal.getTime())+"New message Received");
+		System.out.println("["+dateFormat.format(cal.getTime())+"] New message Received");
 		String wsIp=conn.getRemoteSocketAddress().toString();
 		wsIp=wsIp.substring(1);
 		Message newMsg=new Message(wsIp,msg);

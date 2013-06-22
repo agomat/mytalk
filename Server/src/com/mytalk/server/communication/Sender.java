@@ -19,6 +19,9 @@
 
 package com.mytalk.server.communication;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 
 import org.java_websocket.WebSocket;
@@ -42,14 +45,17 @@ public class Sender implements Runnable {
 		while(true){
 			Message pack=bufferOut.pop();
 			String ip= pack.getIp();
+			Calendar cal = Calendar.getInstance();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			try{
 				if(ip.equals("/broadcast")){
 					sendToAll(pack.getJson());
+					System.out.println("["+dateFormat.format(cal.getTime())+"] Messaggio broadcast");
 				}else{
 					WebSocket ws=receiver.searchConnection(ip);
 					String json=pack.getJson();
 					ws.send(json);
-					System.out.println("Risposta inviata");
+					System.out.println("["+dateFormat.format(cal.getTime())+"] Risposta inviata");
 				}
 			}catch(IpNotFound exc){
 				exc.printStackTrace();

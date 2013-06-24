@@ -338,7 +338,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 /** 
 * Il nome del browser identificato.
 * 
-* @param -webrtcDetectedBrowser
+* @property -webrtcDetectedBrowser
 * @type {string}
 */
 

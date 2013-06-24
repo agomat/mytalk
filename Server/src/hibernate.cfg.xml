@@ -15,7 +15,7 @@
 		<property name="hibernate.c3p0.timeout">1800</property>
 		<property name="hibernate.c3p0.max_statements">50</property>
 		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
-  		<property name="hibernate.c3p0.idle_test_period">10</property>
+  		<property name="hibernate.c3p0.idle_test_period">7200</property>
 		
 		<mapping resource="com/mytalk/server/data/xml/blacklists.hbm.xml"/> 
 		<mapping resource="com/mytalk/server/data/xml/calls.hbm.xml"/> 

@@ -6,7 +6,7 @@
 		<property name="hibernate.dialect"> org.hibernate.dialect.MySQLDialect </property> 
 		<property name="hibernate.connection.driver_class"> com.mysql.jdbc.Driver </property> 
 		
-		<property name="hibernate.connection.url"> jdbc:mysql://localhost/MyTalk </property> 
+		<property name="hibernate.connection.url"> jdbc:mysql://localhost/MyTalk?user=mytalk&password=mytalk&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&maxReconnects=10 </property> 
 		<property name="hibernate.connection.username"> mytalk </property> 
 		<property name="hibernate.connection.password"> mytalk </property> 
 		

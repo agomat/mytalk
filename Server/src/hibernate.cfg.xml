@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"> 
+
 <hibernate-configuration> 
 	<session-factory> 
 		<property name="hibernate.dialect"> org.hibernate.dialect.MySQLDialect </property> 
@@ -8,6 +9,13 @@
 		<property name="hibernate.connection.url"> jdbc:mysql://localhost/MyTalk </property> 
 		<property name="hibernate.connection.username"> mytalk </property> 
 		<property name="hibernate.connection.password"> mytalk </property> 
+		
+		<property name="c3p0.min_size">5</property>
+		<property name="c3p0.max_size">20</property>
+		<property name="c3p0.timeout">1800</property>
+		<property name="c3p0.max_statements">50</property>
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		
 		
 		<mapping resource="com/mytalk/server/data/xml/blacklists.hbm.xml"/> 
 		<mapping resource="com/mytalk/server/data/xml/calls.hbm.xml"/> 

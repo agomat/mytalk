@@ -112,7 +112,7 @@ MyTalk.User = DS.Model.extend( {
 */
 
 /**
-* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} come concatenazione di _name_, _surname_ per poter evitare la concatenazione a livello di template (Handlebar)
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} come concatenazione di _name_, _surname_ per poter evitare la concatenazione a livello di template (Handlebars)
 * 
 * @property -fullNameConc
 * @type {string}

@@ -56,10 +56,10 @@ MyTalk.ListController = Ember.ObjectController.extend({
   /**
    * Questo metodo è deputato alla rinominazione di una lista. 
    * Il metodo dopo aver ottenuto id e nome della lista mostra
-   * un $prompt$ javascript  nel quale l'utente dovrà inserire il nuovo nome da assegnare alla lista in questione.
+   * un $prompt$ JavaScript  nel quale l'utente dovrà inserire il nuovo nome da assegnare alla lista in questione.
    * Prima di procedere con l'operazione il metodo verifica che il nome inserito sia valido, 
    * in caso affermativo il metodo si occupa di creare un'istanza del processore delegato alla rinominazione della lista. 
-   * Nel caso in cui il nuovo nome inserito non sia valido (il nome esiste già o è nullo) viene mostrato all'utente un messaggio d'errore con un alert javascript
+   * Nel caso in cui il nuovo nome inserito non sia valido (il nome esiste già o è nullo) viene mostrato all'utente un messaggio d'errore con un alert JavaScript
    * impedendo cosi il proseguimento dell'operazione.
    *
    * @method +renameList                                     

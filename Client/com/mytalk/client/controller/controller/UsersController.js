@@ -141,7 +141,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * (non deve essere: ne vuota ne Blacklist ne Tutti i contatti ne la lista corrente) ,
    * Terminato il controllo il metodo crea un'istanza del processore necessario per svolgere l'operazione di aggiunta. 
    * Terminata l'aggiunta, il metodo, si occupa di settare a $NULL$ i campi $userId$, $userName$ e $selectedValue$.
-   * Nel caso in cui la lista selezionata non sia valida viene mostrato un messaggio di errore tramite alert di javascript
+   * Nel caso in cui la lista selezionata non sia valida viene mostrato un messaggio di errore tramite alert di JavaScript
    *
    * @method +doAddUser 
    * @return {Void} 
@@ -176,7 +176,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   /**
    * Questo metodo si occupa di eliminare dalla lista corrente l'utente selezionato.
    * Prima di procedere alla creazione dell'istanza del processore delegato a tale operazione,
-   * il metodo chiede conferma all'utente tramite il confirm di javascript, nel caso in cui l'utente
+   * il metodo chiede conferma all'utente tramite il confirm di JavaScript, nel caso in cui l'utente
    * confermi tale operazione l'utente viene eliminato.
    *
    * @method +deleteUser 
@@ -209,7 +209,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * Questo metodo si occupa di mettere l'utente selezionato nella Blacklist e di rimuove 
    * tale utente da tutte le altre liste meno la lista $Tutti i contatti$.
    * Prima di procedere alla creazione dei processori delegati di tale lavoro,
-   * il metodo chiede conferma all'utente tramite un confirm di javascript.
+   * il metodo chiede conferma all'utente tramite un confirm di JavaScript.
    *
    * @method +userCall 
    * @param {User} user è l'oggetto utente che si vuole contattare.

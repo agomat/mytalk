@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Gestisce la visualizzazione del template (Handelbar) e il collegamento del Model al Controller.
+*  Gestisce la visualizzazione del template (Handlebars) e il collegamento del Model al Controller.
 *
 */
 

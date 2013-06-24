@@ -21,7 +21,7 @@
 * attraverso una connessione WebSocket, per eseguire operazioni CRUD. _RESTAdapter_ permette di comunicare
 * con un server HTTP per trasmettere i dati via JSON. I metodi della classe che si andranno a 
 * ridefinire saranno invocati automaticamente da Ember.js ogni qual volta avvenga una modifica
-* ad un Model che estende DS.Model. Le modifiche che Ember.js osserva possono essere catalogate con le
+* ad un Model che estende _DS.Model_. Le modifiche che Ember.js osserva possono essere catalogate con le
 * classiche operazioni CRUD $Create$, $Read$, $Update$, $Delete$. In particolare ci interessa essere
 * notificati per gli aggiornameti dei seguenti cambiamenti a cui un Model è soggetto: $Crezione di un Record$, $Aggiornamento di un Record$
 * $Cancellazione di un Record$. _RESTAdapter_ supporta anche operazioni di $Read$ per rispondere
@@ -55,7 +55,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   *
   * @method +init
   * @constructor
-  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L84}{API RESTAdapter}
+  * @override \href{http://www.thomasboyt.com/ember-data-docs/}{ember-data}$\href{https://github.com/emberjs/data/blob/master/packages/ember-data/lib/adapters/rest_adapter.js#L84}{RESTAdapter}
   * @return {Object}
   */
   init: function() {
@@ -65,7 +65,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
  
  /**
   * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_find_} su un Model che deriva
-  * da DS.Model. Questo metodo deve avere corpo vuoto
+  * da _DS.Model_. Questo metodo deve avere corpo vuoto
   *
   * @method -find
   * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
@@ -80,7 +80,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
  /**
   * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_findQuery_} su un Model che deriva
-  * da DS.Model. Questo metodo deve avere corpo vuotogit add 
+  * da _DS.Model_. Questo metodo deve avere corpo vuoto
   *
   * @method -findQuery
   * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
@@ -96,7 +96,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
  /**
   * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_findMany_} su un Model che deriva
-  * da DS.Model. Questo metodo deve avere corpo vuotogit add 
+  * da _DS.Model_. Questo metodo deve avere corpo vuoto 
   *
   * @method -findMany
   * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente
@@ -112,7 +112,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
 
  /**
   * Questo metodo viene invocato ogni volta che si utilizza il metodo \href{http://emberjs.com/guides/models/finding-models/}{_findAll_} su un Model che deriva
-  * da DS.Model. Questo metodo deve avere corpo vuotogit add 
+  * da _DS.Model_. Questo metodo deve avere corpo vuoto
   *
   * @method -findAll
   * @param {DS.Store} riferimento allo Store di _ember-data_ usato dall'applicazione corrente

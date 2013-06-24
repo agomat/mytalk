@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Questa classe è un _\href{http://emberjs.com/api/classes/Ember.Mixin.html}{Ember.Mixin}_. 
+* Questa classe è un \href{http://emberjs.com/api/classes/Ember.Mixin.html}{_Ember.Mixin_}. 
 * Incapsula una connessione WebSocket per poter essere utilizzata, mediante composizione, delle altre classi
 * È un Singleton
 */

@@ -23,7 +23,7 @@
 * - Zucchetti SRL
 *
 * Controller deputato alla gestione di una chiamata e della chat realativa, 
-* gestisce in oltra il template $calling$
+* gestisce inoltre il template $calling$
 *
 */
 

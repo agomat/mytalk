@@ -17,29 +17,5 @@
 * - Zucchetti SRL
 */
 
-MyTalk = Ember.Application.create({
-  LOG_TRANSITIONS: true
-});
-
+MyTalk = Ember.Application.create({});
 MyTalk.processor = Ember.Namespace.create({});
-
-/*
-
-
-Ember.run.later(this, function(){
-
-    DS.get("defaultStore").adapter.serializer.keyForHasMany = function(type, name) {
-return "list";
-    var key = this.keyForAttributeName(type, name);
-
-    if (this.embeddedType(type, name)) {
-      return key;
-    }
-
-    return this.singularize(key) + "_ids";
-
-}
-
-}, 3500);
-
-*/

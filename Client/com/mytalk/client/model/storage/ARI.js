@@ -127,7 +127,7 @@ MyTalk.ARI = Ember.Object.extend({
   
   /**
    * Questo metodo si occupa settare il valore del campo dati $info$ dell'istanza della classe in questione.
-   * Per settare tale campo dati il metodo applica al parametro $i$ la funzione javascript _JSON.stringify()_ al fine di convertire l'oggetto $JSON$ scambiato col server in una stringa.
+   * Per settare tale campo dati il metodo applica al parametro $i$ la funzione JavaScript _JSON.stringify()_ al fine di convertire l'oggetto $JSON$ scambiato col server in una stringa.
    *
    * @method -setInfo
    * @param {Object} $i$ è l'oggetto JSON contenente le informazioni.                                  

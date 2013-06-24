@@ -42,7 +42,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * Nel caso il nome sia valido il metodo crea un'istanza del processore adeguato 
    * al quale sarà delegato il lavoro di creare la nuova lista.
    * Nel caso in cui il nome non sia valido il metodo 
-   * mostra un messaggio di errore tramite un alert di javascript.
+   * mostra un messaggio di errore tramite un alert di JavaScript.
    *
    * @method +createList                                     
    * @return {Void} 

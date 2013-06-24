@@ -3,24 +3,24 @@
   <head>
     <meta charset="utf-8">
     <title>MyTalk</title>
-    <link type="text/css" rel="stylesheet" href="assets/font/roboto.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/common.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/c1.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/c2.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/c3.css" media="screen" /> 
-    <link type="text/css" rel="stylesheet" href="assets/css/c4.css" media="screen" /> 
-    <link type="text/css" rel="stylesheet" href="assets/css/popup.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/call.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/c4-logged.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/profile.css" media="screen" />
     <link rel="shortcut icon" href="assets/img/mytalk.ico" />
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/font/roboto.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/common.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c1.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c2.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c3.css"/> 
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c4.css"/> 
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/popup.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/call.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c4-logged.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/profile.css"/>
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.2.min.js"></script>
     <script type="text/javascript" src="assets/lib/moment.min.js"></script>
     <script type="text/javascript" src="assets/lib/handlebars-1.0.0-rc.4.js"></script>
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.5.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
-    <script type="text/javascript" src="assets/lib/list-view.js"></script>
+    <script type="text/javascript" src="assets/lib/list-view.min.js"></script>
 
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/client/MyTalk.js"></script>
@@ -266,7 +266,7 @@
             <div id="list_button">
             
             {{#if customList}}
-                <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a>
+                <a href="#" class="common_button" {{action "deleteList" }}>Rimuovi</a> &nbsp;
                 <a href="#" class="common_button" {{action "renameList" }}>Rinomina</a>
             {{/if}}
             

@@ -11,5 +11,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/gson"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/java_websocket"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/c3p0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

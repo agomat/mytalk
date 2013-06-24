@@ -19,6 +19,9 @@
 package com.mytalk.server.communication;
 
 import java.net.InetSocketAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.mytalk.server.data.storage.HibernateUtil;
 
@@ -37,7 +40,9 @@ public class MainClass {
 		receiverThread.start();
 		senderThread.start();
 		dispatcherThread.start();
-		System.out.println("Server started. Listening on port "+address.getPort());
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println("["+dateFormat.format(cal.getTime())+"] Server started. Listening on port "+address.getPort());
 	}
 
 }

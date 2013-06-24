@@ -1,4 +1,5 @@
-// Last commit: 7c01dd5 (2013-05-24 18:29:49 -0700)
+// Version: v0.13-39-gca7ba71
+// Last commit: ca7ba71 (2013-06-20 16:45:54 -0700)
 
 
 (function() {
@@ -15,11 +16,18 @@ var define, requireModule;
     if (seen[name]) { return seen[name]; }
     seen[name] = {};
 
-    var mod = registry[name],
-        deps = mod.deps,
-        callback = mod.callback,
-        reified = [],
-        exports;
+    var mod, deps, callback, reified , exports;
+
+    mod = registry[name];
+
+    if (!mod) {
+      throw new Error("Module '" + name + "' not found.");
+    }
+
+    deps = mod.deps;
+    callback = mod.callback;
+    reified = [];
+    exports;
 
     for (var i=0, l=deps.length; i<l; i++) {
       if (deps[i] === 'exports') {
@@ -181,11 +189,11 @@ var LoadPromise = Ember.Mixin.create(Evented, Deferred, {
     this._super.apply(this, arguments);
 
     this.one('didLoad', this, function() {
-      run(this, 'resolve', this);
+      this.resolve(this);
     });
 
     this.one('becameError', this, function() {
-      run(this, 'reject', this);
+      this.reject(this);
     });
 
     if (get(this, 'isLoaded')) {
@@ -801,8 +809,6 @@ DS.Transaction = Ember.Object.extend({
     current transaction should not be used again.
   */
   rollback: function() {
-    var store = get(this, 'store');
-
     // Destroy all relationship changes and compute
     // all references affected
     var references = Ember.OrderedSet.create();
@@ -1751,7 +1757,7 @@ DS.Store = Ember.Object.extend(DS._Mappable, {
 
       if (adapter && adapter.findHasMany) {
         adapter.findHasMany(this, record, relationship, idsOrReferencesOrOpaque);
-      } else if (idsOrReferencesOrOpaque !== undefined) {
+      } else if (!isNone(idsOrReferencesOrOpaque)) {
         Ember.assert("You tried to load many records but you have no adapter (for " + type + ")", adapter);
         Ember.assert("You tried to load many records but your adapter does not implement `findHasMany`", adapter.findHasMany);
       }
@@ -1770,8 +1776,7 @@ DS.Store = Ember.Object.extend(DS._Mappable, {
 
     var unloadedReferences = this.unloadedReferences(references),
         manyArray = this.recordArrayManager.createManyArray(type, Ember.A(references)),
-        loadingRecordArrays = this.loadingRecordArrays,
-        reference, clientId, i, l;
+        reference, i, l;
 
     // Start the decrementing counter on the ManyArray at the number of
     // records we need to load from the adapter
@@ -3770,7 +3775,11 @@ DS.Model = Ember.Object.extend(Ember.Evented, LoadPromise, {
 
   materializeHasMany: function(name, tuplesOrReferencesOrOpaque) {
     var tuplesOrReferencesOrOpaqueType = typeof tuplesOrReferencesOrOpaque;
-    if (tuplesOrReferencesOrOpaque && tuplesOrReferencesOrOpaqueType !== 'string' && tuplesOrReferencesOrOpaque.length > 1) { Ember.assert('materializeHasMany expects tuples, references or opaque token, not ' + tuplesOrReferencesOrOpaque[0], tuplesOrReferencesOrOpaque[0].hasOwnProperty('id') && tuplesOrReferencesOrOpaque[0].type); }
+
+    if (tuplesOrReferencesOrOpaque && tuplesOrReferencesOrOpaqueType !== 'string' && tuplesOrReferencesOrOpaque.length > 1) {
+      Ember.assert('materializeHasMany expects tuples, references or opaque token, not ' + tuplesOrReferencesOrOpaque[0], tuplesOrReferencesOrOpaque[0].hasOwnProperty('id') && tuplesOrReferencesOrOpaque[0].type);
+    }
+
     if( tuplesOrReferencesOrOpaqueType === "string" ) {
       this._data.hasMany[name] = tuplesOrReferencesOrOpaque;
     } else {
@@ -4487,8 +4496,6 @@ DS.RelationshipChange.prototype = {
 
   /** @private */
   getByReference: function(reference) {
-    var store = this.store;
-
     // return null or undefined if the original reference was null or undefined
     if (!reference) { return reference; }
 
@@ -4796,8 +4803,7 @@ DS.hasMany = function(type, options) {
 };
 
 function clearUnmaterializedHasMany(record, relationship) {
-  var store = get(record, 'store'),
-      data = get(record, 'data').hasMany;
+  var data = get(record, 'data').hasMany;
 
   var references = data[relationship.key];
 
@@ -5688,24 +5694,24 @@ DS.Serializer = Ember.Object.extend({
   extractHasMany: mustImplement('extractHasMany'),
   extractBelongsTo: mustImplement('extractBelongsTo'),
 
-  extractRecordRepresentation: function(loader, type, json, shouldSideload) {
+  extractRecordRepresentation: function(loader, type, data, shouldSideload) {
     var prematerialized = {}, reference;
 
     if (shouldSideload) {
-      reference = loader.sideload(type, json);
+      reference = loader.sideload(type, data);
     } else {
-      reference = loader.load(type, json);
+      reference = loader.load(type, data);
     }
 
     this.eachEmbeddedHasMany(type, function(name, relationship) {
-      var embeddedData = json[this.keyFor(relationship)];
+      var embeddedData = this.extractEmbeddedData(data, this.keyFor(relationship));
       if (!isNone(embeddedData)) {
         this.extractEmbeddedHasMany(loader, relationship, embeddedData, reference, prematerialized);
       }
     }, this);
 
     this.eachEmbeddedBelongsTo(type, function(name, relationship) {
-      var embeddedData = json[this.keyFor(relationship)];
+      var embeddedData = this.extractEmbeddedData(data, this.keyFor(relationship));
       if (!isNone(embeddedData)) {
         this.extractEmbeddedBelongsTo(loader, relationship, embeddedData, reference, prematerialized);
       }
@@ -5765,18 +5771,27 @@ DS.Serializer = Ember.Object.extend({
 
     The `extractEmbeddedType` hook is called with:
 
-    * the serialized representation being built
-    * the serialized id (after calling the `serializeId` hook)
+    * the relationship
+    * the serialized representation of the record
 
     By default, it returns the type of the relationship.
 
     @method extractEmbeddedType
     @param {Object} relationship an object representing the relationship
-    @param {any} data the serialized representation that is being built
+    @param {any} data the serialized representation of the record
   */
   extractEmbeddedType: function(relationship, data) {
     return relationship.type;
   },
+
+  /**
+    A hook you need to implement in order to extract
+    the data associated with an embedded record.
+
+    @param {any} data the serialized representation of the record
+    @param {String} key the key that represents the embedded record
+   */
+  extractEmbeddedData: mustImplement(),
 
   //.......................
   //. SERIALIZATION HOOKS
@@ -5852,11 +5867,14 @@ DS.Serializer = Ember.Object.extend({
     this is the opportunity for the serializer to, for example,
     convert numerical IDs back into number form.
 
+    Null or undefined ids will resolve to a null value.
+
     @param {String} id the id from the record
     @returns {any} the serialized representation of the id
   */
   serializeId: function(id) {
-    if (isNaN(id)) { return id; }
+    if(Ember.isEmpty(id)) { return null; }
+    if(isNaN(+id)) { return id; }
     return +id;
   },
 
@@ -6201,7 +6219,7 @@ DS.Serializer = Ember.Object.extend({
   deserializeValue: function(value, attributeType) {
     var transform = this.transforms ? this.transforms[attributeType] : null;
 
-    Ember.assert("You tried to use a attribute type (" + attributeType + ") that has not been registered", transform);
+    Ember.assert("You tried to use an attribute type (" + attributeType + ") that has not been registered", transform);
     return transform.deserialize(value);
   },
 
@@ -6222,21 +6240,21 @@ DS.Serializer = Ember.Object.extend({
     record.materializeAttribute(attributeName, value);
   },
 
-  materializeRelationships: function(record, hash, prematerialized) {
+  materializeRelationships: function(record, serialized, prematerialized) {
     record.eachRelationship(function(name, relationship) {
       if (relationship.kind === 'hasMany') {
         if (prematerialized && prematerialized.hasOwnProperty(name)) {
           var tuplesOrReferencesOrOpaque = this._convertPrematerializedHasMany(relationship.type, prematerialized[name]);
           record.materializeHasMany(name, tuplesOrReferencesOrOpaque);
         } else {
-          this.materializeHasMany(name, record, hash, relationship, prematerialized);
+          this.materializeHasMany(name, record, serialized, relationship, prematerialized);
         }
       } else if (relationship.kind === 'belongsTo') {
         if (prematerialized && prematerialized.hasOwnProperty(name)) {
           var tupleOrReference = this._convertTuple(relationship.type, prematerialized[name]);
           record.materializeBelongsTo(name, tupleOrReference);
         } else {
-          this.materializeBelongsTo(name, record, hash, relationship, prematerialized);
+          this.materializeBelongsTo(name, record, serialized, relationship, prematerialized);
         }
       }
     }, this);
@@ -6962,6 +6980,10 @@ DS.JSONSerializer = DS.Serializer.extend({
     }
   },
 
+  extractEmbeddedData: function(hash, key) {
+    return hash[key];
+  },
+
   extractHasMany: function(type, hash, key) {
     return hash[key];
   },
@@ -7005,7 +7027,7 @@ DS.JSONSerializer = DS.Serializer.extend({
       if (relationship.options && relationship.options.polymorphic && !Ember.isNone(id)) {
         this.addBelongsToPolymorphic(hash, key, id, child.constructor);
       } else {
-        hash[key] = id === undefined ? null : this.serializeId(id);
+        hash[key] = this.serializeId(id);
       }
     }
   },
@@ -7073,6 +7095,8 @@ DS.JSONSerializer = DS.Serializer.extend({
     if (json[root]) {
       if (record) { loader.updateId(record, json[root]); }
       this.extractRecordRepresentation(loader, type, json[root]);
+    } else {
+      Ember.Logger.warn("Extract requested, but no data given for " + type + ". This may cause weird problems.");
     }
   },
 
@@ -7106,7 +7130,8 @@ DS.JSONSerializer = DS.Serializer.extend({
     }
 
     this.metadataMapping.forEach(function(property, key){
-      if(value = data[property]){
+      value = data[property];
+      if(!Ember.isNone(value)){
         loader.metaForType(type, key, value);
       }
     });
@@ -7333,7 +7358,6 @@ DS.loaderFor = loaderFor;
   To tell your store which adapter to use, set its `adapter` property:
 
       App.store = DS.Store.create({
-        revision: 3,
         adapter: App.MyAdapter.create()
       });
 
@@ -8437,14 +8461,18 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
 
 
 (function() {
-/*global jQuery*/
-
 /**
   @module data
   @submodule data-adapters
 */
 
 var get = Ember.get, set = Ember.set;
+
+DS.rejectionHandler = function(reason) {
+  Ember.Logger.assert([reason, reason.message, reason.stack]);
+
+  throw reason;
+};
 
 /**
   The REST adapter allows your store to communicate with an HTTP server by
@@ -8564,11 +8592,11 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root), "POST", {
       data: data
     }).then(function(json){
-      Ember.run(adapter, 'didCreateRecord', store, type, record, json);
+      adapter.didCreateRecord(store, type, record, json);
     }, function(xhr) {
       adapter.didError(store, type, record, xhr);
       throw xhr;
-    });
+    }).then(null, DS.rejectionHandler);
   },
 
   createRecords: function(store, type, records) {
@@ -8590,8 +8618,8 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root), "POST", {
       data: data
     }).then(function(json) {
-      Ember.run(adapter, 'didCreateRecords', store, type, records, json);
-    });
+      adapter.didCreateRecords(store, type, records, json);
+    }).then(null, DS.rejectionHandler);
   },
 
   updateRecord: function(store, type, record) {
@@ -8607,11 +8635,11 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root, id), "PUT",{
       data: data
     }).then(function(json){
-      Ember.run(adapter, 'didUpdateRecord', store, type, record, json);
+      adapter.didUpdateRecord(store, type, record, json);
     }, function(xhr) {
       adapter.didError(store, type, record, xhr);
       throw xhr;
-    });
+    }).then(null, DS.rejectionHandler);
   },
 
   updateRecords: function(store, type, records) {
@@ -8636,8 +8664,8 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root, "bulk"), "PUT", {
       data: data
     }).then(function(json) {
-      Ember.run(adapter, 'didUpdateRecords', store, type, records, json);
-    });
+      adapter.didUpdateRecords(store, type, records, json);
+    }).then(null, DS.rejectionHandler);
   },
 
   deleteRecord: function(store, type, record) {
@@ -8648,11 +8676,11 @@ DS.RESTAdapter = DS.Adapter.extend({
     adapter = this;
 
     return this.ajax(this.buildURL(root, id), "DELETE").then(function(json){
-      Ember.run(adapter, 'didDeleteRecord', store, type, record, json);
+      adapter.didDeleteRecord(store, type, record, json);
     }, function(xhr){
       adapter.didError(store, type, record, xhr);
       throw xhr;
-    });
+    }).then(null, DS.rejectionHandler);
   },
 
   deleteRecords: function(store, type, records) {
@@ -8662,9 +8690,9 @@ DS.RESTAdapter = DS.Adapter.extend({
       return this._super(store, type, records);
     }
 
-    root = this.rootForType(type),
-    plural = this.pluralize(root),
-    serializer = get(this, 'serializer'),
+    root = this.rootForType(type);
+    plural = this.pluralize(root);
+    serializer = get(this, 'serializer');
     adapter = this;
 
     data = {};
@@ -8674,17 +8702,20 @@ DS.RESTAdapter = DS.Adapter.extend({
       data[plural].push(serializer.serializeId( get(record, 'id') ));
     });
 
-    return this.ajax(this.buildURL(root, 'bulk'), "DELETE", { data: data }).then(function(json){
-      Ember.run(adapter, 'didDeleteRecords', store, type, records, json);
-    });
+    return this.ajax(this.buildURL(root, 'bulk'), "DELETE", {
+      data: data
+    }).then(function(json){
+      adapter.didDeleteRecords(store, type, records, json);
+    }).then(null, DS.rejectionHandler);
   },
 
   find: function(store, type, id) {
     var root = this.rootForType(type), adapter = this;
 
-    return this.ajax(this.buildURL(root, id), "GET").then(function(json){
-      return Ember.run(adapter,'didFindRecord', store, type, json, id);
-    });
+    return this.ajax(this.buildURL(root, id), "GET").
+      then(function(json){
+        adapter.didFindRecord(store, type, json, id);
+    }).then(null, DS.rejectionHandler);
   },
 
   findAll: function(store, type, since) {
@@ -8696,8 +8727,8 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root), "GET",{
       data: this.sinceQuery(since)
     }).then(function(json) {
-      Ember.run(adapter,'didFindAll', store, type, json);
-    });
+      adapter.didFindAll(store, type, json);
+    }).then(null, DS.rejectionHandler);
   },
 
   findQuery: function(store, type, query, recordArray) {
@@ -8707,10 +8738,8 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root), "GET", {
       data: query
     }).then(function(json){
-      Ember.run(adapter, function(){
-        this.didFindQuery(store, type, json, recordArray);
-      });
-    });
+      adapter.didFindQuery(store, type, json, recordArray);
+    }).then(null, DS.rejectionHandler);
   },
 
   findMany: function(store, type, ids, owner) {
@@ -8722,8 +8751,8 @@ DS.RESTAdapter = DS.Adapter.extend({
     return this.ajax(this.buildURL(root), "GET", {
       data: {ids: ids}
     }).then(function(json) {
-      return Ember.run(adapter,'didFindMany', store, type, json);
-    });
+      adapter.didFindMany(store, type, json);
+    }).then(null, DS.rejectionHandler);
   },
 
   /**
@@ -8754,22 +8783,30 @@ DS.RESTAdapter = DS.Adapter.extend({
   },
 
   ajax: function(url, type, hash) {
-    try {
+    var adapter = this;
+
+    return new Ember.RSVP.Promise(function(resolve, reject) {
       hash = hash || {};
       hash.url = url;
       hash.type = type;
       hash.dataType = 'json';
-      hash.context = this;
+      hash.context = adapter;
 
       if (hash.data && type !== 'GET') {
         hash.contentType = 'application/json; charset=utf-8';
         hash.data = JSON.stringify(hash.data);
       }
 
-      return Ember.RSVP.resolve(jQuery.ajax(hash));
-    } catch (error) {
-      return Ember.RSVP.reject(error);
-    }
+      hash.success = function(json) {
+        Ember.run(null, resolve, json);
+      };
+
+      hash.error = function(jqXHR, textStatus, errorThrown) {
+        Ember.run(null, reject, jqXHR);
+      };
+
+      Ember.$.ajax(hash);
+    });
   },
 
   url: "",

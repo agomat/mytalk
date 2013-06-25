@@ -7,12 +7,17 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.1	  |	2013-05-14 |    NM     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Classe che ha il compito di istanziare e avviare l'esecuzione dei thread di tipo Receiver, 
+* Dispatcher e Sender. Inoltre avvia il mapping di Hibernate e specifica su che porta è in
+* ascolto il server
 */
 
 
@@ -27,6 +32,15 @@ import com.mytalk.server.data.storage.HibernateUtil;
 
 public class MainClass {
 
+	/**
+	 * Metodo che avvia il mapping di Hibernate, istanzia e avvia i thread di tipo Receiver, 
+	 * Dispatcher e Sender e invoca il metodo registerReceiver sull'oggetto Sender passando 
+	 * il riferimento all'oggetto Receiver
+	 * 
+	 * @method +main
+	 * @param {String[]} args è l'oggetto che identifica i parametri di ingresso di tipo String
+	 * @return {void}
+	 */
 	public static void main(String[] args) {
 		new HibernateUtil();
 		InetSocketAddress address=new InetSocketAddress(8887);

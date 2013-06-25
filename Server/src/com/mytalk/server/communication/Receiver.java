@@ -43,7 +43,7 @@ public class Receiver extends WebSocketServer{
 	 * passando come parametro un oggetto di tipo InetSocketAddress
 	 * 
 	 * @method +Receiver
-	 * @param {InetSocketAddress} address è un oggetto che identifica l'indirizzo del socket 
+	 * @param {InetSocketAddress} address e' un oggetto che identifica l'indirizzo del socket 
 	 * necessario alla creazione dell'oggetto Receiver
 	 */
 	public Receiver(InetSocketAddress address) {
@@ -66,8 +66,8 @@ public class Receiver extends WebSocketServer{
 	 *  delle richieste in entrata
 	 *  
 	 *  @method +onOpen
-	 *  @param {WebSocket} conn è l'oggetto che identifica la connessione websocket
-	 *  @param {ClientHandshake} hs è l'oggetto 
+	 *  @param {WebSocket} conn e' l'oggetto che identifica la connessione websocket
+	 *  @param {ClientHandshake} hs e' l'oggetto 
 	 *  @return {void}
 	 */
 	@Override
@@ -89,7 +89,7 @@ public class Receiver extends WebSocketServer{
 	 * poi aggiungerla nel buffer delle richieste in entrata
 	 * 
 	 * @method +onClose
-	 * @param {WebSocket} conn è l'oggetto che identifica la connessione websocket
+	 * @param {WebSocket} conn e' l'oggetto che identifica la connessione websocket
 	 * @param {int} code 
 	 * @param {String} reason
 	 * @param {boolean} remote
@@ -112,8 +112,8 @@ public class Receiver extends WebSocketServer{
 	 * di connessione; stampa l'errore nella console del server
 	 * 
 	 * @method +OnError
-	 * @param {WebSocket} conn è l'oggetto che identifica la connessione websocket
-	 * @param {Exception} ex è l'oggetto che identifica l'eccezione sollevata
+	 * @param {WebSocket} conn e' l'oggetto che identifica la connessione websocket
+	 * @param {Exception} ex e' l'oggetto che identifica l'eccezione sollevata
 	 * @return {void}
 	 */
 	@Override
@@ -128,8 +128,8 @@ public class Receiver extends WebSocketServer{
 	 * metodo push(Message msg) nel buffer delle richieste in entrata
 	 * 
 	 * @method +onMessage
-	 * @param {WebSocket} conn è l'oggetto che identifica la connessione websocket
-	 * @param {String} msg è l'oggetto che identifica il messaggio ricevuto del client
+	 * @param {WebSocket} conn e' l'oggetto che identifica la connessione websocket
+	 * @param {String} msg e' l'oggetto che identifica il messaggio ricevuto del client
 	 * @return {void} 
 	 */
 	@Override
@@ -149,7 +149,7 @@ public class Receiver extends WebSocketServer{
 	 * nessun oggetto con questo requisito solleva un'eccezione di tipo IpNotFound
 	 * 
 	 * @method +searchConnection
-	 * @param {String} ip è l'oggetto che identifica un indirizzo ip da cercare
+	 * @param {String} ip e' l'oggetto che identifica un indirizzo ip da cercare
 	 * @return {WebSocket}
 	 * @exception {IpNotFound} sollevata se la ricerca ha esito negativo
 	 */

@@ -6,16 +6,18 @@
 *
 * Diary:
 *
-* Version |
-Date
-| Version | Date       | Developer | Changes
+* Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-04-12 | MF        | [+] Creazione classe    
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-12 |    MF     | [+] Creazione classe    
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Fornisce le operazioni disponibili allo strato superiore sotto forma di metodi pubblici, le quali
+* usano classi del package com.mytalk.server.storage.dao per avere accesso al database
 */
 
 package com.mytalk.server.data.storage;
@@ -29,10 +31,21 @@ import com.mytalk.server.exceptions.*;
 
 public class DataAccess implements IDataAccess{
 	
-	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi da inizializzare
+	 * 
+	 * @method +DataAccess
+	 */
 	public DataAccess(){}
 	
-	//verifica dati autenticazione
+	/**
+	 * Metodo che controlla se l'oggetto userObj ha parametri username e password esistenti e 
+	 * corrispondenti nel database. In caso positivo ritorna true altrimenti ritorna false
+	 * 
+	 * @method +authenticateClient
+	 * @param {User} userObj e' l'oggetto sul quale il metodo agisce
+	 * @return {boolean}
+	 */
 	private boolean authenticateClient(User userObj){
 		boolean esito=false;
 		UserDAO ud=new UserDAO();
@@ -52,7 +65,14 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 		
-	//verifica la presenza dell'ip nella tabella OnlineUser
+	/**
+	 * Cerca nel database un utente autenticato con ip passato e in caso positivo ritorna true, 
+	 * altrimenti ritorna false
+	 * 
+	 * @method +checkUserByIp
+	 * @param {String} ip e' l'indirizzo ip utilizzato per la ricerca 
+	 * @return {boolean}
+	 */
 	public boolean checkUserByIp(String ip){
 		OnlineUserDAO od=new OnlineUserDAO();
 		boolean online=false;
@@ -64,7 +84,15 @@ public class DataAccess implements IDataAccess{
 		return online;
 	}
 	
-	//verifica la presenza dell'username nella tabella OnlineUser
+	/**
+	 * Cerca nel database un utente autenticato con username name, ritornando true in caso 
+	 * positivo o false in caso negativo
+	 * 
+	 * @method +checkUserByName
+	 * @param {String} name e' il nome utilizzato per la ricerca
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @exception {AuthenticationFail} viene sollevata se fallisce l'autenticazione
+	 */
 	public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -82,7 +110,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//restituisce l'username associato ad un ip
+	/**
+	 * Cerca nel database un utente autenticato con ip passato e ritorna l'username associato
+	 * a quell'ip; se non lo trova solleva un'eccezione di tipo LogoutException
+	 * 
+	 * @method +getUsernameByIp
+	 * @param {String} ip e' l'indirizzo ip necessario per la ricerca
+	 * @return {String}
+	 * @exception {LogoutException} viene sollevata se l'username non risulta online
+	 */
 	public String getUsernameByIp(String ip) throws LogoutException{
 		OnlineUserDAO od=new OnlineUserDAO();
 		boolean check=od.checkIpConnected(ip);
@@ -97,7 +133,16 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//crea un account nel database
+	/**
+	 * Aggiunge un record di un utente con l'oggetto toCreate passato; solleva
+	 * UsernameAlreadyExisting se l'username dell'utente da creare non e' unico nel database
+	 * 
+	 * @method +createAccount
+	 * @param {User} toCreate e' l'oggetto che contiene i dati necessari per la creazione 
+	 * dell'account
+	 * @return {void}
+	 * @exception {UsernameAlreadyExisting} viene sollevata se l'username e' gia' presente
+	 */
 	public void createAccount(User toCreate) throws UsernameAlreadyExisting{
 		UserDAO ud=new UserDAO();
 		User existant=ud.get(toCreate.getUsername());
@@ -110,7 +155,26 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	// aggiunge un record sulla tabella OnlineUser
+	/**
+	 * Aggiorna nel database un record di un utente autenticato nel sistema con solo indirizzo 
+	 * ip corrispondente a user.ip, aggiungendo l'username in user.username; solleva un'eccezione
+	 *  UsernameNotCorresponding se l'utente che si autentica non e' lo stesso che ha inviato la 
+	 *  richiesta da autenticare; solleva IpNotLogged se l'utente non risulta gia' autenticato con 
+	 *  solo indirizzo ip; solleva UserAlreadyLogged se un utente sta cercando di autenticarsi 
+	 *  con un nome gia' autenticato con altro indirizzo ip; solleva IpAlreadyLogged se l'ip 
+	 *  dell'utente che si autentica e' gia' in uso da un altro utente
+	 *  
+	 *  @method +login
+	 *  @param {OnlineUser} user e' l'oggetto che contiene tutti i dati necessari per fare il login
+	 *  @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 *  @return {void}
+	 *  @exception {AuthenticationFail} viene sollevata se fallisce l'autenticazione
+	 *  @exception {UsernameNotCorresponding} viene sollevata se i dati di autenticazione e di login
+	 *  sono inconsistenti
+	 *  @exception {IpNotLogged} viene sollevata se l'ip del utente che fa il login non e' online
+	 *  @exception {UserAlreadyLogged} viene sollevata se l'utente e' gia' online
+	 *  @exception {IpAlreadyLogged} viene sollevata se l'ip dell'utente e' gia' online
+	 */
 	public void login(OnlineUser user, User authenticate) throws AuthenticationFail, UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -126,15 +190,15 @@ public class DataAccess implements IDataAccess{
 				boolean connected=od.checkIpConnected(userIp);
 				boolean userConnected=od.checkUsernameConnected(userName);
 				OnlineUser newOnline=od.get(userIp);
-				if(!connected){		//ip già connesso
+				if(!connected){		//ip gia' connesso
 					GenericDAO.closeSession();
 					throw new IpNotLogged();
 				}
-				else if(userConnected){	//username già connesso
+				else if(userConnected){	//username gia' connesso
 					GenericDAO.closeSession();
 					throw new UserAlreadyLogged();
 				}
-				else if(newOnline.getUsername()!=null){		//ip già in uso da un user
+				else if(newOnline.getUsername()!=null){		//ip gia' in uso da un user
 					GenericDAO.closeSession();
 					throw new IpAlreadyLogged();
 				}else{
@@ -149,7 +213,14 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//interroga il db e restituisce le liste dell'utente
+	/**
+	 * Restituisce le liste dell'utente authenticate che autentica la richiesta
+	 * 
+	 * @method +userLists
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List<ListName>}
+	 * @exception {AuthenticationFail} viene sollevata se fallisce l'autenticazione
+	 */
 	public List<ListName> userLists(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -164,7 +235,19 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//interroga il db e restituisce gli utenti di una lista
+	/**
+	 * Restituisce gli utenti della lista list di proprieta' dell'utente che ha autenticato 
+	 * la richiesta; solleva UsernameNotCorresponding se la lista passata non e' di proprieta' 
+	 * dell'utente autenticato
+	 * 
+	 * @method +getListUsers
+	 * @param {ListName} list e' l'oggetto che contiene i dati necessari della lista
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List<User>} 
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
+	 * l'username proprietario della lista non corrispondono 
+	 */
 	public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -193,7 +276,14 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//restituisce una lista di user che identifica tutti gli utenti OnlineUser
+	/**
+	 * Restituisce gli utenti registrati che risultano al momento autenticati con username
+	 * 
+	 * @method +getOnlineUsers
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List<User>}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 */
 	public List<User> getOnlineUsers(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -215,6 +305,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
+	/**
+	 * Restituisce gli utenti registrati che non risultano al momento autenticati con
+	 * username
+	 * 
+	 * @method +getOfflineUsers
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List<User>}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 */
 	public List<User> getOfflineUsers(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -228,7 +327,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//elimina dalla tabella OnlineUser il record corrispondente
+	/**
+	 * Elimina un record di un utente autenticato avente lo stesso indirizzo ip dell'oggetto 
+	 * user passato
+	 * 
+	 * @method +logout
+	 * @param {OnlineUser} user e' l'oggetto che contiene i dati necessari al logout
+	 * @return {void}
+	 * @exception {LogoutException} viene sollevata se l'utente che richiede il logout non e' online
+	 */
 	public void logout(OnlineUser user)throws LogoutException{
 		OnlineUserDAO od=new OnlineUserDAO();
 		String ip=user.getIp();
@@ -242,7 +349,20 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	// verifica che non sia già presente la lista per quell'user e in caso negativo aggiunge un record
+	/**
+	 * Crea un record di una lista utente corrispondente a list; solleva ListAlreadyExists 
+	 * se la lista che si sta creando esiste gia'; solleva UsernameNotCorresponding se la lista 
+	 * da creare non e' dell'utente che ha autenticato la richiesta
+	 * 
+	 * @method +listCreate
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista da creare
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {ListAlreadyExists} viene sollevata se la lista esiste gia'
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
+	 * l'username proprietario della lista non corrispondono
+	 */
 	public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -256,7 +376,7 @@ public class DataAccess implements IDataAccess{
 				ListName listFound=ld.getByNameOwner(list);
 				if (listFound!=null){
 					GenericDAO.closeSession();
-					throw new ListAlreadyExists(); //la lista esiste già con lo stesso nome
+					throw new ListAlreadyExists(); 
 				}else{
 					ld.save(list);
 					GenericDAO.closeSession();
@@ -268,7 +388,20 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	// verifica che sia presente la lista per quell'user e in caso positivo rimuove il record
+	/**
+	 * Elimina il record corrispondente alla lista list passata; solleva ListNotExisting se 
+	 * la lista che si sta eliminando non esiste; solleva UsernameNotCorresponding se la lista 
+	 * da eliminare non e' dell'utente che ha autenticato la richiesta
+	 * 
+	 * @method +listDelete
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista da eliminare
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {ListNotExisting} viene sollevata se la lista da eliminare non esiste
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
+	 * l'username proprietario della lista non corrispondono
+	 */
 	public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting,UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -294,7 +427,26 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//verifica che non sia già presente nella lista quell'user e in caso negativo lo inserisce nella lista
+	/**
+	 * Aggiunge l'utente con username user alla lista list; solleva UserAlreadyListed se l'utente 
+	 * da aggiungere e' gia' presente nella lista; solleva UserNotExisting se user non e' il nome 
+	 * di un utente valido o se e' il nome dell'utente proprietario della lista; solleva 
+	 * ListNotExisting se la lista a cui aggiungere l'utente non esiste; solleva
+	 *  UsernameNotCorresponding se la lista a cui aggiungere l'utente non e' di proprieta' 
+	 *  dell'utente che ha autenticato la richiesta
+	 *  
+	 *  @method +userListAdd
+	 *  @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista
+	 *  @param {String} user e' l'oggetto che identifica l'utente da aggiungere alla lista
+	 *  @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 *  @return {void}
+	 *  @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 *  @exception {UserAlreadyListed} viene sollevata se l'utente e' gia' presente nella lista
+	 *  @exception {UserNotExisting} viene sollevata se l'utente da inserire non esiste
+	 *  @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
+	 *  l'username proprietario della lista non corrispondono
+	 *  @exception {ListNotExisting} viene sollevata se la lista non esiste
+	 */
 	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -336,7 +488,25 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//verifica che sia presente la lista per quell'user e prende l'id della lista dalla tabella List e elimina un record dalla tabella UserList corrispondente all'id
+	/**
+	 * Rimuove l'utente con username user dalla lista list; solleva UserNotListed se l'utente da 
+	 * aggiungere non e' presente nella lista; solleva UserNotExisting se user non e' il nome 
+	 * di un utente valido; solleva ListNotExisting se la lista a cui rimuovere l'utente non 
+	 * esiste; solleva UsernameNotCorresponding se la lista a cui rimuovere l'utente non e' di 
+	 * proprieta' dell'utente che ha autenticato la richiesta
+	 * 
+	 * @method +userListRemove
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista
+	 * @param {String} user e' l'oggetto che contiene l'username da rimuovere dalla lista
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UserNotListed} viene sollevata se l'utente non e' presente nella lista
+	 * @exception {UserNotExisting} viene sollevata se l'utente non esiste
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e
+	 *  l'username proprietario della lista non corrispondono
+	 *@exception  {ListNotExisting} viene sollevata se la lista non esiste
+	 */
 	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed,UserNotExisting, UsernameNotCorresponding, ListNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -377,7 +547,16 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//aggiorna la tabella degli utenti online con l'utente non loggato
+	/**
+	 * Aggiunge un record di utente autenticato con solo indirizzo ip corrispondente all'oggetto
+	 * user passato; solleva IpAlreadyLogged se e' gia' presente un record con lo stesso indirizzo
+	 * ip
+	 * 
+	 * @method +loginAsAnonymous
+	 * @param {OnlineUser} user e' l'oggetto che contiene i dati necessari a fare il login anonimo
+	 * @return {void}
+	 * @exception {IpAlreadyLogged} viene sollevata l'ip e' gia' online
+	 */
 	public void loginAsAnonymous(OnlineUser user)throws IpAlreadyLogged{
 		OnlineUserDAO ou=new OnlineUserDAO();
 		String ip=user.getIp();
@@ -395,7 +574,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//restituisce un vettore di user che identifica la blacklist
+	/**
+	 * Restituisce gli utenti nella blacklist dell'utente corrispondente a authenticate
+	 * 
+	 * @method +getUserBlacklist
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari all'autenticazione
+	 * e a definire l'utente che richiede la blacklist
+	 * @return {List<User>}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 */
 	public List<User> getUserBlacklist(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -410,14 +597,32 @@ public class DataAccess implements IDataAccess{
 				listOfUser.add(ud.get(b.getUsername()));
 			}
 			GenericDAO.closeSession();
-			return listOfUser; // restituisce una lista di user
+			return listOfUser; 
 		}else{
 			GenericDAO.closeSession();
 			throw new AuthenticationFail();
 		}
 	}
 	
-	//aggiunge un record alla blacklist
+	/**
+	 * Aggiunge un record di un utente con username b.username alla blacklist dell'utente b.owner; 
+	 * solleva UserAlreadyBlacklisted se il record in questione esiste gia'; solleva 
+	 * UsernameNotCorresponding se b.owner non corrisponde all'username dell'utente che ha 
+	 * autenticato la richiesta; solleva UserNotExisting se il parametro b.username non corrisponde 
+	 * all'username di un utente esistente
+	 * 
+	 * @method +blacklistAdd
+	 * @param {Blacklist} b e' l'oggetto che contiene i dati necessari a fare l'aggiunta alla 
+	 * blacklist
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UserAlreadyBlacklisted} viene sollevata se l'utente e' gia' nella blacklist
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e
+	 * l'username che ne fa richiesta non corrispondono
+	 * @exception {UserNotExisting} viene sollevata se l'utente da aggiungere alla blacklist
+	 * non esiste
+	 */
 	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -451,7 +656,21 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 		
-	//verifica che sia presente nella lista quell'user rimuove un record dalla tabella Blacklist
+	/**
+	 * Rimuove un record di un utente con username b.username dalla blacklist dell'utente b.owner;
+	 *  solleva UserNotBlacklisted se il record in questione non esiste; solleva 
+	 *  UsernameNotCorresponding se b.owner non corrisponde all'username dell'utente che ha 
+	 *  autenticato la richiesta
+	 *  
+	 *  @method +blacklistRemove
+	 *  @param {Blacklist} b e' l'oggetto che contiene i dati dell'utente da togliere dalla blacklist
+	 *  @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 *  @return {void}
+	 *  @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 *  @exception {UserNotBlacklisted} viene sollevata se l'utente non e' presente nella blacklist
+	 *  @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e
+	 * l'username che ne fa richiesta non corrispondono
+	 */
 	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted, UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -478,7 +697,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 		
-	//restituisce un vector di oggetti call
+	/**
+	 * restituisce una lista di oggetti Call che rappresentano le chiamate in cui l'utente 
+	 * authenticate figura come caller o receiver
+	 * 
+	 * @method +getCalls
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List<Call>}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 */
 	public List<Call> getCalls(User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -493,7 +720,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	// aggiunge una chiamata alla tabella Call(nessun controllo poiché non ci sarà mai una chiamata uguale)
+	/**
+	 * Aggiunge un record di una chiamata corrispondente all'oggetto call passato
+	 * 
+	 * @method +addCall
+	 * @param {Call} callObj e' l'oggetto che contiene i dati relativi alla chiamanta da aggiungere
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 */
 	public void addCall(Call callObj, User authenticate) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -507,7 +742,14 @@ public class DataAccess implements IDataAccess{
 	}
 	
 	
-	// cancella un record dalla tabella User con il metodo delete di hibernate
+	/**
+	 * Elimina il record di un utente corrispondente all'oggetto userObj passato
+	 * 
+	 * @method +deleteAccount
+	 * @param {User} userObj e' l'oggetto che contiene i dati dell'account da eliminare
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 */
 	public void deleteAccount(User userObj) throws AuthenticationFail{
 		boolean authenticated=authenticateClient(userObj);
 		if(authenticated==true){
@@ -521,7 +763,20 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//cambia il valore della pwd sulla tabella User
+	/**
+	 * Cambia il valore del parametro password dell'utente corrispondente all'oggetto passato 
+	 * authenticate con il valore userObj.password; solleva UsernameNotCorresponding se l'utente 
+	 * che ha autenticato la richiesta non e' lo stesso a cui cambiare la password
+	 * 
+	 * @method +changePassword
+	 * @param {User} userObj e' l'oggetto che contiene i dati dell'utente al quale cambiare 
+	 * la password
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
+	 * l'username del cambio password non corrispondono
+	 */
 	public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -543,7 +798,24 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//cambia il nome di una lista utente
+	/**
+	 * Rinomina la lista list con un nuovo nome name; solleva UsernameNotCorresponding se
+	 * la lista non e' di proprieta' dell'utente che ha autenticato la richiesta; solleva 
+	 * ListNotExisting se la lista passata, a cui cambiare nome, non esiste; solleva 
+	 * ListAlreadyExists se la lista per quell'utente con quel nome esiste gia'
+	 * 
+	 * @method +renameList
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista da rinominare
+	 * @param {String} name e' l'oggetto che contiene il nuovo nome della lista
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
+	 * l'username del proprietario della lista non corrispondono
+	 * @exception {ListNotExisting} viene sollevata se la lista da rinominare non esiste
+	 * @exception {ListAlreadyExists} viene sollevata se il nuovo nome corrisponde ad un'altra
+	 * lista di proprieta' dello stesso utente
+	 */
 	public void renameList(ListName list, String name, User authenticate) throws AuthenticationFail,UsernameNotCorresponding,ListNotExisting,ListAlreadyExists{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
@@ -577,7 +849,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//metodo di utilita` per la logic: ritorna un user passando il suo id
+	/**
+	 * Ritorna l'oggetto user avente parametro id uguale a quello passato; solleva IdNotFound 
+	 * se non esiste un record avente l'id cercato
+	 * 
+	 * @method +getUserById
+	 * @param {int} id e' il valore dell'id dell'utente da cercare
+	 * @return {User}
+	 * @exception {IdNotFound} viene sollevata se l'id non e' associato a nessun utente registrato
+	 */
 	public User getUserById(int id) throws IdNotFound{
 		UserDAO ud=new UserDAO();
 		User requested=ud.getById(id);
@@ -590,7 +870,16 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//metodo di utilita` per la logic: ritorna l'ip di un utente
+	/**
+	 * Ritorna l'indirizzo ip dell'utente autenticato con username username; solleva UserNotLogged 
+	 * se l'utente username non e' autenticato
+	 * 
+	 * @method +getUserIp
+	 * @param {String} username e' l'oggetto che contiene i dati relativi all'utente di cui cercare 
+	 * l'indirizzo ip
+	 * @return {String}
+	 * @exception {UserNotLogged} viene sollevata se l'utente non e' autenticato
+	 */
 	public String getUserIp(String username)throws UserNotLogged{
 		OnlineUserDAO od=new OnlineUserDAO();
 		if(username.isEmpty()){
@@ -608,7 +897,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//metodo di utilita` per la logic: ritorna l'id di un utente
+	/**
+	 * Ritorna l'id dell'utente con username username; solleva UserNotExisting se non esiste un
+	 * utente con tale username
+	 * 
+	 * @method +getIdFromUsername
+	 * @param {String} username e' l'oggetto che contiene i dati dell'utente di cui trovare l'id
+	 * @return {int}
+	 * @exception {UserNotExisting} viene sollevata se l'utente non esiste
+	 */
 	public int getIdFromUsername(String username)throws UserNotExisting{
 		UserDAO ud=new UserDAO();
 		User user=ud.get(username);
@@ -622,7 +919,15 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	//logout da autenticato ad anonimo
+	/**
+	 * Imposta a null il valore username di un record di un utente autenticato corrispondente a
+	 * user; solleva LogoutException se non esiste un record corrispondente a user
+	 * 
+	 * @method +logoutToAnonymous
+	 * @param {OnlineUser} user e' l'oggetto che contiene i dati necessarie per il logout ad anonimo
+	 * @return {void}
+	 * @exception {LogoutException} viene sollevata se l'utente non e' online
+	 */
 	public void logoutToAnonymous(OnlineUser user)throws LogoutException{
 		OnlineUserDAO od=new OnlineUserDAO();
 		String ip=user.getIp();
@@ -637,6 +942,17 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
+	/**
+	 * 
+	 * Verifica se esiste un record corrispondente all'oggetto passato blacklistObj e in caso 
+	 * postivo restituisce true, altrimenti restituisce false
+	 * 
+	 * @method +checkBlacklist
+	 * @param {Blacklist} blacklistObj e' l'oggetto che contiene i dati dell'utente della blacklist
+	 * da verificare
+	 * @return {boolean}
+	 * 
+	 */
 	public boolean checkBlacklist(Blacklist blacklistObj){
 		BlacklistDAO bd=new BlacklistDAO();
 		String owner=blacklistObj.getOwner();

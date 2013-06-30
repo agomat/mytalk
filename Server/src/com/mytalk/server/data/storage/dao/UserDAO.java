@@ -7,12 +7,16 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-04-15 | MF        | [+] Creazione classe e definizione metodi  
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-15 |    MF     | [+] Creazione classe e definizione metodi  
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Classe che offre operazioni di lettura e scrittura sul database riguardanti la tabella degli
+* utenti registrati nel sistema
 */
 
 package com.mytalk.server.data.storage.dao;
@@ -25,15 +29,33 @@ import org.hibernate.Transaction;
 import com.mytalk.server.data.model.User;
 
 public class UserDAO extends GenericDAO{
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 */
 	public UserDAO(){}
 	
-	//Aggiunge un oggetto User ricevuto in input
+	/**
+	 * Salva nel database il record corrispondente all'oggetto userObj passato
+	 * 
+	 * @method +save
+	 * @param {User} userObj e' l'oggetto utilizzato da Hibernate per il salvataggio nel database
+	 * @return {void}
+	 */
 	public void save(User userObj){
 		Transaction t=session.beginTransaction();
 		session.save(userObj);
 		t.commit();
 	}
-		
+	
+	/**
+	 * Aggiorna nel database il record avente chiave primaria uguale a quella di userObj usando
+	 *  gli attributi in userObj
+	 *  
+	 *  @method +update
+	 *  @param {User} userObj e' l'oggetto utilizzato da Hibernate per fare l'aggiornamento del
+	 *  database
+	 *  @return {void}
+	 */
 	public void update(User userObj){
 		Transaction t=session.beginTransaction();
 		User userEntity=(User) session.get(User.class, userObj.getUsername());
@@ -56,7 +78,15 @@ public class UserDAO extends GenericDAO{
 		t.commit();
 	}	
 	
-	//Ottenere un oggetto di tipo Blacklist
+	/**
+	 * Ritorna l'oggetto User avente chiave primaria la stringa primaryKey; se non è presente
+	 *  nel database tale record ritorna un oggetto User=null
+	 *  
+	 *  @method +get
+	 *  @param {String} primaryKey e' il valore utilizzato da Hibernate per ottenere una determinata 
+	 * entita' dal database
+	 *  @return {User}
+	 */
 	public User get(String primaryKey){
 		Transaction t=session.beginTransaction();
 		User userEntity=(User) session.get(User.class,primaryKey);
@@ -64,7 +94,13 @@ public class UserDAO extends GenericDAO{
 		return userEntity;
 	}
 	
-	//Restituire tutti gli oggetti di tipo User
+	/**
+	 * Ritorna una lista contenente tutti gli oggetti User corrispondenti a record nel database, 
+	 * ovvero ritorna tutti gli utenti registrati
+	 * 
+	 * @method +getAllUsers
+	 * @return {List<User>}
+	 */
 	public List<User> getAllUsers(){
 		Transaction t=session.beginTransaction();
 		List<User> listUsers=null;
@@ -75,7 +111,14 @@ public class UserDAO extends GenericDAO{
 		return listUsers;
 	}
 	
-	//restituisce gli oggetti User corrispondenti agli User Offline
+	/**
+	 * Ritorna una lista conentente gli oggetti User corrispondenti agli utenti che non risultano 
+	 * al momento autenticati, cioè il cui username non compare in nessun record della tabella 
+	 * degli utenti online
+	 * 
+	 * @method +getOfflineUsers
+	 * @return {List<User>}
+	 */
 	public List<User> getOfflineUsers(){
 		Transaction t=session.beginTransaction();
 		List<User> listUsers=null;
@@ -86,13 +129,27 @@ public class UserDAO extends GenericDAO{
 		return listUsers;
 	}
 	
-	//Cancella un oggetto Blacklist passato in input
+	/**
+	 * Elimina dal database il record avente chiave primaria uguale a quella di userObj
+	 * 
+	 * @method +delete
+	 * @param {User} userObj e' l'oggetto utilizzato da Hibernate per eliminare un record dal 
+	 * database
+	 * @return {void}
+	 */
 	public void delete(User userObj){
 		Transaction t=session.beginTransaction();
 		session.delete(userObj);
 		t.commit();
 	}
 	
+	/**
+	 * Ritorna l'oggetto User avente attributo id uguale all'intero passato; metodo di utilità
+	 * 
+	 * @method +getById
+	 * @param {int} id e' il valore utilizzato per ottenere l'utente con il corrispondente id
+	 * @return {User}
+	 */
 	public User getById(int id){
 		Transaction t=session.beginTransaction();
 		SQLQuery query=session.createSQLQuery("SELECT * FROM Users WHERE id='"+id+"'");

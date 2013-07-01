@@ -75,8 +75,8 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
     ARI.req = this.get('name');
     ARI.info = null;//JSON.stringify(credenzials);
     
-    var wasSent = socket.send( JSON.stringify(ARI) );
-    onSent( this.getProcessorName(), wasSent );
+    socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), true );
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

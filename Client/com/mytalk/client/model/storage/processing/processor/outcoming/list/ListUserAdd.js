@@ -94,8 +94,8 @@ MyTalk.processor.ListUserAdd = Ember.Object.extend(MyTalk.AbstractOutProcessorPr
     
     ARI.info = JSON.stringify( ARI.info );
 
-    var wasSent = socket.send( JSON.stringify(ARI) );
-    onSent( this.getProcessorName(), wasSent );
+    socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), true );
   },
 
   getProcessorName: function () {

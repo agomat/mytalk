@@ -91,8 +91,8 @@ MyTalk.processor.BlackListRemove = Ember.Object.extend(MyTalk.AbstractOutProcess
     
     ARI.info = JSON.stringify( ARI.info );
 
-    var wasSent = socket.send( JSON.stringify(ARI) );
-    onSent( this.getProcessorName(), wasSent );
+    socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), true );
   },
   
   getProcessorName: function () {

@@ -76,8 +76,8 @@ MyTalk.processor.CreateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
     
     ARI.info = JSON.stringify(info);
     
-    var wasSent = socket.send( JSON.stringify(ARI) );
-    onSent( this.getProcessorName(), wasSent );
+    socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), true );
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

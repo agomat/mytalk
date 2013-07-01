@@ -40,6 +40,7 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
   */
   process: function(ari) {
     var info = JSON.parse(ari.info);
+    var userId = info.list.id;
     var username = info.list.username;
     var myUsername = MyTalk.PersonalData.find(0).get('username');
     if (myUsername && myUsername != username) {
@@ -47,6 +48,7 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
       store.loadMany(MyTalk.User, info);
       var adapter = store.adapterForType(MyTalk.User);
       adapter.didFindMany(store, MyTalk.User, info);
+      MyTalk.List.find(0).get('users').addObject( MyTalk.User.find(userId) );
     }
 
   },

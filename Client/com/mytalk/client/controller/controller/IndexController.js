@@ -65,7 +65,6 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   */
  
   login: function (username, password) {
-    
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct( "Login" );
     processor.process({

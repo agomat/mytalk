@@ -61,6 +61,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * tutti gli utenti la cui proprietà $unmatched$ è settata a $false$ mettendo tali utenti in un array
    * chiamato _fileteredUsers_, tale array viene ritornato alla vista che mostrandolo, 
    * stampa l'elenco degli utenti della lista corrente.
+   * Il metodo inoltre ordina gli utenti in base alla proprietà $online$, gli utenti online saranno messi in testa
+   * i rimamenti in coda.
    *
    * @method +filteredUsers                                     
    * @return {Array<User>} 
@@ -73,6 +75,11 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       if(u.get('unmatched') == false)
         filteredUsers.push(u);
     });
+    
+    filteredUsers.sort(function(a,b) {
+      return b.get('online') - a.get('online');
+    });
+    
     return filteredUsers;
   }.property('content.@each.unmatched').cacheable(),
   

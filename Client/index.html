@@ -282,6 +282,7 @@
     <script type="text/x-handlebars" data-template-name="users">  
       <ul id="userlist"> 
         {{#collection Ember.ListView contentBinding="controller.filteredUsers" height=498 rowHeight=60}}
+        
          <li>
 
             <div {{bindAttr class="online:online:offline"}}></div>
@@ -333,8 +334,11 @@
             {{/if}}
             </ul>
           </li>
+        
         {{/collection}}
+
       </ul>
+
       
        <div id="adduser" class="blanket">
        {{controller.loadSelect}}

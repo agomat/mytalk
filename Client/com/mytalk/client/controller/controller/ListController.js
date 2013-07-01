@@ -1,7 +1,8 @@
 /**
 * Filename: ListController.js
 * Package: com.mytalk.client.controller.controller
-* Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
+* Dependencies: com.mytalk.client.controller.controller.LoggedController
+*               com.mytalk.client.model.storage.processing.ProcessorFactory
 *               com.mytalk.client.model.modelstruct.List
 *               com.mytalk.client.model.modelstruct.User
 * Author: Campese Stefano
@@ -24,6 +25,7 @@
 
 MyTalk.ListController = Ember.ObjectController.extend({
   //sortProperties: ['name'], TODO
+  needs:['logged'],
 
   /**
    * Questo metodo è deputato all'eliminazione di una lista. 
@@ -32,6 +34,8 @@ MyTalk.ListController = Ember.ObjectController.extend({
    * il metodo con l'eliminazione della lista invocando l'istanza del processore creata in precedenza e 
    * delegtata dell'eliminazione della lista.
    * Terminata l'operazione il metodo aggiorna il template mostrando la lista $Tutti i contatti$.
+   * Il metodo infine deve richiare il metodo $updateSelect$ del $LoggedController$ al fine di aggiornare 
+   * la select nella quale si selezionano le liste nelle quali aggiungere gli utenti.
    *
    * @method +deleteList                                     
    * @return {Void} 
@@ -49,6 +53,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
         listId: listId,
         name: listName
       });
+      this.get('controllers.logged').updateSelect();
       context.replaceWith('list', MyTalk.List.find(0) );
     }
   },
@@ -61,6 +66,8 @@ MyTalk.ListController = Ember.ObjectController.extend({
    * in caso affermativo il metodo si occupa di creare un'istanza del processore delegato alla rinominazione della lista. 
    * Nel caso in cui il nuovo nome inserito non sia valido (il nome esiste già o è nullo) viene mostrato all'utente un messaggio d'errore con un alert JavaScript
    * impedendo cosi il proseguimento dell'operazione.
+   * Il metodo infine deve richiare il metodo $updateSelect$ del $LoggedController$ al fine di aggiornare 
+   * la select nella quale si selezionano le liste nelle quali aggiungere gli utenti.
    *
    * @method +renameList                                     
    * @return {Void} 
@@ -88,7 +95,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
           newName: newName,
           oldName: listName,
         });
-
+        this.get('controllers.logged').updateSelect();
       }
     else {
       alert("Esiste già una lista con quel nome");

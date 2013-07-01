@@ -354,7 +354,7 @@
                 <p> Segli a quale lista aggiungere l`utente {{ controller.userName }}</p>
                 <label for="search_list" hidden>Scegli la lista</label>
                   {{view Ember.Select 
-                    contentBinding="controller.controllers.logged.content"
+                    contentBinding="controller.controllers.logged.filteredList"
                     optionValuePath="content.id"
                     optionLabelPath="content.name"
                     prompt="Seleziona un lista"

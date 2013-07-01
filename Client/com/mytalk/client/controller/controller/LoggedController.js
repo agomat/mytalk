@@ -22,6 +22,17 @@
 
 MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
+
+ /**
+   * Proprietà che contiene nomi e id delle liste nelle quali mettere un utente, questà porpietà esclude sia 
+   * la $Blacklist$ che la lista $Tutti i contatti$.
+   * @property +fiteredList          
+   * @type {Array of Object}                   
+   *
+  */
+
+  filteredList:[],
+ 
   
   /**
    * Proprietà che contiene l'id dell'ultima lista creato o inserita.
@@ -29,7 +40,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * @type {Number}                   
    *
   */
-  
+
   lastListId: null,
   
   /**
@@ -59,15 +70,59 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
     }); 
     this.set('lastListId',ids.get('lastObject'));
   }.observes(this),
-
-  c:function(){
-    var f=this.get('content');
-    var i=0;
-    f.forEach(function(l){
-      console.log(l.get('online')+" "+i+"\n");
-      i++;
+ 
+ /**
+   * Questo metodo è deputato alla ricerca di una lista.
+   * Il metodo riceve come argomento l'id della lista da cercare, se la ricarca da esito negativo il metodo
+   * ritornerà $falso$, $vero$ altrimenti.
+   *
+   * @param {Number} numero dell'id della lista cercare             
+   * @method -searchList                                     
+   * @return {Boolean} 
+  */
+  
+  searchList:function(idx){
+    var test = this.get('content');
+    var found=false;
+    test.forEach(function(t){
+      if(t.get('id')==idx){
+        found=true;
+      }
     });
+    return found;
+  },
+  
+  /**
+   * Questo metodo è deputato all'aggiornamento della proprietà $filteredList$, tale proprietà è necessaria 
+   * alla select di aggiunta utente ad una lista.
+   * Il metodo si occupa di aggiornare la propietà ogni qual volta che una lista viene creata,eliminata o rinominata
+   * inoltre, aggiorna la propietà alla prima volta che avviene il login.
+   * Il metoddo riceve due argomenti $idx$ e $na$ questi due argomenti sono necessari quando
+   * questo metodo viene richiamato dall'aggiunta di una nuova lista.
+   *
+   * @param {Number} numero dell'id della lista creata
+   * @param {String} nome della lista creata
+   * @method +updateSelect                                     
+   * @return {Void} 
+  */
+  
+  updateSelect:function(idx, na){
+    var c=this.get("content");
+    var item=new Array;
+    c.forEach(function(i){
+      if(i.get('id') >1){
+        item.push(i);
+      }
+    });
+    if(idx!=null && na!=null){
+      if(!this.searchList(idx)){
+        var obj=Ember.Object.create({id:idx,name:na});
+        item.push(obj);
+      }
+    }
+    this.set('filteredList',item);
   }.observes(this),
+
   /**
    * Questo metodo è deputato alla creazione di una nuova lista.
    * Il metodo si occupa di controllare che il nome della nuova lista che si intende creare sia valido 
@@ -76,6 +131,8 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * al quale sarà delegato il lavoro di creare la nuova lista.
    * Nel caso in cui il nome non sia valido il metodo 
    * mostra un messaggio di errore tramite un alert di JavaScript.
+   * Il metodo infine deve richiare il metodo $updateSelect$ del controller al fine di aggiornare 
+   * la select nella quale si selezionano le liste nelle quali aggiungere gli utenti.
    *
    * @method +createList                                     
    * @return {Void} 
@@ -103,6 +160,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
           id: newId,
           name: newName
         });
+        this.updateSelect(newId,newName);
       }
       else {
         alert("Esiste già una lista con questo nome");

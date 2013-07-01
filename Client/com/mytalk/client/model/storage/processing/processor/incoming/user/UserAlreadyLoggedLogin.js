@@ -38,7 +38,7 @@ MyTalk.processor.UserAlreadyLoggedLogin = Ember.Object.extend(MyTalk.AbstractInP
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+    alert("Utente già loggato con questo username");
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

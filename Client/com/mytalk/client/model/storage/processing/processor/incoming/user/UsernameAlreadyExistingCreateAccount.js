@@ -38,7 +38,7 @@ MyTalk.processor.UsernameAlreadyExistingCreateAccount = Ember.Object.extend(MyTa
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+    alert("L'username scelto è già presente nel sistema");
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

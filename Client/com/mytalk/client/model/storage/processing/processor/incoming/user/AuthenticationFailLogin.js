@@ -25,7 +25,7 @@ MyTalk.processor.AuthenticationFailLogin = Ember.Object.extend(MyTalk.AbstractIn
   name: 'AuthenticationFailLogin',
 
   process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+    alert("Username o password non validi");
   },
   
   getProcessorName: function () {

@@ -39,7 +39,7 @@ MyTalk.processor.UnsuccessfulAcceptCall = Ember.Object.extend(MyTalk.AbstractInP
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+    alert("L'utente desiderato è attualmente offline");
   },
   
   /**

@@ -44,6 +44,7 @@ MyTalk.processor.SuccessfulRefuseCall = Ember.Object.extend(MyTalk.AbstractInPro
     RTCmanager = MyTalk.CallState.get('isBusy').get('callData').RTCmanager;
     RTCmanager.closeConnection(function(){});
     MyTalk.CallState.send('beingFree');
+    alert("L'utente desiderato è attualmente offline");
   },
   
   /**

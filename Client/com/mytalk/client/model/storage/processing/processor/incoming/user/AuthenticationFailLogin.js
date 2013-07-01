@@ -25,6 +25,7 @@ MyTalk.processor.AuthenticationFailLogin = Ember.Object.extend(MyTalk.AbstractIn
   name: 'AuthenticationFailLogin',
 
   process: function (ari) {
+    $('#loading_bar').css('visibility','hidden');
     alert("Username o password non validi");
   },
   

@@ -37,6 +37,7 @@ MyTalk.processor.UsernameCorrespondingExistingLogin = Ember.Object.extend(MyTalk
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
+    $('#loading_bar').css('visibility','hidden');
     alert("Utente già loggato con questo username");
   },
   /**

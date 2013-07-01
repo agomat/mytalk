@@ -38,8 +38,8 @@ MyTalk.processor.UserAlreadyLoggedLogin = Ember.Object.extend(MyTalk.AbstractInP
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
+    $('#loading_bar').css('visibility','hidden');
     alert("Tentativo di connessione fallito, utente già connesso al sistema");
-    document.getElementById('loading_bar').style.visibility="hidden";
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

@@ -60,6 +60,14 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
     this.set('lastListId',ids.get('lastObject'));
   }.observes(this),
 
+  c:function(){
+    var f=this.get('content');
+    var i=0;
+    f.forEach(function(l){
+      console.log(l.get('online')+" "+i+"\n");
+      i++;
+    });
+  }.observes(this),
   /**
    * Questo metodo è deputato alla creazione di una nuova lista.
    * Il metodo si occupa di controllare che il nome della nuova lista che si intende creare sia valido 

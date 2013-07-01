@@ -99,10 +99,20 @@
 }
 
 #button_login{
+  float: right;
   font-size: 1.1em;
   height: 30px;
-  margin-left:155px;
+  margin:6px 5px 0 0;
   width:80px;
+}
+
+#loading_bar{
+  width:100px;
+  color:#429215;
+  font-style:italic;
+  visibility: hidden ;
+  margin: 7px 0 4px 0;
+  font-size: 0.8em;
 }
 
 .separator{

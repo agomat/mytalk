@@ -22,7 +22,32 @@
 
 MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
+  
+  /**
+   * Proprietà che contiene l'id dell'ultima lista creato o inserita.
+   * @property -lastListId           
+   * @type {Number}                   
+   *
+  */
+  
   lastListId: null,
+  
+  /**
+   * Questo metodo è deputato all'aggiornamento dell'ultimo id inserito di una lista, tale metodo infatti 
+   * si occupa di osservare il model al fine di permettere il corretto inserimento di una nuova lista, 
+   * senza cosi creare incoerenze o sen za rischiare di sovrascrivere una lista già esistente con quella nuova.
+   * per far ciò l metodo aggiorna la proprietà lastListId, campo dati in cui viene mantenuto aggiornato 
+   * l'Id dell'ultima lista.
+   * Il metodo scorre l'intero gruppo di liste prendendo l'id di ognuna e ponenedolo in array di sopporto, 
+   * questa operazione è resa necessaria al fine di poter odrinare l'array di supporto in ornide crescente 
+   * per poi prelevare l'utlimo Id che siucuramente sarà l'ultimo inserito.
+   * Fatto questo il metodo aggiorna il campo dati lastListId.
+   
+   *
+   * @method -updateLastListId                                     
+   * @return {Void} 
+  */
+
   updateLastListId:function(){
     var list = this.get('content');
     var ids = [];

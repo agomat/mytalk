@@ -204,14 +204,8 @@ public interface IDataAccess{
 			 * @exception {AutneticationFail}
 			 */
 			public void deleteAccount(User userObj) throws AuthenticationFail;
-			/**
-			 * Metodo implementato dalla classe che estende tale interfaccia
-			 * 
-			 * @method +changePassword
-			 * @return {void}
-			 * @exception {AuthenticationFail,UsernameNotCorresponding}
-			 */
-			public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding;
+			
+			public void updateAccount(User user, User authenticate)throws AuthenticationFail,UsernameNotCorresponding;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 

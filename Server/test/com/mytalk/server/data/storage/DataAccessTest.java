@@ -635,30 +635,32 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkChangePassword()throws AuthenticationFail{
+	public void checkUpdateAccount()throws AuthenticationFail{
+		User toChange=new User("user0","pwd","user0@prova.com","nome","cognome","emailhashNUOVO");
 		User toAuth=new User("user0","user0",null,null,null,null);
-		User toChange=new User("user0","password",null,null,null,null);
 		
-		//test di cambio password
+		//test di cambio di tutti i campi permessi
 		try{
-			dataAccess.changePassword(toChange, toAuth);
+			dataAccess.updateAccount(toChange, toAuth);
 			UserDAO ud=new UserDAO();
 			User u=ud.get(toAuth.getUsername());
-			String pwdChanged=u.getPassword();
-			String pwdToChange=toChange.getPassword();
-			assertEquals("la password non e` stata aggiornata",pwdToChange,pwdChanged);
-		}catch(UsernameNotCorresponding exc){
-			fail("non e` stata trovata la corrispondenza username da autenticare-username a cui cambiare password");
+			assertEquals("email non aggiornata",u.getEmail(),toChange.getEmail());
+			assertEquals("hash della email non aggiornato",u.getEmailHash(),toChange.getEmailHash());
+			assertEquals("password non aggiornata",u.getPassword(),toChange.getPassword());
+			assertEquals("nome non aggiornato",u.getName(),toChange.getName());
+			assertEquals("cognome non aggiornato",u.getSurname(),toChange.getSurname());
+		}catch(UsernameNotCorresponding e){
+			fail("non e` stata trovata la corrispondenza username da autenticare-username a cui cambiare dati");
 		}
 	}
 	
 	@Test(expected=UsernameNotCorresponding.class)
-	public void checkChangePasswordFail()throws AuthenticationFail,UsernameNotCorresponding{
+	public void checkUpdateAccountFail()throws AuthenticationFail,UsernameNotCorresponding{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		User toChange=new User("user11","user11",null,null,null,null);
 		
-		//test di cambio password di un altro user
-		dataAccess.changePassword(toChange, toAuth);
+		//test di cambio dati di un altro user
+		dataAccess.updateAccount(toChange, toAuth);
 	}
 	
 	@Test

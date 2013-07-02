@@ -763,33 +763,31 @@ public class DataAccess implements IDataAccess{
 		}
 	}
 	
-	/**
-	 * Cambia il valore del parametro password dell'utente corrispondente all'oggetto passato 
-	 * authenticate con il valore userObj.password; solleva UsernameNotCorresponding se l'utente 
-	 * che ha autenticato la richiesta non e' lo stesso a cui cambiare la password
-	 * 
-	 * @method +changePassword
-	 * @param {User} userObj e' l'oggetto che contiene i dati dell'utente al quale cambiare 
-	 * la password
-	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
-	 * @return {void}
-	 * @exception {AuthenticationFail} viene sollevata quando fallisce l'autenticazione
-	 * @exception {UsernameNotCorresponding} viene sollevata se l'username di autenticazione e 
-	 * l'username del cambio password non corrispondono
-	 */
-	public void changePassword(User userObj, User authenticate) throws AuthenticationFail,UsernameNotCorresponding{
+	public void updateAccount(User user, User authenticate) throws AuthenticationFail, UsernameNotCorresponding{
 		boolean authenticated=authenticateClient(authenticate);
 		if(authenticated==true){
 			String usernameAuth=authenticate.getUsername();
-			String usernameNew=userObj.getUsername();
+			String usernameNew=user.getUsername();
 			if(!usernameAuth.equals(usernameNew)){
 				GenericDAO.closeSession();
 				throw new UsernameNotCorresponding();
 			}else{
 				UserDAO ud=new UserDAO();
-				User u=ud.get(usernameNew);
-				u.setPassword(userObj.getPassword());
-				ud.update(u);
+				User dbUser=ud.get(usernameNew);
+				if(!dbUser.getEmail().equals(user.getEmail())){
+					dbUser.setEmail(user.getEmail());
+					dbUser.setEmailHash(user.getEmailHash());
+				}
+				if(!dbUser.getPassword().equals(user.getPassword())){
+					dbUser.setPassword(user.getPassword());
+				}
+				if(!dbUser.getName().equals(user.getName())){
+					dbUser.setName(user.getName());
+				}
+				if(!dbUser.getSurname().equals(user.getSurname())){
+					dbUser.setSurname(user.getSurname());
+				}
+				ud.update(dbUser);
 				GenericDAO.closeSession();
 			}
 		}else{

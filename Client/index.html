@@ -192,7 +192,7 @@
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ChatMessage.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/CallingController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/IpcallController.js"></script>
-    <script type="text/javascript" src="com/mytalk/client/controller/controller/Profile.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/controller/ProfileController.js"></script>
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
@@ -417,7 +417,7 @@
                   <li><img src="assets/img/users.png" alt="" /> {{#linkTo 'list'}} Visualizza i miei contatti {{/linkTo}}</li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="assets/img/door_out.png" alt=""/> <a href=".">Esci</a></li>
+                  <li><img src="assets/img/door_out.png" alt=""/> <a {{action "schifo"}} href=".">Esci</a></li>
                 </ul>
               </div>
             </div>
@@ -631,6 +631,7 @@
                 </li>
               </ul>
             </fieldset>
+             <button type="button" {{action "deleteAccount"}}class="common_button" id="button_signup">Delete</button>
           {{/view}}
       </div>
     </script>

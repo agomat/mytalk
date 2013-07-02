@@ -32,6 +32,7 @@ MyTalk.CallingRoute = Ember.Route.extend({
     Ember.run.later(this, function() {
     var controller = this.controllerFor('calling');
     console.log(controller.get('isIncomingCall'));
+    controller.set('messages',[]);
     if(controller.get('isIncomingCall') === false) {
       controller.call(controller.get('content'));
     }

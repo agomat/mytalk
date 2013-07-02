@@ -72,6 +72,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   messages: [],
 
+  stats:MyTalk.CallInfo.create({}),
+
+  bitrate:null,
+
+  r:null,
+
   /**
    * Proprietà che contiente la connessione peer
    * @property -RTCmanager          
@@ -139,6 +145,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
     
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
+    this.getStats();
   },
   
   /**
@@ -202,6 +209,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
+    this.getStats();
   },
 
   /**
@@ -224,7 +232,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     MyTalk.CallState.get('isBusy').set('accepted', true);
     if(this.get('isConnected')) {
       this.RTCmanager.closeConnection(this.onClose);
-      this.set('messages',[]);
+      
 //       MyTalk.CallState.send('beingFree');
     }
     else {
@@ -282,6 +290,96 @@ MyTalk.CallingController = Ember.ObjectController.extend({
         },300);
     }, 300);
      
+  },
+
+  getStats: function(connection) {
+// Display statistics
+var bytePrev = 0;
+var timestampPrev = 0;
+
+var context = this;
+
+var statCollector = setInterval(function() {
+  var display = function(str) {
+    context.set('bitrate',str);
+  }
+  console.log('stats');
+      context.RTCmanager.pc.getStats(function(stats) {
+        var statsString = '';
+        var results = stats.result();
+        var bitrateText = 'No bitrate stats';
+        for (var i = 0; i < results.length; ++i) {
+          var res = results[i];
+          statsString += '<h3>Report ';
+          statsString += i;
+          statsString += '</h3>';
+            statsString += dumpStats(res,context);
+            // The bandwidth info for video is in a type ssrc stats record
+            // with googFrameHeightReceived defined.
+            // Should check for mediatype = video, but this is not
+            // implemented yet.
+            if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
+              var bytesNow = res.stat('bytesReceived');
+              if (timestampPrev > 0) {
+                 var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
+                    (res.timestamp - timestampPrev));
+                 bitrateText = bitRate + ' kbits/sec';
+              }
+              timestampPrev = res.timestamp;
+              bytesPrev = bytesNow;
+            }
+          
+        }
+        document.getElementById('stats').innerHTML = statsString;
+        //$('#stats').append(statsString);
+         //$('#stats').append(bitrateText);
+        display(bitrateText);
+      });
+
+}, 1000);
+
+// Dumping a stats variable as a string.
+// might be named toString?
+function dumpStats(obj,c) {
+  var context=c;
+  var statsString = 'Timestamp:';
+  var d;
+  statsString += obj.timestamp;
+  if (obj.id) {
+     statsString += "<br>id ";
+     statsString += obj.id;
+  }
+  if (obj.type) {
+     statsString += " type ";
+     statsString += obj.type;
+  }
+  if (obj.names) {
+    names = obj.names();
+    for (var i = 0; i < names.length; ++i) {
+      console.log(names[i]+" "+i+"\n");
+       statsString += '<br>';
+       statsString += names[i];
+       statsString += ':';
+       statsString += obj.stat(names[i]);
+       //c+= obj.stat(names[i]);
+       if(i==4){
+        d+=obj.stat(names[i]);
+       }
+       if(i==8){
+       d+=obj.stat(names[i]);
+       context.set('r',d);
+     }
+       //f.set('receivedBytes',obj.stat(names[i]));
+    }
+  } else {
+    if (obj.stat('audioOutputLevel')) {
+      statsString += "audioOutputLevel: ";
+      statsString += obj.stat('audioOutputLevel');
+      statsString += "<br>";
+    }
+  }
+  return statsString;
+}
   }
 
 });

@@ -190,6 +190,7 @@
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ListController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/UsersController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ChatMessage.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/controller/CallInfo.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/CallingController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/IpcallController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ProfileController.js"></script>
@@ -587,11 +588,13 @@
         <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><div></div> Rispondi</button>
         <button {{action "closeCall" this}} id="hangup_button" ><div></div>Riaggancia</button>
 
-        <ul id="stats" {{bindAttr class="isConnected:display_yes:display_none"}}> 
-          <li><span>Tempo trascorso:</span>{{callInfo.stats.duration}}</li>
-          <li><span>Byte ricevuti:</span>{{callInfo.stats.receivedBytes}}</li>
-          <li><span>Byte trasmessi:</span>{{callInfo.stats.sentBytes}}</li>
+        <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
+          <li><span>Tempo trascorso:</span>{{stats.duration}}</li>
+          <li><span>Byte ricevuti:</span>{{r}}</li>
+          <li><span>Byte trasmessi:</span>{{stats.sentBytes}}</li>
+          <li><span>Velocit&agrave;:</span>{{bitrate}}<span id="bitrate"></span></li>
         </ul>
+        <div id="stats"></div>
 
       </div>
     </div>

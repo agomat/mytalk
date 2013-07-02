@@ -126,6 +126,6 @@ MyTalk.ProfileView = Ember.View.extend({
     var email = this.get('email');
     var surname = this.get('surname');
     var username = this.get('username');
-    this.get('controller').save(name, surname, username, email, password, password_conf);
+    this.get('controller').updateProfile(name, surname, username, email, password, password_conf);
   }
 });

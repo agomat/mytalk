@@ -56,6 +56,12 @@
     <script type="text/javascript" src="com/mytalk/client/view/templateform/RegisterUsername.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateform/SearchView.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateform/MessageText.js"></script>
+
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyConfirmPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifySurname.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyEmail.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyName.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyPassword.js"></script>
     
     
     <!-- bootstrap Router -->
@@ -602,30 +608,26 @@
               <ul id="newdata">
                 <li>
                   <label for="name">Nuovo nome</label>
-                  <span>{{view MyTalk.RegisterName valueBinding='view.name' }}</span>
+                  <span>{{view MyTalk.ModifyName valueBinding='view.name' }}</span>
                 </li>
                 <li>
                   <label for="surname" >Nuovo cognome</label>
-                  <span>{{view MyTalk.RegisterSurname valueBinding='view.surname' }}</span>
-                </li>
-                <li>
-                  <label for="username" >Nuovo username</label>
-                  <span>{{view MyTalk.RegisterUsername valueBinding='view.username' }}</span>
+                  <span>{{view MyTalk.ModifySurname valueBinding='view.surname' }}</span>
                 </li>
                 <li>
                   <label for="email" >Nuova email</label>
-                  <span>{{view MyTalk.RegisterEmail valueBinding='view.email' }}</span>
+                  <span>{{view MyTalk.ModifyEmail valueBinding='view.email' }}</span>
                 </li>
                 <li>
                   <label for="password" >Nuova password</label>
-                  <span>{{view MyTalk.RegisterPassword valueBinding='view.password' }}</span>
+                  <span>{{view MyTalk.ModifyPassword valueBinding='view.password' }}</span>
                 </li>
                 <li>
                   <label for="password_conf" >Conferma la password</label>
-                  <span>{{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}</span>
+                  <span>{{view MyTalk.ModifyConfirmPassword valueBinding='view.password_conf' }}</span>
                 </li>
                 <li>
-                  <button type="submit"class="common_button" id="button_signup">Salva</button>
+                  <button type="submit"class="common_button" id="button_signup">Aggiorna Dati</button>
                 </li>
               </ul>
             </fieldset>

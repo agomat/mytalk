@@ -27,8 +27,8 @@ import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.model_client.PersonalData;
 import com.mytalk.server.data.model.User;
 import com.mytalk.server.data.storage.MD5Converter;
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 
 public class UpdateAccount extends GenericRequest {
 
@@ -39,9 +39,9 @@ public class UpdateAccount extends GenericRequest {
 	 *  codificati l'indirizzo email e la password, in modo tale da salvarle codificate e non 
 	 *  inviarle in chiaro. Infine, chiamando il metodo opportuno del DataAccess (appartenente alla 
 	 *  componente CSDAT2), si prosegue con l'aggiornamento dell'account.
-	 *   Si ritorna un nuovo pacchetto ARI, specificando che l'aggiunta è andata a buon fine: 
-	 *   "SuccessfulUpdateAccount". Altrimenti vengono lanciate e catturate le seguente eccezioni:
-	 *    "AuthenticationFail" e "UsernameNotCorresponding", ritornando un pacchetto con campo richiesta
+	 *  Si ritorna un nuovo pacchetto ARI, specificando che l'aggiunta è andata a buon fine: 
+	 *  "SuccessfulUpdateAccount". Altrimenti vengono lanciate e catturate le seguente eccezioni:
+	 *  "AuthenticationFailException" e "UsernameNotCorrespondingException", ritornando un pacchetto con campo richiesta
 	 *  "AuthenticationFailUpdateAccount" o "UsernameNotCorrespondingUpdateAccount".
 	 *    
 	 * @method +manage
@@ -59,17 +59,16 @@ public class UpdateAccount extends GenericRequest {
 		}
 		else {
 			PersonalData pd=pack.getWorldPersonalData().getPersonalData();
-			String pwdAuthHash=MD5Converter.getHashMD5(ari.getAuth().getPwd());
 			String pwdHash=MD5Converter.getHashMD5(pd.getPassword());
 			String mailHash=MD5Converter.getHashMD5(pd.getEmail());
-			User authenticate= new User(ari.getAuth().getUser(),pwdAuthHash,null,null,null,null);
+			User authenticate= new User(ari.getAuth().getUser(),ari.getAuth().getPwd(),null,null,null,null);
 			User userClient=new User(pd.getUsername(),pwdHash,pd.getEmail(),pd.getName(),pd.getSurname(),mailHash);
 			try {
 				da.updateAccount(userClient,authenticate);
 				response=new ARI(null, "SuccessfulUpdateAccount", infoRequest);
-			} catch (AuthenticationFail e) {
+			} catch (AuthenticationFailException e) {
 				response=new ARI(null, "AuthenticationFailUpdateAccount", infoRequest);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null, "UsernameNotCorrespondingUpdateAccount", infoRequest);
 			}
 		}

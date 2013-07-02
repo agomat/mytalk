@@ -1,5 +1,5 @@
 /**
-* Filename: UsernameNotCorresponding.java
+* Filename: UserAlreadyListedException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolo' Mazzucato
 * Date: 2013-04-29
@@ -13,10 +13,12 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa ad un utente gia' nella lista
 */
 
 package com.mytalk.server.exceptions;
 
-public class UsernameNotCorresponding extends Throwable {
+public class UserAlreadyListedException extends StorageException {
 
 }

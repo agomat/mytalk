@@ -82,7 +82,7 @@ public class DataAccessTest{
 	}
 
 	@Test
-	public void checkCheckUserByName() throws AuthenticationFail{
+	public void checkCheckUserByName() throws AuthenticationFailException{
 		String existingUsername="user2";
 		String notExistingUsername="random";
 		User toAuth=new User("user0","user0",null,null,null,null);
@@ -126,13 +126,13 @@ public class DataAccessTest{
 			User createdUser=ud.get(testUsername);
 			assertNotNull("L'utente non è stato creato",createdUser);
 			assertEquals("I campi dati degli utenti non sono stati creati correttamente",testUser.getUsername(),createdUser.getUsername());
-		}catch(UsernameAlreadyExisting exc){
+		}catch(UsernameAlreadyExistingException exc){
 			fail("è stato creato un utente con un username già esistente");
 		}
 	}
 	
-	@Test(expected = UsernameAlreadyExisting.class)
-	public void checkCreateAccountFail() throws UsernameAlreadyExisting{
+	@Test(expected = UsernameAlreadyExistingException.class)
+	public void checkCreateAccountFail() throws UsernameAlreadyExistingException{
 		User testUser=new User("user0","user0","user0@mytalk.com","user0","user0","emailhash123123123");
 		
 		//test creazione di un utente avente un username già usato
@@ -140,7 +140,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkLogin()throws AuthenticationFail{
+	public void checkLogin()throws AuthenticationFailException{
 		User toAuth=new User("user4","user4",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user4","111.111.111.1");
 		
@@ -150,19 +150,19 @@ public class DataAccessTest{
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser userToCheck=od.get(onUserTest.getIp());
 			assertEquals("non è stato autenticato l'utente valido",onUserTest.getUsername(),userToCheck.getUsername());
-		}catch(UsernameNotCorresponding exc){
+		}catch(UsernameNotCorrespondingException exc){
 			fail("non è stata trovata la corrispondenza tra username autenticato e username da autenticare (ecc:UsernameNotExisting)");
-		}catch(IpNotLogged exc){
-			fail("non è stato trovato l'utente come autenticato anonimo (ecc:UserNotLogged)");
-		}catch(UserAlreadyLogged exc){
-			fail("è stato trovato l'utente come già autenticato nel sistema (ecc:UserAlreadyLogged)");
-		}catch(IpAlreadyLogged exc){
-			fail("è stato trovato l'ip come già autenticato nel sistema (ecc:IpAlreadyLogged)");
+		}catch(IpNotLoggedException exc){
+			fail("non è stato trovato l'utente come autenticato anonimo (ecc:UserNotLoggedException)");
+		}catch(UserAlreadyLoggedException exc){
+			fail("è stato trovato l'utente come già autenticato nel sistema (ecc:UserAlreadyLoggedException)");
+		}catch(IpAlreadyLoggedException exc){
+			fail("è stato trovato l'ip come già autenticato nel sistema (ecc:IpAlreadyLoggedException)");
 		}
 	}
 	
-	@Test(expected=UserAlreadyLogged.class)
-	public void checkLoginAuthenticatedUsername()throws AuthenticationFail,UserAlreadyLogged, IpNotLogged, IpAlreadyLogged, UsernameNotCorresponding{
+	@Test(expected=UserAlreadyLoggedException.class)
+	public void checkLoginAuthenticatedUsername()throws AuthenticationFailException,UserAlreadyLoggedException, IpNotLoggedException, IpAlreadyLoggedException, UsernameNotCorrespondingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.2");
 		
@@ -170,8 +170,8 @@ public class DataAccessTest{
 		dataAccess.login(onUserTest, toAuth);
 	}
 	
-	@Test(expected=IpAlreadyLogged.class)
-	public void checkLoginAuthenticatedIp()throws AuthenticationFail,IpAlreadyLogged, IpNotLogged, UserAlreadyLogged, UsernameNotCorresponding{
+	@Test(expected=IpAlreadyLoggedException.class)
+	public void checkLoginAuthenticatedIp()throws AuthenticationFailException,IpAlreadyLoggedException, IpNotLoggedException, UserAlreadyLoggedException, UsernameNotCorrespondingException{
 		User toAuth=new User("user5","user5",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.2");
 		
@@ -179,8 +179,8 @@ public class DataAccessTest{
 		dataAccess.login(onUserTest, toAuth);
 	}
 
-	@Test(expected = IpNotLogged.class)
-	public void checkLoginFailIp()throws AuthenticationFail,IpNotLogged, UserAlreadyLogged, IpAlreadyLogged, UsernameNotCorresponding{
+	@Test(expected = IpNotLoggedException.class)
+	public void checkLoginFailIp()throws AuthenticationFailException,IpNotLoggedException, UserAlreadyLoggedException, IpAlreadyLoggedException, UsernameNotCorrespondingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.111");
 		
@@ -188,8 +188,8 @@ public class DataAccessTest{
 		dataAccess.login(onUserTest, toAuth);
 	}
 	
-	@Test(expected = UsernameNotCorresponding.class)
-	public void checkLoginFailNotCorresponding()throws AuthenticationFail,UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged{
+	@Test(expected = UsernameNotCorrespondingException.class)
+	public void checkLoginFailNotCorresponding()throws AuthenticationFailException,UsernameNotCorrespondingException, IpNotLoggedException, UserAlreadyLoggedException, IpAlreadyLoggedException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("random","111.111.111.2");
 		
@@ -198,7 +198,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkUserLists()throws AuthenticationFail{
+	public void checkUserLists()throws AuthenticationFailException{
 		User testUser1=new User("user0","user0",null,null,null,null);
 		User testUser2=new User("user9","user9",null,null,null,null);
 		
@@ -237,7 +237,7 @@ public class DataAccessTest{
 	}
 	
 	 @Test
-	 public void checkGetListUsers()throws AuthenticationFail{
+	 public void checkGetListUsers()throws AuthenticationFailException{
 		 User toAuth=new User("user1","user1",null,null,null,null);
 		 ListName list=new ListName();
 		 list.setId(2);
@@ -246,13 +246,13 @@ public class DataAccessTest{
 		 try{
 			 List<User> listResult=dataAccess.getListUsers(list, toAuth);
 			 assertEquals("la lista ritornata dal metodo è sbagliata",4,listResult.size());
-		 }catch(UsernameNotCorresponding exc){
+		 }catch(UsernameNotCorrespondingException exc){
 			 fail("la lista non risulta corrispondente all'utente anche se lo è");
 		 }
 	 }
 	 
-	 @Test(expected=UsernameNotCorresponding.class)
-	 public void checkGetListUsersFail()throws AuthenticationFail, UsernameNotCorresponding{
+	 @Test(expected=UsernameNotCorrespondingException.class)
+	 public void checkGetListUsersFail()throws AuthenticationFailException, UsernameNotCorrespondingException{
 		 User toAuth=new User("user1","user1",null,null,null,null);
 		 ListName list=new ListName();
 		 list.setId(3);
@@ -262,21 +262,21 @@ public class DataAccessTest{
 	 }
 	
 	@Test
-	public void checkGetOnlineUsers()throws AuthenticationFail{
+	public void checkGetOnlineUsers()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		List<User> onlines=dataAccess.getOnlineUsers(toAuth);
 		assertEquals("il numero di utenti autenticati non corrisponde quello effettivo",3,onlines.size());
 	}
 	
 	@Test
-	public void checkGetOfflineUsers()throws AuthenticationFail{
+	public void checkGetOfflineUsers()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		List<User> offlines=dataAccess.getOfflineUsers(toAuth);
 		assertEquals("il numero di utenti non autenticati non corrisponde quello effettivo",7,offlines.size());
 	}
 	
 	@Test
-	public void checkListCreate()throws AuthenticationFail{
+	public void checkListCreate()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		//testo la creazione della lista
@@ -285,15 +285,15 @@ public class DataAccessTest{
 			ListNameDAO ld=new ListNameDAO();
 			ListName checkList=ld.getByNameOwner(newList);
 			assertNotNull("la lista non è stata creata correttamente",checkList);
-		}catch(ListAlreadyExists exc){
+		}catch(ListAlreadyExistsException exc){
 			fail("la lista risulta come già esistente");
-		}catch(UsernameNotCorresponding exc){
+		}catch(UsernameNotCorrespondingException exc){
 			fail("la lista risulta non valida nella corrispondenza autenticato-proprietario");
 		}
 	}
 	
-	@Test(expected=ListAlreadyExists.class)
-	public void checkListCreateFail()throws AuthenticationFail, ListAlreadyExists, UsernameNotCorresponding{
+	@Test(expected=ListAlreadyExistsException.class)
+	public void checkListCreateFail()throws AuthenticationFailException, ListAlreadyExistsException, UsernameNotCorrespondingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		
@@ -301,8 +301,8 @@ public class DataAccessTest{
 		dataAccess.listCreate(newList, toAuth);
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkListCreateFailCorresponding()throws AuthenticationFail, ListAlreadyExists, UsernameNotCorresponding{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkListCreateFailCorresponding()throws AuthenticationFailException, ListAlreadyExistsException, UsernameNotCorrespondingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user2");
 		
@@ -311,7 +311,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkListDelete()throws AuthenticationFail{
+	public void checkListDelete()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		//testo la cancellazione di una lista
@@ -320,16 +320,16 @@ public class DataAccessTest{
 			ListNameDAO ld=new ListNameDAO();
 			ListName checkList=ld.getByNameOwner(newList);
 			assertNull("la lista non è stata cancellata dal db",checkList);
-		}catch(ListNotExisting exc){
+		}catch(ListNotExistingException exc){
 			fail("la lista che stai cercando di cancellare non sembra essere esistente");
-		}catch(UsernameNotCorresponding exc){
+		}catch(UsernameNotCorrespondingException exc){
 			fail("non è stata trovata corrispondenza tra owner-username");
 		}
 		
 	}
 	
-	@Test(expected=ListNotExisting.class)
-	public void checkListDeleteFail()throws AuthenticationFail, ListNotExisting, UsernameNotCorresponding{
+	@Test(expected=ListNotExistingException.class)
+	public void checkListDeleteFail()throws AuthenticationFailException, ListNotExistingException, UsernameNotCorrespondingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		
@@ -337,8 +337,8 @@ public class DataAccessTest{
 		dataAccess.listDelete(newList, toAuth);
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkListDeleteFailCorresponding()throws AuthenticationFail, ListNotExisting, UsernameNotCorresponding{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkListDeleteFailCorresponding()throws AuthenticationFailException, ListNotExistingException, UsernameNotCorrespondingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user2");
 		
@@ -347,7 +347,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkUserListAdd()throws AuthenticationFail{
+	public void checkUserListAdd()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user5";
@@ -360,19 +360,19 @@ public class DataAccessTest{
 			ListName list=lnd.getByNameOwner(newList);
 			UserList checkUser=ld.get(list.getId(), toAdd);
 			assertNotNull("l'utente non è stato aggiunto alla lista",checkUser);
-		}catch(UserAlreadyListed exc){
+		}catch(UserAlreadyListedException exc){
 			fail("l'utente risulta già nella lista");
-		} catch (UserNotExisting exc) {
+		} catch (UserNotExistingException exc) {
 			fail("l'utente da aggiungere non sembra essere registrato nel sistema");
-		} catch (UsernameNotCorresponding e) {
+		} catch (UsernameNotCorrespondingException e) {
 			fail("non è stata trovata la corrispondenza owner-username");
-		} catch (ListNotExisting e) {
+		} catch (ListNotExistingException e) {
 			fail("la lista a cui aggiungere non risulta esistente");
 		}
 	}
 	
-	@Test(expected=UserAlreadyListed.class)
-	public void checkUserListAddFail()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
+	@Test(expected=UserAlreadyListedException.class)
+	public void checkUserListAddFail()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user4";
@@ -381,8 +381,8 @@ public class DataAccessTest{
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=UserNotExisting.class)
-	public void checkUserListAddFailNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
+	@Test(expected=UserNotExistingException.class)
+	public void checkUserListAddFailNotExisting()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
@@ -391,8 +391,8 @@ public class DataAccessTest{
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=UserNotExisting.class)
-	public void checkUserListAddFailSameUser()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
+	@Test(expected=UserNotExistingException.class)
+	public void checkUserListAddFailSameUser()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user1";
@@ -401,8 +401,8 @@ public class DataAccessTest{
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkUserListAddFailNotCorresponding()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkUserListAddFailNotCorresponding()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String toAdd="user4";
@@ -411,8 +411,8 @@ public class DataAccessTest{
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=ListNotExisting.class)
-	public void checkUserListAddFailListNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting{
+	@Test(expected=ListNotExistingException.class)
+	public void checkUserListAddFailListNotExisting()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		String toAdd="user4";
@@ -422,7 +422,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkUserListRemove()throws AuthenticationFail{
+	public void checkUserListRemove()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user3";
@@ -435,19 +435,19 @@ public class DataAccessTest{
 			ListName list=lnd.getByNameOwner(newList);
 			UserList checkUser=ld.get(list.getId(), toAdd);
 			assertNull("l'utente non è stato rimosso dalla lista",checkUser);
-		}catch(UserNotListed exc){
+		}catch(UserNotListedException exc){
 			fail("l'utente non risulta nella lista");
-		} catch (UserNotExisting exc) {
+		} catch (UserNotExistingException exc) {
 			fail("l'utente da aggiungere non sembra essere registrato nel sistema");
-		} catch (UsernameNotCorresponding e) {
+		} catch (UsernameNotCorrespondingException e) {
 			fail("non è stata trovata la corrispondenza owner-username");
-		} catch (ListNotExisting e) {
+		} catch (ListNotExistingException e) {
 			fail("la lista da cui rimuovere non risulta esistente");
 		}
 	}
 	
-	@Test(expected=UserNotListed.class)
-	public void checkUserListRemoveFail()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
+	@Test(expected=UserNotListedException.class)
+	public void checkUserListRemoveFail()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException, UserNotListedException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user5";
@@ -456,8 +456,8 @@ public class DataAccessTest{
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=UserNotExisting.class)
-	public void checkUserListRemoveFailNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
+	@Test(expected=UserNotExistingException.class)
+	public void checkUserListRemoveFailNotExisting()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException, UserNotListedException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
@@ -466,8 +466,8 @@ public class DataAccessTest{
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkUserListRemoveFailNotCorresponding()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkUserListRemoveFailNotCorresponding()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException, UserNotListedException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String toAdd="user2";
@@ -476,8 +476,8 @@ public class DataAccessTest{
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
-	@Test(expected=ListNotExisting.class)
-	public void checkUserListRemoveFailListNotExisting()throws AuthenticationFail,UserAlreadyListed, UserNotExisting, UsernameNotCorresponding, ListNotExisting, UserNotListed{
+	@Test(expected=ListNotExistingException.class)
+	public void checkUserListRemoveFailListNotExisting()throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException, UserNotListedException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		String toAdd="user4";
@@ -495,13 +495,13 @@ public class DataAccessTest{
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser checkOnline=od.get(testUser.getIp());
 			assertNotNull("l'ip non è stato registrato nel db",checkOnline);
-		}catch(IpAlreadyLogged exc){
+		}catch(IpAlreadyLoggedException exc){
 			fail("l'ip usato sembra essere già in uso");
 		}
 	}
 	
-	@Test(expected=IpAlreadyLogged.class)
-	public void checkLoginAsAnonymousFail()throws IpAlreadyLogged{
+	@Test(expected=IpAlreadyLoggedException.class)
+	public void checkLoginAsAnonymousFail()throws IpAlreadyLoggedException{
 		OnlineUser testUser=new OnlineUser(null,"123.123.123.0");
 		
 		//test con un ip già in uso
@@ -509,14 +509,14 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkGetUserBlacklist()throws AuthenticationFail{
+	public void checkGetUserBlacklist()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		List<User> blacklisted=dataAccess.getUserBlacklist(toAuth);
 		assertEquals("non sono stati trovati utenti nella blacklist di un utente che ne ha",1,blacklisted.size());
 	}
 	
 	@Test
-	public void checkBlacklistAdd()throws AuthenticationFail{
+	public void checkBlacklistAdd()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user1");
 		
@@ -526,17 +526,17 @@ public class DataAccessTest{
 			BlacklistDAO bd=new BlacklistDAO();
 			Blacklist checkBlack=bd.get(toBlack.getOwner(), toBlack.getUsername());
 			assertNotNull("l'utente non è stato aggiunto alla blacklist",checkBlack);
-		}catch(UserAlreadyBlacklisted exc){
+		}catch(UserAlreadyBlacklistedException exc){
 			fail("l'utente risulta già nella blacklist");
-		} catch (UsernameNotCorresponding e) {
+		} catch (UsernameNotCorrespondingException e) {
 			fail("non è stata trovata corrispondenza owner-username");
-		} catch (UserNotExisting e) {
+		} catch (UserNotExistingException e) {
 			fail("non è stato trovato nel db l'utente da aggiungere alla blacklist");
 		}
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkBlacklistAddFailNotCorresponding()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkBlacklistAddFailNotCorresponding()throws AuthenticationFailException, UserAlreadyBlacklistedException, UsernameNotCorrespondingException, UserNotExistingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user1","user2");
 		
@@ -544,8 +544,8 @@ public class DataAccessTest{
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
-	@Test(expected=UserAlreadyBlacklisted.class)
-	public void checkBlacklistAddFailAlreadyBlacklisted()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
+	@Test(expected=UserAlreadyBlacklistedException.class)
+	public void checkBlacklistAddFailAlreadyBlacklisted()throws AuthenticationFailException, UserAlreadyBlacklistedException, UsernameNotCorrespondingException, UserNotExistingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
@@ -553,8 +553,8 @@ public class DataAccessTest{
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
-	@Test(expected=UserNotExisting.class)
-	public void checkBlacklistAddFailSame()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
+	@Test(expected=UserNotExistingException.class)
+	public void checkBlacklistAddFailSame()throws AuthenticationFailException, UserAlreadyBlacklistedException, UsernameNotCorrespondingException, UserNotExistingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user0");
 		
@@ -562,8 +562,8 @@ public class DataAccessTest{
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
-	@Test(expected=UserNotExisting.class)
-	public void checkBlacklistAddFailNotExisting()throws AuthenticationFail, UserAlreadyBlacklisted, UsernameNotCorresponding, UserNotExisting{
+	@Test(expected=UserNotExistingException.class)
+	public void checkBlacklistAddFailNotExisting()throws AuthenticationFailException, UserAlreadyBlacklistedException, UsernameNotCorrespondingException, UserNotExistingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","random");
 		
@@ -572,7 +572,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkBlacklistRemove()throws AuthenticationFail{
+	public void checkBlacklistRemove()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
@@ -582,15 +582,15 @@ public class DataAccessTest{
 			BlacklistDAO bd=new BlacklistDAO();
 			Blacklist checkBlack=bd.get(toBlack.getOwner(), toBlack.getUsername());
 			assertNull("l'utente non è stato rimosso salla blacklist",checkBlack);
-		} catch (UsernameNotCorresponding e) {
+		} catch (UsernameNotCorrespondingException e) {
 			fail("non è stata trovata corrispondenza owner-username");
-		} catch (UserNotBlacklisted e) {
+		} catch (UserNotBlacklistedException e) {
 			fail("l'utente non è stato trovato nella blacklist");
 		}
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkBlacklistRemoveFailNotCorresponding()throws AuthenticationFail, UsernameNotCorresponding, UserNotBlacklisted{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkBlacklistRemoveFailNotCorresponding()throws AuthenticationFailException, UsernameNotCorrespondingException, UserNotBlacklistedException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user1","user8");
 		
@@ -598,8 +598,8 @@ public class DataAccessTest{
 		dataAccess.blacklistRemove(toBlack, toAuth);
 	}
 	
-	@Test(expected=UserNotBlacklisted.class)
-	public void checkBlacklistRemoveFailNotBlacklisted()throws AuthenticationFail, UsernameNotCorresponding, UserNotBlacklisted{
+	@Test(expected=UserNotBlacklistedException.class)
+	public void checkBlacklistRemoveFailNotBlacklisted()throws AuthenticationFailException, UsernameNotCorrespondingException, UserNotBlacklistedException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user1");
 		
@@ -608,14 +608,14 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkGetCalls()throws AuthenticationFail{
+	public void checkGetCalls()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		List<Call> calls=dataAccess.getCalls(toAuth);
 		assertEquals("e` stato trovato un numero di chiamate errato",4,calls.size());
 	}
 	
 	@Test
-	public void checkAddCall()throws AuthenticationFail{
+	public void checkAddCall()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Call call=new Call("user0","user1",34000,"2013-04-01",30495,56039);
 		call.setId(12);
@@ -626,7 +626,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkDeleteAccount()throws AuthenticationFail{
+	public void checkDeleteAccount()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		dataAccess.deleteAccount(toAuth);
 		UserDAO ud=new UserDAO();
@@ -635,7 +635,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkUpdateAccount()throws AuthenticationFail{
+	public void checkUpdateAccount()throws AuthenticationFailException{
 		User toChange=new User("user0","pwd","user0@prova.com","nome","cognome","emailhashNUOVO");
 		User toAuth=new User("user0","user0",null,null,null,null);
 		
@@ -649,13 +649,13 @@ public class DataAccessTest{
 			assertEquals("password non aggiornata",u.getPassword(),toChange.getPassword());
 			assertEquals("nome non aggiornato",u.getName(),toChange.getName());
 			assertEquals("cognome non aggiornato",u.getSurname(),toChange.getSurname());
-		}catch(UsernameNotCorresponding e){
+		}catch(UsernameNotCorrespondingException e){
 			fail("non e` stata trovata la corrispondenza username da autenticare-username a cui cambiare dati");
 		}
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkUpdateAccountFail()throws AuthenticationFail,UsernameNotCorresponding{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkUpdateAccountFail()throws AuthenticationFailException,UsernameNotCorrespondingException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		User toChange=new User("user11","user11",null,null,null,null);
 		
@@ -664,7 +664,7 @@ public class DataAccessTest{
 	}
 	
 	@Test
-	public void checkRenameList()throws AuthenticationFail{
+	public void checkRenameList()throws AuthenticationFailException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String newName="enemies";
@@ -676,17 +676,17 @@ public class DataAccessTest{
 			ListName list=new ListName(newName,newList.getOwner());
 			ListName checkList=ld.getByNameOwner(list);
 			assertNotNull("la lista non è stata rinominata", checkList);
-		}catch(UsernameNotCorresponding exc){
+		}catch(UsernameNotCorrespondingException exc){
 			fail("non è stata trovata la corrispondenza owner-username autenticato");
-		} catch (ListNotExisting e) {
+		} catch (ListNotExistingException e) {
 			fail("la lista non risulta esistente");
-		} catch (ListAlreadyExists e) {
+		} catch (ListAlreadyExistsException e) {
 			fail("esiste già una lista con questo nome");
 		}
 	}
 	
-	@Test(expected=UsernameNotCorresponding.class)
-	public void checkRenameListFailNotCorresponding()throws AuthenticationFail, ListNotExisting, ListAlreadyExists, UsernameNotCorresponding{
+	@Test(expected=UsernameNotCorrespondingException.class)
+	public void checkRenameListFailNotCorresponding()throws AuthenticationFailException, ListNotExistingException, ListAlreadyExistsException, UsernameNotCorrespondingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		String newName="enemies";
@@ -695,8 +695,8 @@ public class DataAccessTest{
 		dataAccess.renameList(newList, newName, toAuth);
 	}
 	
-	@Test(expected=ListNotExisting.class)
-	public void checkRenameListFailNotExisting()throws AuthenticationFail, ListNotExisting, ListAlreadyExists, UsernameNotCorresponding{
+	@Test(expected=ListNotExistingException.class)
+	public void checkRenameListFailNotExisting()throws AuthenticationFailException, ListNotExistingException, ListAlreadyExistsException, UsernameNotCorrespondingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("office","user0");
 		String newName="friends";
@@ -705,8 +705,8 @@ public class DataAccessTest{
 		dataAccess.renameList(newList, newName, toAuth);
 	}
 	
-	@Test(expected=ListAlreadyExists.class)
-	public void checkRenameListFailAlreadyExisting()throws AuthenticationFail, ListNotExisting, ListAlreadyExists, UsernameNotCorresponding{
+	@Test(expected=ListAlreadyExistsException.class)
+	public void checkRenameListFailAlreadyExisting()throws AuthenticationFailException, ListNotExistingException, ListAlreadyExistsException, UsernameNotCorrespondingException{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		ListName newList=new ListName("friends","user0");
 		String newName="friends";
@@ -724,13 +724,13 @@ public class DataAccessTest{
 			User u=dataAccess.getUserById(id);
 			assertNotNull("non e` stato ritornato nessun oggetto User",u);
 			assertEquals("non e` stato ritornato l'oggetto User corretto",id,u.getId());
-		}catch(IdNotFound exc){
+		}catch(IdNotFoundException exc){
 			fail("l'id non e` stato trovato correttamente nel database");
 		}
 	}
 	
-	@Test(expected=IdNotFound.class)
-	public void checkGetUserByIdFail()throws IdNotFound{
+	@Test(expected=IdNotFoundException.class)
+	public void checkGetUserByIdFail()throws IdNotFoundException{
 		int id=300;
 		
 		//test di ricerca di un User con id non presente
@@ -746,21 +746,21 @@ public class DataAccessTest{
 			String ip=dataAccess.getUserIp(username);
 			String expected="123.123.123.0";
 			assertEquals("l'ip dell'utente cercato e` sbagliato",expected,ip);
-		}catch(UserNotLogged exc){
+		}catch(UserNotLoggedException exc){
 			fail("l'username non e` stato trovato correttamente nel database");
 		}
 	}
 	
-	@Test(expected=UserNotLogged.class)
-	public void checkGetUserIpFailNotExisting()throws UserNotLogged{
+	@Test(expected=UserNotLoggedException.class)
+	public void checkGetUserIpFailNotExisting()throws UserNotLoggedException{
 		String username="";
 		
 		//test di ricerca di un username vuoto
 		String ip=dataAccess.getUserIp(username);
 	}
 	
-	@Test(expected=UserNotLogged.class)
-	public void checkGetUserIpFail()throws UserNotLogged{
+	@Test(expected=UserNotLoggedException.class)
+	public void checkGetUserIpFail()throws UserNotLoggedException{
 		String username="user6";
 		
 		//test di ricerca di un username di un utente non autenticato
@@ -776,13 +776,13 @@ public class DataAccessTest{
 			int id=dataAccess.getIdFromUsername(username);
 			int expected=1;
 			assertEquals("l'id dell'utente cercato e` sbagliato",expected,id);
-		}catch(UserNotExisting exc){
+		}catch(UserNotExistingException exc){
 			fail("l'username non e` stato trovato correttamente nel database");
 		}
 	}
 	
-	@Test(expected=UserNotExisting.class)
-	public void checkGetIdFromUsernameFail()throws UserNotExisting{
+	@Test(expected=UserNotExistingException.class)
+	public void checkGetIdFromUsernameFail()throws UserNotExistingException{
 		String username="random";
 		
 		//test di ricerca di un username non esistente

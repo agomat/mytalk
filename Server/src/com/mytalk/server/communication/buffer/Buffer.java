@@ -32,7 +32,7 @@ public interface Buffer {
 	public void push(Message packet);
 	
 	/**
-	 * Metodo che ritorna un oggetto Message presente nel buffer
+	 * Metodo che elimina e ritorna un oggetto Message presente nel buffer
 	 * 
 	 * @method +pop
 	 * @return {Message}

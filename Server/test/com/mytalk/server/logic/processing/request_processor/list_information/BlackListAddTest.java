@@ -61,7 +61,7 @@ public class BlackListAddTest {
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlackListAdd",ariResponse.getReq());
 		
 		ariResponse=blackListAdd.manage(ari);
-		assertEquals("User gia' in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklisted",ariResponse.getReq());
+		assertEquals("User gia' in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklistedException",ariResponse.getReq());
 	
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListAdd",packString);
@@ -83,8 +83,8 @@ public class BlackListAddTest {
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Nesssun user da aggiungere in blacklist ma processata","CorruptedPack",ariResponse.getReq());
 			
-	//UsernameNotCorresponding non viene mai sollevata perche' per creare l'user si usa il valore presente in authentication
-	//UsernameNotExisting non viene mai sollevata perche' vi e' l'eccezione IdNotFound che previene cio'
+	//UsernameNotCorrespondingException non viene mai sollevata perche' per creare l'user si usa il valore presente in authentication
+	//UsernameNotExisting non viene mai sollevata perche' vi e' l'eccezione IdNotFoundException che previene cio'
 	}
 
 }

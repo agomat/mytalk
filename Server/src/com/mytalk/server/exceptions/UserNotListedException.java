@@ -1,5 +1,5 @@
 /**
-* Filename: UserAlreadyListed.java
+* Filename: UserNotListedException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolo' Mazzucato
 * Date: 2013-04-29
@@ -13,10 +13,12 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa ad un user non presente in una lista
 */
 
 package com.mytalk.server.exceptions;
 
-public class UserAlreadyListed extends StorageException {
+public class UserNotListedException extends StorageException {
 
 }

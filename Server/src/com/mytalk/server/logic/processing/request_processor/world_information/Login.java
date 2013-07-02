@@ -55,9 +55,9 @@ public class Login extends GenericRequest{
 	 *  la blacklist. Tutto questo viene inserito nel pacchetto WorldPack, che a sua volta farà parte
 	 *  del pacchetto informazione del nuovo pacchetto ARI sotto forma di stringa JSON. Tale 
 	 *  pacchetto conterrà anche la buona riuscita dell'operazione: "SuccessfulLogin". Altrimenti,
-	 *  è possibile che vengano sollevate e catturate le seguenti eccezioni: "AuthenticationFail", 
-	 *  "UsernameNotCorresponding", "IpNotLogged", "UserAlreadyLogged", "IpAlreadyLogged", 
-	 *  "UserNotLogged", ritornando un pacchetto con campo richiesta "AuthenticationFailLogin", 
+	 *  è possibile che vengano sollevate e catturate le seguenti eccezioni: "AuthenticationFailException", 
+	 *  "UsernameNotCorrespondingException", "IpNotLoggedException", "UserAlreadyLoggedException", "IpAlreadyLoggedException", 
+	 *  "UserNotLoggedException", ritornando un pacchetto con campo richiesta "AuthenticationFailLogin", 
 	 *  "UsernameNotCorrespondingLogin", "IpNotLoggedLogin", "UserAlreadyLoggedLogin",
 	 *  "IpAlreadyLoggedLogin" o "UserNotLoggedLogin".
 	 *  
@@ -139,17 +139,17 @@ public class Login extends GenericRequest{
 				String responsePackString=conv.convertJavaToJson(responsePack);
 				
 				response=new ARI(null, "SuccessfulLogin", responsePackString);
-			} catch(AuthenticationFail af){
+			} catch(AuthenticationFailException af){
 				response=new ARI(null, "AuthenticationFailLogin", null);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response= new ARI(null, "UsernameNotCorrespondingLogin",null);
-			}catch (IpNotLogged e) {
+			}catch (IpNotLoggedException e) {
 				response= new ARI(null, "IpNotLoggedLogin",null);
-			} catch (UserAlreadyLogged e) {
+			} catch (UserAlreadyLoggedException e) {
 				response= new ARI(null, "UserAlreadyLoggedLogin",null);
-			} catch (IpAlreadyLogged e) {
+			} catch (IpAlreadyLoggedException e) {
 				response= new ARI(null, "IpAlreadyLoggedLogin",null);
-			} catch (UserNotLogged e) {
+			} catch (UserNotLoggedException e) {
 				response= new ARI(null,"UserNotLoggedLogin",null);
 			}
 		}

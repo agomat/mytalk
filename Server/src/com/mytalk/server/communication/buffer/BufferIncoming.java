@@ -81,7 +81,7 @@ public class BufferIncoming implements Buffer{
 	}
 	
 	/**
-	 * rimuove e ritorna un oggetto Message dal contenitore buffer; la rimozione viene fatta 
+	 * Rimuove e ritorna un oggetto Message dal contenitore buffer; la rimozione viene fatta 
 	 * in testa al contenitore; se il contenitore e' vuoto non c'e' niente da rimuovere e il 
 	 * thread consumatore viene messo in attesa
 	 * 

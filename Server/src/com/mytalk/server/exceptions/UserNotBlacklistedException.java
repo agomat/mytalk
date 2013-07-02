@@ -1,5 +1,5 @@
 /**
-* Filename: IpNotLogged.java
+* Filename: UserNotBlacklistedException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolo' Mazzucato
 * Date: 2013-04-29
@@ -13,11 +13,12 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa ad un usern non presente nella blacklist
 */
-
 
 package com.mytalk.server.exceptions;
 
-public class IpNotLogged extends StorageException{
+public class UserNotBlacklistedException extends StorageException {
 
 }

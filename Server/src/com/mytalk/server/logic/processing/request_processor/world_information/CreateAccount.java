@@ -24,7 +24,7 @@
 package com.mytalk.server.logic.processing.request_processor.world_information;
 
 import com.mytalk.server.data.storage.MD5Converter;
-import com.mytalk.server.exceptions.UsernameAlreadyExisting;
+import com.mytalk.server.exceptions.UsernameAlreadyExistingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;
@@ -47,7 +47,7 @@ public class CreateAccount extends GenericRequest{
 	 *  componente CSDAT2), si prosegue con l'aggiunta dell'account, che non implica il login 
 	 *  automatico da parte dell'utente. Si ritorna un nuovo pacchetto ARI, specificando che 
 	 *  l'aggiunta è andata a buon fine: "SuccessfulCreateAccount". Altrimenti viene catturata la seguente 
-	 *  eccezione "UsernameAlreadyExisting" e ritornato un pacchetto con valore richiesta 
+	 *  eccezione "UsernameAlreadyExistingException" e ritornato un pacchetto con valore richiesta 
 	 *  "UsernameAlreadyExistingCreateAccount"
 	 *  
 	 *  @method +manage
@@ -70,7 +70,7 @@ public class CreateAccount extends GenericRequest{
 			try{
 				da.createAccount(user);
 				response=new ARI(null, "SuccessfulCreateAccount", infoRequest);
-			}catch(UsernameAlreadyExisting uae){
+			}catch(UsernameAlreadyExistingException uae){
 				response=new ARI(null, "UsernameAlreadyExistingCreateAccount", infoRequest);
 			}
 		}

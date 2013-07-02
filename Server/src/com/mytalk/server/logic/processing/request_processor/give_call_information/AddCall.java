@@ -24,8 +24,8 @@ package com.mytalk.server.logic.processing.request_processor.give_call_informati
 
 import java.util.List;
 
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.IdNotFound;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -49,7 +49,7 @@ public class AddCall extends GenericRequest {
 	 * dati ottenuti riguardanti la chiamata. Tale oggetto lo si aggiunge chiamando il metodo 
 	 * opportuno del DataAccess, appartenente alla componente CSDAT2. Si ritorna un nuovo pacchetto 
 	 * ARI, specificando che l'aggiunta è andata a buon fine: "SuccessfulAddCall". Altrimenti 
-	 * vengono catturate le seguenti eccezioni: "AuthenticationFail" e "IdNotFound", ritornando un 
+	 * vengono catturate le seguenti eccezioni: "AuthenticationFailException" e "IdNotFoundException", ritornando un 
 	 * pacchetto con valore richiesta "AuthenticationFailAddCall" (in caso di 
 	 * autenticazione fallita) o "IdNotFoundAddCall" (id non trovato). In tutti i pacchetti 
 	 * di risposta, il campo Information rimane invariato
@@ -92,9 +92,9 @@ public class AddCall extends GenericRequest {
 				callServer=new com.mytalk.server.data.model.Call(caller,receiver,duration,startdate,byteR,byteS);
 				da.addCall(callServer,userAuth);
 				response=new ARI(null,"SuccessfulAddCall",infoRequest);
-			}catch(AuthenticationFail af){
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailAddCall",infoRequest);
-			} catch (IdNotFound e) {
+			} catch (IdNotFoundException e) {
 				response=new ARI(null,"IdNotFoundAddCall",infoRequest);
 			}
 		}

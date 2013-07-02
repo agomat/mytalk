@@ -25,7 +25,7 @@
 package com.mytalk.server.logic.processing.request_processor.connection_information;
 
 import com.mytalk.server.data.model.Blacklist;
-import com.mytalk.server.exceptions.IdNotFound;
+import com.mytalk.server.exceptions.IdNotFoundException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -91,7 +91,7 @@ public class UserCall extends GenericRequest{
 			else{
 				response=new ARI(null,"UnsuccessfulUserCall",infoRequest);
 			}
-		}catch (IdNotFound e) {
+		}catch (IdNotFoundException e) {
 			response= new ARI(null,"IdNotFoundUserCall",infoRequest);
 		} 
 		return response;

@@ -13,6 +13,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa al pacchetto storage
 */
 
 package com.mytalk.server.exceptions;

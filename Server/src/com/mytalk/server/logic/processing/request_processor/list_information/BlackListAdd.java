@@ -24,11 +24,11 @@ package com.mytalk.server.logic.processing.request_processor.list_information;
 
 import java.util.List;
 
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.IdNotFound;
-import com.mytalk.server.exceptions.UserAlreadyBlacklisted;
-import com.mytalk.server.exceptions.UserNotExisting;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.UserAlreadyBlacklistedException;
+import com.mytalk.server.exceptions.UserNotExistingException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -50,8 +50,8 @@ public class BlackListAdd extends GenericRequest {
 	 * campo dati ari, viene creato un oggetto di tipo CSDAT1. Blacklist, utilizzato per aggiungere 
 	 * l'utente alla blacklist utilizzando l'oggetto DataAccess, classe appartenente al componente 
 	 * CSDAT2. Viene restituito un "SuccessfulBlackListAdd". Se non va a buon fine, vengono 
-	 * sollevate e catturate le seguenti eccezioni: "UserAlreadyBlacklisted", "AuthenticationFail", "UserNotExisting",
-	 * "UsernameNotCorresponding", "IdNotFound", ritornando un pacchetto con campo richiesta
+	 * sollevate e catturate le seguenti eccezioni: "UserAlreadyBlacklistedException", "AuthenticationFailException", "UserNotExistingException",
+	 * "UsernameNotCorrespondingException", "IdNotFoundException", ritornando un pacchetto con campo richiesta
 	 * "AuthenticationFailBlackListAdd", "UserNotExistingBlackListAdd", 
 	 * "UsernameNotCorrespondingBlackListAdd" o "IdNotFoundBlackListAdd". In caso di pacchetto mal formato, 
 	 * viene restituito un "CorruptedPack"
@@ -86,15 +86,15 @@ public class BlackListAdd extends GenericRequest {
 				da.blacklistAdd(blacklist,userAuth);
 
 				response=new ARI(null,"SuccessfulBlackListAdd",infoRequest);
-			}catch(UserAlreadyBlacklisted uab){
-				response=new ARI(null,"UserAlreadyBlacklisted",infoRequest);
-			}catch(AuthenticationFail af){
+			}catch(UserAlreadyBlacklistedException uab){
+				response=new ARI(null,"UserAlreadyBlacklistedException",infoRequest);
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailBlackListAdd",infoRequest);
-			} catch (UserNotExisting une) {
+			} catch (UserNotExistingException une) {
 				response=new ARI(null,"UserNotExistingBlackListAdd",infoRequest);
-			} catch (UsernameNotCorresponding unc) {
+			} catch (UsernameNotCorrespondingException unc) {
 				response=new ARI(null,"UsernameNotCorrespondingBlackListAdd",infoRequest);
-			} catch (IdNotFound inf) {
+			} catch (IdNotFoundException inf) {
 				response=new ARI(null,"IdNotFoundBlackListAdd",infoRequest);
 			}
 		}

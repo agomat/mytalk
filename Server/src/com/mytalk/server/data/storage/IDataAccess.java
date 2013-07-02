@@ -41,9 +41,9 @@ public interface IDataAccess{
 			 * 
 			 * @method +checkUserByName
 			 * @return {boolean}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public boolean checkUserByName(String name, User authenticate) throws AuthenticationFail;
+			public boolean checkUserByName(String name, User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
@@ -57,41 +57,41 @@ public interface IDataAccess{
 			 * 
 			 * @method +login
 			 * @return {void}
-			 * @exception {AuthenticationFail, UsernameNotCorresponding, IpNotLogged, UsernameAlreadyLogged, IpAlreadyLogged}
+			 * @exception {AuthenticationFailException, UsernameNotCorrespondingException, IpNotLoggedException, UsernameAlreadyLogged, IpAlreadyLoggedException}
 			 */
-			public void login(OnlineUser user, User authenticate)throws AuthenticationFail,UsernameNotCorresponding, IpNotLogged, UserAlreadyLogged, IpAlreadyLogged;
+			public void login(OnlineUser user, User authenticate)throws AuthenticationFailException,UsernameNotCorrespondingException, IpNotLoggedException, UserAlreadyLoggedException, IpAlreadyLoggedException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +userLists
 			 * @return {List<ListName>}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public List<ListName> userLists(User authenticate) throws AuthenticationFail;
+			public List<ListName> userLists(User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getListUsers
 			 * @return {List<User>}
-			 * @exception {AuthenticationFail, UsernameNotCorresponding}
+			 * @exception {AuthenticationFailException, UsernameNotCorrespondingException}
 			 */
-			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFail, UsernameNotCorresponding;
+			public List<User> getListUsers(ListName list, User authenticate) throws AuthenticationFailException, UsernameNotCorrespondingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getOnlineUsers
 			 * @return {List<User>}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public List<User> getOnlineUsers(User authenticate) throws AuthenticationFail;
+			public List<User> getOnlineUsers(User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getOfflineUsers
 			 * @return {List<User>}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public List<User> getOfflineUsers(User authenticate) throws AuthenticationFail;
+			public List<User> getOfflineUsers(User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
@@ -105,97 +105,97 @@ public interface IDataAccess{
 			 * 
 			 * @method +renameList
 			 * @return {void}
-			 * @exception {AuthenticationFail, UsernameNotCorresponding,ListNotExisting,ListAlreadyExists}
+			 * @exception {AuthenticationFailException, UsernameNotCorrespondingException,ListNotExistingException,ListAlreadyExistsException}
 			 */
-			public void renameList(ListName list, String name, User authenticate) throws AuthenticationFail, UsernameNotCorresponding,ListNotExisting,ListAlreadyExists;
+			public void renameList(ListName list, String name, User authenticate) throws AuthenticationFailException, UsernameNotCorrespondingException,ListNotExistingException,ListAlreadyExistsException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +listCreate
 			 * @return {void}
-			 * @exception {AuthenticationFail,ListAlreadyExists,UsernameNotCorresponding}
+			 * @exception {AuthenticationFailException,ListAlreadyExistsException,UsernameNotCorrespondingException}
 			 */
-			public void listCreate(ListName list, User authenticate) throws AuthenticationFail,ListAlreadyExists,UsernameNotCorresponding;
+			public void listCreate(ListName list, User authenticate) throws AuthenticationFailException,ListAlreadyExistsException,UsernameNotCorrespondingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +listDelete
 			 * @return {void}
-			 * @exception {AuthenticationFail,ListNotExisting,UsernameNotCorresponding}
+			 * @exception {AuthenticationFailException,ListNotExistingException,UsernameNotCorrespondingException}
 			 */
-			public void listDelete(ListName list, User authenticate) throws AuthenticationFail,ListNotExisting,UsernameNotCorresponding;
+			public void listDelete(ListName list, User authenticate) throws AuthenticationFailException,ListNotExistingException,UsernameNotCorrespondingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +userListAdd
 			 * @return {void}
-			 * @exception {AuthenticationFail,UserAlreadyListed,UserNotExisting,UsernameNotCorresponding,ListNotExisting}
+			 * @exception {AuthenticationFailException,UserAlreadyListedException,UserNotExistingException,UsernameNotCorrespondingException,ListNotExistingException}
 			 */
-			public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFail,UserAlreadyListed,UserNotExisting,UsernameNotCorresponding,ListNotExisting;
+			public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFailException,UserAlreadyListedException,UserNotExistingException,UsernameNotCorrespondingException,ListNotExistingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @emthod +userListRemove
 			 * @return {void}
-			 * @exception {AuthenticationFail,UserNotListed,UserNotExisting, UsernameNotCorresponding, ListNotExisting}
+			 * @exception {AuthenticationFailException,UserNotListedException,UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException}
 			 */		
-			public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFail,UserNotListed,UserNotExisting, UsernameNotCorresponding, ListNotExisting;
+			public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFailException,UserNotListedException,UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +loginAsAnonymous
 			 * @return {void}
-			 * @exception {IpAlreadyLogged}
+			 * @exception {IpAlreadyLoggedException}
 			 */
-			public void loginAsAnonymous(OnlineUser user) throws IpAlreadyLogged;
+			public void loginAsAnonymous(OnlineUser user) throws IpAlreadyLoggedException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +createAccount
 			 * @return {void}
-			 * @exception {UsernameAlreadyExisting}
+			 * @exception {UsernameAlreadyExistingException}
 			 */
-			public void createAccount(User toCreate) throws UsernameAlreadyExisting;
+			public void createAccount(User toCreate) throws UsernameAlreadyExistingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getUserBlacklist
 			 * @return {List<User>}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public List<User> getUserBlacklist(User authenticate) throws AuthenticationFail;
+			public List<User> getUserBlacklist(User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +blacklistAdd
 			 * @return {void}
-			 * @exception {AuthenticationFail,UserAlreadyBlacklisted,UsernameNotCorresponding,UserNotExisting}
+			 * @exception {AuthenticationFailException,UserAlreadyBlacklistedException,UsernameNotCorrespondingException,UserNotExistingException}
 			 */
-			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFail,UserAlreadyBlacklisted,UsernameNotCorresponding,UserNotExisting;
+			public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFailException,UserAlreadyBlacklistedException,UsernameNotCorrespondingException,UserNotExistingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +blacklistRemove
 			 * @return {void}
-			 * @exception {AuthenticationFail,UserNotBlacklisted,UsernameNotCorresponding}
+			 * @exception {AuthenticationFailException,UserNotBlacklistedException,UsernameNotCorrespondingException}
 			 */
-			public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFail,UserNotBlacklisted,UsernameNotCorresponding;
+			public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFailException,UserNotBlacklistedException,UsernameNotCorrespondingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getCalls
 			 * @return {List<Call>}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public List<Call> getCalls(User authenticate) throws AuthenticationFail;
+			public List<Call> getCalls(User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +addCall
 			 * @return {void}
-			 * @exception {AuthenticationFail}
+			 * @exception {AuthenticationFailException}
 			 */
-			public void addCall(Call call, User authenticate) throws AuthenticationFail;
+			public void addCall(Call call, User authenticate) throws AuthenticationFailException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
@@ -203,33 +203,33 @@ public interface IDataAccess{
 			 * @return {void}
 			 * @exception {AutneticationFail}
 			 */
-			public void deleteAccount(User userObj) throws AuthenticationFail;
+			public void deleteAccount(User userObj) throws AuthenticationFailException;
 			
-			public void updateAccount(User user, User authenticate)throws AuthenticationFail,UsernameNotCorresponding;
+			public void updateAccount(User user, User authenticate)throws AuthenticationFailException,UsernameNotCorrespondingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getUserById
 			 * @return {User}
-			 * @excetion {IdNotFound}
+			 * @excetion {IdNotFoundException}
 			 */
-			public User getUserById(int id) throws IdNotFound;
+			public User getUserById(int id) throws IdNotFoundException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getUserIp
 			 * @return {String}
-			 * @exception {UserNotLogged}
+			 * @exception {UserNotLoggedException}
 			 */
-			public String getUserIp(String username)throws UserNotLogged;
+			public String getUserIp(String username)throws UserNotLoggedException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 
 			 * @method +getIdFromUsername
 			 * @return {int}
-			 * @exception {UserNotExisting}
+			 * @exception {UserNotExistingException}
 			 */
-			public int getIdFromUsername(String username)throws UserNotExisting;
+			public int getIdFromUsername(String username)throws UserNotExistingException;
 			/**
 			 * Metodo implementato dalla classe che estende tale interfaccia
 			 * 

@@ -9,8 +9,10 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Java-Websocket"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/WebSocket"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/gson"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/java_websocket"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/c3p0"/>
+	<classpathentry kind="lib" path="lib/c3p0-0.9.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-oracle-thin-extras-0.9.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-c3p0-4.0.0.CR2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

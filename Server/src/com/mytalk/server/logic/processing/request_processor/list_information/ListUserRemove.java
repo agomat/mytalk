@@ -25,12 +25,12 @@ package com.mytalk.server.logic.processing.request_processor.list_information;
 
 import java.util.List;
 
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.IdNotFound;
-import com.mytalk.server.exceptions.ListNotExisting;
-import com.mytalk.server.exceptions.UserNotExisting;
-import com.mytalk.server.exceptions.UserNotListed;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.ListNotExistingException;
+import com.mytalk.server.exceptions.UserNotExistingException;
+import com.mytalk.server.exceptions.UserNotListedException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -51,9 +51,9 @@ public class ListUserRemove extends GenericRequest {
 	 *  dal campo dati ari, viene creato un oggetto di tipo CSDAT1. ListName, utilizzato per
 	 *  rimuovere un utente da una lista utilizzando l'oggetto DataAccess, classe appartenente 
 	 *  al componente CSDAT2. Viene restituito un "SuccessfulListUserRemove". Se non va a buon
-	 *  fine, vengono sollevate e catturate le seguenti eccezioni: "UserNotListed", "AuthenticationFail", "IdNotFound",
-	 *  "UserNotExisting", "ListNotExisting" e "UsernameNotCorresponding", ritornando un pacchetto con
-	 *  richiesta "UserNotListed", "AuthenticationFailListUserRemove", "IdNotFoundListUserRemove", 
+	 *  fine, vengono sollevate e catturate le seguenti eccezioni: "UserNotListedException", "AuthenticationFailException", "IdNotFoundException",
+	 *  "UserNotExistingException", "ListNotExistingException" e "UsernameNotCorrespondingException", ritornando un pacchetto con
+	 *  richiesta "UserNotListedException", "AuthenticationFailListUserRemove", "IdNotFoundListUserRemove", 
 	 *  "UserNotExistingListUserRemove", "ListNotExistingListUserRemove" o  
 	 *  "UsernameNotCorrespondingListUserRemove". In caso di pacchetto mal formato,
 	 * viene restituito un "CorruptedPack"
@@ -87,17 +87,17 @@ public class ListUserRemove extends GenericRequest {
 				user=(da.getUserById(listString.get(0))).getUsername();
 				da.userListRemove(listName, user, userAuth);
 				response=new ARI(null,"SuccessfulListUserRemove",infoRequest);
-			}catch(UserNotListed unl){
-				response=new ARI(null,"UserNotListed",infoRequest);
-			}catch(AuthenticationFail af){
+			}catch(UserNotListedException unl){
+				response=new ARI(null,"UserNotListedException",infoRequest);
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListUserRemove",infoRequest);
-			}catch (IdNotFound e) {
+			}catch (IdNotFoundException e) {
 				response=new ARI(null,"IdNotFoundListUserRemove",infoRequest);
-			}catch (UserNotExisting e) {
+			}catch (UserNotExistingException e) {
 				response=new ARI(null,"UserNotExistingListUserRemove",infoRequest);
-			} catch (ListNotExisting e) {
+			} catch (ListNotExistingException e) {
 				response=new ARI(null,"ListNotExistingListUserRemove",infoRequest);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null,"UsernameNotCorrespondingListUserRemove",infoRequest);
 			}
 		}

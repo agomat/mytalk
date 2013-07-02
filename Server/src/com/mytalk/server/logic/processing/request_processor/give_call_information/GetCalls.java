@@ -26,8 +26,8 @@ package com.mytalk.server.logic.processing.request_processor.give_call_informati
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.UserNotExisting;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.UserNotExistingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -105,9 +105,9 @@ public class GetCalls extends GenericRequest {
 				giveCallPack=new GiveCallPack(wrapperCall);
 				infoResponse=conv.convertJavaToJson(giveCallPack);
 				response=new ARI(null,"GiveCalls",infoResponse);
-			}catch(AuthenticationFail af){
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailGetCalls",null);
-			} catch (UserNotExisting e) {
+			} catch (UserNotExistingException e) {
 				response=new ARI(null,"UsernameNotExistingGetCalls",null);
 			}	
 		}

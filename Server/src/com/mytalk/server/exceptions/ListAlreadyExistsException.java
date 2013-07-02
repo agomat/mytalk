@@ -1,5 +1,5 @@
 /**
-* Filename: UserAlreadyExisting.java
+* Filename: ListAlreadyExistsException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolo' Mazzucato
 * Date: 2013-04-29
@@ -13,10 +13,12 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa ad una lista che esiste gia'
 */
 
 package com.mytalk.server.exceptions;
 
-public class UsernameAlreadyExisting extends StorageException {
+public class ListAlreadyExistsException extends StorageException {
 
 }

@@ -33,7 +33,7 @@ import org.java_websocket.WebSocket;
 
 import com.mytalk.server.communication.buffer.BufferOutgoing;
 import com.mytalk.server.communication.buffer.Message;
-import com.mytalk.server.exceptions.IpNotFound;
+import com.mytalk.server.exceptions.IpNotFoundException;
 
 public class Sender implements Runnable {
 	
@@ -98,7 +98,7 @@ public class Sender implements Runnable {
 					ws.send(json);
 					System.out.println("["+dateFormat.format(cal.getTime())+"] Risposta inviata");
 				}
-			}catch(IpNotFound exc){
+			}catch(IpNotFoundException exc){
 				exc.printStackTrace();
 			}
 		}

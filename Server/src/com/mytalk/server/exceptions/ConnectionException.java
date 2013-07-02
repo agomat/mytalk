@@ -13,6 +13,8 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione riguardante lo strato communication
 */
 
 package com.mytalk.server.exceptions;

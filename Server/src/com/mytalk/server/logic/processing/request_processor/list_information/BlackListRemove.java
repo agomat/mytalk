@@ -26,10 +26,10 @@ package com.mytalk.server.logic.processing.request_processor.list_information;
 
 import java.util.List;
 
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.IdNotFound;
-import com.mytalk.server.exceptions.UserNotBlacklisted;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.UserNotBlacklistedException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
@@ -51,8 +51,8 @@ public class BlackListRemove extends GenericRequest {
 	 * campo dati ari, viene creato un oggetto di tipo CSDAT1. Blacklist, utilizzato per rimuovere 
 	 * l'utente dalla blacklist utilizzando l'oggetto DataAccess, classe appartenente al componente 
 	 * CSDAT2. Viene restituito un "SuccessfulBlackListRemove". Se non va a buon fine, vengono 
-	 * sollevate e catturate le seguenti eccezioni: "UserNotBlacklisted", "AuthenticationFail", 
-	 * "UsernameNotCorresponding", "IdNotFound", ritornando un pacchetto con campo richiesta 
+	 * sollevate e catturate le seguenti eccezioni: "UserNotBlacklistedException", "AuthenticationFailException", 
+	 * "UsernameNotCorrespondingException", "IdNotFoundException", ritornando un pacchetto con campo richiesta 
 	 * "AuthenticationFailBlackListRemove", "UsernameNotCorrespondingBlackListRemove" o 
 	 * "IdNotFoundBlackListRemove".In caso di pacchetto mal formato, viene restituito un "CorruptedPack"
 	 *  
@@ -85,13 +85,13 @@ public class BlackListRemove extends GenericRequest {
 				blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),user);
 				da.blacklistRemove(blacklist,userAuth);
 				response=new ARI(null,"SuccessfulBlackListRemove",infoRequest);
-			}catch(UserNotBlacklisted unb){
-				response=new ARI(null,"UserNotBlacklisted",infoRequest);
-			}catch(AuthenticationFail af){
+			}catch(UserNotBlacklistedException unb){
+				response=new ARI(null,"UserNotBlacklistedException",infoRequest);
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailBlackListRemove",null);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null,"UsernameNotCorrespondingBlackListRemove",null);
-			}catch (IdNotFound inf) {
+			}catch (IdNotFoundException inf) {
 				response=new ARI(null,"IdNotFoundBlackListRemove",null);
 			}
 		}	

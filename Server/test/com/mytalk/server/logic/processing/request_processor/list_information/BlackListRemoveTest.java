@@ -62,7 +62,7 @@ public class BlackListRemoveTest {
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlackListRemove",ariResponse.getReq());
 		
 		ariResponse=blackListRemove.manage(ari);
-		assertEquals("User non presente in blacklist ma la richiesta viene processata lo stesso","UserNotBlacklisted",ariResponse.getReq());
+		assertEquals("User non presente in blacklist ma la richiesta viene processata lo stesso","UserNotBlacklistedException",ariResponse.getReq());
 	
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListRemove",packString);
@@ -82,7 +82,7 @@ public class BlackListRemoveTest {
 		ariResponse=blackListRemove.manage(ari);
 		assertEquals("Nesssun user da togliere dalla blacklist ma processata","CorruptedPack",ariResponse.getReq());
 	
-		//UsernameNotCorresponding non viene mai sollevata perche' per creare l'user si usa il valore presente in authentication
+		//UsernameNotCorrespondingException non viene mai sollevata perche' per creare l'user si usa il valore presente in authentication
 	}
 
 }

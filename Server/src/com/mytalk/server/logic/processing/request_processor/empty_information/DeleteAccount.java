@@ -22,7 +22,7 @@
 
 package com.mytalk.server.logic.processing.request_processor.empty_information;
 
-import com.mytalk.server.exceptions.AuthenticationFail;
+import com.mytalk.server.exceptions.AuthenticationFailException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 
@@ -54,7 +54,7 @@ public class DeleteAccount extends GenericRequest{
 		try{
 			da.deleteAccount(user);
 			response=new ARI(null, "SuccessfulDeleteAccount", null);
-		}catch(AuthenticationFail af){
+		}catch(AuthenticationFailException af){
 			response=new ARI(null, "AuthenticationFailDeleteAccount", null);
 		}
 		return response;

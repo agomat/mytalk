@@ -35,7 +35,7 @@ import org.java_websocket.server.WebSocketServer;
 
 import com.mytalk.server.communication.buffer.BufferIncoming;
 import com.mytalk.server.communication.buffer.Message;
-import com.mytalk.server.exceptions.IpNotFound;
+import com.mytalk.server.exceptions.IpNotFoundException;
 
 public class Receiver extends WebSocketServer{
 	/**
@@ -67,7 +67,9 @@ public class Receiver extends WebSocketServer{
 	 *  
 	 *  @method +onOpen
 	 *  @param {WebSocket} conn e' l'oggetto che identifica la connessione websocket
-	 *  @param {ClientHandshake} hs e' l'oggetto 
+	 *  @param {ClientHandshake} hs e' un parametro appartenente alla segnatura del metodo e non 
+	 *  utilizzato per i nostri scopi, e' necessaria la sua presenza poiche' il metodo e' un 
+	 *  overriding del metodo onOpen di WebSocketServer
 	 *  @return {void}
 	 */
 	@Override
@@ -90,9 +92,15 @@ public class Receiver extends WebSocketServer{
 	 * 
 	 * @method +onClose
 	 * @param {WebSocket} conn e' l'oggetto che identifica la connessione websocket
-	 * @param {int} code 
-	 * @param {String} reason
-	 * @param {boolean} remote
+	 * @param {int} code e' un parametro appartenente alla segnatura del metodo e non 
+	 *  utilizzato per i nostri scopi, e' necessaria la sua presenza poiche' il metodo e' un 
+	 *  overriding del metodo onOpen di WebSocketServer
+	 * @param {String} reason e' un parametro appartenente alla segnatura del metodo e non 
+	 *  utilizzato per i nostri scopi, e' necessaria la sua presenza poiche' il metodo e' un 
+	 *  overriding del metodo onOpen di WebSocketServer
+	 * @param {boolean} remote e' un parametro appartenente alla segnatura del metodo e non 
+	 *  utilizzato per i nostri scopi, e' necessaria la sua presenza poiche' il metodo e' un 
+	 *  overriding del metodo onOpen di WebSocketServer
 	 * @return {void}
 	 */
 	@Override
@@ -146,14 +154,14 @@ public class Receiver extends WebSocketServer{
 	/**
 	 * Metodo di utilita' che cerca nella collezione di oggetti WebSocket, che rappresentano 
 	 * tutte le connessioni aperte, un oggetto WebSocket avente l'ip passato; se non trova 
-	 * nessun oggetto con questo requisito solleva un'eccezione di tipo IpNotFound
+	 * nessun oggetto con questo requisito solleva un'eccezione di tipo IpNotFoundException
 	 * 
 	 * @method +searchConnection
 	 * @param {String} ip e' l'oggetto che identifica un indirizzo ip da cercare
 	 * @return {WebSocket}
-	 * @exception {IpNotFound} sollevata se la ricerca ha esito negativo
+	 * @exception {IpNotFoundException} sollevata se la ricerca ha esito negativo
 	 */
-	public WebSocket searchConnection(String ip) throws IpNotFound{
+	public WebSocket searchConnection(String ip) throws IpNotFoundException{
 		Iterator<WebSocket> iterator = connections().iterator();
 		WebSocket wsFound=null;
 		while (iterator.hasNext() && wsFound==null) {
@@ -166,7 +174,7 @@ public class Receiver extends WebSocketServer{
 		if(wsFound!=null){
 			return wsFound;
 		}else{
-			throw new IpNotFound();
+			throw new IpNotFoundException();
 		}	
 	}
 

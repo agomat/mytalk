@@ -62,7 +62,7 @@ public class ListUserAddTest {
 		assertEquals("Dati corretti ma non avviene l'aggiunta","SuccessfulListUserAdd",ariResponse.getReq());
 		
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("User gia' presente","UserAlreadyListed",ariResponse.getReq());
+		assertEquals("User gia' presente","UserAlreadyListedException",ariResponse.getReq());
 		
 		auth.setPwd("user1");
 		ariResponse=listUserAdd.manage(ari);

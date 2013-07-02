@@ -24,10 +24,10 @@
 package com.mytalk.server.logic.processing.request_processor.update_list_information;
 
 import com.mytalk.server.data.model.ListName;
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.ListAlreadyExists;
-import com.mytalk.server.exceptions.ListNotExisting;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.ListAlreadyExistsException;
+import com.mytalk.server.exceptions.ListNotExistingException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -46,8 +46,8 @@ public class UpdateListName extends GenericRequest {
 	 * dal campo dati ari, viene creato un oggetto di tipo CSDAT1. ListName, utilizzato per 
 	 * modificare il nome di una lista utilizzando l'oggetto DataAccess, classe appartenente al 
 	 * componente CSDAT2. Viene restituito un "SuccessfulRenameList". Se non va a buon fine, 
-	 * vengono sollevate  e catturate le seguenti eccezioni: "AuthenticationFail",
-	 *  "ListNotExisting", "ListAlreadyExists" e "UsernameNotCorresponding", ritornando un pacchetto
+	 * vengono sollevate  e catturate le seguenti eccezioni: "AuthenticationFailException",
+	 *  "ListNotExistingException", "ListAlreadyExistsException" e "UsernameNotCorrespondingException", ritornando un pacchetto
 	 *  con campo richiesta "AuthenticationFailRenameList",n"ListNotExistingRenameList", 
 	 *  "ListAlreadyExistsRenameList" o "UsernameNotCorrespondingRenameList". In caso di pacchetto mal 
 	 *  formato, viene restituito un "CorruptedPack"
@@ -74,13 +74,13 @@ public class UpdateListName extends GenericRequest {
 			try {
 				da.renameList(list, newListName, userAuth);
 				response=new ARI(null,"SuccessfulRenameList",infoRequest);
-			} catch (AuthenticationFail e) {
+			} catch (AuthenticationFailException e) {
 				response=new ARI(null, "AuthenticationFailRenameList", infoRequest);
-			} catch (ListNotExisting e) {
+			} catch (ListNotExistingException e) {
 				response=new ARI(null, "ListNotExistingRenameList", infoRequest);
-			} catch (ListAlreadyExists e) {
+			} catch (ListAlreadyExistsException e) {
 				response=new ARI(null, "ListAlreadyExistsRenameList", infoRequest);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null, "UsernameNotCorrespondingRenameList", infoRequest);
 			}
 		}

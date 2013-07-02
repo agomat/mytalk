@@ -1,5 +1,5 @@
 /**
-* Filename: AuthenticationFail.java
+* Filename: UserAlreadyBlacklistedException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolo' Mazzucato
 * Date: 2013-04-29
@@ -13,10 +13,12 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa ad un utente già in blacklist
 */
 
 package com.mytalk.server.exceptions;
 
-public class AuthenticationFail extends StorageException {
+public class UserAlreadyBlacklistedException extends StorageException {
 
 }

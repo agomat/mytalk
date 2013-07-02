@@ -23,12 +23,12 @@
 package com.mytalk.server.logic.processing.request_processor.list_information;
 
 import java.util.List;
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.IdNotFound;
-import com.mytalk.server.exceptions.ListNotExisting;
-import com.mytalk.server.exceptions.UserAlreadyListed;
-import com.mytalk.server.exceptions.UserNotExisting;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.ListNotExistingException;
+import com.mytalk.server.exceptions.UserAlreadyListedException;
+import com.mytalk.server.exceptions.UserNotExistingException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -47,8 +47,8 @@ public class ListUserAdd extends GenericRequest{
 	 * dal campo dati ari, viene creato un oggetto di tipo CSLOG2.model_client.ListName, utilizzato 
 	 * per aggiungere un nuovo utente ad una lista utilizzando l'oggetto DataAccess, classe 
 	 * appartenente al componente CSDAT2. Viene restituito un "SuccessfulListUserAdd". Se non va 
-	 * a buon fine, vengono sollevate e catturate le seguenti eccezioni: "UserAlreadyListed", 
-	 * "AuthenticationFail", "IdNotFound", "UserNotExisting","ListNotExisting" e "UsernameNotCorresponding",
+	 * a buon fine, vengono sollevate e catturate le seguenti eccezioni: "UserAlreadyListedException", 
+	 * "AuthenticationFailException", "IdNotFoundException", "UserNotExistingException","ListNotExistingException" e "UsernameNotCorrespondingException",
 	 * ritornando un pacchetto con campo richiesta "AuthenticationFailListUserAdd", "IdNotFoundListUserAdd",
 	 *  "UserNotExistingListUserAdd", "ListNotExistingListUserAdd" o "UsernameNotCorrespondingListUserAdd".
 	 * In caso di pacchetto mal formato, viene restituito un "CorruptedPack"
@@ -83,17 +83,17 @@ public class ListUserAdd extends GenericRequest{
 				da.userListAdd(listName, user, userAuth);
 				response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
 			}
-			catch(UserAlreadyListed ual){
-				response=new ARI(null,"UserAlreadyListed",infoRequest);
-			}catch(AuthenticationFail af){
+			catch(UserAlreadyListedException ual){
+				response=new ARI(null,"UserAlreadyListedException",infoRequest);
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListUserAdd",infoRequest);
-			} catch (IdNotFound inf) {
+			} catch (IdNotFoundException inf) {
 				response=new ARI(null,"IdNotFoundListUserAdd",infoRequest);
-			} catch (UserNotExisting e) {
+			} catch (UserNotExistingException e) {
 				response=new ARI(null,"UserNotExistingListUserAdd",infoRequest);
-			} catch (ListNotExisting e) {
+			} catch (ListNotExistingException e) {
 				response=new ARI(null,"ListNotExistingListUserAdd",infoRequest);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null,"UsernameNotCorrespondingListUserAdd",infoRequest);
 			}
 		}

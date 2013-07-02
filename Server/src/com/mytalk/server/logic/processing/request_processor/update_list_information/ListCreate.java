@@ -23,9 +23,9 @@
 package com.mytalk.server.logic.processing.request_processor.update_list_information;
 
 import com.mytalk.server.data.model.ListName;
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.ListAlreadyExists;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.ListAlreadyExistsException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -46,8 +46,8 @@ public class ListCreate extends GenericRequest {
 	 * dal campo dati ari, viene creato un oggetto di tipo CSDAT1.ListName, utilizzato per creare 
 	 * una nuova lista utente utilizzando l'oggetto DataAccess, classe appartenente al componente 
 	 * CSDAT2. Viene restituito un "SuccessfulListCreate". Se non va a buon fine, vengono 
-	 * sollevate e catturate le seguenti eccezioni: "ListAlreadyExists", "AuthenticationFail",
-	 *  "UsernameNotCorresponding", ritornando un pacchetto con campo richiesta ListAlreadyExists", 
+	 * sollevate e catturate le seguenti eccezioni: "ListAlreadyExistsException", "AuthenticationFailException",
+	 *  "UsernameNotCorrespondingException", ritornando un pacchetto con campo richiesta ListAlreadyExistsException", 
 	 *  "AuthenticationFailListCreate" o "UsernameNotCorrespondingListCreate". In caso di pacchetto mal 
 	 *  formato, viene restituito un "CorruptedPack"
 	 *  
@@ -73,11 +73,11 @@ public class ListCreate extends GenericRequest {
 			try{
 				da.listCreate(newList,userAuth);
 				response=new ARI(null,"SuccessfulListCreate",infoRequest);
-			}catch(ListAlreadyExists lae){
-				response=new ARI(null,"ListAlreadyExists",infoRequest);
-			}catch(AuthenticationFail af){
+			}catch(ListAlreadyExistsException lae){
+				response=new ARI(null,"ListAlreadyExistsException",infoRequest);
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListCreate",infoRequest);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null,"UsernameNotCorrespondingListCreate",infoRequest);
 			}
 		}

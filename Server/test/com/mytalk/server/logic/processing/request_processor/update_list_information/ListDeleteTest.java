@@ -68,7 +68,7 @@ public class ListDeleteTest {
 		ariResponse=listDelete.manage(ari);
 		assertEquals("Autenticazione deve fallire","AuthenticationFailListDelete",ariResponse.getReq());
 		
-		//UsernameNotCorresponding non viene sollevata per formazione
+		//UsernameNotCorrespondingException non viene sollevata per formazione
 	}
 
 }

@@ -24,7 +24,7 @@
 package com.mytalk.server.logic.processing.request_processor.world_information;
 
 import com.mytalk.server.data.model.OnlineUser;
-import com.mytalk.server.exceptions.IpAlreadyLogged;
+import com.mytalk.server.exceptions.IpAlreadyLoggedException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.WorldPack;
@@ -46,7 +46,7 @@ public class LoginAsAnonymous extends GenericRequest {
 	 *  al metodo invocato sull'oggetto DataAccess, appartenente alla componente CSDAT2. Infine, 
 	 *  il campo Information del nuovo pacchetto ARI conterrà un WorldPack, sotto forma di stringa 
 	 *  JSON, contenente l'indirizzo Ip e il campo richiesta "SuccessfulLoginAsAnonymous". 
-	 *  Altrimenti verrà lanciata e catturata la seguente eccezione: "IpAlreadyLogged" ritornando 
+	 *  Altrimenti verrà lanciata e catturata la seguente eccezione: "IpAlreadyLoggedException" ritornando 
 	 *  un pacchetto con campo richiesta "IpAlreadyLoggedLoginAsAnonymous".
 	 *  
 	 *  @method +manage
@@ -68,7 +68,7 @@ public class LoginAsAnonymous extends GenericRequest {
 				WorldPack worldPack=new WorldPack(null,worldPersonalData);
 				infoResponse=conv.convertJavaToJson(worldPack);
 				response=new ARI(null,"SuccessfulLoginAsAnonymous",infoResponse);
-			} catch (IpAlreadyLogged e) {
+			} catch (IpAlreadyLoggedException e) {
 				response=new ARI(null,"IpAlreadyLoggedLoginAsAnonymous",infoResponse);
 			}
 		}

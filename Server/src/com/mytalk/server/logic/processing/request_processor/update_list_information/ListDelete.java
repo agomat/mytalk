@@ -23,9 +23,9 @@
 package com.mytalk.server.logic.processing.request_processor.update_list_information;
 
 import com.mytalk.server.data.model.ListName;
-import com.mytalk.server.exceptions.AuthenticationFail;
-import com.mytalk.server.exceptions.ListNotExisting;
-import com.mytalk.server.exceptions.UsernameNotCorresponding;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.ListNotExistingException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
@@ -45,8 +45,8 @@ public class ListDelete extends GenericRequest {
 	 * dal campo dati ari, viene creato un oggetto di tipo CSDAT1. ListName, utilizzato per eliminare
 	 *  lista utente, precedentemente creata, utilizzando l'oggetto DataAccess, classe appartenente 
 	 *  al componente CSDAT2. Viene restituito un "SuccessfulListDelete". Se non va a buon fine, 
-	 *  vengono sollevate e catturate le seguenti eccezioni: "ListNotExisting", "AuthenticationFail",
-	 *  "UsernameNotCorresponding", ritornando un pacchetto con campo richiesta "ListNotExistingListDelete", 
+	 *  vengono sollevate e catturate le seguenti eccezioni: "ListNotExistingException", "AuthenticationFailException",
+	 *  "UsernameNotCorrespondingException", ritornando un pacchetto con campo richiesta "ListNotExistingListDelete", 
 	 *  "AuthenticationFailListDelete" o "UsernameNotCorrespondingListDelete". In caso di 
 	 *  pacchetto mal formato, viene restituito un "CorruptedPack"
 	 *  
@@ -72,11 +72,11 @@ public class ListDelete extends GenericRequest {
 			try{
 				da.listDelete(newList,userAuth);
 				response=new ARI(null,"SuccessfulListDelete",infoRequest);
-			}catch(ListNotExisting lne){
+			}catch(ListNotExistingException lne){
 				response=new ARI(null,"ListNotExistingListDelete",infoRequest);
-			}catch(AuthenticationFail af){
+			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListDelete",infoRequest);
-			} catch (UsernameNotCorresponding e) {
+			} catch (UsernameNotCorrespondingException e) {
 				response=new ARI(null,"UsernameNotCorrespondingListDelete",infoRequest);
 			}
 		}

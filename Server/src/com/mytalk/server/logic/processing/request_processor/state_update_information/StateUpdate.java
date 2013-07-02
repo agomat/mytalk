@@ -26,8 +26,8 @@
 
 package com.mytalk.server.logic.processing.request_processor.state_update_information;
 
-import com.mytalk.server.exceptions.IdNotFound;
-import com.mytalk.server.exceptions.UserNotExisting;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.UserNotExistingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.UserStatePack;
@@ -85,10 +85,10 @@ public class StateUpdate extends GenericRequest{
 			packOut= new UserStatePack(userClient);
 			infoResponse=conv.convertJavaToJson(packOut);
 			response=new ARI(null,"StateUpdate",infoResponse);
-		} catch (UserNotExisting e) {
+		} catch (UserNotExistingException e) {
 			// Auto-generated catch block
 			e.printStackTrace();
-		} catch (IdNotFound e) {
+		} catch (IdNotFoundException e) {
 			// Auto-generated catch block
 			e.printStackTrace();
 		}	

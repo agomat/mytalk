@@ -1,5 +1,5 @@
 /**
-* Filename: UserAlreadyBlacklisted.java
+* Filename: UsernameNotCorrespondingException.java
 * Package: com.mytalk.server.exceptions
 * Author: Nicolo' Mazzucato
 * Date: 2013-04-29
@@ -13,10 +13,12 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Identifica un'eccezione relativa ad un username che non corrisponde a quello di autenticazione
 */
 
 package com.mytalk.server.exceptions;
 
-public class UserAlreadyBlacklisted extends StorageException {
+public class UsernameNotCorrespondingException extends Throwable {
 
 }

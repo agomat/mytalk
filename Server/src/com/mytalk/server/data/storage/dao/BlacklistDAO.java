@@ -29,6 +29,8 @@ import com.mytalk.server.data.model.Blacklist;
 public class BlacklistDAO extends GenericDAO{
 	/**
 	 * Costruttore della classe con corpo vuoto poiche' non contiene campi dati
+	 * 
+	 * @method +BlacklistDAO
 	 */
 	public BlacklistDAO(){}
 	

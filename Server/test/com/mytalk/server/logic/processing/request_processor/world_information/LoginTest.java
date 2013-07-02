@@ -115,12 +115,12 @@ public class LoginTest {
 		
 		ari.setAuth(authRightTest);
 		ariResult=login.manage(ari);
-		assertEquals("Tentativo di login con user già loggato","UserAlreadyLoggedLogin",ariResult.getReq());
+		assertEquals("Tentativo di login con user gia' loggato","UserAlreadyLoggedLogin",ariResult.getReq());
 		
 		authRightTest=new Authentication("user5","user5","123.123.123.0");
 		ari.setAuth(authRightTest);
 		ariResult=login.manage(ari);
-		assertEquals("Tentativo di login con ip già assegnato ad un altro user","IpAlreadyLoggedLogin",ariResult.getReq());
+		assertEquals("Tentativo di login con ip gia' assegnato ad un altro user","IpAlreadyLoggedLogin",ariResult.getReq());
 		
 		//UserNotLogged mai lanciata poiché i candidati sono oggetti ricavati dal db e quindi consistenti
 	}

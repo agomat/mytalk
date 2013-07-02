@@ -52,7 +52,7 @@ public class LoginAsAnonymousTest {
 	
 		authRightTest.setIp("111.111.111.1");
 		ariResult=loginAsAnonymous.manage(ari);
-		assertEquals("Ip già in uso","IpAlreadyLoggedLoginAsAnonymous",ariResult.getReq());
+		assertEquals("Ip gia' in uso","IpAlreadyLoggedLoginAsAnonymous",ariResult.getReq());
 	}
 
 }

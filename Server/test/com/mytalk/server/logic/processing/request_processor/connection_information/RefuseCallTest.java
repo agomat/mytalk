@@ -60,7 +60,7 @@ public class RefuseCallTest {
 		packString=conv.convertJavaToJson(packTest);
 		ari=new ARI(null,"RefuseCall",packString);
 		ariResponse=refuseCall.manage(ari);
-		assertEquals("IpSpeaker non è online ma viene processata lo stesso","UnsuccessfulRefuseCall",ariResponse.getReq());
+		assertEquals("IpSpeaker non e' online ma viene processata lo stesso","UnsuccessfulRefuseCall",ariResponse.getReq());
 	}
 
 }

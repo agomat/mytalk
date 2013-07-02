@@ -30,6 +30,8 @@ public class CallDAO extends GenericDAO{
 
 	/**
 	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi da inizializzare
+	 * 
+	 * @method +CallDAO
 	 */
 	public CallDAO(){}
 	

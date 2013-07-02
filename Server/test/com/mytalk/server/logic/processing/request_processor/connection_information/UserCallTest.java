@@ -79,18 +79,18 @@ public class UserCallTest {
 		String packString2=conv.convertJavaToJson(packTest2);
 		ari.setInfo(packString2);
 		ariResponse=userCall.manage(ari);
-		assertEquals("IpSpeaker non è online ma viene processata lo stesso","UnsuccessfulUserCall",ariResponse.getReq());
+		assertEquals("IpSpeaker non e' online ma viene processata lo stesso","UnsuccessfulUserCall",ariResponse.getReq());
 		
 		ari.setAuth(auth);
 		ariResponse=userCall.manage(ari);
-		assertEquals("IpSpeaker non è online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
+		assertEquals("IpSpeaker non e' online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
 		
 		packTest.setSpeakerIp("123.123.123.2");
 		packTest.setSpeakerUserId(3);
 		packString=conv.convertJavaToJson(packTest);
 		ari.setInfo(packString);
 		ariResponse=userCall.manage(ari);
-		assertEquals("IpSpeaker non è online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
+		assertEquals("IpSpeaker non e' online ma viene processata lo stesso con auth","UnsuccessfulUserCall",ariResponse.getReq());
 		
 		auth.setUser("user0");
 		packTest.setMyUserId(15);

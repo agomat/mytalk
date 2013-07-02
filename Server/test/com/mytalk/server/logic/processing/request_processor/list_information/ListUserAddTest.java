@@ -62,7 +62,7 @@ public class ListUserAddTest {
 		assertEquals("Dati corretti ma non avviene l'aggiunta","SuccessfulListUserAdd",ariResponse.getReq());
 		
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("User già presente","UserAlreadyListed",ariResponse.getReq());
+		assertEquals("User gia' presente","UserAlreadyListed",ariResponse.getReq());
 		
 		auth.setPwd("user1");
 		ariResponse=listUserAdd.manage(ari);
@@ -81,7 +81,7 @@ public class ListUserAddTest {
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
 		ariResponse=listUserAdd.manage(ari);
-		assertEquals("User non può aggiungere se stesso","UserNotExistingListUserAdd",ariResponse.getReq());
+		assertEquals("User non puo' aggiungere se stesso","UserNotExistingListUserAdd",ariResponse.getReq());
 		
 		userList.setName("lista");
 		list.remove(0);

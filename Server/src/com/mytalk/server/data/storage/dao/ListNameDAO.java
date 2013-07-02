@@ -30,6 +30,8 @@ public class ListNameDAO extends GenericDAO{
 	
 	/**
 	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +ListNameDAO
 	 */
 	public ListNameDAO() {}
 	

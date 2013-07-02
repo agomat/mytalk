@@ -31,6 +31,8 @@ public class OnlineUserDAO extends GenericDAO{
 	
 	/**
 	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +OnlineUserDAO
 	 */
 	public OnlineUserDAO(){}
 	

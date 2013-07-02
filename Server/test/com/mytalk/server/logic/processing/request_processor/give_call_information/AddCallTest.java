@@ -65,17 +65,17 @@ public class AddCallTest {
 		AddCall addCall=new AddCall();
 
 		ARI ariSuccess=addCall.manage(ariRightTest);
-		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","SuccessfulAddCall", ariSuccess.getReq());
+		assertEquals("L'autenticazione e' corretta ma viene fallita l'autenticazione","SuccessfulAddCall", ariSuccess.getReq());
 		
 		ARI ariUnsuccess=addCall.manage(ariWrongTest);
-		assertEquals("L'autenticazione è errata ma fa l'autenticazione lo stesso","AuthenticationFailAddCall", ariUnsuccess.getReq());
+		assertEquals("L'autenticazione e' errata ma fa l'autenticazione lo stesso","AuthenticationFailAddCall", ariUnsuccess.getReq());
 		
 		callListTest.remove(0);
 		callListTest.add(call2);
 		packJson=conv.convertJavaToJson(packTest);
 		ariRightTest= new ARI(authRightTest,"AddCall",packJson);
 		ARI ariIdNotRight=addCall.manage(ariRightTest);
-		assertEquals("L'id fornito è inesistente","IdNotFoundAddCall", ariIdNotRight.getReq());
+		assertEquals("L'id fornito e' inesistente","IdNotFoundAddCall", ariIdNotRight.getReq());
 	
 	}
 }

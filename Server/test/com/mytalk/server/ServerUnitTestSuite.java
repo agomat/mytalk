@@ -1,7 +1,7 @@
 /**
  * Filename: ServerUnitTestSuite.java
  * Package: com.mytalk.server
- * Author: Nicolò Mazzucato
+ * Author: Nicolo' Mazzucato
  * Date: 2013-05-22
  *
  * Diary:

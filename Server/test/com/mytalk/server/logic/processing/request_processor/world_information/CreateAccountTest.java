@@ -54,7 +54,7 @@ public class CreateAccountTest {
 		ARI ari=new ARI(auth,"CreateAccount",packString);
 		ARI ariResult=createAccount.manage(ari);
 		
-		assertEquals("Creazione account fallita ma username non è già presente","SuccessfulCreateAccount",ariResult.getReq());
+		assertEquals("Creazione account fallita ma username non e' gia' presente","SuccessfulCreateAccount",ariResult.getReq());
 		
 		personalData=new PersonalData(2,"user1","user1","user1","user1","user1@mytalk.com","us01us01us01us01us01us01us01us01","1.1.1.4");
 		
@@ -63,7 +63,7 @@ public class CreateAccountTest {
 		ari.setInfo(packString);
 		ariResult=createAccount.manage(ari);
 		
-		assertEquals("Creazione account riuscita ma username è già presente","UsernameAlreadyExistingCreateAccount",ariResult.getReq());
+		assertEquals("Creazione account riuscita ma username e' gia' presente","UsernameAlreadyExistingCreateAccount",ariResult.getReq());
 		
 	}
 

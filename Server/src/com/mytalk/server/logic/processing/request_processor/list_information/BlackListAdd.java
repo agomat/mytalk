@@ -7,14 +7,17 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.2	  |	2013-05-22 |   MF      | [#] Modifica dei nomi del metodo manage al fine di renderli
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-22 |    MF     | [#] Modifica dei nomi del metodo manage al fine di renderli
 * 									     più espressivi e di facile comprensione
-* 0.1	  |	2013-05-01 |   MF      | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Classe che si occupa di aggiungere un utente nella blacklist del client che ne fa la richiesta
 */
 
 package com.mytalk.server.logic.processing.request_processor.list_information;
@@ -34,8 +37,30 @@ import com.mytalk.server.logic.shared.model_client.UserList;
 
 
 public class BlackListAdd extends GenericRequest {
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +BlackListAdd
+	 */
 	public BlackListAdd(){}
 	
+	/**
+	 * Una volta ricevuto l'ARI e fatti i controlli di pacchetto ben formato, usando i dati ricevuti dal 
+	 * campo dati ari, viene creato un oggetto di tipo CSDAT1. Blacklist, utilizzato per aggiungere 
+	 * l'utente alla blacklist utilizzando l'oggetto DataAccess, classe appartenente al componente 
+	 * CSDAT2. Viene restituito un "SuccessfulBlackListAdd". Se non va a buon fine, vengono 
+	 * sollevate e catturate le seguenti eccezioni: "UserAlreadyBlacklisted", "AuthenticationFail", "UserNotExisting",
+	 * "UsernameNotCorresponding", "IdNotFound", ritornando un pacchetto con campo richiesta
+	 * "AuthenticationFailBlackListAdd", "UserNotExistingBlackListAdd", 
+	 * "UsernameNotCorrespondingBlackListAdd" o "IdNotFoundBlackListAdd". In caso di pacchetto mal formato, 
+	 * viene restituito un "CorruptedPack"
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
 	public ARI manage(ARI ari){
 		ARI response=null;
 		Authentication auth=ari.getAuth();
@@ -48,7 +73,7 @@ public class BlackListAdd extends GenericRequest {
 		}	
 		else{
 			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);
-			List<UserList> listUserList=pack.getList(); // userlist contiene nome lista e lista di stringhe
+			List<UserList> listUserList=pack.getList(); 
 			UserList userList=null;
 			com.mytalk.server.data.model.Blacklist blacklist=null;
 			List<Integer> listUser=null;

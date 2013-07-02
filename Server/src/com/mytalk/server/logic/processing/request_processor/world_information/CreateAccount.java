@@ -1,20 +1,23 @@
 /**
 * Filename: CreateAccount.java
 * Package: com.mytalk.server.logic.processing.request_processor.world_information
-* Author: Nicolò Toso
+* Author: Nicolo' Toso
 * Date: 2013-05-02
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.2	  | 2013-05-13 |   NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
 * 										 fine di renderli più espressivi
-* 0.1	  |	2013-05-02 |   NT      | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Classe che si occupa di creare un nuovo account del client che ne fa richiesta
 */
 
 
@@ -28,9 +31,30 @@ import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.model_client.PersonalData;
 
 public class CreateAccount extends GenericRequest{
-	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +CreateAccount
+	 */
 	public CreateAccount(){}
 	
+	/**
+	 * Una volta ricevuto il pacchetto ARI, si controlla se è ben formato. Se la risposta è negativa,
+	 *  viene restituito un "CorruptedPack". Viceversa, si crea un oggetto di tipo 
+	 *  CSDAT1.model.User, contenente le informazioni presenti nel campo dati ari. Inoltre vengono 
+	 *  codificati l'indirizzo email e la password, in modo tale da salvarle codificate e non 
+	 *  inviarle in chiaro. Infine, chiamando il metodo opportuno del DataAccess (appartenente alla 
+	 *  componente CSDAT2), si prosegue con l'aggiunta dell'account, che non implica il login 
+	 *  automatico da parte dell'utente. Si ritorna un nuovo pacchetto ARI, specificando che 
+	 *  l'aggiunta è andata a buon fine: "SuccessfulCreateAccount". Altrimenti viene catturata la seguente 
+	 *  eccezione "UsernameAlreadyExisting" e ritornato un pacchetto con valore richiesta 
+	 *  "UsernameAlreadyExistingCreateAccount"
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
 	public ARI manage(ARI ari){
 		String infoRequest=ari.getInfo();
 		ARI response=null;

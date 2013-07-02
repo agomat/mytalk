@@ -37,6 +37,6 @@ MyTalk.IpcallController = Ember.ObjectController.extend({
   
   ipCall: function(ip) {
     console.log('controller ipCAll: '+ip);
-    // TODO
+    // TODO fare metodo ipCall
   }
 });

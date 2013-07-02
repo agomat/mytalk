@@ -24,7 +24,6 @@
 */
 
 MyTalk.ListController = Ember.ObjectController.extend({
-  //sortProperties: ['name'], TODO
   needs:['logged'],
 
   /**

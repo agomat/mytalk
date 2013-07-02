@@ -145,9 +145,10 @@ MyTalk.CallState = Ember.StateManager.create({
         
           RTCmanager.setSDP( RTCinfo.sdp );
 
-          for(var i=0; i<RTCinfo.ice.length; ++i) { //TODO possibilità di delegare il ciclo for
+          for(var i=0; i<RTCinfo.ice.length; ++i) {
             RTCmanager.addICE( RTCinfo.ice[i] );
-          }        }
+          }        
+        }
       },
 
     })

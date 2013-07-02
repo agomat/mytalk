@@ -125,7 +125,8 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
  /**
-  * Questo metodo viene invocato alla creazione di un nuovo record di un Model.
+  * Questo me
+todo viene invocato alla creazione di un nuovo record di un Model.
   * \\
   * Deve ottenere il processore interrogando la transazione del parametro _record_. Il metodo
   * poi deve definire una callback da passare al processore come parametro del suo metodo _sendToServer_ assieme al record che è stato creato.
@@ -148,11 +149,9 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
       if (success) {
         context.didCreateRecord(store, type, record);
         console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta per es "Login in corso"
       } else {
         context.didError(store, type, record, '');      
         console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta "Connessione con il server persa"
       }
     };
 
@@ -200,11 +199,9 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
       if (success) {
         context.didUpdateRecord(store, type, record);
         console.log("[Processor] The processor "+processorName+" has successfully sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta per es "Login in corso"
       } else {
         context.didError(store, type, record, '');      
         console.log("[Processor] The processor "+processorName+" was unable to sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta "Connessione con il server persa"
       }
     };
 
@@ -252,11 +249,9 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
       if (success) {
         context.didDeleteRecord(store,type,record);
         console.log("[Processor] The processor "+processorName+" has successfully sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta per es "Login in corso"
       } else {
         context.didError(store, type, record, '');      
         console.log("[Processor] The processor "+processorName+" was unable to sent the request to WebServer");
-        // TODO fare in modo che appaia una scritta "Connessione con il server persa"
       }
     };
 

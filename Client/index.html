@@ -548,7 +548,6 @@
     <script type="text/x-handlebars" data-template-name="calling">
      <div id="call_content" class="scroll_content">
      
-     <!-- TODO: mostrare la chat disattivata quando lo stato non è isConnected -->
       <div id="chat" {{bindAttr class="isConnected:visible:hidden"}}>
         <ul id="messages">
           {{#each message in controller.messages}}
@@ -572,7 +571,7 @@
         <video id="local" autoplay muted {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
         <video id="remote" autoplay {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
         
-        {{#unless isConnected}} <!-- TODO: volendo usare anche qui bindAttr per regolare la visibilità  -->
+        {{#unless isConnected}}
           <div class="call_placeholder">
             <div class="avatar300">
              <img {{bindAttr src="avatarBig"}} />

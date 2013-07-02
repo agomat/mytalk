@@ -27,7 +27,7 @@ MyTalk.User = DS.Model.extend( {
   md5: DS.attr('string'),
   ip: DS.attr('string'),
   online: DS.attr('boolean'),
-  unmatched: DS.attr('boolean'), // TODO: per mattia: tenere questa proprietà offline
+  unmatched: DS.attr('boolean'),
 
   fullName: function() {
     return this.get('name') + " " + this.get('surname');

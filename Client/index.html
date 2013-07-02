@@ -56,6 +56,12 @@
     <script type="text/javascript" src="com/mytalk/client/view/templateform/RegisterUsername.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateform/SearchView.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateform/MessageText.js"></script>
+
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyConfirmPassword.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifySurname.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyEmail.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyName.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateform/ModifyPassword.js"></script>
     
     
     <!-- bootstrap Router -->
@@ -186,7 +192,9 @@
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ChatMessage.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/CallingController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/IpcallController.js"></script>
-    <script type="text/javascript" src="com/mytalk/client/controller/controller/Profile.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/controller/ProfileController.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/controller/StatsController.js"></script>
+
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
@@ -595,41 +603,45 @@
     </script>
     
     <script type="text/x-handlebars" data-template-name="profile">
+        <div id="modifica_text">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet eros fermentum lectus interdum placerat. Donec et laoreet quam. Sed tempus augue ut mi consequat sagittis. Nunc venenatis fermentum neque non sodales. Nam sodales lectus odio, et gravida velit mattis eu. Praesent lacinia enim et urna interdum, quis convallis sapien interdum. Nunc ac ipsum feugiat, rutrum quam eu, placerat risus. Aliquam vel ante nec lorem consequat tincidunt. Sed euismod libero ut felis tincidunt porta molestie fermentum sem. Donec pellentesque convallis scelerisque. Donec lobortis sed sem blandit vulputate. Nam varius sem nisi, nec imperdiet sapien condimentum id. Fusce eu consectetur turpis, ac vulputate erat.</p>
+        </div>
       <div id="me">
         {{#view MyTalk.ProfileView}}
             <fieldset>
               <legend hidden>Modifica Profilo</legend>
               <ul id="newdata">
                 <li>
-                  <label for="name">Nuovo nome</label>
-                  <span>{{view MyTalk.RegisterName valueBinding='view.name' }}</span>
+                  <label for="name">Nome</label>
+                  <span>{{view MyTalk.ModifyName valueBinding='view.name' }}</span>
                 </li>
                 <li>
-                  <label for="surname" >Nuovo cognome</label>
-                  <span>{{view MyTalk.RegisterSurname valueBinding='view.surname' }}</span>
-                </li>
-                <li>
-                  <label for="username" >Nuovo username</label>
-                  <span>{{view MyTalk.RegisterUsername valueBinding='view.username' }}</span>
+                  <label for="surname" >Cognome</label>
+                  <span>{{view MyTalk.ModifySurname valueBinding='view.surname' }}</span>
                 </li>
                 <li>
                   <label for="email" >Nuova email</label>
-                  <span>{{view MyTalk.RegisterEmail valueBinding='view.email' }}</span>
+                  <span>{{view MyTalk.ModifyEmail valueBinding='view.email' }}</span>
                 </li>
                 <li>
                   <label for="password" >Nuova password</label>
-                  <span>{{view MyTalk.RegisterPassword valueBinding='view.password' }}</span>
+                  <span>{{view MyTalk.ModifyPassword valueBinding='view.password' }}</span>
                 </li>
                 <li>
                   <label for="password_conf" >Conferma la password</label>
-                  <span>{{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}</span>
+                  <span>{{view MyTalk.ModifyConfirmPassword valueBinding='view.password_conf' }}</span>
                 </li>
                 <li>
-                  <button type="submit"class="common_button" id="button_signup">Salva</button>
+                  <button type="submit"class="common_button" id="button_signup">Aggiorna Dati</button>
                 </li>
               </ul>
             </fieldset>
+             <div id="elimina_block">
+                <label for="button_elimina"> Elimina il tuo account</label>
+                <button type="button" class="common_button" id="button_elimina" {{action "deleteAccount"}}>Elimina</button>
+            </div>
           {{/view}}
+            
       </div>
     </script>
     

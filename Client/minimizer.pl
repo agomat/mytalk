@@ -28,7 +28,7 @@ print "# Minimizza CSS/HTML/JavaScript di MyTalk e crea un ZIP in /tmp/Client.zi
 # Dare --only-zip per zippare il Client senza minimizzare (debug mode)\n\n>> Sto lavorando...\n";
 
 if (!defined $ARGV[0]) {
-		my $index = `cat index.html`;
+		my $index = `cat index.html`; $index =~ s/`/'/g;
 		my @js_library_file = $index =~ /<script type="text\/javascript" src="(assets\/lib\/.*?)">/g;
 		my @js_our_file = $index =~ /<script type="text\/javascript" src="(com\/.*?)">/g;
 		my @css_file = $index =~ /<link type="text\/css" rel="stylesheet" media="screen" href="(.*?)"\/>/g;
@@ -123,7 +123,7 @@ if (!defined $ARGV[0]) {
 		open FILE, ">/tmp/index.html" or die $!;
 		print FILE $index;
 		close FILE;
-		
+	
 		#5
 		`rm -rf /tmp/Client` if (-e "/tmp/Client");
 		`mkdir /tmp/Client && cp -r . /tmp/Client`;

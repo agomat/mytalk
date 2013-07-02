@@ -104,12 +104,11 @@ MyTalk.ProfileView = Ember.View.extend({
   password_conf: null,
   
   /**
-   * Questo metodo viene richiamato dal $submit$ della form.
-   * Il metodo si occupa di attivare, nel controller associato, il metodo _save()_ per salvare i dati immessi.
+   * Questo metodo si occupa di riempire i campi della form con i dati attuali dell'utente.
    *
-   * @method +submit              
-   * @param {Object} event è l'evento di $submit$ effettuato sulla form               
-   * @return {Void} 
+   * @method -didInsertElement
+   * @return {Void}
+   * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.$
   */
   didInsertElement: function() {
     var me = MyTalk.PersonalData.find(0);
@@ -119,6 +118,14 @@ MyTalk.ProfileView = Ember.View.extend({
     this.set('email', me.get('email'));
   },
   
+  /**
+   * Questo metodo viene richiamato dal $submit$ della form.
+   * Il metodo si occupa di attivare, nel controller associato, il metodo _save()_ per salvare i dati immessi.
+   *
+   * @method +submit              
+   * @param {Object} event è l'evento di $submit$ effettuato sulla form               
+   * @return {Void} 
+  */
   submit: function(event) {
     event.preventDefault();
     var name = this.get('name');
@@ -127,6 +134,7 @@ MyTalk.ProfileView = Ember.View.extend({
     var email = this.get('email');
     var surname = this.get('surname');
     var username = this.get('username');
+    alert("Non prende i nuovi dati\n\n" + name +"\n"+ surname +"\n"+ username +"\n"+ email +"\n"+ password +"\n"+ password_conf);
     this.get('controller').updateProfile(name, surname, username, email, password, password_conf);
   }
 });

@@ -49,6 +49,7 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
       var adapter = store.adapterForType(MyTalk.User);
       adapter.didFindMany(store, MyTalk.User, info);
       MyTalk.List.find(0).get('users').addObject( MyTalk.User.find(userId) );
+      MyTalk.List.find(0).get('stateManager').goToState('saved');
     }
 
   },

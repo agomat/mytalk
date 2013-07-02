@@ -43,7 +43,7 @@ MyTalk.IndexView = Ember.View.extend({
 
 
   /**
-   * Questo metodo di occupa di attivare alcune funzioni JQuery per la vista.
+   * Questo metodo si occupa di attivare alcune funzioni JQuery per la vista.
    *
    * @method -didInsertElement            
    * @return {Void} 

@@ -41,17 +41,12 @@ MyTalk.processor.UpdateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
   process: function (params) {
-
-    // TODO: rimuovere lo stub
-    params = {"name":"Nuovo nome","surname":"Nuovo cognome","username":MyTalk.Authentication.find(0).get('username'),"email":"new@email.it","password":MyTalk.Authentication.find(0).get('password')};
-
-    alert("nota: uso parametri fittizzi in attesa dell'aggiornamento del file ProfileView.js");
+    var username = MyTalk.Authentication.find(0).get('username');
+    var password = MyTalk.Authentication.find(0).get('password');
+    
     if (params.password == null){
       delete params.password;
     }
-
-    var username = MyTalk.Authentication.find(0).get('username');
-    var password = MyTalk.Authentication.find(0).get('password');
 
     // Aggiornamento PersonalData
     var recordPd = MyTalk.PersonalData.find(0).setProperties(params);
@@ -66,8 +61,8 @@ MyTalk.processor.UpdateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
     // Aggiornamento Authentication
     var recordAuth = MyTalk.Authentication.find(0).setProperties(params);
     recordAuth.get('stateManager').goToState('saved');
-    transaction.commit();
 
+    transaction.commit();
   },
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _UpdateAccount_ e campo dati informativo le informazioni del profilo modificate

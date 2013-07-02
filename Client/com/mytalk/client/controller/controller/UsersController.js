@@ -56,7 +56,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   userName: null,
 
   /**
-   * Questo metodo è necessatio al fine di mostrare gli utenti di una lista
+   * Questo metodo è necessario al fine di mostrare gli utenti di una lista
    * Il metodo preleva, dal $content$ del $controller$,  
    * tutti gli utenti la cui proprietà $unmatched$ è settata a $false$ mettendo tali utenti in un array
    * chiamato _fileteredUsers_, tale array viene ritornato alla vista che mostrandolo, 

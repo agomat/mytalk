@@ -88,7 +88,7 @@ MyTalk.LoginFormView = Ember.View.extend({
   
   submit: function(event) {
     event.preventDefault();
-    document.getElementById('loading_bar').style.visibility="visible";
+    $('#loading_bar').css('visibility','visible');
     $("input[name=password]").change();
     $("input[name=username]").change();
     var username = $.trim( this.get('username') );

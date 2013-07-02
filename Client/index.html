@@ -193,6 +193,8 @@
     <script type="text/javascript" src="com/mytalk/client/controller/controller/CallingController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/IpcallController.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/controller/ProfileController.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/controller/StatsController.js"></script>
+
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
@@ -417,7 +419,7 @@
                   <li><img src="assets/img/users.png" alt="" /> {{#linkTo 'list'}} Visualizza i miei contatti {{/linkTo}}</li>
                 </ul>
                 <ul class="separator">
-                  <li><img src="assets/img/door_out.png" alt=""/> <a {{action "schifo"}} href=".">Esci</a></li>
+                  <li><img src="assets/img/door_out.png" alt=""/> <a href=".">Esci</a></li>
                 </ul>
               </div>
             </div>
@@ -634,13 +636,12 @@
                 </li>
               </ul>
             </fieldset>
-             <button type="button" {{action "deleteAccount"}}class="common_button" id="button_signup">Delete</button>
-          {{/view}}
-          <!--Nuovo bottone da aggiungere con ember-->
-            <div id="elimina_block">
+             <div id="elimina_block">
                 <label for="button_elimina"> Elimina il tuo account</label>
-                <button type="button" class="common_button" id="button_elimina">Elimina</button>
+                <button type="button" class="common_button" id="button_elimina" {{action "deleteAccount"}}>Elimina</button>
             </div>
+          {{/view}}
+            
       </div>
     </script>
     

@@ -9,8 +9,8 @@
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-*  0.2     | 2013-05-03 | MA        | [+] Stesura metodo sendToServer
-* 0.1      | 2013-05-01 | MA        | [+] Creazione del Mixin
+*  0.2    | 2013-05-03 | MA        | [+] Stesura metodo sendToServer
+*  0.1    | 2013-05-01 | MA        | [+] Creazione del Mixin
 *
 * This software is distributed under GNU/GPL 2.0.
 *

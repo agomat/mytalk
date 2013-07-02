@@ -73,7 +73,7 @@ BEGIN
         DECLARE r INT;
         ciclo: WHILE i < n DO
           SET r = ROUND(RAND()*1000000);
-          INSERT INTO Users (username,password,name,surname,email,emailhash) VALUES 
+          INSERT IGNORE INTO Users (username,password,name,surname,email,emailhash) VALUES 
               (CONCAT("user",r),MD5("password"),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),"agomat@gmail.com",md5("agomat@gmail.com"));
           SET i = i + 1;
         END WHILE ciclo;

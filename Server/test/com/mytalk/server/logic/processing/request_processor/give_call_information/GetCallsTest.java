@@ -52,10 +52,10 @@ public class GetCallsTest {
 		GetCalls getCallsTest=new GetCalls();
 		
 		ARI ariSuccess=getCallsTest.manage(ariRightTest);
-		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","GiveCalls", ariSuccess.getReq());
+		assertEquals("L'autenticazione e' corretta ma viene fallita l'autenticazione","GiveCalls", ariSuccess.getReq());
 		
 		ARI ariUnsuccess=getCallsTest.manage(ariWrongTest);
-		assertEquals("L'autenticazione è corretta ma viene fallita l'autenticazione","AuthenticationFailGetCalls", ariUnsuccess.getReq());
+		assertEquals("L'autenticazione e' corretta ma viene fallita l'autenticazione","AuthenticationFailGetCalls", ariUnsuccess.getReq());
 	
 		String giveCallPack=ariSuccess.getInfo();
 		GiveCallPack packTest=(GiveCallPack)conv.convertJsonToJava(giveCallPack, GiveCallPack.class);
@@ -64,7 +64,7 @@ public class GetCallsTest {
 		assertEquals("Le statistiche totali relative ai byte mandati sono errate",new Integer(70000),packTest.getWrapperCall().getTotalByteSent());
 		assertEquals("Le statistiche totali relative alla durata sono errate",new Integer(1700),packTest.getWrapperCall().getTotalDuration());
 	
-		//UsernameNotExisting non viene sollevata perchè usa dati provvenienti dal db e quindi consistenti
+		//UsernameNotExisting non viene sollevata perche' usa dati provvenienti dal db e quindi consistenti
 	}
 
 }

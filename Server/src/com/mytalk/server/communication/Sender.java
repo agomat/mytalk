@@ -1,7 +1,7 @@
 /**
 * Filename: Sender.java
 * Package: com.mytalk.server.communication
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-05-14
 *
 * Diary:
@@ -62,7 +62,7 @@ public class Sender implements Runnable {
 	 * memorizza il riferimento nell'oggetto Sender
 	 * 
 	 * @method +registerReceiver
-	 * @param {Receiver} rec è l'oggetto che identifica un receiver da registrare
+	 * @param {Receiver} rec e' l'oggetto che identifica un receiver da registrare
 	 * @return {void}
 	 */
 	public void registerReceiver(Receiver rec){
@@ -109,7 +109,7 @@ public class Sender implements Runnable {
 	 * cercare i client connessi usa il riferimento all'oggetto Receiver
 	 * 
 	 * @method +sendToAll
-	 * @param {String} json è l'oggetto che identifica il messaggio da mandare a tutti i client
+	 * @param {String} json e' l'oggetto che identifica il messaggio da mandare a tutti i client
 	 * @return {void}
 	 */
 	private void sendToAll(String json){

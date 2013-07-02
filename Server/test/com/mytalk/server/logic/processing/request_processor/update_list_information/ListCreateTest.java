@@ -64,7 +64,7 @@ public class ListCreateTest {
 		ari.setInfo(packString);
 		
 		ariResponse=listCreate.manage(ari);
-		assertEquals("Lista esiste già","ListAlreadyExists",ariResponse.getReq());
+		assertEquals("Lista esiste gia'","ListAlreadyExists",ariResponse.getReq());
 		
 		listPack.setListName("NuovaLista");
 		listPack.setOwner("user2");

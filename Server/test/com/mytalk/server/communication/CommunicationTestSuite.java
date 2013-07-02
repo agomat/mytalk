@@ -1,7 +1,7 @@
 /**
  * Filename: CommunicationTestSuite.java
  * Package: com.mytalk.server.communication
- * Author: Nicolò Mazzucato
+ * Author: Nicolo' Mazzucato
  * Date: 2013-05-22
  *
  * Diary:

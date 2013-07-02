@@ -7,14 +7,17 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.2	  |	2013-05-22 |   MF      | [+] Modifica dei nomi del metodo manage al fine di renderli
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
 * 									     più espressivi e di facile comprensione
-* 0.1	  |	2013-05-01 |   MF      | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
+* 
+* Classe che si occupa di aggiungere una chiamata effettuata nella lista delle chiamate
 */
 
 package com.mytalk.server.logic.processing.request_processor.give_call_information;
@@ -31,8 +34,31 @@ import com.mytalk.server.logic.shared.model_client.Call;
 import com.mytalk.server.logic.shared.model_client.WrapperCall;
 
 public class AddCall extends GenericRequest {
-
 	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +AddCall
+	 */
+	public AddCall(){}
+	/**
+	 * Ricevuto il pacchetto ARI, si controlla se è ben formato. Se la risposta è negativa, 
+	 * viene restituito un pacchetto con richiesta "CorruptedPack". Viceversa, si crea un 
+	 * oggetto di tipo CSDAT1.model.User, contenente le informazioni dell'Authentication del 
+	 * campo dati ari. Inoltre si crea un oggetto di tipo CSDAT1.model.Call contenente i 
+	 * dati ottenuti riguardanti la chiamata. Tale oggetto lo si aggiunge chiamando il metodo 
+	 * opportuno del DataAccess, appartenente alla componente CSDAT2. Si ritorna un nuovo pacchetto 
+	 * ARI, specificando che l'aggiunta è andata a buon fine: "SuccessfulAddCall". Altrimenti 
+	 * vengono catturate le seguenti eccezioni: "AuthenticationFail" e "IdNotFound", ritornando un 
+	 * pacchetto con valore richiesta "AuthenticationFailAddCall" (in caso di 
+	 * autenticazione fallita) o "IdNotFoundAddCall" (id non trovato). In tutti i pacchetti 
+	 * di risposta, il campo Information rimane invariato
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
 	public ARI manage(ARI ari) {
 		ARI response=null;
 		Authentication auth=ari.getAuth();
@@ -56,7 +82,7 @@ public class AddCall extends GenericRequest {
 			int byteR=0;
 			int byteS=0;
 			try{
-				callClient=listOfCall.get(0); //ottengo una chiamata
+				callClient=listOfCall.get(0); 
 				caller=auth.getUser();
 				receiver=(da.getUserById(callClient.getSpeaker())).getUsername();
 				duration=callClient.getDuration();

@@ -1,7 +1,7 @@
 /**
 * Filename: MainClass.java
 * Package: com.mytalk.server.communication
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-05-14
 *
 * Diary:
@@ -16,7 +16,7 @@
 * - Zucchetti SRL
 * 
 * Classe che ha il compito di istanziare e avviare l'esecuzione dei thread di tipo Receiver, 
-* Dispatcher e Sender. Inoltre avvia il mapping di Hibernate e specifica su che porta è in
+* Dispatcher e Sender. Inoltre avvia il mapping di Hibernate e specifica su che porta e' in
 * ascolto il server
 */
 
@@ -38,7 +38,7 @@ public class MainClass {
 	 * il riferimento all'oggetto Receiver
 	 * 
 	 * @method +main
-	 * @param {String[]} args è l'oggetto che identifica i parametri di ingresso di tipo String
+	 * @param {String[]} args e' l'oggetto che identifica i parametri di ingresso di tipo String
 	 * @return {void}
 	 */
 	public static void main(String[] args) {

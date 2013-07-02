@@ -1,7 +1,7 @@
 /**
 * Filename: Dispatcher.java
 * Package: com.mytalk.server.communication
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-05-14
 *
 * Diary:
@@ -34,7 +34,7 @@ import com.mytalk.server.logic.processing.Processor;
 public class Dispatcher implements Runnable {
 	
 	/**
-	 * Riferimento all'oggetto di tipo IProcessor su cui Dispatcher chiamerà il metodo per 
+	 * Riferimento all'oggetto di tipo IProcessor su cui Dispatcher chiamera' il metodo per 
 	 * processare una richiesta
 	 * 
 	 * @property -processor

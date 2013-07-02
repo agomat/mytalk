@@ -1,19 +1,20 @@
 /**
-* Filename: CreateAccountTest.java
+* Filename: UpdateAccountTest.java
 * Package: com.mytalk.server.logic.processing.request_processor.world_information
-* Author: Michael Ferronato
-* Date: 2013-05-06
+* Author: 
+* Date:
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-06 |   MF      | [+] Inserimento classe     
+* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *
 * Software licensed to:
 * - Zucchetti SRL
 */
+
 
 package com.mytalk.server.logic.processing.request_processor.world_information;
 
@@ -24,14 +25,13 @@ import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.logic.processing.Convert;
-import com.mytalk.server.logic.processing.request_processor.world_information.CreateAccount;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.WorldPack;
 import com.mytalk.server.logic.shared.model_client.PersonalData;
 import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
 
-public class CreateAccountTest {
+public class UpdateAccountTest {
 
 	private EnvironmentSetter envSetter=new EnvironmentSetter();
 	private Convert conv=new Convert();
@@ -41,29 +41,35 @@ public class CreateAccountTest {
 		envSetter.cleanDB();
 		envSetter.initDB();
 	}
-	
 	@Test
 	public void testManage() {
-		CreateAccount createAccount=new CreateAccount();
-		Authentication auth=new Authentication(null,null,"123.123.123.11");
-		PersonalData personalData=new PersonalData(12,"user11","user11","user11","user11","user11@mytalk.com","us11us11us11us11us11us11us11us11","1.1.1.3");
+		UpdateAccount updateAccount=new UpdateAccount();
+		Authentication auth=new Authentication("user1","user1","123.123.123.1");
+		PersonalData personalData=new PersonalData(2,"user1","user1","user1","user1","user1@mytalk.com","us01us01us01us01us01us01us01us01","123.123.123.1");
 		WorldPersonalData wpd=new WorldPersonalData(personalData);
 		WorldPack pack=new WorldPack(null,wpd);
 		String packString=conv.convertJavaToJson(pack);
+		ARI ari=new ARI(auth,"UpdateAccount",packString);
 		
-		ARI ari=new ARI(auth,"CreateAccount",packString);
-		ARI ariResult=createAccount.manage(ari);
+		ARI response=updateAccount.manage(ari);
+		assertEquals("Dati corretti ma fallisce","SuccessfulUpdateAccount",response.getReq());
 		
-		assertEquals("Creazione account fallita ma username non e' gia' presente","SuccessfulCreateAccount",ariResult.getReq());
+		auth.setUser("user2");
+		response=updateAccount.manage(ari);
+		assertEquals("Dati di autenticazione errati ma non viene notificato","AuthenticationFailUpdateAccount",response.getReq());
 		
-		personalData=new PersonalData(2,"user1","user1","user1","user1","user1@mytalk.com","us01us01us01us01us01us01us01us01","1.1.1.4");
+		auth.setPwd("user2");
+		response=updateAccount.manage(ari);
+		assertEquals("Username di autenticazione diverso da quello dei dati","UsernameNotCorrespondingUpdateAccount",response.getReq());
 		
-		pack=new WorldPack(null,wpd);
+		wpd.setPersonalData(null);
+		pack.setWorldPersonalData(wpd);
 		packString=conv.convertJavaToJson(pack);
 		ari.setInfo(packString);
-		ariResult=createAccount.manage(ari);
 		
-		assertEquals("Creazione account riuscita ma username e' gia' presente","UsernameAlreadyExistingCreateAccount",ariResult.getReq());
+		auth.setPwd("user2");
+		response=updateAccount.manage(ari);
+		assertEquals("Pacchetto mal formato","CorruptedPack",response.getReq());
 		
 	}
 

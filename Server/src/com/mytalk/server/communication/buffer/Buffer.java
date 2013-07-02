@@ -1,7 +1,7 @@
 /**
 * Filename: Buffer.java
 * Package: com.mytalk.server.comunication.buffer
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-05-14
 *
 * Diary:
@@ -26,7 +26,7 @@ public interface Buffer {
 	 * Metodo che inserisce un oggetto Message nel buffer
 	 * 
 	 * @method +push
-	 * @param {Message} packet è l'oggetto che rappresenta una coppia indirizzo ip e json
+	 * @param {Message} packet e' l'oggetto che rappresenta una coppia indirizzo ip e json
 	 * @return {void}
 	 */
 	public void push(Message packet);

@@ -1,7 +1,7 @@
 /**
 * Filename: Message.java
 * Package: com.mytalk.server.communication.buffer
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-15-05
 *
 * Diary:

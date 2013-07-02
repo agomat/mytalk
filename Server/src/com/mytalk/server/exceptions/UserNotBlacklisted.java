@@ -1,7 +1,7 @@
 /**
 * Filename: UserNotBlacklisted.java
 * Package: com.mytalk.server.exceptions
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-04-29
 *
 * Diary:

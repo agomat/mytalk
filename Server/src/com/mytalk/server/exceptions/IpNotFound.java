@@ -1,7 +1,7 @@
 /**
 * Filename: IpNotFound.java
 * Package: com.mytalk.server.exceptions
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-15-05
 *
 * Diary:

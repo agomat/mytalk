@@ -81,7 +81,7 @@ public class ListUserRemoveTest {
 		packString=conv.convertJavaToJson(listPack);
 		ari.setInfo(packString);
 		ariResponse=listUserRemove.manage(ari);
-		assertEquals("User non può rimuovere se stesso","UserNotExistingListUserRemove",ariResponse.getReq());
+		assertEquals("User non puo' rimuovere se stesso","UserNotExistingListUserRemove",ariResponse.getReq());
 		
 		userList.setName("lista");
 		list.remove(0);

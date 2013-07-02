@@ -1,7 +1,7 @@
 /**
 * Filename: Receiver.java
 * Package: com.mytalk.server.communication
-* Author: Nicolò Mazzucato
+* Author: Nicolo' Mazzucato
 * Date: 2013-05-14
 *
 * Diary:
@@ -144,7 +144,7 @@ public class Receiver extends WebSocketServer{
 	}
 
 	/**
-	 * Metodo di utilità che cerca nella collezione di oggetti WebSocket, che rappresentano 
+	 * Metodo di utilita' che cerca nella collezione di oggetti WebSocket, che rappresentano 
 	 * tutte le connessioni aperte, un oggetto WebSocket avente l'ip passato; se non trova 
 	 * nessun oggetto con questo requisito solleva un'eccezione di tipo IpNotFound
 	 * 

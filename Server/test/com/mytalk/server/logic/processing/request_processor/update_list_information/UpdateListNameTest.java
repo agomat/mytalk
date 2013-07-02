@@ -67,7 +67,7 @@ public class UpdateListNameTest {
 		packString=conv.convertJavaToJson(pack);
 		ari.setInfo(packString);
 		ariResponse=updateListName.manage(ari);
-		assertEquals("C'è una già una lista con il nuovo nome","ListAlreadyExistsRenameList",ariResponse.getReq());
+		assertEquals("C'e' una gia' una lista con il nuovo nome","ListAlreadyExistsRenameList",ariResponse.getReq());
 		
 		pack.setOwner("user1");
 		packString=conv.convertJavaToJson(pack);

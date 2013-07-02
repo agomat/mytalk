@@ -1,7 +1,7 @@
 /**
  * Filename: LogicTestSuite.java
  * Package: com.mytalk.server.logic
- * Author: Nicolò Mazzucato
+ * Author: Nicolo' Mazzucato
  * Date: 2013-05-22
  *
  * Diary:

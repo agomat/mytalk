@@ -604,7 +604,10 @@
     
     <script type="text/x-handlebars" data-template-name="profile">
         <div id="modifica_text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet eros fermentum lectus interdum placerat. Donec et laoreet quam. Sed tempus augue ut mi consequat sagittis. Nunc venenatis fermentum neque non sodales. Nam sodales lectus odio, et gravida velit mattis eu. Praesent lacinia enim et urna interdum, quis convallis sapien interdum. Nunc ac ipsum feugiat, rutrum quam eu, placerat risus. Aliquam vel ante nec lorem consequat tincidunt. Sed euismod libero ut felis tincidunt porta molestie fermentum sem. Donec pellentesque convallis scelerisque. Donec lobortis sed sem blandit vulputate. Nam varius sem nisi, nec imperdiet sapien condimentum id. Fusce eu consectetur turpis, ac vulputate erat.</p>
+        <h2>Modifica Profilo</h2>
+        <p>Modifica i tuoi dati personali cambiando nome, cogone o email. La modifica della password richiede la conferma.</p>
+        <p>Puoi eliminare il tuo account tramite l'apposito bottone; <em>MyTalk</em> non mantiene i tuoi dati una volta cancellato l'account. </p>
+        <p>L'operazione una volta effettuata non è reversibile.</p>
         </div>
       <div id="me">
         {{#view MyTalk.ProfileView}}
@@ -613,14 +616,14 @@
               <ul id="newdata">
                 <li>
                   <label for="name">Nome</label>
-                  <span>{{view MyTalk.ModifyName valueBinding='view.name' }}</span>
+                  <span>{{view MyTalk.ModifyName valueBinding='view.name'}}</span>
                 </li>
                 <li>
                   <label for="surname" >Cognome</label>
                   <span>{{view MyTalk.ModifySurname valueBinding='view.surname' }}</span>
                 </li>
                 <li>
-                  <label for="email" >Nuova email</label>
+                  <label for="email" >Indirizzo email</label>
                   <span>{{view MyTalk.ModifyEmail valueBinding='view.email' }}</span>
                 </li>
                 <li>
@@ -637,7 +640,7 @@
               </ul>
             </fieldset>
              <div id="elimina_block">
-                <label for="button_elimina"> Elimina il tuo account</label>
+                <label for="button_elimina"> Elimina il tuo account:</label>
                 <button type="button" class="common_button" id="button_elimina" {{action "deleteAccount"}}>Elimina</button>
             </div>
           {{/view}}

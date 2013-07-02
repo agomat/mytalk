@@ -50,18 +50,6 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
   },
   
   /**
-   * Questo metodo si occupa di effettura la disconnessione dell'utente dal sistema 
-   * dopo che questo ha confermato la sua intenzione ad eliminare il proprio account.
-   *
-   * @method -logout                                    
-   * @return {Void} 
-  */
-
-  logout:function(){
-    window.location = '';
-  },
-  
-  /**
    * Questo metodo è deputato all'eliminazione dell'account utente.
    * Il metodo si occupa di controllare che l'utente confermi la sua intenzione di eliminare il profilo
    * (la richiesta di conferma avviene tramite $confirm$ JavaScript).
@@ -79,10 +67,7 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
     if(c){
       var processorFactory = MyTalk.ProcessorFactory.create({});
       var processor = processorFactory.createProcessorProduct( "DeleteAccount" );
-      processor.process({
-        username: me.get('username'),
-      });
-      this.logout();
+      processor.process({});
     }
   }
 

@@ -75,7 +75,7 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
           processor.process( ari );
         }
         this.set('socket', ws);
-      }, 300);
+      }, 500);
     }
   },
 

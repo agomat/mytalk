@@ -21,7 +21,24 @@
 */
 
 MyTalk.ModifyEmail = Ember.TextField.extend({
+    
+  /**
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
+   * @property -attributeBindings           
+   * @type {Binding}                   
+   *
+  */
   
+  attributeBindings: ["required"],
+  
+  /**
+   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * @property +required           
+   * @type {Boolean}                   
+   *
+  */
+  
+  required: true,
 
   /**
    * Proprietà necessaria per settare il nome dell'input area

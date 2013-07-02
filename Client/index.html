@@ -595,25 +595,24 @@
     </script>
     
     <script type="text/x-handlebars" data-template-name="profile">
+        <div id="modifica_text">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet eros fermentum lectus interdum placerat. Donec et laoreet quam. Sed tempus augue ut mi consequat sagittis. Nunc venenatis fermentum neque non sodales. Nam sodales lectus odio, et gravida velit mattis eu. Praesent lacinia enim et urna interdum, quis convallis sapien interdum. Nunc ac ipsum feugiat, rutrum quam eu, placerat risus. Aliquam vel ante nec lorem consequat tincidunt. Sed euismod libero ut felis tincidunt porta molestie fermentum sem. Donec pellentesque convallis scelerisque. Donec lobortis sed sem blandit vulputate. Nam varius sem nisi, nec imperdiet sapien condimentum id. Fusce eu consectetur turpis, ac vulputate erat.</p>
+        </div>
       <div id="me">
         {{#view MyTalk.ProfileView}}
             <fieldset>
               <legend hidden>Modifica Profilo</legend>
               <ul id="newdata">
                 <li>
-                  <label for="name">Nuovo nome</label>
+                  <label for="name">Nome</label>
                   <span>{{view MyTalk.RegisterName valueBinding='view.name' }}</span>
                 </li>
                 <li>
-                  <label for="surname" >Nuovo cognome</label>
+                  <label for="surname" >Cognome</label>
                   <span>{{view MyTalk.RegisterSurname valueBinding='view.surname' }}</span>
                 </li>
                 <li>
-                  <label for="username" >Nuovo username</label>
-                  <span>{{view MyTalk.RegisterUsername valueBinding='view.username' }}</span>
-                </li>
-                <li>
-                  <label for="email" >Nuova email</label>
+                  <label for="email" >Indirizzo email</label>
                   <span>{{view MyTalk.RegisterEmail valueBinding='view.email' }}</span>
                 </li>
                 <li>
@@ -625,11 +624,16 @@
                   <span>{{view MyTalk.RegisterConfirmPassword valueBinding='view.password_conf' }}</span>
                 </li>
                 <li>
-                  <button type="submit"class="common_button" id="button_signup">Salva</button>
+                  <button type="submit" class="common_button" id="button_signup">Salva</button>
                 </li>
               </ul>
             </fieldset>
           {{/view}}
+          <!--Nuovo bottone da aggiungere con ember-->
+            <div id="elimina_block">
+                <label for="button_elimina"> Elimina il tuo account</label>
+                <button type="button" class="common_button" id="button_elimina">Elimina</button>
+            </div>
       </div>
     </script>
     

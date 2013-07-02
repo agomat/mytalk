@@ -122,7 +122,7 @@ public class LoginTest {
 		ariResult=login.manage(ari);
 		assertEquals("Tentativo di login con ip gia' assegnato ad un altro user","IpAlreadyLoggedLogin",ariResult.getReq());
 		
-		//UserNotLoggedException mai lanciata poiché i candidati sono oggetti ricavati dal db e quindi consistenti
+		//UserNotLoggedException mai lanciata poiche' i candidati sono oggetti ricavati dal db e quindi consistenti
 	}
 
 }

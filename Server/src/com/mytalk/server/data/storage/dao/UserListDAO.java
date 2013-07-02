@@ -81,7 +81,7 @@ public class UserListDAO extends GenericDAO{
 
 	/**
 	 * Ritorna l'oggetto UserList avente chiave primaria la coppia (primaryKeyId, primaryKeyUser); 
-	 * se non è presente nel database tale record ritorna un oggetto UserList=null
+	 * se non e' presente nel database tale record ritorna un oggetto UserList=null
 	 * 
 	 * @method +get
 	 * @param {int} primaryKeyId e' il valore utilizzato assieme a primaryKeyUser per ottenere 

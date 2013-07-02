@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
-* 									     più espressivi e di facile comprensione
+* 									     piu' espressivi e di facile comprensione
 * 0.1	  |	2013-05-17 |    MF     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -39,8 +39,8 @@ public class LogoutToAnonymous extends GenericRequest {
 	public LogoutToAnonymous(){}
 	
 	/**
-	 * Una volta ricevuto l'ARI, viene controllato se il pacchetto è ben formato. Se la risposta 
-	 * è negativa, viene ritornato un pacchetto con richiesta "CorruptedPack". In seguito viene
+	 * Una volta ricevuto l'ARI, viene controllato se il pacchetto e' ben formato. Se la risposta 
+	 * e' negativa, viene ritornato un pacchetto con richiesta "CorruptedPack". In seguito viene
 	 *  creato un oggetto di tipo OnlineUser con i dati presenti nell'Authentication del campo dati 
 	 *  ari. Tale oggetto viene utilizzato dal metodo di DataAccess, appartenente alla componente 
 	 *  CSDAT2, per consentire il cambiamento da autenticato ad anonimo. Nel caso in cui tutto 

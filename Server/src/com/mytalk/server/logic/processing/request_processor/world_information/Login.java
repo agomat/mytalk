@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.4     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.3	  |	2013-05-22 |    MF     | [#] Modifica dei nomi del metodo manage al fine di renderli
-* 									     più espressivi e di facile comprensione
+* 									     piu' espressivi e di facile comprensione
 * 0.2	  |	2013-05-15 |    MF     | [#] Ottimizzazione del metodo manage al fine di ridurre la 
 * 										 complessita'
 * 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
@@ -47,15 +47,15 @@ public class Login extends GenericRequest{
 	public Login(){}
 	
 	/**
-	 * Una volta ricevuto il pacchetto ARI, si controlla se è ben formato. Se la risposta è negativa,
+	 * Una volta ricevuto il pacchetto ARI, si controlla se e' ben formato. Se la risposta e' negativa,
 	 *  viene ritornato un "CorruptedPack". Viceversa, viene invocato il corrispondente metodo 
-	 *  sull'oggetto DataAccess e, se l'operazione è andata a buon fine, vengono caricate tutte le
+	 *  sull'oggetto DataAccess e, se l'operazione e' andata a buon fine, vengono caricate tutte le
 	 *  informazioni riguardanti l'utente e le sue liste. Nel dettaglio, viene caricata la lista 
 	 *  degli utenti distinguendo quelli online da quelli offline, le liste personali dell'utente e 
-	 *  la blacklist. Tutto questo viene inserito nel pacchetto WorldPack, che a sua volta farà parte
+	 *  la blacklist. Tutto questo viene inserito nel pacchetto WorldPack, che a sua volta fara' parte
 	 *  del pacchetto informazione del nuovo pacchetto ARI sotto forma di stringa JSON. Tale 
-	 *  pacchetto conterrà anche la buona riuscita dell'operazione: "SuccessfulLogin". Altrimenti,
-	 *  è possibile che vengano sollevate e catturate le seguenti eccezioni: "AuthenticationFailException", 
+	 *  pacchetto conterra' anche la buona riuscita dell'operazione: "SuccessfulLogin". Altrimenti,
+	 *  e' possibile che vengano sollevate e catturate le seguenti eccezioni: "AuthenticationFailException", 
 	 *  "UsernameNotCorrespondingException", "IpNotLoggedException", "UserAlreadyLoggedException", "IpAlreadyLoggedException", 
 	 *  "UserNotLoggedException", ritornando un pacchetto con campo richiesta "AuthenticationFailLogin", 
 	 *  "UsernameNotCorrespondingLogin", "IpNotLoggedLogin", "UserAlreadyLoggedLogin",

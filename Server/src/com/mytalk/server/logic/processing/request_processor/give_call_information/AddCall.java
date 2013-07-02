@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
-* 									     più espressivi e di facile comprensione
+* 									     piu' espressivi e di facile comprensione
 * 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -42,13 +42,13 @@ public class AddCall extends GenericRequest {
 	 */
 	public AddCall(){}
 	/**
-	 * Ricevuto il pacchetto ARI, si controlla se è ben formato. Se la risposta è negativa, 
+	 * Ricevuto il pacchetto ARI, si controlla se e' ben formato. Se la risposta e' negativa, 
 	 * viene restituito un pacchetto con richiesta "CorruptedPack". Viceversa, si crea un 
 	 * oggetto di tipo CSDAT1.model.User, contenente le informazioni dell'Authentication del 
 	 * campo dati ari. Inoltre si crea un oggetto di tipo CSDAT1.model.Call contenente i 
 	 * dati ottenuti riguardanti la chiamata. Tale oggetto lo si aggiunge chiamando il metodo 
 	 * opportuno del DataAccess, appartenente alla componente CSDAT2. Si ritorna un nuovo pacchetto 
-	 * ARI, specificando che l'aggiunta è andata a buon fine: "SuccessfulAddCall". Altrimenti 
+	 * ARI, specificando che l'aggiunta e' andata a buon fine: "SuccessfulAddCall". Altrimenti 
 	 * vengono catturate le seguenti eccezioni: "AuthenticationFailException" e "IdNotFoundException", ritornando un 
 	 * pacchetto con valore richiesta "AuthenticationFailAddCall" (in caso di 
 	 * autenticazione fallita) o "IdNotFoundAddCall" (id non trovato). In tutti i pacchetti 

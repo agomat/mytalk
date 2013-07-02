@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
-* 										 fine di renderli più espressivi
+* 										 fine di renderli piu' espressivi
 * 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -39,14 +39,14 @@ public class CreateAccount extends GenericRequest{
 	public CreateAccount(){}
 	
 	/**
-	 * Una volta ricevuto il pacchetto ARI, si controlla se è ben formato. Se la risposta è negativa,
+	 * Una volta ricevuto il pacchetto ARI, si controlla se e' ben formato. Se la risposta e' negativa,
 	 *  viene restituito un "CorruptedPack". Viceversa, si crea un oggetto di tipo 
 	 *  CSDAT1.model.User, contenente le informazioni presenti nel campo dati ari. Inoltre vengono 
 	 *  codificati l'indirizzo email e la password, in modo tale da salvarle codificate e non 
 	 *  inviarle in chiaro. Infine, chiamando il metodo opportuno del DataAccess (appartenente alla 
 	 *  componente CSDAT2), si prosegue con l'aggiunta dell'account, che non implica il login 
 	 *  automatico da parte dell'utente. Si ritorna un nuovo pacchetto ARI, specificando che 
-	 *  l'aggiunta è andata a buon fine: "SuccessfulCreateAccount". Altrimenti viene catturata la seguente 
+	 *  l'aggiunta e' andata a buon fine: "SuccessfulCreateAccount". Altrimenti viene catturata la seguente 
 	 *  eccezione "UsernameAlreadyExistingException" e ritornato un pacchetto con valore richiesta 
 	 *  "UsernameAlreadyExistingCreateAccount"
 	 *  

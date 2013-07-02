@@ -81,7 +81,7 @@ public class UserDAO extends GenericDAO{
 	}	
 	
 	/**
-	 * Ritorna l'oggetto User avente chiave primaria la stringa primaryKey; se non è presente
+	 * Ritorna l'oggetto User avente chiave primaria la stringa primaryKey; se non e' presente
 	 *  nel database tale record ritorna un oggetto User=null
 	 *  
 	 *  @method +get
@@ -115,7 +115,7 @@ public class UserDAO extends GenericDAO{
 	
 	/**
 	 * Ritorna una lista conentente gli oggetti User corrispondenti agli utenti che non risultano 
-	 * al momento autenticati, cioè il cui username non compare in nessun record della tabella 
+	 * al momento autenticati, cioe' il cui username non compare in nessun record della tabella 
 	 * degli utenti online
 	 * 
 	 * @method +getOfflineUsers
@@ -146,7 +146,7 @@ public class UserDAO extends GenericDAO{
 	}
 	
 	/**
-	 * Ritorna l'oggetto User avente attributo id uguale all'intero passato; metodo di utilità
+	 * Ritorna l'oggetto User avente attributo id uguale all'intero passato; metodo di utilita'
 	 * 
 	 * @method +getById
 	 * @param {int} id e' il valore utilizzato per ottenere l'utente con il corrispondente id

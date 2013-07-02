@@ -14,7 +14,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 * 
-* Identifica un'eccezione relativa ad un utente già in blacklist
+* Identifica un'eccezione relativa ad un utente gia' in blacklist
 */
 
 package com.mytalk.server.exceptions;

@@ -71,7 +71,7 @@ public class ListNameDAO extends GenericDAO{
 	}
 	
 	/**
-	 * Ritorna l'oggetto ListName avente chiave primaria l'intero primaryKey; se non è presente nel 
+	 * Ritorna l'oggetto ListName avente chiave primaria l'intero primaryKey; se non e' presente nel 
 	 * database tale record ritorna un oggetto ListName=null
 	 * 
 	 * @method +get
@@ -107,7 +107,7 @@ public class ListNameDAO extends GenericDAO{
 	
 	/**
 	 * Ritorna l'oggetto ListName con attributo owner uguale a listObj.owner e attributo name 
-	 * uguale a listObj.name; metodo di utilità
+	 * uguale a listObj.name; metodo di utilita'
 	 * 
 	 * @method +getByNameOwner
 	 * @param {ListName} listObj e' l'oggetto utilizzato per ottenere un oggetto lista corrispondente

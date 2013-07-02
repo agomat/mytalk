@@ -79,7 +79,7 @@ public class OnlineUserDAO extends GenericDAO{
 	}
 	
 	/**
-	 * Ritorna l'oggetto OnlineUser avente chiave primaria la stringa primaryKey; se non è presente
+	 * Ritorna l'oggetto OnlineUser avente chiave primaria la stringa primaryKey; se non e' presente
 	 *  nel database tale record ritorna un oggetto OnlineUser=null
 	 *  
 	 *  @method +get

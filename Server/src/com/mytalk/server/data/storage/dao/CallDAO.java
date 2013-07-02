@@ -84,7 +84,7 @@ public class CallDAO extends GenericDAO{
 	}
 	
 	/**
-	 * Ritorna l'oggetto Call avente chiave primaria l'intero primaryKey; se non è presente nel 
+	 * Ritorna l'oggetto Call avente chiave primaria l'intero primaryKey; se non e' presente nel 
 	 * database tale record ritorna un oggetto Call=null
 	 * 
 	 * @method +get

@@ -33,13 +33,13 @@ import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
 public class UpdateAccount extends GenericRequest {
 
 	/**
-	 * Una volta ricevuto il pacchetto ARI, si controlla se è ben formato. Se la risposta è negativa,
+	 * Una volta ricevuto il pacchetto ARI, si controlla se e' ben formato. Se la risposta e' negativa,
 	 *  viene restituito un "CorruptedPack". Viceversa, si crea un oggetto di tipo 
 	 *  CSDAT1.model.User, contenente le informazioni presenti nel campo dati ari. Inoltre vengono 
 	 *  codificati l'indirizzo email e la password, in modo tale da salvarle codificate e non 
 	 *  inviarle in chiaro. Infine, chiamando il metodo opportuno del DataAccess (appartenente alla 
 	 *  componente CSDAT2), si prosegue con l'aggiornamento dell'account.
-	 *  Si ritorna un nuovo pacchetto ARI, specificando che l'aggiunta è andata a buon fine: 
+	 *  Si ritorna un nuovo pacchetto ARI, specificando che l'aggiunta e' andata a buon fine: 
 	 *  "SuccessfulUpdateAccount". Altrimenti vengono lanciate e catturate le seguente eccezioni:
 	 *  "AuthenticationFailException" e "UsernameNotCorrespondingException", ritornando un pacchetto con campo richiesta
 	 *  "AuthenticationFailUpdateAccount" o "UsernameNotCorrespondingUpdateAccount".

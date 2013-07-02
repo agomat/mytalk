@@ -32,7 +32,7 @@ public interface IProcessor {
 	
 	/**
 	 * Ritorna una lista di oggetti Message che identifica le risposte alla specifica richiesta 
-	 * che è stata processata; esso verrà ridefinito dalle classi che implementano tale interfaccia
+	 * che e' stata processata; esso verra' ridefinito dalle classi che implementano tale interfaccia
 	 * 
 	 * @method +processRequest
 	 * @param {Message} message e' l'oggetto utilizzato che contiene le informazioni necessarie 

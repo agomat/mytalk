@@ -69,7 +69,7 @@ public class BlacklistDAO extends GenericDAO{
 	
 	/**
 	 * Ritorna l'oggetto Blacklist avente chiave primaria la coppia (primaryKeyOwner, primaryKeyUser);
-	 *  se non è presente nel database tale record ritorna un oggetto 
+	 *  se non e' presente nel database tale record ritorna un oggetto 
 	 * Blacklist=null
 	 * 
 	 * @method +get
@@ -88,7 +88,7 @@ public class BlacklistDAO extends GenericDAO{
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti Blacklist in cui l'attributo owner è uguale a primaryKey, 
+	 * Ritorna una lista di oggetti Blacklist in cui l'attributo owner e' uguale a primaryKey, 
 	 * ovvero ritorna gli utenti in blacklist di un certo utente
 	 * 
 	 * @method +getUserBlacklist

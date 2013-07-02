@@ -1,7 +1,7 @@
 /**
  * Filename: DataAccessTest.java
  * Package: com.mytalk.server.data.storage
- * Author: Nicolò Mazzucato
+ * Author: Nicolo' Mazzucato
  * Date: 2013-04-29
  *
  * Diary:
@@ -73,11 +73,11 @@ public class DataAccessTest{
 		String notExistingIp="1.1.1.1";
 		//test con ip di un utente presente nella tabella OnlineUsers
 		boolean result1=dataAccess.checkUserByIp(existingIp);
-		assertTrue("non è stato trovato l'utente con ip "+existingIp,result1);
+		assertTrue("non e' stato trovato l'utente con ip "+existingIp,result1);
 		
 		//test con ip di un utente non presente nella tabella OnlineUsers
 		boolean result2=dataAccess.checkUserByIp(notExistingIp);
-		assertTrue("è stato trovato un utente con ip "+notExistingIp+" anche se non è presente",!result2);
+		assertTrue("e' stato trovato un utente con ip "+notExistingIp+" anche se non e' presente",!result2);
 		
 	}
 
@@ -89,11 +89,11 @@ public class DataAccessTest{
 		
 		//test con username presente nella tabella OnlineUsers
 		boolean result1=dataAccess.checkUserByName(existingUsername, toAuth);
-		assertTrue("non è stato trovato l'utente con username "+existingUsername,result1);
+		assertTrue("non e' stato trovato l'utente con username "+existingUsername,result1);
 		
 		//test con username non presente nella tabella OnlineUsers
 		boolean result2=dataAccess.checkUserByName(notExistingUsername, toAuth);
-		assertTrue("è stato trovato un utente con username "+notExistingUsername+" anche se non presente",!result2);
+		assertTrue("e' stato trovato un utente con username "+notExistingUsername+" anche se non presente",!result2);
 		
 	}
 	
@@ -124,10 +124,10 @@ public class DataAccessTest{
 			UserDAO ud=new UserDAO();
 			String testUsername=testUser.getUsername();
 			User createdUser=ud.get(testUsername);
-			assertNotNull("L'utente non è stato creato",createdUser);
+			assertNotNull("L'utente non e' stato creato",createdUser);
 			assertEquals("I campi dati degli utenti non sono stati creati correttamente",testUser.getUsername(),createdUser.getUsername());
 		}catch(UsernameAlreadyExistingException exc){
-			fail("è stato creato un utente con un username già esistente");
+			fail("e' stato creato un utente con un username gia' esistente");
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class DataAccessTest{
 	public void checkCreateAccountFail() throws UsernameAlreadyExistingException{
 		User testUser=new User("user0","user0","user0@mytalk.com","user0","user0","emailhash123123123");
 		
-		//test creazione di un utente avente un username già usato
+		//test creazione di un utente avente un username gia' usato
 		dataAccess.createAccount(testUser);
 	}
 	
@@ -149,15 +149,15 @@ public class DataAccessTest{
 			dataAccess.login(onUserTest, toAuth);
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser userToCheck=od.get(onUserTest.getIp());
-			assertEquals("non è stato autenticato l'utente valido",onUserTest.getUsername(),userToCheck.getUsername());
+			assertEquals("non e' stato autenticato l'utente valido",onUserTest.getUsername(),userToCheck.getUsername());
 		}catch(UsernameNotCorrespondingException exc){
-			fail("non è stata trovata la corrispondenza tra username autenticato e username da autenticare (ecc:UsernameNotExisting)");
+			fail("non e' stata trovata la corrispondenza tra username autenticato e username da autenticare (ecc:UsernameNotExisting)");
 		}catch(IpNotLoggedException exc){
-			fail("non è stato trovato l'utente come autenticato anonimo (ecc:UserNotLoggedException)");
+			fail("non e' stato trovato l'utente come autenticato anonimo (ecc:UserNotLoggedException)");
 		}catch(UserAlreadyLoggedException exc){
-			fail("è stato trovato l'utente come già autenticato nel sistema (ecc:UserAlreadyLoggedException)");
+			fail("e' stato trovato l'utente come gia' autenticato nel sistema (ecc:UserAlreadyLoggedException)");
 		}catch(IpAlreadyLoggedException exc){
-			fail("è stato trovato l'ip come già autenticato nel sistema (ecc:IpAlreadyLoggedException)");
+			fail("e' stato trovato l'ip come gia' autenticato nel sistema (ecc:IpAlreadyLoggedException)");
 		}
 	}
 	
@@ -166,7 +166,7 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.2");
 		
-		//testo il metodo con un OnlineUser avente username già autenticato con un altro ip
+		//testo il metodo con un OnlineUser avente username gia' autenticato con un altro ip
 		dataAccess.login(onUserTest, toAuth);
 	}
 	
@@ -175,7 +175,7 @@ public class DataAccessTest{
 		User toAuth=new User("user5","user5",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.2");
 		
-		//testo il metodo con un OnlineUser avente ip già autenticato con un username
+		//testo il metodo con un OnlineUser avente ip gia' autenticato con un username
 		dataAccess.login(onUserTest, toAuth);
 	}
 
@@ -205,7 +205,7 @@ public class DataAccessTest{
 		//test con un User che ha liste
 		List<ListName> list1=dataAccess.userLists(testUser1);
 		int count1=list1.size();
-		assertEquals("è stato trovato un numero di liste diverso da quelle possedute dall'utente",2,count1);
+		assertEquals("e' stato trovato un numero di liste diverso da quelle possedute dall'utente",2,count1);
 		
 		//test con un User che non ha liste
 		List<ListName> list2=dataAccess.userLists(testUser2);
@@ -222,9 +222,9 @@ public class DataAccessTest{
 			dataAccess.logout(testUser);
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser checkUser=od.get(testUser.getIp());
-			assertNull("l'utente non è stato de-autenticato",checkUser);
+			assertNull("l'utente non e' stato de-autenticato",checkUser);
 		}catch(LogoutException exc){
-			fail("non è stato trovato l'utente da de-autenticare come autenticato");
+			fail("non e' stato trovato l'utente da de-autenticare come autenticato");
 		}
 	}
 	
@@ -242,12 +242,12 @@ public class DataAccessTest{
 		 ListName list=new ListName();
 		 list.setId(2);
 		 
-		 //test con una lista di proprietà dell'utente autenticato
+		 //test con una lista di proprieta' dell'utente autenticato
 		 try{
 			 List<User> listResult=dataAccess.getListUsers(list, toAuth);
-			 assertEquals("la lista ritornata dal metodo è sbagliata",4,listResult.size());
+			 assertEquals("la lista ritornata dal metodo e' sbagliata",4,listResult.size());
 		 }catch(UsernameNotCorrespondingException exc){
-			 fail("la lista non risulta corrispondente all'utente anche se lo è");
+			 fail("la lista non risulta corrispondente all'utente anche se lo e'");
 		 }
 	 }
 	 
@@ -257,7 +257,7 @@ public class DataAccessTest{
 		 ListName list=new ListName();
 		 list.setId(3);
 		 
-		 //test con una lista di proprietà di un altro utente
+		 //test con una lista di proprieta' di un altro utente
 		 List<User> listResult=dataAccess.getListUsers(list, toAuth);
 	 }
 	
@@ -284,9 +284,9 @@ public class DataAccessTest{
 			dataAccess.listCreate(newList, toAuth);
 			ListNameDAO ld=new ListNameDAO();
 			ListName checkList=ld.getByNameOwner(newList);
-			assertNotNull("la lista non è stata creata correttamente",checkList);
+			assertNotNull("la lista non e' stata creata correttamente",checkList);
 		}catch(ListAlreadyExistsException exc){
-			fail("la lista risulta come già esistente");
+			fail("la lista risulta come gia' esistente");
 		}catch(UsernameNotCorrespondingException exc){
 			fail("la lista risulta non valida nella corrispondenza autenticato-proprietario");
 		}
@@ -297,7 +297,7 @@ public class DataAccessTest{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		
-		//test con una lista già presente per l'utente
+		//test con una lista gia' presente per l'utente
 		dataAccess.listCreate(newList, toAuth);
 	}
 	
@@ -319,11 +319,11 @@ public class DataAccessTest{
 			dataAccess.listDelete(newList, toAuth);
 			ListNameDAO ld=new ListNameDAO();
 			ListName checkList=ld.getByNameOwner(newList);
-			assertNull("la lista non è stata cancellata dal db",checkList);
+			assertNull("la lista non e' stata cancellata dal db",checkList);
 		}catch(ListNotExistingException exc){
 			fail("la lista che stai cercando di cancellare non sembra essere esistente");
 		}catch(UsernameNotCorrespondingException exc){
-			fail("non è stata trovata corrispondenza tra owner-username");
+			fail("non e' stata trovata corrispondenza tra owner-username");
 		}
 		
 	}
@@ -359,13 +359,13 @@ public class DataAccessTest{
 			ListNameDAO lnd=new ListNameDAO();
 			ListName list=lnd.getByNameOwner(newList);
 			UserList checkUser=ld.get(list.getId(), toAdd);
-			assertNotNull("l'utente non è stato aggiunto alla lista",checkUser);
+			assertNotNull("l'utente non e' stato aggiunto alla lista",checkUser);
 		}catch(UserAlreadyListedException exc){
-			fail("l'utente risulta già nella lista");
+			fail("l'utente risulta gia' nella lista");
 		} catch (UserNotExistingException exc) {
 			fail("l'utente da aggiungere non sembra essere registrato nel sistema");
 		} catch (UsernameNotCorrespondingException e) {
-			fail("non è stata trovata la corrispondenza owner-username");
+			fail("non e' stata trovata la corrispondenza owner-username");
 		} catch (ListNotExistingException e) {
 			fail("la lista a cui aggiungere non risulta esistente");
 		}
@@ -377,7 +377,7 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user4";
 		
-		//test di aggiunta di un utente a una lista che lo ha già
+		//test di aggiunta di un utente a una lista che lo ha gia'
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -387,7 +387,7 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
 		
-		//test di aggiunta di un utente che non è registrato nel sistema
+		//test di aggiunta di un utente che non e' registrato nel sistema
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -434,13 +434,13 @@ public class DataAccessTest{
 			ListNameDAO lnd=new ListNameDAO();
 			ListName list=lnd.getByNameOwner(newList);
 			UserList checkUser=ld.get(list.getId(), toAdd);
-			assertNull("l'utente non è stato rimosso dalla lista",checkUser);
+			assertNull("l'utente non e' stato rimosso dalla lista",checkUser);
 		}catch(UserNotListedException exc){
 			fail("l'utente non risulta nella lista");
 		} catch (UserNotExistingException exc) {
 			fail("l'utente da aggiungere non sembra essere registrato nel sistema");
 		} catch (UsernameNotCorrespondingException e) {
-			fail("non è stata trovata la corrispondenza owner-username");
+			fail("non e' stata trovata la corrispondenza owner-username");
 		} catch (ListNotExistingException e) {
 			fail("la lista da cui rimuovere non risulta esistente");
 		}
@@ -462,7 +462,7 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
 		
-		//test di rimozione di un utente che non è registrato nel sistema
+		//test di rimozione di un utente che non e' registrato nel sistema
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
@@ -494,9 +494,9 @@ public class DataAccessTest{
 			dataAccess.loginAsAnonymous(testUser);
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser checkOnline=od.get(testUser.getIp());
-			assertNotNull("l'ip non è stato registrato nel db",checkOnline);
+			assertNotNull("l'ip non e' stato registrato nel db",checkOnline);
 		}catch(IpAlreadyLoggedException exc){
-			fail("l'ip usato sembra essere già in uso");
+			fail("l'ip usato sembra essere gia' in uso");
 		}
 	}
 	
@@ -504,7 +504,7 @@ public class DataAccessTest{
 	public void checkLoginAsAnonymousFail()throws IpAlreadyLoggedException{
 		OnlineUser testUser=new OnlineUser(null,"123.123.123.0");
 		
-		//test con un ip già in uso
+		//test con un ip gia' in uso
 		dataAccess.loginAsAnonymous(testUser);
 	}
 	
@@ -525,13 +525,13 @@ public class DataAccessTest{
 			dataAccess.blacklistAdd(toBlack, toAuth);
 			BlacklistDAO bd=new BlacklistDAO();
 			Blacklist checkBlack=bd.get(toBlack.getOwner(), toBlack.getUsername());
-			assertNotNull("l'utente non è stato aggiunto alla blacklist",checkBlack);
+			assertNotNull("l'utente non e' stato aggiunto alla blacklist",checkBlack);
 		}catch(UserAlreadyBlacklistedException exc){
-			fail("l'utente risulta già nella blacklist");
+			fail("l'utente risulta gia' nella blacklist");
 		} catch (UsernameNotCorrespondingException e) {
-			fail("non è stata trovata corrispondenza owner-username");
+			fail("non e' stata trovata corrispondenza owner-username");
 		} catch (UserNotExistingException e) {
-			fail("non è stato trovato nel db l'utente da aggiungere alla blacklist");
+			fail("non e' stato trovato nel db l'utente da aggiungere alla blacklist");
 		}
 	}
 	
@@ -549,7 +549,7 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
-		//test di aggiunta di un utente già presente nella blacklist
+		//test di aggiunta di un utente gia' presente nella blacklist
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
@@ -581,11 +581,11 @@ public class DataAccessTest{
 			dataAccess.blacklistRemove(toBlack, toAuth);
 			BlacklistDAO bd=new BlacklistDAO();
 			Blacklist checkBlack=bd.get(toBlack.getOwner(), toBlack.getUsername());
-			assertNull("l'utente non è stato rimosso salla blacklist",checkBlack);
+			assertNull("l'utente non e' stato rimosso salla blacklist",checkBlack);
 		} catch (UsernameNotCorrespondingException e) {
-			fail("non è stata trovata corrispondenza owner-username");
+			fail("non e' stata trovata corrispondenza owner-username");
 		} catch (UserNotBlacklistedException e) {
-			fail("l'utente non è stato trovato nella blacklist");
+			fail("l'utente non e' stato trovato nella blacklist");
 		}
 	}
 	
@@ -675,13 +675,13 @@ public class DataAccessTest{
 			ListNameDAO ld=new ListNameDAO();
 			ListName list=new ListName(newName,newList.getOwner());
 			ListName checkList=ld.getByNameOwner(list);
-			assertNotNull("la lista non è stata rinominata", checkList);
+			assertNotNull("la lista non e' stata rinominata", checkList);
 		}catch(UsernameNotCorrespondingException exc){
-			fail("non è stata trovata la corrispondenza owner-username autenticato");
+			fail("non e' stata trovata la corrispondenza owner-username autenticato");
 		} catch (ListNotExistingException e) {
 			fail("la lista non risulta esistente");
 		} catch (ListAlreadyExistsException e) {
-			fail("esiste già una lista con questo nome");
+			fail("esiste gia' una lista con questo nome");
 		}
 	}
 	
@@ -711,7 +711,7 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user0");
 		String newName="friends";
 		
-		//test di rinomina di una lista con un nome già usato
+		//test di rinomina di una lista con un nome gia' usato
 		dataAccess.renameList(newList, newName, toAuth);
 	}
 	
@@ -798,9 +798,9 @@ public class DataAccessTest{
 			dataAccess.logoutToAnonymous(user);
 			OnlineUserDAO od=new OnlineUserDAO();
 			OnlineUser checkUser=od.get(user.getIp());
-			assertNull("l'utente non è stato deautenticato correttamente",checkUser.getUsername());
+			assertNull("l'utente non e' stato deautenticato correttamente",checkUser.getUsername());
 		}catch(LogoutException exc){
-			fail("l'utente non è stato trovato come autenticato");
+			fail("l'utente non e' stato trovato come autenticato");
 		}
 	}
 	
@@ -817,14 +817,14 @@ public class DataAccessTest{
 		Blacklist toCheckTrue=new Blacklist("user0","user9");
 		Blacklist toCheckFalse=new Blacklist("user0","random");
 		
-		//test di controllo di un user che è nella blacklist dell'user0
+		//test di controllo di un user che e' nella blacklist dell'user0
 		boolean b=dataAccess.checkBlacklist(toCheckTrue);
-		assertTrue("l'utente non è stato trovato nella blacklist",b);
+		assertTrue("l'utente non e' stato trovato nella blacklist",b);
 	
 		
-		//test di controllo di un user che non è nella blacklist dell'user0
+		//test di controllo di un user che non e' nella blacklist dell'user0
 		boolean t=dataAccess.checkBlacklist(toCheckFalse);
-		assertTrue("l'utente è stato trovato in blacklist pur non essendo presente",!t);
+		assertTrue("l'utente e' stato trovato in blacklist pur non essendo presente",!t);
 
 	}
 

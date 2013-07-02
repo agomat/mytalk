@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
-* 										 fine di renderli più espressivi
+* 										 fine di renderli piu' espressivi
 * 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -38,7 +38,7 @@ public class Logout extends GenericRequest{
 	public Logout(){}
 	
 	/**
-	 * Una volta ricevuto l'ARI, viene controllato se è presente l'indirizzo IP in tale pacchetto.
+	 * Una volta ricevuto l'ARI, viene controllato se e' presente l'indirizzo IP in tale pacchetto.
 	 *  Se non presente, viene ritornato un pacchetto con richiesta "CorruptedPack". 
 	 *  In seguito viene creato un oggetto di tipo OnlineUser con i dati presenti 
 	 *  nell'Authentication del campo dati ari. Tale oggetto viene utilizzato dal metodo di 

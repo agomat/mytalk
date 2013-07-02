@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  |	2013-05-22 |    MF     | [#] Modifica dei nomi del metodo manage al fine di renderli
-* 									     più espressivi e di facile comprensione
+* 									     piu' espressivi e di facile comprensione
 * 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.

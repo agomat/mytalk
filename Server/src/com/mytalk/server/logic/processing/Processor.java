@@ -13,7 +13,7 @@ Date
 * 0.4     | 2013-07-02 |    MF     | [+] Aggiunta nuova richiesta nella hashmap UpdateAccount 
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
-* 										 fine di renderli più espressivi
+* 										 fine di renderli piu' espressivi
 * 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -118,25 +118,25 @@ public class Processor implements IProcessor{
 	 * si procede con l'identificazione del tipo di richiesta utilizzando la stringa relativa alla 
 	 * richiesta, presente nell'oggetto ARI, come indice nella mappa; ottenuta la classe 
 	 * corrispondente si utilizza la tecnica della riflessione propria di Java per invocare su 
-	 * tale classe il metodo manage, il quale processerà la richiesta e i relativi dati associati
-	 *  alla parte informazione del pacchetto ARI e restituirà la risposta a tale richiesta sotto 
+	 * tale classe il metodo manage, il quale processera' la richiesta e i relativi dati associati
+	 *  alla parte informazione del pacchetto ARI e restituira' la risposta a tale richiesta sotto 
 	 *  forma di oggetto ARI. Una volta ottenuto l'oggetto di risposta, su di esso viene fatta 
-	 *  una verifica se il campo ip dei dati di autenticazione è impostato oppure no, in modo 
+	 *  una verifica se il campo ip dei dati di autenticazione e' impostato oppure no, in modo 
 	 *  tale da determinare l'indirizzo ip di destinazione del pacchetto, nel caso in cui abbia 
-	 *  valore nullo allora l'ip di destinazione sarà quello del client che ha fatto la richiesta. 
+	 *  valore nullo allora l'ip di destinazione sara' quello del client che ha fatto la richiesta. 
 	 *  In seguito si esegue un primo controllo sul campo richiesta dell'oggetto di risposta serve 
 	 *  a determinare se la risposta non necessita di essere inviata a nessun client, ossia se si 
-	 *  tratta della risposta ad un logout o a un rifiuto di chiamata non riuscito poiché al client 
+	 *  tratta della risposta ad un logout o a un rifiuto di chiamata non riuscito poiche' al client 
 	 *  tale informazione non interessa; nel caso in cui non si tratti di queste risposte allora 
 	 *  viene creato e aggiunto alla lista da restituire un oggetto Message contenente la 
 	 *  conversione in stringa JSON del pacchetto ARI di risposta e l'indirizzo IP al quale mandare 
 	 *  tale risposta. Il secondo controllo si esegue sul campo richiesta dell'oggetto ARI di 
 	 *  risposta, al fine di determinare se il tipo di risposta indica un operazione di cambio 
-	 *  stato completata con successo, in tale caso è necessario notificare il cambio di stato a 
+	 *  stato completata con successo, in tale caso e' necessario notificare il cambio di stato a 
 	 *  tutti gli altri utenti utilizzando il campo dati stateUpdate, il quale restituisce 
-	 *  un pacchetto da inviare contenente i dati dell'user che ha cambiato stato. Fatto ciò viene 
+	 *  un pacchetto da inviare contenente i dati dell'user che ha cambiato stato. Fatto cio' viene 
 	 *  creato ed aggiunto un oggetto di tipo Message contenente la conversione JSON del pacchetto 
-	 *  restituito da stateUpdate e come indirizzo ip la stringa broadcast la quale sarà 
+	 *  restituito da stateUpdate e come indirizzo ip la stringa broadcast la quale sara' 
 	 *  interpretata a dovere nella componente CSCOM1
 	 * 
 	 * @method +processRequest

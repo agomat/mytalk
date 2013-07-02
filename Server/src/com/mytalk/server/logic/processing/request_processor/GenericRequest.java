@@ -16,7 +16,7 @@
 * - Zucchetti SRL
 * 
 * Classe astratta che rappresenta una richiesta generica proveniente dal client e contiene dei
-* metodi di utilità necessari per verificare il corretto contenuto dei pacchetti information e dei
+* metodi di utilita' necessari per verificare il corretto contenuto dei pacchetti information e dei
 * dati di autenticazione
 */
 

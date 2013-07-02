@@ -14,7 +14,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 * 
-* Identifica un'eccezione relativa ad un utente già online
+* Identifica un'eccezione relativa ad un utente gia' online
 */
 
 

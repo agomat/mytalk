@@ -66,7 +66,7 @@ public class Dispatcher implements Runnable {
 	 * viene eseguito quando si esegue il metodo start sul thread. Prende i messaggi in 
 	 * arrivo dal buffer apposito BufferIncoming, uno alla volta usando il metodo pop, 
 	 * li passa al processor invocando il metodo processRequest che ritorna una lista di
-	 * zero o più risposte da inviare. Per ognuna di queste risposte le aggiunge al buffer dei
+	 * zero o piu' risposte da inviare. Per ognuna di queste risposte le aggiunge al buffer dei
 	 * messaggi in uscita BufferOutgoing usando il metodo push
 	 * 
 	 * @method +run

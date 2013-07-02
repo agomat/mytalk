@@ -9,7 +9,7 @@
 * --------+------------+-----------+------------------
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  |	2013-05-13 |    NT     | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
-* 										 fine di renderli più espressivi  
+* 										 fine di renderli piu' espressivi  
 * 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
 *
 * This software is distributed under GNU/GPL 2.0.
@@ -60,7 +60,7 @@ public class Convert {
 	}
 	
 	/**
-	 * Riceve in input una stringa JSON e un oggetto Class<?> necessario per dire qual è la 
+	 * Riceve in input una stringa JSON e un oggetto Class<?> necessario per dire qual e' la 
 	 * classe target della conversione; viene utilizzato l'oggetto gson che converte la stringa 
 	 * in un oggetto definito dalla classe target, e restituisce tale oggetto
 	 * 

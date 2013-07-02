@@ -2,6 +2,7 @@
 * Filename: ProfileView.js
 * Package: com.mytalk.client.view.templateview
 * Dependencies: com.mytalk.client.controller.controller.IndexController
+                com.mytalk.client.model..modelstruct.PersonalData
 * Author: Griggio Massimo
 * Date: 2013-04-26
 *
@@ -111,7 +112,7 @@ MyTalk.ProfileView = Ember.View.extend({
    * @return {Void} 
   */
   didInsertElement: function() {
-    me = MyTalk.PersonalData.find(0);
+    var me = MyTalk.PersonalData.find(0);
     this.set('name', me.get('name'));
     this.set('surname', me.get('surname'));
     this.set('username', me.get('username'));

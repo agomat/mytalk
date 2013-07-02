@@ -1,7 +1,10 @@
 /**
 * Filename: UpdateAccount.js
 * Package: com.mytalk.client.model.storage.processing.processor.outcoming.user
-* Dependencies:  TODO
+* Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
+*                com.mytalk.client.model.storage.ARI
+*                com.mytalk.client.model.modelstruct.PersonalData
+*                com.mytalk.client.model.modelstruct.Authentication
 * Author: Agostinetto Mattia
 * Date: 2013-07-01
 *
@@ -16,7 +19,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Processore che viene eseguito quando l'utente si registra
+* Processore che viene eseguito quando l'utente sceglie di modificare le proprie informazioni personali
 *
 */
 
@@ -30,25 +33,44 @@ MyTalk.processor.UpdateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   */
   name: 'UpdateAccount',
  /**
-  * TODO
+  * Il metodo deve aggiornare i nuovi dati del profilo nel model _DS.PersonalData_ e _DS.Authentication_
   *
   * @method +process
-  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
+  * @param {Object} Stringa JSON che rappresenta i nuovi dati di profilo
   * @return {Void}
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
   process: function (params) {
-    var record = MyTalk.PersonalData.find(0).setProperties(params);
-    var transaction = record.get('transaction');
+
+    // TODO: rimuovere lo stub
+    params = {"name":"Nuovo nome","surname":"Nuovo cognome","username":MyTalk.Authentication.find(0).get('username'),"email":"new@email.it","password":MyTalk.Authentication.find(0).get('password')};
+
+    alert("nota: uso parametri fittizzi in attesa dell'aggiornamento del file ProfileView.js");
+    if (params.password == null){
+      delete params.password;
+    }
+
+    var username = MyTalk.Authentication.find(0).get('username');
+    var password = MyTalk.Authentication.find(0).get('password');
+
+    // Aggiornamento PersonalData
+    var recordPd = MyTalk.PersonalData.find(0).setProperties(params);
+    var transaction = recordPd.get('transaction');
 
     transaction.reopen({
-      processor: this
+      processor: this,
+      username: username,
+      password: password
     });
 
+    // Aggiornamento Authentication
+    var recordAuth = MyTalk.Authentication.find(0).setProperties(params);
+    recordAuth.get('stateManager').goToState('saved');
     transaction.commit();
+
   },
  /**
-  * TODO
+  * Il metodo deve inviare al server un ARI avente richiesta _UpdateAccount_ e campo dati informativo le informazioni del profilo modificate
   *
   * @method +sendToServer
   * @param {WebSocket} instanza di connessione WebSocket
@@ -60,8 +82,14 @@ MyTalk.processor.UpdateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   sendToServer: function (socket, record, onSent) {
     var ARI = new Object();
 
-    ARI.auth = null;
-    ARI.req = this.get('name');
+    ARI.req = this.getProcessorName();
+
+    var auth = new Object();
+    auth.username = record.get('transaction').get('username');
+    auth.password = record.get('transaction').get('password');
+    auth.ip = MyTalk.PersonalData.find(0).get('ip');
+
+    ARI.auth = auth;
     
     var info = new Object();
     info.worldPersonalData = new Object();
@@ -76,6 +104,7 @@ MyTalk.processor.UpdateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
     
     socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), true );
+    
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

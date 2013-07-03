@@ -2,6 +2,8 @@
 * Filename: ProfileController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
+*               com.mytalk.client.model.storage.processing.processor.outcoming.UpdateAccount
+*               com.mytalk.client.model.storage.processing.processor.outcoming.DeleteAccount
 * Author: Campese Stefano
 * Date: 2013-07-01
 *

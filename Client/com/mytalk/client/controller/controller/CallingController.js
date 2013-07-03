@@ -7,6 +7,9 @@
 *               com.mytalk.client.model.storage.processing.ProcessorFactory
 *               com.mytalk.client.model.modelstruct.WCall
 *               com.mytalk.client.model.modelstruct.Call
+*               com.mytalk.client.model.storage.processing.processor.outcoming.UserCall
+*               com.mytalk.client.model.storage.processing.processor.outcoming.AcceptCall
+*               com.mytalk.client.model.storage.processing.processor.outcoming.RefuseCall
 * Author: Agostinetto Mattia
 * Date: 2013-04-23
 *

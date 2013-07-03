@@ -2,6 +2,7 @@
 * Filename: LoggedController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
+*               com.mytalk.client.model.storage.processing.processor.outcoming.ListCreate
 * Author: Campese Stefano
 * Date: 2013-04-23
 *

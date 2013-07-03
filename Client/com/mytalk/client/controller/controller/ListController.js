@@ -5,6 +5,8 @@
 *               com.mytalk.client.model.storage.processing.ProcessorFactory
 *               com.mytalk.client.model.modelstruct.List
 *               com.mytalk.client.model.modelstruct.User
+*               com.mytalk.client.model.storage.processing.processor.outcoming.ListDelete
+*               com.mytalk.client.model.storage.processing.processor.outcoming.UpdateListName
 * Author: Campese Stefano
 * Date: 2013-04-23
 *

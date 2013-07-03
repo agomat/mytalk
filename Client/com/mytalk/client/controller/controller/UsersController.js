@@ -6,6 +6,10 @@
 *               com.mytalk.client.controller.controller.ListController
 *               com.mytalk.client.model.modelstruct.List
 *               com.mytalk.client.model.modelstruct.User
+*               com.mytalk.client.model.storage.processing.processor.outcoming.BlackListRemove
+*               com.mytalk.client.model.storage.processing.processor.outcoming.ListUserRemove
+*               com.mytalk.client.model.storage.processing.processor.outcoming.BlackListAdd
+*               com.mytalk.client.model.storage.processing.processor.outcoming.ListUserAdd
 * Author: Campese Stefano
 * Date: 2013-04-23
 *

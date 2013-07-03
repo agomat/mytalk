@@ -119,7 +119,8 @@ MyTalk.ListController = Ember.ObjectController.extend({
   filter:function(value){
     var context=this;
     var fcontent=[];
-   
+    
+    value = $.trim(value).toLowerCase();
     if(value){
       context.get('content').get('users').forEach(function(entry){
         if((entry.get('fullNameConc')).indexOf(value) !== -1) {

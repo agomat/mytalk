@@ -22,9 +22,6 @@
 
 MyTalk.StatsController = Ember.ArrayController.extend({
 
-
-  
-
-
+	
 
 });

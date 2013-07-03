@@ -44,6 +44,7 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractInProcesso
     
     // popolamento liste
     var worldList = JSON.parse(ari.info).worldList;
+    window.worldList = worldList;
     store.loadMany(MyTalk.List, worldList);
     adapter = store.adapterForType(MyTalk.List);
     adapter.didFindMany(store, MyTalk.List, worldList);

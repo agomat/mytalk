@@ -2,6 +2,8 @@
 * Filename: GetCalls.js
 * Package: com.mytalk.client.model.storage.processing.processor.outcoming.stats
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
+*                com.mytalk.client.model.modelstruct.Authentication
+*                com.mytalk.client.model.modelstruct.PersonalData
 *                com.mytalk.client.model.storage.ARI
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
@@ -29,15 +31,23 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   */
   name: 'GetCalls',
  /**
-  * Il metodo deve inserire nel model _DS.WCall_ il JSON contenente la lista dello storico delle chiamate
+  * TODO
   *
   * @method +process
-  * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
   * @return {Void}
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
-  process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+  process: function () {
+    var record = MyTalk.WCall.createRecord({id:1}); // fix!
+    record.get('stateManager').goToState('saved');
+    record.deleteRecord();
+    var transaction = record.get('transaction');
+
+    transaction.reopen({
+      processor: this
+    });
+
+    transaction.commit();
   },
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _GetCalls_ 
@@ -50,7 +60,21 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
 
-// TODO FARE METODO
+  sendToServer: function (socket, record, onSent) {
+    var ARI = new Object();
+
+    var auth = new Object();
+    auth.username = MyTalk.Authentication.find(0).get('username');
+    auth.password = MyTalk.Authentication.find(0).get('password');
+    auth.ip = MyTalk.PersonalData.find(0).get('ip');
+
+    ARI.auth = auth;
+    ARI.req = this.get('name');
+    ARI.info = null;
+    
+    socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), true );
+  },
 
   /**
   * Il metodo deve ritornare l'attributo _name_

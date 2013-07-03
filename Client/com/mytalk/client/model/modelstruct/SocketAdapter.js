@@ -292,3 +292,7 @@ DS.SocketAdapter.configure('MyTalk.List', {
 DS.SocketAdapter.configure('MyTalk.User', {
   sideloadAs: 'list'
 });
+
+DS.SocketAdapter.map('MyTalk.WCall', {
+  list: {embedded: 'always'}
+});

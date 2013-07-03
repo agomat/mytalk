@@ -64,7 +64,7 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
     var auth = new Object();
     auth.username = record.get('username');
     auth.password = record.get('password');
-    auth.ip = "127.0.0.1";
+    auth.ip = MyTalk.PersonalData.find(0).get('ip');
 
     var credenzials = new Object();
     credenzials.username = record.get('username');
@@ -73,7 +73,7 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
     
     ARI.auth = auth;
     ARI.req = this.get('name');
-    ARI.info = null;//JSON.stringify(credenzials);
+    ARI.info = null;
     
     socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), true );

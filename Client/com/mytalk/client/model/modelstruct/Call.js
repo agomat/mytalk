@@ -25,7 +25,8 @@ MyTalk.Call = DS.Model.extend({
   startDate: DS.attr('date'),
   duration: DS.attr('number'),
   byteSent: DS.attr('number'),
-  byteReceived: DS.attr('number')
+  byteReceived: DS.attr('number'),
+  list: DS.belongsTo('MyTalk.WCall',{embedded:'always'})
 });
 
 /**

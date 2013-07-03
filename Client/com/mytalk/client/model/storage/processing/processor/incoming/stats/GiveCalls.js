@@ -1,5 +1,5 @@
 /**
-* Filename: GetCalls.js
+* Filename: GiveCalls.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.stats
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
 * Author: Agostinetto Mattia
@@ -20,18 +20,18 @@
 *
 */
 
-MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
+MyTalk.processor.GiveCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProduct, {
   /**
   * Memorizza il nome del processore
   * 
   * @property -name
   * @type {String}
   */
-  name: 'GetCalls',
+  name: 'GiveCalls',
 
 
  /**
-  * Il metodo salvare le il JSON delle chiamate nel model _DS.WCall_ e _DS.Call_
+  * TODO
   *
   * @method +process
   * @param {String} Stringa JSON che rappresenta il pacchetto ARI
@@ -39,7 +39,7 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProduc
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+    window.info = JSON.parse(ari.info);
   },
 
   /**

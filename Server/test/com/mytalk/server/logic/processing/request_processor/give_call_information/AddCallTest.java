@@ -50,8 +50,8 @@ public class AddCallTest {
 		
 		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
 		Authentication authWrongTest=new Authentication("user1","user2","1.1.1.1");
-		Call call1=new Call(3,true,"2013-05-03 13.37:58",1000,100,100);
-		Call call2=new Call(20,true,"2013-05-03 13.37:58",1000,100,100);
+		Call call1=new Call(1,3,true,"2013-05-03 13.37:58",1000,100,100);
+		Call call2=new Call(2,20,true,"2013-05-03 13.37:58",1000,100,100);
 		List<Call> callListTest=new ArrayList<Call>();
 		callListTest.add(call1);
 		WrapperCall wrapperTest=new WrapperCall(callListTest);

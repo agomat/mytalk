@@ -7,6 +7,8 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.4     | 2013-07-04 |    MF     | [#] Modifica alla creazione di un oggeto Call in seguito a modifica
+* 									 della struttura della classe Call
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
 * 									     piu' espressivi e di facile comprensione
@@ -84,7 +86,7 @@ public class AddCall extends GenericRequest {
 			try{
 				callClient=listOfCall.get(0); 
 				caller=auth.getUser();
-				receiver=(da.getUserById(callClient.getSpeaker())).getUsername();
+				receiver=(da.getUserById(callClient.getSpeakerId())).getUsername();
 				duration=callClient.getDuration();
 				startdate=callClient.getStartDate();
 				byteR=callClient.getByteReceived();

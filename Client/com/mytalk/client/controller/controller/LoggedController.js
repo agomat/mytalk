@@ -98,7 +98,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * alla select di aggiunta utente ad una lista.
    * Il metodo si occupa di aggiornare la propietà ogni qual volta che una lista viene creata,eliminata o rinominata
    * inoltre, aggiorna la propietà alla prima volta che avviene il login.
-   * Il metoddo riceve due argomenti $idx$ e $na$ questi due argomenti sono necessari quando
+   * Il metodo riceve due argomenti $idx$ e $na$ questi due argomenti sono necessari quando
    * questo metodo viene richiamato dall'aggiunta di una nuova lista.
    *
    * @param {Number} numero dell'id della lista creata
@@ -132,7 +132,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * al quale sarà delegato il lavoro di creare la nuova lista.
    * Nel caso in cui il nome non sia valido il metodo 
    * mostra un messaggio di errore tramite un alert di JavaScript.
-   * Il metodo infine deve richiare il metodo $updateSelect$ del controller al fine di aggiornare 
+   * Il metodo infine deve richiamare il metodo $updateSelect$ del controller al fine di aggiornare 
    * la select nella quale si selezionano le liste nelle quali aggiungere gli utenti.
    *
    * @method +createList                                     

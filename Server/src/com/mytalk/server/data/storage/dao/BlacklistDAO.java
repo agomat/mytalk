@@ -59,8 +59,8 @@ public class BlacklistDAO extends GenericDAO{
 	 */
 	public void update(Blacklist blacklistObj){
 		Transaction t=session.beginTransaction();
-		Blacklist blacklistEntity=(Blacklist) session.get(Blacklist.class,blacklistObj);
 		if(blacklistObj.getUsername()==null){
+			Blacklist blacklistEntity=(Blacklist) session.get(Blacklist.class,blacklistObj);
 			blacklistObj.setUsername(blacklistEntity.getUsername());
 		}
 		session.update(blacklistObj);

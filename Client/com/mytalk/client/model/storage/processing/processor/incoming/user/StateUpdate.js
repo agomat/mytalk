@@ -44,12 +44,40 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
     var username = info.list.username;
     var myUsername = MyTalk.PersonalData.find(0).get('username');
     if (myUsername && myUsername != username) {
-      var store = DS.get("defaultStore");
-      store.loadMany(MyTalk.User, info);
-      var adapter = store.adapterForType(MyTalk.User);
-      adapter.didFindMany(store, MyTalk.User, info);
-      MyTalk.List.find(0).get('users').addObject( MyTalk.User.find(userId) );
-      MyTalk.List.find(0).get('stateManager').goToState('saved');
+      if ( MyTalk.User.find(userId).get('name') === undefined ) {
+        var store = DS.get("defaultStore");
+        var adapter = store.adapterForType(MyTalk.User);
+
+        MyTalk.User.find(userId).get('stateManager').goToState('loaded');
+
+        store.loadMany(MyTalk.User, info);
+        adapter.didFindMany(store, MyTalk.User, info);
+
+        MyTalk.List.find(0).get('users').addObject( MyTalk.User.find(userId) );
+        MyTalk.List.find(0).get('stateManager').goToState('saved');
+      } else {
+        MyTalk.User.find(userId).set('online', info.list.online );
+        MyTalk.User.find(userId).get('stateManager').goToState('saved');
+        MyTalk.List.find().forEach(function(list){
+          if(list.get('id') > 0) {
+            var found = false;
+            list.get('users').forEach(function(user){
+              if (user.get('id') == userId){
+                found = true;
+              }
+            });
+            if(found) {
+              list.get('users').removeObject( MyTalk.User.find(userId) );
+              list.get('users').addObject( MyTalk.User.find(userId) );
+              list.get('stateManager').goToState('saved');
+            }
+          } else {
+              list.get('users').removeObject( MyTalk.User.find(userId) );
+              list.get('users').addObject( MyTalk.User.find(userId) );
+              list.get('stateManager').goToState('saved');
+          }
+        });
+      }
     }
 
   },

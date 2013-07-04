@@ -80,7 +80,6 @@ public class CallDAO extends GenericDAO{
 		}
 		session.update(callObj);
 		t.commit();
-		session.close();
 	}
 	
 	/**

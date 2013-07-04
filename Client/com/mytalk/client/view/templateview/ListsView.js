@@ -23,7 +23,7 @@
 MyTalk.ListsView = Ember.View.extend({
 
   /**
-   * Proprietà necessaria per settare il nome del template associato alla vista
+   * Proprietà necessaria per impostare il nome del template associato alla vista
    * @property -templateName          
    * @type {String}                   
    *
@@ -32,7 +32,7 @@ MyTalk.ListsView = Ember.View.extend({
   templateName: "lists",
 
   /**
-   * Proprietà necessaria per settare il nome della vista
+   * Proprietà necessaria per impostare il nome della vista
    * @property -name          
    * @type {String}                   
    *

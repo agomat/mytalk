@@ -33,7 +33,7 @@ MyTalk.ModifyPassword = Ember.TextField.extend({
   
 
   /**
-   * Proprietà necessaria per settare il nome dell'input area
+   * Proprietà necessaria per impostare il nome dell'input area
    * @property +name           
    * @type {String}                   
    *
@@ -42,7 +42,7 @@ MyTalk.ModifyPassword = Ember.TextField.extend({
   name: 'password',
 
   /**
-   * Proprietà necessaria per settare l'id dell'input area
+   * Proprietà necessaria per impostare l'id dell'input area
    * @property +id          
    * @type {String}                   
    *
@@ -51,7 +51,7 @@ MyTalk.ModifyPassword = Ember.TextField.extend({
   id: 'password',
 
   /**
-   * Proprietà necessaria per settare a $password$ il tipo di dato dell'input area
+   * Proprietà necessaria per impostare a $password$ il tipo di dato dell'input area
    * @property +type           
    * @type {String}                   
    *
@@ -60,7 +60,7 @@ MyTalk.ModifyPassword = Ember.TextField.extend({
   type: 'password',
 
   /**
-   * Proprietà necessaria per settare il placeholder dell'input area
+   * Proprietà necessaria per impostare il placeholder dell'input area
    * @property +placeholder           
    * @type {String}                   
    *
@@ -69,7 +69,7 @@ MyTalk.ModifyPassword = Ember.TextField.extend({
   placeholder: 'Password',
   
   /**
-   * Proprietà necessaria per settare l'attributo $onchange$ con la funzione relativa allo scatenamento dell'evento
+   * Proprietà necessaria per impostare l'attributo $onchange$ con la funzione relativa allo scatenamento dell'evento
    * @property +onchange           
    * @type {String}                   
    *
@@ -78,7 +78,7 @@ MyTalk.ModifyPassword = Ember.TextField.extend({
   onchange: "this.setCustomValidity( this.validity.patternMismatch ? 'La password deve contenere almeno 6 caratteri': '')",
   
   /**
-   * Proprietà necessaria per settare l'attributo $pattern$ con il pattern necessario alla verifica della password.
+   * Proprietà necessaria per impostare l'attributo $pattern$ con il pattern necessario alla verifica della password.
    * @property +pattern           
    * @type {String}                   
    *

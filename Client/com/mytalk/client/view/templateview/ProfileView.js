@@ -24,7 +24,7 @@
 MyTalk.ProfileView = Ember.View.extend({
 
   /**
-   * Proprietà necessaria per settare il tipo di vista 
+   * Proprietà necessaria per impostare il tipo di vista 
    * @property -tagName          
    * @type {String}                   
    *
@@ -41,7 +41,7 @@ MyTalk.ProfileView = Ember.View.extend({
   attributeBindings: ["method"],
   
   /**
-   * Proprietà necessaria per settare l'attributo $method$ a $post$ 
+   * Proprietà necessaria per impostare l'attributo $method$ a $post$ 
    * @property +method          
    * @type {String}                   
    *

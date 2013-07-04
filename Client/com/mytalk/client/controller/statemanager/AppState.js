@@ -32,7 +32,7 @@ MyTalk.AppState = Ember.StateManager.create({
   enableLogging: true,
   
   /**
-   * Proprietà che contiene il nome dello stato attuale dell'applicazione, di default è settato a $"isNotAuthenticated"$.
+   * Proprietà che contiene il nome dello stato attuale dell'applicazione, di default è impostato a $"isNotAuthenticated"$.
    * @property -initialState           
    * @type {String}                   
    *

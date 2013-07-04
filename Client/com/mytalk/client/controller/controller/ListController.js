@@ -108,8 +108,8 @@ MyTalk.ListController = Ember.ObjectController.extend({
    * Questo metodo è deputato al filtraggio degli utenti, all'interno della lista corrente, in base alla ricerca effettuata.
    * Per effettuare tale operazione il metodo scorre tutti gli utenti della lista e controlla che la stringa di 
    * ricerca sia uguale alla proprietà $fullNameConc$ degli utenti.
-   * In caso affermativo il metodo setta il campo $unmatched$ degli utenti a false.
-   * In caso negativo o nel caso in cui la stringa sia vuota il metodo setta la propietà $unmatched$ a true.
+   * In caso affermativo il deve impostare il campo $unmatched$ degli utenti a false.
+   * In caso negativo o nel caso in cui la stringa sia vuota il deve impostare la propietà $unmatched$ a true.
    *
    * @method +filter
    * @param {String} value contiene la stringa con cui fare la ricerca degli nutenti all'interno della lista.
@@ -140,7 +140,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
 
   /**
    * Questo metodo è deputato al reset della ricerca delgli utenti nella lista corrente, 
-   * tale metodo setta la proprietà $unmatched$ degli utenti a $false$ in modo tale 
+   * tale metodo deve impostare la proprietà $unmatched$ degli utenti a $false$ in modo tale 
    * che tutti gli utenti della lista siano mostrati.
    *
    * @method -umatchedReset                                     

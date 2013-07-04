@@ -22,7 +22,7 @@
 
 MyTalk.LoginView = Ember.View.extend({
   /**
-   * Proprietà necessaria per settare il nome del template associato alla vista
+   * Proprietà necessaria per impostare il nome del template associato alla vista
    * @property -templateName          
    * @type {String}                   
    *
@@ -30,7 +30,7 @@ MyTalk.LoginView = Ember.View.extend({
   templateName: "login",
 
   /**
-   * Proprietà necessaria per settare il nome della vista
+   * Proprietà necessaria per impostare il nome della vista
    * @property -name          
    * @type {String}                   
    *

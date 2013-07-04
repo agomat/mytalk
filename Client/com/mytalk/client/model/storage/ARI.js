@@ -50,13 +50,13 @@ MyTalk.ARI = Ember.Object.extend({
   info: undefined,
 
   /**
-   * Questo metodo si attiva ogni qual volta viene creata un'istanza della classe $ARI$, tale metodo si occupa di settare i campi dati della classe.
-   * I campi dati $auth$ e $req$ vengono settati rispettivamente con i parametri $a$ e $r$ passati al metodo, mentre per settare il campo dati $info$ viene applicata la funzione javacript 
+   * Questo metodo si attiva ogni qual volta viene creata un'istanza della classe $ARI$, tale metodo si occupa di impostare i campi dati della classe.
+   * I campi dati $auth$ e $req$ vengono impostati rispettivamente con i parametri $a$ e $r$ passati al metodo, mentre per impostare il campo dati $info$ viene applicata la funzione javacript 
    * _JSON.stringify()_  al parametro $i$ passato al metodo; tale funzione è necessaria al fine di convertire il JSON, ( contente le informazioni scambiate con il server ), in stringa.
    *
    * @method -init
-   * @param {String} $a$ è la stringa da settare nel campo dati $auth$       
-   * @param {String} $r$ è la stringa da settare nel campo dati $req$
+   * @param {String} $a$ è la stringa da impostare nel campo dati $auth$       
+   * @param {String} $r$ è la stringa da impostare nel campo dati $req$
    * @param {Object} $i$ è l'oggetto JSON contenente le informazioni.                                 
    * @return {Void} 
   */
@@ -102,10 +102,10 @@ MyTalk.ARI = Ember.Object.extend({
   },
 
   /**
-   * Questo metodo si occupa settare il valore del campo dati $auth$ dell'istanza della classe in questione
+   * Questo metodo si occupa di impostare il valore del campo dati $auth$ dell'istanza della classe in questione
    *
    * @method -setAuth
-   * @param {String} $a$ è la stringa da settare nel campo dati $auth$                                 
+   * @param {String} $a$ è la stringa da impostare nel campo dati $auth$                                 
    * @return {Void} 
   */
 
@@ -114,10 +114,10 @@ MyTalk.ARI = Ember.Object.extend({
   },
   
   /**
-   * Questo metodo si occupa settare il valore del campo dati $req$ dell'istanza della classe in questione
+   * Questo metodo si occupa di impostare il valore del campo dati $req$ dell'istanza della classe in questione
    *
    * @method -setReq
-   * @param {String} $r$ è la stringa da settare nel campo dati $req$                                 
+   * @param {String} $r$ è la stringa da impostare nel campo dati $req$                                 
    * @return {Void} 
   */
 
@@ -126,8 +126,8 @@ MyTalk.ARI = Ember.Object.extend({
   },
   
   /**
-   * Questo metodo si occupa settare il valore del campo dati $info$ dell'istanza della classe in questione.
-   * Per settare tale campo dati il metodo applica al parametro $i$ la funzione JavaScript _JSON.stringify()_ al fine di convertire l'oggetto $JSON$ scambiato col server in una stringa.
+   * Questo metodo si occupa di impostare il valore del campo dati $info$ dell'istanza della classe in questione.
+   * Per impostare tale campo dati il metodo applica al parametro $i$ la funzione JavaScript _JSON.stringify()_ al fine di convertire l'oggetto $JSON$ scambiato col server in una stringa.
    *
    * @method -setInfo
    * @param {Object} $i$ è l'oggetto JSON contenente le informazioni.                                  

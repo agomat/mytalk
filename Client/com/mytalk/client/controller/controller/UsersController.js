@@ -62,7 +62,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   /**
    * Questo metodo è necessario al fine di mostrare gli utenti di una lista
    * Il metodo preleva, dal $content$ del $controller$,  
-   * tutti gli utenti la cui proprietà $unmatched$ è settata a $false$ mettendo tali utenti in un array
+   * tutti gli utenti la cui proprietà $unmatched$ è impostata a $false$ mettendo tali utenti in un array
    * chiamato _fileteredUsers_, tale array viene ritornato alla vista che mostrandolo, 
    * stampa l'elenco degli utenti della lista corrente.
    * Il metodo inoltre ordina gli utenti in base alla proprietà $online$, gli utenti online saranno messi in testa
@@ -91,7 +91,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utente ad una nuova listaò
    * Il meetodo occupa di mostrare il pop-up con una select HTML contenente l'elenco delle liste 
    * nelle quali poter aggiungere l'utente selezionato.
-   * Il metodo si occupa di settare i campi $userId$ e $userName$ 
+   * Il metodo si occupa di impostare i campi $userId$ e $userName$ 
    * rispettivamente con l'id e il nome dell'utente preso in considerazione
    *
    * @method +addUsers 
@@ -133,7 +133,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
 
   /**
    * Questo metodo si occupa di chiudere il pop-up che gestisce l'aggiunta 
-   * dell'utente ad una lista, settando, inoltre,  i campi $userId$, $userName$ e $selectedValue$ a $NULL$.
+   * dell'utente ad una lista, impostando, inoltre,  i campi $userId$, $userName$ e $selectedValue$ a $NULL$.
    *
    * @method +closeSelect 
    * @return {Void} 
@@ -151,7 +151,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * Come prima cosa viene controllato che la lista nella quale si vuole aggiungere l'utente sia una lista valida,
    * (non deve essere: ne vuota ne Blacklist ne Tutti i contatti ne la lista corrente) ,
    * Terminato il controllo il metodo crea un'istanza del processore necessario per svolgere l'operazione di aggiunta. 
-   * Terminata l'aggiunta, il metodo, si occupa di settare a $NULL$ i campi $userId$, $userName$ e $selectedValue$.
+   * Terminata l'aggiunta, il metodo, si occupa di impostare a $NULL$ i campi $userId$, $userName$ e $selectedValue$.
    * Nel caso in cui la lista selezionata non sia valida viene mostrato un messaggio di errore tramite alert di JavaScript
    *
    * @method +doAddUser 

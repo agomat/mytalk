@@ -32,7 +32,7 @@ MyTalk.MessageText = Ember.TextArea.extend({
   attributeBindings: ["required"],
   
   /**
-   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * Proprietà necessaria per impostare l'attributo $required$ a $true$
    * @property +required           
    * @type {Boolean}                   
    *
@@ -41,7 +41,7 @@ MyTalk.MessageText = Ember.TextArea.extend({
   required: true,
 
   /**
-   * Proprietà necessaria per settare il nome della text area
+   * Proprietà necessaria per impostare il nome della text area
    * @property +name           
    * @type {String}                   
    *
@@ -50,7 +50,7 @@ MyTalk.MessageText = Ember.TextArea.extend({
   name: 'text_input',
   
   /**
-   * Proprietà necessaria per settare l'id della text area
+   * Proprietà necessaria per impostare l'id della text area
    * @property +id          
    * @type {String}                   
    *
@@ -59,7 +59,7 @@ MyTalk.MessageText = Ember.TextArea.extend({
   id: 'text_input',
 
   /**
-   * Proprietà necessaria per settare a $text$ il tipo di dato della text area
+   * Proprietà necessaria per impostare a $text$ il tipo di dato della text area
    * @property +type           
    * @type {String}                   
    *
@@ -68,7 +68,7 @@ MyTalk.MessageText = Ember.TextArea.extend({
   type: 'text',
   
   /**
-   * Proprietà necessaria per settare il placeholder della text area
+   * Proprietà necessaria per impostare il placeholder della text area
    * @property +palceholder           
    * @type {String}                   
    *

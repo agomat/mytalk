@@ -32,7 +32,7 @@ MyTalk.CallState = Ember.StateManager.create({
   enableLogging: true,
 
   /**
-   * Proprietà che contiene il nome dello stato attuale dell'utente, di default è settato a $"isNotBusy"$.
+   * Proprietà che contiene il nome dello stato attuale dell'utente, di default è impostato a $"isNotBusy"$.
    * @property -initialState           
    * @type {String}                   
    *

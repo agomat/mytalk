@@ -23,7 +23,7 @@
 MyTalk.SearchView = Ember.TextField.extend({
   
   /**
-   * Proprietà necessaria per settare il nome dell'input area
+   * Proprietà necessaria per impostare il nome dell'input area
    * @property +name           
    * @type {String}                   
    *
@@ -32,7 +32,7 @@ MyTalk.SearchView = Ember.TextField.extend({
   name: 'search',
 
   /**
-   * Proprietà necessaria per settare a $text$ il tipo di dato dell'input area
+   * Proprietà necessaria per impostare a $text$ il tipo di dato dell'input area
    * @property +type           
    * @type {String}                   
    *
@@ -41,7 +41,7 @@ MyTalk.SearchView = Ember.TextField.extend({
   type: 'text',
 
   /**
-   * Proprietà necessaria per settare il placeholder dell'input area
+   * Proprietà necessaria per impostare il placeholder dell'input area
    * @property +placeholder           
    * @type {String}                   
    *

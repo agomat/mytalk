@@ -32,7 +32,7 @@ MyTalk.RegisterName = Ember.TextField.extend({
   attributeBindings: ["required"],
   
   /**
-   * Proprietà necessaria per settare l'attributo $required$ a $true$
+   * Proprietà necessaria per impostare l'attributo $required$ a $true$
    * @property +required           
    * @type {Boolean}                   
    *
@@ -41,7 +41,7 @@ MyTalk.RegisterName = Ember.TextField.extend({
   required: true,
   
   /**
-   * Proprietà necessaria per settare il nome dell'input area
+   * Proprietà necessaria per impostare il nome dell'input area
    * @property +name           
    * @type {String}                   
    *
@@ -50,7 +50,7 @@ MyTalk.RegisterName = Ember.TextField.extend({
   name: 'name',
 
   /**
-   * Proprietà necessaria per settare l'id dell'input area
+   * Proprietà necessaria per impostare l'id dell'input area
    * @property +id          
    * @type {String}                   
    *
@@ -59,7 +59,7 @@ MyTalk.RegisterName = Ember.TextField.extend({
   id: 'name',
   
  /**
-   * Proprietà necessaria per settare a $text$ il tipo di dato dell'input area
+   * Proprietà necessaria per impostare a $text$ il tipo di dato dell'input area
    * @property +type           
    * @type {String}                   
    *
@@ -68,7 +68,7 @@ MyTalk.RegisterName = Ember.TextField.extend({
   type: 'text',
 
   /**
-   * Proprietà necessaria per settare il placeholder dell'input area
+   * Proprietà necessaria per impostare il placeholder dell'input area
    * @property +placeholder           
    * @type {String}                   
    *

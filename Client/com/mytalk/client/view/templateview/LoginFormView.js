@@ -24,7 +24,7 @@ MyTalk.LoginFormView = Ember.View.extend({
   needs: ['IndexView.controller'],
 
   /**
-   * Proprietà necessaria per settare il Controller della vista a $IndexController$
+   * Proprietà necessaria per impostare il Controller della vista a $IndexController$
    * @property -indexBinding          
    * @type {Binding}                   
    *
@@ -33,7 +33,7 @@ MyTalk.LoginFormView = Ember.View.extend({
   indexBinding: "controller.index",
  
   /**
-   * Proprietà necessaria per settare il tipo di vista 
+   * Proprietà necessaria per impostare il tipo di vista 
    * @property -tagName          
    * @type {String}                   
    *
@@ -51,7 +51,7 @@ MyTalk.LoginFormView = Ember.View.extend({
   attributeBindings: ["method"],
   
   /**
-   * Proprietà necessaria per settare l'attributo $method$ a $post$ 
+   * Proprietà necessaria per impostare l'attributo $method$ a $post$ 
    * @property +method          
    * @type {String}                   
    *

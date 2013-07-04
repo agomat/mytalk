@@ -36,7 +36,7 @@
 
 DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   /**
-  * Questa proprietà se settata a $true$ permette di generare tante richieste
+  * Questa proprietà se impostata a $true$ permette di generare tante richieste
   * da inviare al server in caso di modifica di più record alla volta all'interno di una data
   * transazione. La documentazione su questa proprietà è inesistente. Si rimanda secondo quanto
   * descritto a questo \href{http://goo.gl/TWZXK}{test di unità}.

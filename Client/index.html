@@ -14,6 +14,7 @@
     <link type="text/css" rel="stylesheet" media="screen" href="assets/css/call.css"/>
     <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c4-logged.css"/>
     <link type="text/css" rel="stylesheet" media="screen" href="assets/css/profile.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/stats.css"/>
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.2.min.js"></script>
     <script type="text/javascript" src="assets/lib/moment.min.js"></script>
@@ -653,8 +654,31 @@
     </script>
     
     <script type="text/x-handlebars" data-template-name="stats">
-    <h2>Le tue statistiche</h2>
+      <div id="stats">
+        <div id="global_stats">
+          <h2>Statistiche Globali</h2>
+          <img src="assets/img/stats_big.png" alt="" />
+          <ul>
+            <li id="global_time"><strong>Tempo totale in chiamata: </strong>Numero con unità di misura</li>
+            <li id="global_inbyte"><strong>Totale byte ricevuti: </strong>Numero con unità di misura</li>
+            <li id="global_outbyte"><strong>Totale byte inviati: </strong>Numero con unità di misura</li>
+          </ul>
+        </div>
+        {{render history}}
+      </div>
     </script>
-    
+
+    <script type="text/x-handlebars" data-template-name="history">
+      <h3>Registro Chiamate</h3>
+      <ul id="call_list">
+        <li class="call_out"> <!-- call_in -->
+          <div class="avatar35"><!--img fdi gravatar--></div>
+          <div class="who_call">Nome Cognome</div>
+          <div class="data_call">02/07/2013 15:50</div>
+          <div class="duration_call">1h 5m 4s</div>
+        </li>
+      </ul>
+    </script>
+
   </body>
 </html>

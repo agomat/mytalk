@@ -29,7 +29,7 @@ MyTalk.CallInfo = Ember.Object.extend({
    *
   */    
 
-  duration: null,
+  duration: 0,
   
   /**
    * Proprietà contiene la quantità di byte ricevuti. 
@@ -38,7 +38,7 @@ MyTalk.CallInfo = Ember.Object.extend({
    *
   */    
   
-  receivedBytes: null,
+  receivedBytes: 0,
   
   /**
    * Proprietà contiene la quantità di bite inviati 
@@ -47,5 +47,5 @@ MyTalk.CallInfo = Ember.Object.extend({
    *
   */    
   
-  sentBytes: null
+  sentBytes: 0
 }); 

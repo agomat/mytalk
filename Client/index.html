@@ -589,9 +589,9 @@
         <button {{action "closeCall" this}} id="hangup_button" ><div></div>Riaggancia</button>
 
         <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
-          <li><span>Tempo trascorso:</span>{{stats.duration}}</li>
-          <li><span>Byte ricevuti:</span>{{r}}</li>
-          <li><span>Byte trasmessi:</span>{{stats.sentBytes}}</li>
+          <li><span>Tempo trascorso:</span>{{hourconversion stats.duration}}</li>
+          <li><span>Byte ricevuti:</span>{{conversion stats.receivedBytes}}</li>
+          <li><span>Byte trasmessi:</span>{{conversion stats.sentBytes}}</li>
           <li><span>Velocit&agrave;:</span>{{bitrate}}<span id="bitrate"></span></li>
         </ul>
         <div id="stats"></div>

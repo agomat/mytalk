@@ -77,6 +77,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   stats:MyTalk.CallInfo.create({}),
 
+
   bitrate:null,
 
   r:null,
@@ -148,7 +149,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
     
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
-    this.getStats();
+    this.getStats(true);
   },
   
   /**
@@ -212,7 +213,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
-    this.getStats();
+    this.getStats(false);
   },
 
   /**
@@ -295,7 +296,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
      
   },
 
-  getStats: function(connection) {
+  getStats: function(sender) {
 // Display statistics
 var bytePrev = 0;
 var timestampPrev = 0;
@@ -310,18 +311,22 @@ var statCollector = setInterval(function() {
       context.RTCmanager.pc.getStats(function(stats) {
         var statsString = '';
         var results = stats.result();
-        var bitrateText = 'No bitrate stats';
+        var bitrateText = 'N/A';
+        context.get('stats').set('duration',context.get('stats.duration')+1);
         for (var i = 0; i < results.length; ++i) {
           var res = results[i];
-          statsString += '<h3>Report ';
+          /*statsString += '<h3>Report ';
           statsString += i;
           statsString += '</h3>';
-            statsString += dumpStats(res,context);
-            // The bandwidth info for video is in a type ssrc stats record
-            // with googFrameHeightReceived defined.
-            // Should check for mediatype = video, but this is not
-            // implemented yet.
+          statsString += dumpStats(res,context,i,sender);
+           */
+          
+            if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
+              context.get('stats').set('sentBytes',res.stat('bytesSent'));
+            }
             if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
+              context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
+              
               var bytesNow = res.stat('bytesReceived');
               if (timestampPrev > 0) {
                  var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
@@ -333,60 +338,81 @@ var statCollector = setInterval(function() {
             }
           
         }
-        document.getElementById('stats').innerHTML = statsString;
-        //$('#stats').append(statsString);
-         //$('#stats').append(bitrateText);
         display(bitrateText);
       });
 
 }, 1000);
-
-// Dumping a stats variable as a string.
-// might be named toString?
-function dumpStats(obj,c) {
-  var context=c;
-  var statsString = 'Timestamp:';
-  var d;
-  statsString += obj.timestamp;
-  if (obj.id) {
-     statsString += "<br>id ";
-     statsString += obj.id;
-  }
-  if (obj.type) {
-     statsString += " type ";
-     statsString += obj.type;
-  }
-  if (obj.names) {
-    names = obj.names();
-    for (var i = 0; i < names.length; ++i) {
-      console.log(names[i]+" "+i+"\n");
-       statsString += '<br>';
-       statsString += names[i];
-       statsString += ':';
-       statsString += obj.stat(names[i]);
-       //c+= obj.stat(names[i]);
-       if(i==4){
-        d+=obj.stat(names[i]);
-       }
-       if(i==8){
-       d+=obj.stat(names[i]);
-       context.set('r',d);
-     }
-       //f.set('receivedBytes',obj.stat(names[i]));
-    }
-  } else {
-    if (obj.stat('audioOutputLevel')) {
-      statsString += "audioOutputLevel: ";
-      statsString += obj.stat('audioOutputLevel');
-      statsString += "<br>";
-    }
-  }
-  return statsString;
-}
-  }
-
 });
 
 Ember.Handlebars.registerBoundHelper('date',function(date){
-  return date.format("HH:mm:ss");
+  if(date!=null){
+    return date.format("HH:mm:ss");
+  }
+});
+
+
+Ember.Handlebars.registerBoundHelper('hourconversion',function(seconds){
+
+    var hstring="";
+
+   var h=parseInt(seconds/3600);
+   seconds=seconds-(h*3600);
+   var min = parseInt(seconds/60);
+   seconds=seconds-(min*60);
+    
+    if(h>0){
+      if(h<10){
+        hstring+="0"+h+"h ";
+      }
+      else{
+        hstring+=h+"h ";
+      }
+    }
+    if(min>0){
+      if(min<10){
+      hstring+="0"+min+"m ";
+    }
+    else{
+      hstring+=min+"m ";
+    }
+
+
+    }
+    if(seconds>0){
+      hstring+=seconds+"s ";
+    }
+    return hstring;
+ 
+});
+
+
+ 
+
+Ember.Handlebars.registerBoundHelper('conversion',function(bytes){
+
+    var precision=2;
+    var kilobyte = 1024;
+    var megabyte = kilobyte * 1024;
+    var gigabyte = megabyte * 1024;
+    var terabyte = gigabyte * 1024;
+   
+    if ((bytes >= 0) && (bytes < kilobyte)) {
+        return bytes + ' B';
+ 
+    } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
+        return (bytes / kilobyte).toFixed(precision) + ' KB';
+ 
+    } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
+        return (bytes / megabyte).toFixed(precision) + ' MB';
+ 
+    } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
+        return (bytes / gigabyte).toFixed(precision) + ' GB';
+ 
+    } else if (bytes >= terabyte) {
+        return (bytes / terabyte).toFixed(precision) + ' TB';
+ 
+    } else {
+        return bytes + ' B';
+    }
+
 });

@@ -173,7 +173,7 @@ public class GenericRequestTest {
 	@Test
 	public void testCheckGiveCallPackWellFormed() {
 		List<Call> listCall=new ArrayList<Call>();
-		Call c=new Call(1,true,"startDate",0,0,0);
+		Call c=new Call(1,1,true,"startDate",0,0,0);
 		listCall.add(c);
 		WrapperCall wc=new WrapperCall(listCall);
 		GiveCallPack pack=new GiveCallPack(wc);

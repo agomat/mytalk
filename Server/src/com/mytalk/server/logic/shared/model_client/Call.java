@@ -7,6 +7,8 @@
 * Diary:
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.4     | 2013-07-04 |    MF     | [+] Aggiunta campo dati id con getter e setter
+* 0.3     | 2013-07-04 |	MF	   | [#] Modifica nome speaker, byteSent, byteReceived e startDate
 * 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.1	  |	2013-04-18 |    NT     | [+] Creazione classe e metodi   
 *
@@ -22,12 +24,19 @@ package com.mytalk.server.logic.shared.model_client;
 
 public class Call{
 	/**
+	 * Rappresenta un id univoco della chiamata
+	 * 
+	 * @property -id
+	 * @type {Integer}
+	 */
+	private Integer id;
+	/**
 	 * Rappresenta l'id associato all'interlocutore della chiamata
 	 * 
-	 * @property -speaker
+	 * @property -speaker_id
 	 * @type {Integer}
 	 */ 
-	private Integer speaker; 
+	private Integer speaker_id; 
 	/**
 	 * Identifica se chi richiede tale chiamata era il chiamante oppure no
 	 * 
@@ -38,10 +47,10 @@ public class Call{
 	/**
 	 * Rappresenta la data in cui \`e stata effettuata la chiamata
 	 * 
-	 * @property -startDate
+	 * @property -start_date
 	 * @type {String}
 	 */
-	private String startDate;
+	private String start_date;
 	/**
 	 * Rappresenta la durata della telefonata
 	 * 
@@ -52,58 +61,77 @@ public class Call{
 	/**
 	 * Rappresenta il numero di byte inviati
 	 * 
-	 * @property -byteSent
+	 * @property -byte_sent
 	 * @type {Integer}
 	 */
-	private Integer byteSent;
+	private Integer byte_sent;
 	/**
 	 * Rappresenta il numero di byte ricevuti
 	 * 
-	 * @property -byteReceived
+	 * @property -byte_received
 	 * @type {Integer}
 	 */
-	private Integer byteReceived;
+	private Integer byte_received;
 	
 	/**
-	 * Costruttore della classe che inizializza i campi dati speaker, caller, startData, duration, 
-	 * byteSent e byteReceived
+	 * Costruttore della classe che inizializza i campi dati speaker_id, caller, startData, duration, 
+	 * byte_sent e byte_received
 	 * 
 	 * @method +Call
-	 * @param {Integer} s e' l'oggetto utilizzato per inizializzare il campo dati speaker
+	 * @param {Integer} s e' l'oggetto utilizzato per inizializzare il campo dati speaker_id
 	 * @param {boolean} c e' l'oggetto utilizzato per inizializzare il campo dati caller
-	 * @param {String} sd e' l'oggetto utilizzato per inizializzare il campo dati startDate
+	 * @param {String} sd e' l'oggetto utilizzato per inizializzare il campo dati start_date
 	 * @param {Integer} d e' l'oggetto utilizzato per inizializzare il campo dati duration
-	 * @param {Integer} bs e' l'oggetto utilizzato per inizializzare il campo dati byteSent
-	 * @param {Integer} br e' l'oggetto utilizzato per inizializzare il campo dati byteReceived
+	 * @param {Integer} bs e' l'oggetto utilizzato per inizializzare il campo dati byte_sent
+	 * @param {Integer} br e' l'oggetto utilizzato per inizializzare il campo dati byte_received
 	 */
-	public Call(Integer s, boolean c, String sd, Integer d, Integer bs, Integer br){
-		speaker=s;
-		byteSent=bs;
-		byteReceived=br;
+	public Call(int i,Integer s, boolean c, String sd, Integer d, Integer bs, Integer br){
+		id=i;
+		speaker_id=s;
+		byte_sent=bs;
+		byte_received=br;
 		duration=d;
-		startDate=sd;
+		start_date=sd;
 		caller=c;
 	}
-	
 	/**
-	 * Ritorna il campo dati speaker
+	 *  Ritorna il valore del campo id
+	 *  
+	 *  @method +getId
+	 *  @return {Integer}
+	 */
+	public Integer getId(){
+		return id;
+	}
+	/**
+	 * Imposta il campo dati id
 	 * 
-	 * @method +getSpeaker
+	 * @method +setId
+	 * @param {Integer} i e' l'oggetto assegnato al campo dati id
+	 * @return {void}
+	 */
+	public void setId(Integer i){
+		id=i;
+	}
+	/**
+	 * Ritorna il campo dati speaker_id
+	 * 
+	 * @method +getSpeakerId
 	 * @return {Integer}
 	 */
-	public Integer getSpeaker(){
-		return speaker;
+	public Integer getSpeakerId(){
+		return speaker_id;
 	}
 	
 	/**
-	 * Imposta il campo dati speaker
+	 * Imposta il campo dati speaker_id
 	 * 
-	 * @method +setSpeaker
-	 * @param {Integer} n e' l'oggetto assegnato al campo dati speaker
+	 * @method +setSpeakerId
+	 * @param {Integer} n e' l'oggetto assegnato al campo dati speaker_id
 	 * @return {void}
 	 */
-	public void setSpeaker(Integer n){
-		speaker=n;
+	public void setSpeakerId(Integer n){
+		speaker_id=n;
 	}
 	
 	/**
@@ -149,66 +177,66 @@ public class Call{
 	}
 	
 	/**
-	 * Ritorna il campo dati byteSent
+	 * Ritorna il campo dati byte_sent
 	 * 
 	 * @method +getByteSent
 	 * @return {Integer}
 	 */
 	public Integer getByteSent(){
-		return byteSent;
+		return byte_sent;
 	}
 	
 	/**
-	 * Imposta il campo dati byteSent
+	 * Imposta il campo dati byte_sent
 	 * 
 	 * @method +setByteSent
-	 * @param {Integer} n e' l'oggetto assegnato al campo dati byteSent
+	 * @param {Integer} n e' l'oggetto assegnato al campo dati byte_sent
 	 * @return {void}
 	 */
 	public void setByteSent(Integer n){
-		byteSent=n;
+		byte_sent=n;
 	}
 	
 	/**
-	 * Ritorna il campo dati byteReceived
+	 * Ritorna il campo dati byte_received
 	 * 
 	 * @method +getByteReceived
 	 * @return {Integer}
 	 */
 	public Integer getByteReceived(){
-		return byteReceived;
+		return byte_received;
 	}
 	
 	/**
-	 * Imposta il campo dati byteReceived
+	 * Imposta il campo dati byte_received
 	 * 
 	 * @method +setByteReceived
-	 * @param {Integer} n e' l'oggetto assegnato al campo dati byteReceived
+	 * @param {Integer} n e' l'oggetto assegnato al campo dati byte_received
 	 * @return {void}
 	 */
 	public void setByteReceived(Integer n){
-		byteReceived=n;
+		byte_received=n;
 	}
 	
 	/**
-	 * Ritorna il campo dati startDate
+	 * Ritorna il campo dati start_date
 	 * 
 	 * @method +getStartDate
 	 * @return {String}
 	 */
 	public String getStartDate(){
-		return startDate;
+		return start_date;
 	}
 	
 	/**
-	 * Imposta il campo dati byteReceived
+	 * Imposta il campo dati start_date
 	 * 
 	 * @method +setStartDate
 	 * @param {String} t e' l'oggetto assegnato al campo dati startDate
 	 * @return {void}
 	 */
 	public void setStartDate(String t){
-		startDate=t;
+		start_date=t;
 	}
 	
 }

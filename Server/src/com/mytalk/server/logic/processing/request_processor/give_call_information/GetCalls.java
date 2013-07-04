@@ -7,6 +7,8 @@
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.4     | 2013-07-04 |    MF     | [#] Modifica alla creazione di un oggeto Call in seguito a modifica
+* 									 della struttura della classe Call
 * 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
 * 									     piu' espressivi e di facile comprensione
@@ -85,7 +87,7 @@ public class GetCalls extends GenericRequest {
 					if(callServer.getCaller().equals(userAuth.getUsername())){ 
 						caller=true;
 						speaker=da.getIdFromUsername(callServer.getReceiver());
-						listCallClient.add(new Call(speaker, caller, callServer.getStartdate(),callServer.getDuration() , callServer.getByteSent(),callServer.getByteReceived()));
+						listCallClient.add(new Call(callServer.getId(),speaker, caller, callServer.getStartdate(),callServer.getDuration() , callServer.getByteSent(),callServer.getByteReceived()));
 
 						wrapperCall.increaseTotalByteSent(callServer.getByteSent());
 						wrapperCall.increaseTotalByteReceived(callServer.getByteReceived());
@@ -94,7 +96,7 @@ public class GetCalls extends GenericRequest {
 					else{
 						caller=false;
 						speaker=da.getIdFromUsername(callServer.getCaller());
-						listCallClient.add(new Call(speaker, caller, callServer.getStartdate(), callServer.getDuration(), callServer.getByteReceived(),callServer.getByteSent()));
+						listCallClient.add(new Call(callServer.getId(),speaker, caller, callServer.getStartdate(), callServer.getDuration(), callServer.getByteReceived(),callServer.getByteSent()));
 						
 						wrapperCall.increaseTotalByteSent(callServer.getByteReceived());
 						wrapperCall.increaseTotalByteReceived(callServer.getByteSent());

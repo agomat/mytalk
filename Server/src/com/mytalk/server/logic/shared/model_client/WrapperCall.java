@@ -7,6 +7,8 @@
 * Diary:
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.4     | 2013-07-04 |    MF     | [+] Aggiunta campo dati statico id con getter e setter
+* 0.3     | 2013-07-04 |	MF	   | [#] Modifica nome totalByteSent, totalByteReceived e totaleDuration
 * 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.1	  |	2013-04-18 |    NT     | [+] Creazione classe e metodi   
 *
@@ -24,6 +26,13 @@ import java.util.List;
 
 public class WrapperCall{
 	/**
+	 * Id statico necessario al client
+	 * 
+	 * @property -id
+	 * @type {Integer}
+	 */
+	private static Integer id=0;
+	/**
 	 * Rappresenta l'insieme delle chiamate
 	 * 
 	 * @property -list
@@ -33,24 +42,24 @@ public class WrapperCall{
 	/**
 	 * Rappresenta il totale dei byte inviati, inizializzato a zero
 	 * 
-	 * @property -totalByteSent
+	 * @property -total_byte_sent
 	 * @type {Integer}
 	 */
-	private Integer totalByteSent=0;
+	private Integer total_byte_sent=0;
 	/**
 	 * Rappresenta il totale dei byte ricevuti, inizializzato a zero
 	 * 
-	 * @property -totalByteReceived
+	 * @property -total_byte_received
 	 * @type {Integer}
 	 */
-	private Integer totalByteReceived=0;
+	private Integer total_byte_received=0;
 	/**
 	 * Rappresenta la durata totale di chiamate, inizializzato a 0
 	 * 
-	 * @property -totalDuration
+	 * @property -total_duration
 	 * @type {Integer}
 	 */
-	private Integer totalDuration=0;
+	private Integer total_duration=0;
 	/**
 	 * Costruttore della classe che inizializza il campo dati list
 	 * 
@@ -79,61 +88,61 @@ public class WrapperCall{
 		list=c;
 	}
 	/**
-	 * Ritorna il campo dati totalByteSent
+	 * Ritorna il campo dati total_byte_sent
 	 * 
 	 * @method +getTotalByteSent
 	 * @return {Integer}
 	 */
 	public Integer getTotalByteSent(){
-		return totalByteSent;
+		return total_byte_sent;
 	}
 	
 	/**
-	 * Incrementa il campo dati totalByteSent
+	 * Incrementa il campo dati total_byte_sent
 	 * 
 	 * @method +increaseTotalByteSent
-	 * @param {Integer} increase e' l'oggetto che viene sommato al valore di totalByteSent
+	 * @param {Integer} increase e' l'oggetto che viene sommato al valore di total_byte_sent
 	 * @return {void}
 	 */
 	public void increaseTotalByteSent(Integer increase){
-		totalByteSent=totalByteSent+increase;
+		total_byte_sent=total_byte_sent+increase;
 	}
 	/**
-	 * Ritorna il campo dati totalByteReceived
+	 * Ritorna il campo dati total_byte_received
 	 * 
 	 * @method +getTotalByteReceived
 	 * @return {Integer}
 	 */
 	public Integer getTotalByteReceived(){
-		return totalByteReceived;
+		return total_byte_received;
 	}
 	/**
-	 * Incrementa il campo dati totalByteReceived
+	 * Incrementa il campo dati total_byte_received
 	 * 
 	 * @method +increaseTotalByteReceived
-	 * @param {Integer} increase e' l'oggetto che viene sommato al valore di totalByteReceived
+	 * @param {Integer} increase e' l'oggetto che viene sommato al valore di total_byte_received
 	 * @return {void}
 	 */
 	public void increaseTotalByteReceived(Integer increase){
-		totalByteReceived=totalByteReceived+increase;
+		total_byte_received=total_byte_received+increase;
 	}
 	/**
-	 * Ritorna il campo dati totalDuration
+	 * Ritorna il campo dati total_duration
 	 * 
 	 * @method +getTotalDuration
 	 * @return {Integer}
 	 */
 	public Integer getTotalDuration(){
-		return totalDuration;
+		return total_duration;
 	}
 	/**
-	 * Incrementa il campo dati totalDuration
+	 * Incrementa il campo dati total_duration
 	 * 
 	 * @method +increaseTotalDuration
-	 * @param {Integer} increase e' l'oggetto che viene sommato al valore di totalDuration
+	 * @param {Integer} increase e' l'oggetto che viene sommato al valore di total_duration
 	 * @return {void}
 	 */
 	public void increaseTotalDuration(Integer increase){
-		totalDuration=totalDuration+increase;
+		total_duration=total_duration+increase;
 	}
 }

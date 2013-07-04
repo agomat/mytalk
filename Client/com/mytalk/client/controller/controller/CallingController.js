@@ -80,7 +80,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   bitrate:null,
 
-  r:null,
+  statsInterval:null,
 
   /**
    * Proprietà che contiente la connessione peer
@@ -105,6 +105,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   call: function(user) {
     //TODO verificare se sono impegnato in altra conversazione
+    var time=new moment().lang('it');
+    this.set('stats.date',time);
+    this.set('stats.sender',true);
     this.RTCmanager = MyTalk.PeerConnection.create();
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct("UserCall");
@@ -149,7 +152,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
     
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
-    this.getStats(true);
+    this.getStats();
   },
   
   /**
@@ -163,6 +166,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   acceptCall: function(user){
+    var time=new moment().lang('it');
+    this.set('stats.date',time);
+    this.set('stats.sender',false);
     MyTalk.CallState.get('isBusy').set('accepted', true);
     document.getElementById('ring').pause();
     this.RTCmanager = MyTalk.PeerConnection.create();
@@ -213,7 +219,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
-    this.getStats(false);
+    this.getStats();
   },
 
   /**
@@ -253,7 +259,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
   
   onClose: function() {
-//     this.set('messages',[]);
+    clearInterval(this.get('statsInterval'));
+    this.saveStats();
+    this.clearStats();
     document.getElementById('closeCall').play();
     MyTalk.CallState.send('beingFree');
   },
@@ -295,19 +303,32 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     }, 300);
      
   },
+  
 
-  getStats: function(sender) {
-// Display statistics
-var bytePrev = 0;
-var timestampPrev = 0;
+  saveStats:function(){
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct( "AddCall" );
+    var stats=this.get('stats');
+      processor.process({
+        duration:stats.get('duration'),
+        sentBytes:stats.get('sentBytes'),
+        receivedBytes:stats.get('receivedBytes')
+      });
 
-var context = this;
+  },
 
-var statCollector = setInterval(function() {
-  var display = function(str) {
-    context.set('bitrate',str);
-  }
-  console.log('stats');
+  clearStats:function(){
+    this.set('stats',MyTalk.CallInfo.create({}));
+  },
+
+  getStats: function() {
+    var bytePrev = 0;
+    var timestampPrev = 0;
+    var context = this;
+    var statCollector = setInterval(function() {
+      var display = function(str) {
+        context.set('bitrate',str);
+      }
       context.RTCmanager.pc.getStats(function(stats) {
         var statsString = '';
         var results = stats.result();
@@ -315,33 +336,26 @@ var statCollector = setInterval(function() {
         context.get('stats').set('duration',context.get('stats.duration')+1);
         for (var i = 0; i < results.length; ++i) {
           var res = results[i];
-          /*statsString += '<h3>Report ';
-          statsString += i;
-          statsString += '</h3>';
-          statsString += dumpStats(res,context,i,sender);
-           */
-          
             if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
               context.get('stats').set('sentBytes',res.stat('bytesSent'));
             }
             if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
               context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
-              
               var bytesNow = res.stat('bytesReceived');
               if (timestampPrev > 0) {
-                 var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
-                    (res.timestamp - timestampPrev));
-                 bitrateText = bitRate + ' kbits/sec';
+                var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
+                  (res.timestamp - timestampPrev));
+                bitrateText = bitRate + ' kbits/sec';
               }
               timestampPrev = res.timestamp;
               bytesPrev = bytesNow;
             }
-          
         }
         display(bitrateText);
       });
-
-}, 1000);}
+    }, 1000);
+    this.set('statsInterval',statCollector);
+  }
 });
 
 Ember.Handlebars.registerBoundHelper('date',function(date){

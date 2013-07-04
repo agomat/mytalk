@@ -24,8 +24,8 @@ MyTalk.CallInfo = Ember.Object.extend({
   
   /**
    * Proprietà deputata al contenimento della durata della chiamata.
-   * @property -text           
-   * @type {String}                   
+   * @property -duration           
+   * @type {Number}                   
    *
   */    
 
@@ -33,8 +33,8 @@ MyTalk.CallInfo = Ember.Object.extend({
   
   /**
    * Proprietà contiene la quantità di byte ricevuti. 
-   * @property -sent           
-   * @type {Boolean}                   
+   * @property -receivedBytes           
+   * @type {Number}                   
    *
   */    
   
@@ -42,10 +42,35 @@ MyTalk.CallInfo = Ember.Object.extend({
   
   /**
    * Proprietà contiene la quantità di bite inviati 
-   * @property -date           
-   * @type {Date}                   
+   * @property -sentBytes           
+   * @type {Number}                   
    *
   */    
   
-  sentBytes: 0
+  sentBytes: 0,
+ 
+  /**
+   * Proprietà contiene la data della chiamata
+   * @property -date           
+   * @type {Date}                   
+   *
+  */   
+ 
+  date:null,
+
+  /**
+   * Proprietà contiene la data della chiamata
+   * @property -date           
+   * @type {Date}                   
+   *
+  */  
+  sender:null,
+ 
+  /**
+   * Proprietà contiene l'id dell'utente con il quale si sta parlando
+   * @property -speaker           
+   * @type {Number}                   
+   *
+  */ 
+  speaker:null,
 }); 

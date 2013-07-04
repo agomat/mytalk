@@ -1,5 +1,5 @@
 /**
-* Filename: StatsController.js
+* Filename: HistoryController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies:
 * Author: Campese Stefano
@@ -20,10 +20,10 @@
 *
 */
 
-MyTalk.StatsController = Ember.ObjectController.extend({
-
-  model: function() {
-    return MyTalk.WCall.find(0); 
+MyTalk.HistoryController = Ember.ArrayController.extend({
+//TODO doc
+	model: function() {
+    return MyTalk.Call.find(); 
   }
 
 });

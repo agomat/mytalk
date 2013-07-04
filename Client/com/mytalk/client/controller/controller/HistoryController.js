@@ -22,8 +22,9 @@
 
 MyTalk.HistoryController = Ember.ArrayController.extend({
 //TODO doc
-	model: function() {
-    return MyTalk.Call.find(); 
-  }
+init:function(){
+  this._super();
+  console.log(this.get('content'));
+}
 
 });

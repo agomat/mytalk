@@ -21,9 +21,9 @@
 
 MyTalk.WCall = DS.Model.extend({
   list: DS.hasMany('MyTalk.Call'),
-  totalByteSent: DS.attr('integer'),
-  totalByteReceived: DS.attr('integer'),
-  totalDuration: DS.attr('integer')
+  totalByteSent: DS.attr('number'),
+  totalByteReceived: DS.attr('number'),
+  totalDuration: DS.attr('number')
   
 });
 

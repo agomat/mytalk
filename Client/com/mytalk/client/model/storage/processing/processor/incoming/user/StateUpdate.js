@@ -56,12 +56,13 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
         MyTalk.List.find(0).get('users').addObject( MyTalk.User.find(userId) );
         MyTalk.List.find(0).get('stateManager').goToState('saved');
       } else {
-        MyTalk.User.find(userId).set('online', info.list.online );
-        MyTalk.User.find(userId).set('ip', info.list.ip );
-        MyTalk.User.find(userId).set('name', info.list.name );
-        MyTalk.User.find(userId).set('surname', info.list.surname );
-        MyTalk.User.find(userId).set('md5', info.list.md5 );
-        MyTalk.User.find(userId).get('stateManager').goToState('saved');
+        var user = MyTalk.User.find(userId);
+        user.set('online', info.list.online );
+        user.set('ip', info.list.ip );
+        user.set('name', info.list.name );
+        user.set('surname', info.list.surname );
+        user.set('md5', info.list.md5 );
+        user.get('stateManager').goToState('saved');
         MyTalk.List.find().forEach(function(list){
           if(list.get('id') > 0) {
             var found = false;

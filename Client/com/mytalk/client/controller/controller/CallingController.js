@@ -341,7 +341,7 @@ var statCollector = setInterval(function() {
         display(bitrateText);
       });
 
-}, 1000);
+}, 1000);}
 });
 
 Ember.Handlebars.registerBoundHelper('date',function(date){

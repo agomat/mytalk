@@ -28,7 +28,8 @@ MyTalk.IndexRoute = Ember.Route.extend({
    * @return {Void} 
   */
 
-  renderTemplate: function(controller, model) { 
+  renderTemplate: function(controller, model) {
+    this._super();
     this.render('header', { into: 'index', outlet: 'head' });
   },
   

@@ -57,6 +57,7 @@ MyTalk.processor.StateUpdate = Ember.Object.extend(MyTalk.AbstractInProcessorPro
         MyTalk.List.find(0).get('stateManager').goToState('saved');
       } else {
         MyTalk.User.find(userId).set('online', info.list.online );
+        MyTalk.User.find(userId).set('ip', info.list.online );
         MyTalk.User.find(userId).get('stateManager').goToState('saved');
         MyTalk.List.find().forEach(function(list){
           if(list.get('id') > 0) {

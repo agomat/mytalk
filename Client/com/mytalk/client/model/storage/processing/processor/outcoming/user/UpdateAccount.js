@@ -43,9 +43,8 @@ MyTalk.processor.UpdateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   process: function (params) {
     var username = MyTalk.Authentication.find(0).get('username');
     var password = MyTalk.Authentication.find(0).get('password');
-    
     if (params.password == null){
-      delete params.password;
+      params.password = MyTalk.Authentication.find(0).get('password');
     }
 
     // Aggiornamento PersonalData

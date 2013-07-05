@@ -4,6 +4,7 @@
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
 *               com.mytalk.client.model.modelstruct.PersonalData
 *               com.mytalk.client.model.modelstruct.User
+*               com.mytalk.client.model.modelstruct.List
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *

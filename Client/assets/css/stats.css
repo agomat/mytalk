@@ -72,13 +72,13 @@
 
 .avatar35{
 	float: left;
-	background: url(../img/mytalk_blank_35.png) center center no-repeat;
+	background: url(../img/mytalk_blank_35.png) center bottom no-repeat;
 }
 
 .avatar35, .avatar35 img {
   width: 35px;
   height: 35px !important;
-  padding: 4px 0;
+  padding: 2px 0;
   border-radius: 3px;
 }
 

@@ -26,12 +26,12 @@ import java.util.List;
 
 public class WrapperCall{
 	/**
-	 * Id statico necessario al client
+	 * Id necessario al client
 	 * 
 	 * @property -id
 	 * @type {Integer}
 	 */
-	private static Integer id=0;
+	private int id=0;
 	/**
 	 * Rappresenta l'insieme delle chiamate
 	 * 

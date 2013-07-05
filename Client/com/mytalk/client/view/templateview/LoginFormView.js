@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Classe che rappresenta la vista che rappresenta la form per effettuare il login.
+* Classe che rappresenta la vista che rappresenta la form per effettuare l'autenticazione.
 *
 */
 
@@ -79,7 +79,7 @@ MyTalk.LoginFormView = Ember.View.extend({
  
   /**
    * Questo metodo viene richiamato dal $submit$ della form.
-   * Il metodo si occupa di attivare, nel controller associato, il metodo _login()_ necessario per effetturare il login.
+   * Il metodo si occupa di attivare, nel controller associato, il metodo _login()_ necessario per effettuare l'autenticazione.
    *
    * @method +submit              
    * @param {Object} event è l'evento di $submit$ effettuato sulla form               

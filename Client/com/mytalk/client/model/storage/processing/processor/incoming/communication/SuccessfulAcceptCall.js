@@ -33,7 +33,7 @@ MyTalk.processor.SuccessfulAcceptCall = Ember.Object.extend(MyTalk.AbstractInPro
 
   /**
   * Il metodo deve convertire la stringa in un oggetto mediante il metodo _JSON.parse_.
-  * Deve poi creare un hash da passare allo StateManager _CallState_ redirezionando allo stato "beingConnected".
+  * Deve poi creare un hash da passare allo StateManager _CallState_ transitando allo stato "beingConnected".
   * L'hash deve indicare il fatto che l'utente attuale sia il chiamante e deve passare
   * le informazioni WebRTC allo StateManager
   *

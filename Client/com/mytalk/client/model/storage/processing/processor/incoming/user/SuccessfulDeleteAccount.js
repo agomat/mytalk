@@ -29,7 +29,7 @@ MyTalk.processor.SuccessfulDeleteAccount = Ember.Object.extend(MyTalk.AbstractIn
   */
   name: 'SuccessfulDeleteAccount',
  /**
-  * Il metodo deve redirezionare la GUI nella pagina iniziale
+  * Il metodo deve portare la GUI alla pagina iniziale
   *
   * @method +process
   * @param {String} Stringa JSON che rappresenta il pacchetto ARI

@@ -34,7 +34,7 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProce
 
   /**
   * Il metodo deve convertire la stringa in un oggetto mediante il metodo _JSON.parse_.
-  * Deve poi creare un hash da passare allo StateManager _CallState_ redirezionando allo stato "isBusy.incomingCall".
+  * Deve poi creare un hash da passare allo StateManager _CallState_ transitando allo stato "isBusy.incomingCall".
   * L'hash deve contenere le informazioni WebRTC del chiamante da passare allo SteteManager
   * le informazioni WebRTC allo StateManager
   *

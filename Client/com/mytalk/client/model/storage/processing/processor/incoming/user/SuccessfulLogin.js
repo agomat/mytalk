@@ -32,7 +32,7 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractInProcesso
 
  /**
   * Il metodo deve salvare nel model _DS.User_ la lista di tutti i contatti registrati nel sistema
-  * e nel model _DS.PersonalData_ i dati personali che l'utente che si è appena autnticato
+  * e nel model _DS.PersonalData_ i dati personali che l'utente che si è appena autenticato
   *
   * @method +process
   * @param {String} Stringa JSON che rappresenta il pacchetto ARI

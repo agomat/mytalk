@@ -18,7 +18,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller deputato alla gestione del login e alla gestione del template $"index"$
+*  Controller deputato alla gestione dell'autenticazione e alla gestione del template $"index"$
 *
 */
 
@@ -55,13 +55,13 @@ MyTalk.IndexController = Ember.ObjectController.extend({
   }.property('appState'),
  
   /**
-   * Questo metodo è deputato all'esecuzione del login nell'applicazione. 
-   * Il metodo crea un'istanza del processore delegato di eseguire il login
+   * Questo metodo è deputato all'esecuzione dell'autenticazione nell'applicazione. 
+   * Il metodo crea un'istanza del processore delegato di eseguire l'autenticazione
    * passandogli tutti i parametri ricevuti in ingresso.
    *
    * @method +login               
-   * @param {String} username dell'utente che effettua il login                                   
-   * @param {String} password dell'utente che effettua il login                        
+   * @param {String} username dell'utente che effettua l'autenticazione                                   
+   * @param {String} password dell'utente che effettua l'autenticazione                        
    * @return {Void} 
   */
  

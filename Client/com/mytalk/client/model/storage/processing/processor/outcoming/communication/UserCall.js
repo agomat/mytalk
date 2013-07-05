@@ -65,7 +65,7 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   * propria configurazione WebRTC
   *
   * @method +sendToServer
-  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {WebSocket} istanza di connessione WebSocket
   * @param {Object} record Call da inviare al server
   * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
   * @return {Void}

@@ -42,7 +42,7 @@ MyTalk.processor.ListDelete = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
   * Il metodo deve inviare al server un ARI avente richiesta _ListDelete_ 
   *
   * @method +sendToServer
-  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {WebSocket} istanza di connessione WebSocket
   * @param {Object} record Call da inviare al server
   * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
   * @return {Void}

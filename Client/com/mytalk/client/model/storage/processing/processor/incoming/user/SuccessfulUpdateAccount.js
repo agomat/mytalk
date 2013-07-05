@@ -17,7 +17,7 @@
 * - Zucchetti SRL
 *
 * Processore che viene eseguito quando il server ha correttamente salvato le modifiche
-* al profilo dell'account dell'utente loggato nel sistema
+* al profilo dell'account dell'utente autenticato nel sistema
 *
 */
 

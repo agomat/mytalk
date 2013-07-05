@@ -41,7 +41,7 @@ MyTalk.StatsView = Ember.View.extend({
   name: "stats",
 
   /**
-   * Questo metodo di occupa si occupa di invocare il metodo $getCalls$ del relativo controller.
+   * Questo metodo si occupa si occupa di invocare il metodo $getCalls$ del relativo controller.
    *
    * @method -didInsertElement            
    * @return {Void} 

@@ -39,7 +39,7 @@ MyTalk.processor.UsernameNotCorrespondingUpdateAccount = Ember.Object.extend(MyT
   */
   process: function (ari) {
     $('#loading_bar').css('visibility','hidden');
-    alert("Utente già loggato con questo username");
+    alert("Utente già autenticato con questo username");
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

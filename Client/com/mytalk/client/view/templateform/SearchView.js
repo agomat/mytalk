@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Classe che rappresenta il $textfield$ per l'inserimento dell nome dell'utente da cercare.
+* Classe che rappresenta il $textfield$ per l'inserimento del nome dell'utente da cercare.
 *
 */
 
@@ -53,9 +53,9 @@ MyTalk.SearchView = Ember.TextField.extend({
    * Questo metodo osserva il $value$ dell'input e lancia la ricerca ogni volta che questo cambia al fine di affinare la ricerca di un utente su una lista.
    *
    * @method +valueDidChange
-   * @param {Object} element è l'oggetto della view        
-   * @param {Key} property è la proprietà che viene cambiata    
-   * @param {String} value è contiene il valore effettivo sul quale effettuare la ricerca.                                 
+   * @param {Object} è l'oggetto della view        
+   * @param {Key} è la proprietà che viene cambiata    
+   * @param {String} contiene il valore effettivo sul quale effettuare la ricerca                                 
    * @return {Void} 
   */
 

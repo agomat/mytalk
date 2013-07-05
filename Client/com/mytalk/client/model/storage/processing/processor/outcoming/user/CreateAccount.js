@@ -53,7 +53,7 @@ MyTalk.processor.CreateAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   * nel pacchetto ARI
   *
   * @method +sendToServer
-  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {WebSocket} istanza di connessione WebSocket
   * @param {Object} record Call da inviare al server
   * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
   * @return {Void}

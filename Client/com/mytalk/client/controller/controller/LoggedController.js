@@ -17,7 +17,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller deputato alla visualizzazione delle liste dell'utente che ha effettuato il login.
+*  Controller deputato alla visualizzazione delle liste dell'utente che ha effettuato l'autenticazione.
 *
 */
 
@@ -97,7 +97,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * Questo metodo è deputato all'aggiornamento della proprietà $filteredList$, tale proprietà è necessaria 
    * alla select di aggiunta utente ad una lista.
    * Il metodo si occupa di aggiornare la propietà ogni qual volta che una lista viene creata,eliminata o rinominata
-   * inoltre, aggiorna la propietà alla prima volta che avviene il login.
+   * inoltre, aggiorna la propietà alla prima volta che avviene l'autenticazione.
    * Il metodo riceve due argomenti $idx$ e $na$ questi due argomenti sono necessari quando
    * questo metodo viene richiamato dall'aggiunta di una nuova lista.
    *

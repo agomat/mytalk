@@ -32,7 +32,7 @@ MyTalk.processor.SuccessfulRefuseCall = Ember.Object.extend(MyTalk.AbstractInPro
 
   /**
   * Il metodo deve convertire la stringa in un oggetto mediante il metodo _JSON.parse_.
-  * Deve poi creare un hash da passare allo StateManager _CallState_ redirezionando allo stato "isNotBusy".
+  * Deve poi creare un hash da passare allo StateManager _CallState_ transitando allo stato "isNotBusy".
   *
   * @method +process
   * @param {String} Stringa JSON che rappresenta il pacchetto ARI

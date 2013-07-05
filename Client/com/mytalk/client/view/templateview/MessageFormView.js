@@ -1,7 +1,7 @@
 /**
 * Filename: MessageFormView.js
 * Package: com.mytalk.client.view.templateview
-* Dependencies: com.mytalk.client.controller.controller.CollingController
+* Dependencies: com.mytalk.client.controller.controller.CallingController
 * Author: Campese Stefano
 * Date: 2013-04-26
 *
@@ -76,8 +76,8 @@ MyTalk.MessageFormView = Ember.View.extend({
   },
 
   /**
-   * Questo metodo di occupa di attivare alcune funzioni JQuery che permettodo di catturare
-   * la pressione del tasto $Invio$ esguendo l'invio del messaggio di testo all'altro peer
+   * Questo metodo si occupa di attivare alcune funzioni JQuery che permettendo di catturare
+   * la pressione del tasto $Invio$ eseguendo l'invio del messaggio di testo all'altro peer
    *
    * @method -didInsertElement            
    * @return {Void} 

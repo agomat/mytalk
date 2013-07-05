@@ -30,7 +30,7 @@ MyTalk.AbstractInProcessorProduct = Ember.Mixin.create({
   * Metodo astratto che prende in input un hash contenente le informazioni da scrivere (o modificare) nel Model.
   *
   * @method +process 
-  * @params {String} stringa contenente le infomazioni che dovranno essere inserite, modificate o aggiornate nel Model
+  * @params {String} stringa contenente le informazioni che dovranno essere inserite, modificate o aggiornate nel Model
   * @return {Void}
   */
   process: function (ari) {

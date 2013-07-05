@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Processore che viene eseguito quando il server rileva che l'utente con quell'username è già loggato nel sistema.
+* Processore che viene eseguito quando il server rileva che l'utente con quel username è già autenticato nel sistema.
 *
 */
 
@@ -38,7 +38,7 @@ MyTalk.processor.UsernameCorrespondingExistingLogin = Ember.Object.extend(MyTalk
   */
   process: function (ari) {
     $('#loading_bar').css('visibility','hidden');
-    alert("Utente già loggato con questo username");
+    alert("Utente già autenticato con questo username");
   },
   /**
   * Il metodo deve ritornare l'attributo _name_

@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Classe che rappresenta il $textfield$ per l'inserimento dell'username per la registrazione.
+* Classe che rappresenta il $textfield$ per l'inserimento del username per la registrazione.
 *
 */
 

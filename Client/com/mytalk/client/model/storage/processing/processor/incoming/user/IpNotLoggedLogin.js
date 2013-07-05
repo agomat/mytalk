@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Processore che viene eseguito quando il server rileva che l'utente con quell'IP non è loggato nel sistema. Il client
+* Processore che viene eseguito quando il server rileva che l'utente con quell'IP non è autenticato nel sistema. Il client
 * deve ignorare questo tipo di richiesta e di conseguenza il metodo _process_ deve avere corpo vuoto
 *
 */

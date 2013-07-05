@@ -56,11 +56,11 @@ MyTalk.processor.DeleteAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
     transaction.commit();
   },
  /**
-  * Il metodo deve inviare al server un ARI avente richiesta _DeleteAccount_ per poter eliminare permanenetemente
+  * Il metodo deve inviare al server un ARI avente richiesta _DeleteAccount_ per poter eliminare permanentemente
   * l'account dal database del server
   *
   * @method +sendToServer
-  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {WebSocket} istanza di connessione WebSocket
   * @param {Object} record Call da inviare al server
   * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
   * @return {Void}

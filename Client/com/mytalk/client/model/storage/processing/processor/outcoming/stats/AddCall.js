@@ -31,7 +31,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
   */
   name: 'AddCall',
  /**
-  * Il metodo deve inserire nel model _DS.Call_ un nuovo record conentenente i dettagli della chiamata
+  * Il metodo deve inserire nel model _DS.Call_ un nuovo record contenente i dettagli della chiamata
   *
   * @method +process
   * @param {Object} Stringa JSON che rappresenta il pacchetto ARI
@@ -45,7 +45,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
   * Il metodo deve inviare al server un ARI avente richiesta _AddCall_ 
   *
   * @method +sendToServer
-  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {WebSocket} istanza di connessione WebSocket
   * @param {Object} record Call da inviare al server
   * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
   * @return {Void}

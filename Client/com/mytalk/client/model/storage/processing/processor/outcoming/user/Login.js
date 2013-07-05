@@ -52,7 +52,7 @@ MyTalk.processor.Login = Ember.Object.extend(MyTalk.AbstractOutProcessorProduct,
   * Il metodo deve inviare al server un ARI avente richiesta _Login_ per autenticarsi nel sistema
   *
   * @method +sendToServer
-  * @param {WebSocket} instanza di connessione WebSocket
+  * @param {WebSocket} istanza di connessione WebSocket
   * @param {Object} record Call da inviare al server
   * @param {Function} callback che deve essere eseguita quando il pacchetto risulta correttamente inviato al server
   * @return {Void}

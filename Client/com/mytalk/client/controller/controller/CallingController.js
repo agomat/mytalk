@@ -2,6 +2,7 @@
 * Filename: CallingController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.controller.controller.ChatMessage
+*          com.mytalk.client.controller.controller.CallInfo
 *          com.mytalk.client.controller.statemanager.CallState
 *          com.mytalk.client.controller.comunicator.PeerConnection
 *          com.mytalk.client.model.storage.processing.ProcessorFactory
@@ -17,6 +18,7 @@
 *
 | Version | Date     | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.3    | 2013-07-02 | SC      | [+] Aggiunta funzionalità salva statistiche
 * 0.2    | 2013-06-07 | SC      | [+] Aggiunta funzionalità chat
 * 0.1    | 2013-04-23 | MA      | [+] Scrittura classe
 *
@@ -74,13 +76,25 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   messages: [],
+  
+  /**
+  * Proprietà che contine un oggetto MyTalk.CallInfo al cui interno 
+  * vengono salvate le statistiche di una chimata
+  * @property +stats      
+  * @type {MyTalk.CallInfo}             
+  *
+  */
 
   stats:MyTalk.CallInfo.create({}),
-
+  
+  /**
+  * Proprietà necessaria a mostrare nella vista la velocità attuale di connessione
+  * @property +bitrate       
+  * @type {String}             
+  *
+  */
 
   bitrate:null,
-
-  statsInterval:null,
 
   /**
   * Proprietà che contiente la connessione peer
@@ -91,7 +105,16 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   RTCmanager: undefined,
   
-  //TODO
+  /**
+  * Questo metodo viene invocato alla creazione di un'istanza di questo controller,
+  * tale metodo garantisce l'aggiunta della callback $onclose$ dinamicamente.
+  * Questa soluzione è stata pensata dai progettisti in quanto c'è la necessità di ottenere il $this$ cioè l'istanza attuale
+  * del controller, in modo tale da poter salvare e resettare le statistiche delle chiamate.
+  *
+  * @method -init
+  * @return {Void} 
+  */
+
   init: function(){
    this._super();
    var context = this;
@@ -269,19 +292,40 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     this.onClose();
    }
   },
-  //TODO
+
+  
+ /**
+  * Questo metodo si occupa di salvare le statistiche dell'ultima chiamata ricevuta/effettuata.
+  * Una volta invocato, questo metodo,crea un'istanza del processore adeguato 
+  * al quale sarà delegato il lavoro di salvare nel model le statistiche ottenute.
+  *
+  * @method -saveStats
+  * @return {Void} 
+  */
+
+
   saveStats:function(){
    var processorFactory = MyTalk.ProcessorFactory.create({});
    var processor = processorFactory.createProcessorProduct( "AddCall" );
    var stats=this.get('stats');
     processor.process({
+      //speaker: stats.get('speaker'),
+      startDate: stats.get('date'),
       duration:stats.get('duration'),
       sentBytes:stats.get('sentBytes'),
       receivedBytes:stats.get('receivedBytes')
     });
 
   },
-// TODO
+ 
+ /**
+  * Questo metodo si occupa di di resettare il campo dati contenente le statistiche
+  * delle chiamate ricevute/effettuate.
+  *
+  * @method -clearStats
+  * @return {Void} 
+  */
+
   clearStats:function(){
    this.set('stats',MyTalk.CallInfo.create({}));
   },
@@ -324,6 +368,19 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     
   },
   
+  
+  /**
+  * Questo metodo si occupa di ottenere dall'oggetto RTCmanager le statistiche della connessione peer.
+  * per fare questo il metodo sfrutta il metodo ononimo $getStats()$, proprietario dell'oggetto $RTCmanager.pc$
+  * il metodo ottiene tutti i dati necessari, i byte ricevuti/trasmessi e la velocità istantanea; inoltre si occupa
+  * di avviare il timer necessario all conteggio della durata della chiamata.
+  * il tutto viene eseguito ogni secondo in modo da garantire una giusta efficienza nel campionamento e nel conteggio
+  * dei secondi della durata di una chiamata.
+  *
+  * @method -getStats
+  * @return {Void} 
+  */
+
 
   getStats: function() {
    var bytePrev = 0;

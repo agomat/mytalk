@@ -94,7 +94,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * Il metodo si occupa di impostare i campi $userId$ e $userName$ 
    * rispettivamente con l'id e il nome dell'utente preso in considerazione
    *
-   * @method +addUsers 
+   * @method +addUser 
    * @param {User} user è l'oggetto utente che si vuole aggiungere alla lista.
    * @return {Void} 
   */

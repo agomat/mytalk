@@ -23,8 +23,8 @@
 MyTalk.CallState = Ember.StateManager.create({
 
   /**
-   * Proprietà che abilita iul login
-   * @property -enableLoggin           
+   * Proprietà che scrive il cambiamento di stato sulla console del browser
+   * @property -enableLogging          
    * @type {Boolean}                   
    *
   */ 

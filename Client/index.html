@@ -673,6 +673,9 @@
     <script type="text/x-handlebars" data-template-name="history">
       <h3>Registro Chiamate</h3>
       <ul id="call_list">
+      {{#each call in controller}}
+        call.caller ; 
+      {{/each}}
         <li class="call_out"> <!-- call_in -->
           <div class="avatar35"><!--img fdi gravatar--></div>
           <div class="who_call">Nome Cognome</div>

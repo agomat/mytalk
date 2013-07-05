@@ -27,7 +27,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
  /**
    * Proprietà che contiene nomi e id delle liste nelle quali mettere un utente, questà porpietà esclude sia 
    * la $Blacklist$ che la lista $Tutti i contatti$.
-   * @property +fiteredList          
+   * @property +filteredList          
    * @type {Array<Object>}                   
    *
   */

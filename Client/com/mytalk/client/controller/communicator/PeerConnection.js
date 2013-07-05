@@ -368,7 +368,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 /** 
 * Contiene i parametri per la costruzione del canale dati, da passare al costruttore RTCPeerConnection.
 * 
-* @property -optsDataChann
+* @property -dataChannelOpts
 * @type {JSON anonymous object}
 */
  

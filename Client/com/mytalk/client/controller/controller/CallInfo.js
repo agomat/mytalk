@@ -61,13 +61,13 @@ MyTalk.CallInfo = Ember.Object.extend({
   /**
    * Proprietà contiene la data della chiamata
    * @property -date           
-   * @type {Date}                   
+   * @type {Boolean}                   
    *
   */  
   sender:null,
  
   /**
-   * Proprietà contiene l'id dell'utente con il quale si sta parlando
+   * Proprietà contiene l'id dell'utente interlocutore
    * @property -speaker           
    * @type {Number}                   
    *

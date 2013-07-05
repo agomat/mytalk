@@ -135,17 +135,17 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var onDataChannelMessage = function(message) {
       
       var msg=context.get('messages');
-      var temp=[];
+      var aux=[];
 
       msg.forEach(function(t){
-           temp.pushObject(t);
+        aux.pushObject(t);
       });
-      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
-      context.set('messages',temp);
+      aux.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',aux);
       
       Ember.run.later(this, function(){
-      $("#messages").animate({
-        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        $("#messages").animate({
+          scrollTop:$("#messages")[0].scrollHeight - $("#messages").height();
         },300);
       }, 300);
   
@@ -211,8 +211,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       context.set('messages',temp);
       
       Ember.run.later(this, function(){
-      $("#messages").animate({
-        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        $("#messages").animate({
+          scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
         },300);
       }, 300);
   
@@ -280,26 +280,26 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   sendMessage:function(message){
     var context=this.get('messages');
-    var temp=[];
+    var aux=[];
 
     if(context){
       context.forEach(function(t){
-        temp.pushObject(t);
+        aux.pushObject(t);
       });
-      temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
+      aux.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
       this.RTCmanager.send(message);
-      this.set('messages',temp);
+      this.set('messages',aux);
     } else {
-      temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
+      aux.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
       this.RTCmanager.send(message);
-      this.set('messages',temp);
+      this.set('messages',aux);
       
     }
     
     Ember.run.later(this, function(){
       $("#messages").animate({
-        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
-        },300);
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height();
+      },300);
     }, 300);
      
   },

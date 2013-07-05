@@ -17,7 +17,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Processore che viene eseguito quando l'utente termina la chiamata
+* Processore che viene eseguito quando la chiamata viene terminata
 *
 */
 

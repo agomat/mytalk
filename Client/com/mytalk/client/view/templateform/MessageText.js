@@ -69,7 +69,7 @@ MyTalk.MessageText = Ember.TextArea.extend({
   
   /**
    * Proprietà necessaria per impostare il placeholder della text area
-   * @property +palceholder           
+   * @property +placeholder           
    * @type {String}                   
    *
   */

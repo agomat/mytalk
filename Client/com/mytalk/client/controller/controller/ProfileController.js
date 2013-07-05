@@ -4,6 +4,7 @@
 * Dependencies: com.mytalk.client.model.storage.processing.ProcessorFactory
 *               com.mytalk.client.model.storage.processing.processor.outcoming.UpdateAccount
 *               com.mytalk.client.model.storage.processing.processor.outcoming.DeleteAccount
+*               com.mytalk.client.model.modelstruct.PersonalData
 * Author: Campese Stefano
 * Date: 2013-07-01
 *
@@ -72,10 +73,20 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
       processor.process({});
     }
   },
-
-   returnAccount:function(){
+   
+   /**
+   * Questo è necessario per poter procedere con la modifica dell'account utente
+   * il metodo ritorna alla vista i dati necessari a settare i campi dati $value$
+   * degli input, in modo tale da avere già i campi $name$, $surname$ ed $email$ già precompilati
+   * nel caso l'utente volesse modificare solo la password.
+   *
+   * @method +returnAccount                                     
+   * @return {Void} 
+  */
+  
+  returnAccount:function(){
     var me = MyTalk.PersonalData.find(0);
     return me;
-   }
+  }
 
 });

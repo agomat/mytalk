@@ -29,7 +29,7 @@ MyTalk.ModifyEmail = Ember.TextField.extend({
    *
   */
   
-  attributeBindings: ['required','onchange'],
+  attributeBindings: ['required'],
   
   /**
    * Proprietà necessaria per impostare l'attributo $required$ a $true$

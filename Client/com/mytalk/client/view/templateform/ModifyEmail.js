@@ -23,7 +23,7 @@
 MyTalk.ModifyEmail = Ember.TextField.extend({
     
   /**
-   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$ e l'attributo $onchange$
    * @property -attributeBindings           
    * @type {Binding}                   
    *
@@ -73,5 +73,7 @@ MyTalk.ModifyEmail = Ember.TextField.extend({
    *
   */
 
-  placeholder: 'Email'
+  placeholder: 'Email',
+
+  
 });

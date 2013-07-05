@@ -76,5 +76,5 @@ MyTalk.ModifySurname = Ember.TextField.extend({
   
   placeholder: 'Cognome',
 
-  //onchange:
+ 
 });

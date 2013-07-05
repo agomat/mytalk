@@ -1,5 +1,5 @@
 /**
-* Filename: ProfileView.js
+* Filename: ProfileFromView.js
 * Package: com.mytalk.client.view.templateview
 * Dependencies: com.mytalk.client.controller.controller.IndexController
                 com.mytalk.client.model..modelstruct.PersonalData
@@ -21,7 +21,7 @@
 *
 */
 
-MyTalk.ProfileView = Ember.View.extend({
+MyTalk.ProfileFromView = Ember.View.extend({
 
   /**
    * Proprietà necessaria per impostare il tipo di vista 
@@ -102,14 +102,16 @@ MyTalk.ProfileView = Ember.View.extend({
   */
 
   password_conf: null,
+ 
   
   /**
-   * Questo metodo si occupa di riempire i campi della form con i dati attuali dell'utente.
-   *
-   * @method -didInsertElement
-   * @return {Void}
-   * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
+  * Questo metodo si occupa di riempire i campi della form con i dati attuali dell'utente. 
+  *
+  * @method -didInsertElement
+  * @return {Void}
+  * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
   */
+  
   didInsertElement: function() {
     var me=this.get('controller').returnAccount();
     this.set('name', me.get('name'));
@@ -117,7 +119,6 @@ MyTalk.ProfileView = Ember.View.extend({
     this.set('username', me.get('username'));
     this.set('email', me.get('email'));
   },
-  
   /**
    * Questo metodo viene richiamato dal $submit$ della form.
    * Il metodo si occupa di attivare, nel controller associato, il metodo _save()_ per salvare i dati immessi.

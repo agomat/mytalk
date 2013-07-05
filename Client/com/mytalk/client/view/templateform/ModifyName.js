@@ -21,7 +21,6 @@
 */
 
 MyTalk.ModifyName = Ember.TextField.extend({
-     
   /**
    * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
    * @property -attributeBindings           
@@ -73,5 +72,8 @@ MyTalk.ModifyName = Ember.TextField.extend({
    *
   */
   
-  placeholder: 'Nome'
+  placeholder: 'Nome',
+   
+
+  
 });

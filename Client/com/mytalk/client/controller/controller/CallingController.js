@@ -119,6 +119,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    this._super();
    var context = this;
    this.onClose = function() {
+    context.set('messages',[]);
     context.saveStats();
     context.clearStats();
     document.getElementById('closeCall').play();

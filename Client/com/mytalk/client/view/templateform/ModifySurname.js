@@ -23,13 +23,13 @@
 MyTalk.ModifySurname = Ember.TextField.extend({
     
   /**
-   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$
+   * Proprietà necessaria per la gestione del campo dati, aggiunge l'attributo $required$ e l'attributo $onchange$
    * @property -attributeBindings           
    * @type {Binding}                   
    *
   */
   
-  attributeBindings: ["required"],
+  attributeBindings: ['required','onchange'],
   
   /**
    * Proprietà necessaria per impostare l'attributo $required$ a $true$
@@ -74,5 +74,7 @@ MyTalk.ModifySurname = Ember.TextField.extend({
    *
   */
   
-  placeholder: 'Cognome'
+  placeholder: 'Cognome',
+
+  //onchange:
 });

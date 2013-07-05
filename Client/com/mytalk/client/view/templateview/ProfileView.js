@@ -111,7 +111,7 @@ MyTalk.ProfileView = Ember.View.extend({
    * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
   */
   didInsertElement: function() {
-    var me = MyTalk.PersonalData.find(0);
+    var me=this.get('controller').returnAccount();
     this.set('name', me.get('name'));
     this.set('surname', me.get('surname'));
     this.set('username', me.get('username'));

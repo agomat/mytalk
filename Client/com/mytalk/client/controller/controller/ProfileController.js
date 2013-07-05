@@ -71,8 +71,11 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
       var processor = processorFactory.createProcessorProduct( "DeleteAccount" );
       processor.process({});
     }
-  }
+  },
 
-
+   returnAccount:function(){
+    var me = MyTalk.PersonalData.find(0);
+    return me;
+   }
 
 });

@@ -29,7 +29,7 @@ MyTalk.ModifyName = Ember.TextField.extend({
    *
   */
   
-  attributeBindings: ["required"],
+  attributeBindings: ['required','onchange'],
   
   /**
    * Proprietà necessaria per impostare l'attributo $required$ a $true$

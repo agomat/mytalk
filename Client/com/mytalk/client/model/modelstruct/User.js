@@ -43,6 +43,10 @@ MyTalk.User = DS.Model.extend( {
 
   avatarBig: function() {
     return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=blank';
+  }.property('md5'),
+
+  avatarSuperTiny: function() {
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=35&d=blank';
   }.property('md5')
 
 });

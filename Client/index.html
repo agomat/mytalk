@@ -74,7 +74,6 @@
     <script type="text/javascript" src="com/mytalk/client/controller/router/IpcallRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/ProfileRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/StatsRoute.js"></script>
-    <script type="text/javascript" src="com/mytalk/client/controller/router/HistoryRoute.js"></script>
 
     
     <!-- bootstrap StateManager -->
@@ -662,9 +661,11 @@
           <h2>Statistiche Globali</h2>
           <img src="assets/img/stats_big.png" alt="" />
           <ul>
-            <li id="global_time"><strong>Tempo totale in chiamata: </strong>Numero con unità di misura</li>
-            <li id="global_inbyte"><strong>Totale byte ricevuti: </strong>Numero con unità di misura</li>
-            <li id="global_outbyte"><strong>Totale byte inviati: </strong>Numero con unità di misura</li>
+         
+            <li id="global_time"><strong>Tempo totale in chiamata: </strong>{{hourconversion content.totalDuration}}</li>
+            <li id="global_inbyte"><strong>Totale dati ricevuti: </strong>{{conversion content.totalByteSent}}</li>
+            <li id="global_outbyte"><strong>Totale dati inviati: </strong>{{conversion content.totalByteReceived}}</li>
+          
           </ul>
         </div>
         {{render history}}
@@ -674,15 +675,14 @@
     <script type="text/x-handlebars" data-template-name="history">
       <h3>Registro Chiamate</h3>
       <ul id="call_list">
-      {{#each call in controller.content}}
-        <li {{bindAttr class="caller:call_in:call_out"}}> 
-          <div class="avatar35"> foto </div>
-          <div class="who_call">Nome Cognome</div>
-          <div class="data_call">{{call.startDate}}</div>
+      {{#each call in controller}}
+        <li {{bindAttr class="call.caller:call_in:call_out"}}> 
+          <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
+          <div class="who_call">{{call.speaker.name}} {{call.speaker.surname}}</div>
+          <div class="data_call"> {{calldate call.startDate}}</div>
           <div class="duration_call">{{hourconversion call.duration}}</div>
         </li>
       {{/each}}
-      {{controller}}
       </ul>
     </script>
 

@@ -33,7 +33,7 @@ MyTalk.StatsRoute = Ember.Route.extend({
     var processor = processorFactory.createProcessorProduct( "GetCalls" );// TODO rimuovere quata dipendenza
     processor.process();
     this.render('stats', { into: 'index', outlet: 'content' });
-  }
+  },
 }); 
  
  

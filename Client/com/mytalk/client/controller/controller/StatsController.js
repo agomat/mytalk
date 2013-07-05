@@ -21,9 +21,16 @@
 */
 
 MyTalk.StatsController = Ember.ObjectController.extend({
-
-  model: function() {
-    return MyTalk.WCall.find(0); 
-  }
+  /**
+   * Questo metodo è necessario per collegare il controller al rispettivo model; tale
+   * metodo viene invocato ogni qual volta viene creata un'istanza di questo controller.
+   *
+   * @method -init                                     
+   * @return {Void} 
+  */
+  init:function(){
+    this._super();
+    this.set('content',MyTalk.WCall.find(0));
+  },
 
 });

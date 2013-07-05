@@ -33,6 +33,13 @@ MyTalk.StatsController = Ember.ObjectController.extend({
     this.set('content',MyTalk.WCall.find(0));
   },
 
+  /**
+   * Questo metodo deve invocare il processore $GetCalls$ al fine di poter aggiornare la lista
+   * delle chiamate effettuate e ricevute
+   *
+   * @method +getCalls                                 
+   * @return {Void} 
+  */
   getCalls:function() {
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct( "GetCalls" );

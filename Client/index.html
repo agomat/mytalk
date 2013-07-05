@@ -39,7 +39,7 @@
     <script type="text/javascript" src="com/mytalk/client/view/templateform/IPCall.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateview/UsersView.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateview/GuestView.js"></script>
-    <script type="text/javascript" src="com/mytalk/client/view/templateview/ProfileView.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/view/templateview/ProfileFromView.js"></script>
     <script type="text/javascript" src="com/mytalk/client/view/templateview/StatsView.js"></script>
     
     <script type="text/javascript" src="com/mytalk/client/view/templateview/LoginView.js"></script>
@@ -618,13 +618,13 @@
         <p>L`operazione una volta effettuata non è reversibile.</p>
         </div>
       <div id="me">
-        {{#view MyTalk.ProfileView}}
+        {{#view MyTalk.ProfileFromView}}
             <fieldset>
               <legend hidden>Modifica Profilo</legend>
               <ul id="newdata">
                 <li>
                   <label for="name">Nome</label>
-                  <span>{{view MyTalk.ModifyName valueBinding='view.name'}}</span>
+                  <span>{{view MyTalk.ModifyName valueBinding='view.name' }}</span>
                 </li>
                 <li>
                   <label for="surname" >Cognome</label>

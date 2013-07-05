@@ -36,7 +36,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
   isCaller: false,
   opts: {'optional': [{'DtlsSrtpKeyAgreement': true}, {'RtpDataChannels': true }]},
   dataChannelOpts: undefined,
-  setDataChannelBinaryType: function(channel) { console.log("This appears to be chrome."); },
+  setDataChannelBinaryType: function(channel) { },
   dataChannel: undefined,
   myStream: undefined,
   mySDP: undefined,
@@ -47,26 +47,17 @@ MyTalk.PeerConnection = Ember.Object.extend({
     if (text[text.length - 1] == '\n') {
       text = text.substring(0, text.length - 1);
     }
-    console.log((performance.now() / 1000).toFixed(3) + ": " + text);
   },
   
   init: function() {
     this._super();
     
     if (navigator.mozGetUserMedia) {
-      console.log("This appears to be Firefox");
-//       document.getElementById('chat').style.display = 'none';
-
       this.webrtcDetectedBrowser = "firefox";
-
       this.RTCPeerConnection = mozRTCPeerConnection;
-      
       this.configuration = {iceServers: [{url: 'stun:216.93.246.18:3478'}, {url: 'stun:66.228.45.110:3478'}, {url: 'stun:173.194.78.127:19302'}]};
-
       this.RTCSessionDescription = mozRTCSessionDescription;
-      
       this.dataChannelOpts = {reliable: true};
-
       this.RTCIceCandidate = mozRTCIceCandidate;
       
       this.setDataChannelBinaryType = function(channel) {
@@ -76,12 +67,10 @@ MyTalk.PeerConnection = Ember.Object.extend({
       this.getUserMedia = navigator.mozGetUserMedia.bind(navigator);
 
       this.attachMediaStream = function(element, stream) {
-        console.log("Attaching media stream");
         element.mozSrcObject = stream;
       };
 
       this.reattachMediaStream = function(to, from) {
-        console.log("Reattaching media stream");
         to.mozSrcObject = from.mozSrcObject;
       };
 
@@ -94,20 +83,12 @@ MyTalk.PeerConnection = Ember.Object.extend({
       };
     } 
     else if (navigator.webkitGetUserMedia) {
-      console.log("This appears to be Chrome");
-
       this.webrtcDetectedBrowser = "chrome";
-
       this.RTCPeerConnection = webkitRTCPeerConnection;
-      
       this.configuration = {iceServers: [{url: "stun:stun.l.google.com:19302"}]};
-      
       this.RTCSessionDescription = RTCSessionDescription;
-      
       this.dataChannelOpts = {reliable: false};
-
       this.RTCIceCandidate = RTCIceCandidate;
-
       this.getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
 
       this.attachMediaStream = function(element, stream) {
@@ -118,7 +99,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
         } else if (typeof element.src !== 'undefined') {
         element.src = URL.createObjectURL(stream);
         } else {
-        console.log('Error attaching stream to element.');
+        //Error attaching stream to element
         }
       };
 
@@ -145,7 +126,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
       }
     } 
     else {
-      console.error("Il tuo browser sembra non supportare WebRTC.");
+      alert("Il tuo browser sembra non supportare WebRTC");
     }
   },
   
@@ -177,7 +158,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
       
       context.myStream = stream;
       var selfView = document.getElementById('local');
-      console.debug("ATTACHED local "+selfView);
       if(selfView) context.attachMediaStream(selfView,stream);
       
       peerConn.addStream(stream);
@@ -186,18 +166,17 @@ MyTalk.PeerConnection = Ember.Object.extend({
         context.dataChannel = context.pc.createDataChannel('RTCDataChannel', context.dataChannelOpts);
         context.setDataChannelBinaryType(context.dataChannel);
         context.setChannelEvents(context.dataChannel, onDataChannelMessage);
-        peerConn.createOffer(gotDescription, function(){ console.error("Failed to create rtc offer."); });
+        peerConn.createOffer(gotDescription, function(){ alert("Failed to create rtc offer."); });
       }
-      else peerConn.createAnswer(gotDescription, function(){ console.error("Failed to create rtc answer."); });
+      else peerConn.createAnswer(gotDescription, function(){ alert("Failed to create rtc answer."); });
       
       function gotDescription(desc) {
         peerConn.setLocalDescription(desc);
-        console.log('add sdp'+ desc.toString());
         context.mySDP = desc;
       } 
     }
     function onError(e) {
-      console.error('Non e\' stato possibile ottenere l\'accesso agli stream audio e video.\n' + e);
+      alert('Non e\' stato possibile ottenere l\'accesso agli stream audio e video.\n' + e);
     }
     this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
   },
@@ -215,12 +194,10 @@ MyTalk.PeerConnection = Ember.Object.extend({
     this.pc.onicecandidate = function(evt) {
       if(evt.candidate) {
         context.myICE.push(evt.candidate);
-        console.log('candidato non nullo');
       }
       else {
-        console.log('candidato nullo');
         window.CN = context.get('myICE');
-        var RTCinfo = new Object(); // max: sistemate meglio
+        var RTCinfo = new Object();
         RTCinfo.sdp = context.get('mySDP');
         RTCinfo.ice = context.get('myICE');
         onCandidatesReady( RTCinfo );
@@ -230,7 +207,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
     // visualizza lo stream remoto quando viene aggiunto
     this.pc.onaddstream = function(evt) {
       var remoteView = document.getElementById('remote');
-      console.debug("ATTACHED remote"+remoteView);
       if(remoteView) context.attachMediaStream(remoteView,evt.stream);
     };
     
@@ -262,15 +238,15 @@ MyTalk.PeerConnection = Ember.Object.extend({
     };
     
     channel.onopen = function() {
-      console.debug('RTCDataChannel connected.');
+      //console.debug('RTCDataChannel connected.');
     };
     
     channel.onclose = function(e) {
-      console.debug('RTCDataChannel closed.');
+      //console.debug('RTCDataChannel closed.');
     };
     
     channel.onerror = function(e) {
-      console.error('RTCDataChannel error. Channel closed.');
+      //console.error('RTCDataChannel error. Channel closed.');
     };
   },
   
@@ -280,35 +256,10 @@ MyTalk.PeerConnection = Ember.Object.extend({
     
 });
 
-// function dumpStats(obj) {
-//     var statsString ='';
-//     if (obj.names) {
-//     names = obj.names();
-//     var t=JSON.stringify(names);
-//     for (var i = 0; i < names.length; ++i) 
-//     {
-//        statsString += '"';
-//        statsString += names[i];
-//        statsString += '":"';
-//        statsString += obj.stat(names[i]);
-//        statsString += '",';
-//     }
-//   }
-//     return statsString;
-// }
-// var callback  =  function(stats) {
-//   var all = stats.result();
-//   for(var i in all)
-//  console.log(dumpStats(all[i].local));
-// }
-// 
-// conn.pc.getStats(callback);
-
-
 
 /**
-* Rappresenta il costruttore con il nome standard "RTCPeerConnection", a cui Chrome si riferisce
-* con il nome "webkitRTCPeerConnection" mentre Firefox con "mozRTCPeerConnection". Crea un'istanza 
+* Rappresenta il costruttore con il nome standard $RTCPeerConnection$, a cui Chrome si riferisce
+* con il nome $webkitRTCPeerConnection$ mentre Firefox con $mozRTCPeerConnection$. Crea un'istanza 
 * di connessione peer to peer.
 * 
 * @property -RTCPeerConnection
@@ -316,8 +267,8 @@ MyTalk.PeerConnection = Ember.Object.extend({
 */
  
 /** 
-* Rappresenta il metodo con il nome standard "getUserMedia", implementato da Chrome come "webkitGetUserMedia"
-* e da Firefox come "mozGetUserMedia". Chiede all'utente il permesso di utilizzare le periferiche di 
+* Rappresenta il metodo con il nome standard $getUserMedia$, implementato da Chrome come $webkitGetUserMedia$
+* e da Firefox come $mozGetUserMedia$. Chiede all'utente il permesso di utilizzare le periferiche di 
 * acquisizione audio e video.
 * 
 * @property -getUserMedia
@@ -325,7 +276,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 */
 
 /**
-* Funzione che consente di inserire uno stream video all'interno di un tag "<video>" HTML5. Necessaria 
+* Funzione che consente di inserire uno stream video all'interno di un tag $<video>$ HTML5. Necessaria 
 * dato che ogni browser fornisce questa funzionalità in modo diverso, sarà quindi diversa a seconda del 
 * browser identificato.
 * 
@@ -350,7 +301,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 */
  
 /** 
-* Contiene i parametri da passare al costruttore RTCPeerConnection, che sono differenti a seconda del 
+* Contiene i parametri da passare al costruttore $RTCPeerConnection$, che sono differenti a seconda del 
 * browser.
 * 
 * @property -configuration
@@ -359,21 +310,21 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
 /**
 * Consente di sapere se l'utente che sta accedendo ai metodi è il chiamante o il chiamato. In base a questa
-* proprietà si deciderà se chiamare il metodo WebRTC "createOffer" o "createAnswer".
+* proprietà si deciderà se chiamare il metodo WebRTC $createOffer$ o $createAnswer$.
 * 
 * @property -isCaller
 * @type {boolean}
 */
  
 /** 
-* Contiene i parametri per la costruzione del canale dati, da passare al costruttore RTCPeerConnection.
+* Contiene i parametri per la costruzione del canale dati, da passare al costruttore $RTCPeerConnection$.
 * 
 * @property -dataChannelOpts
 * @type {JSON anonymous object}
 */
  
 /** 
-* In questa proprietà viene salvato il canale dati attivo. Il canale dati ("RTCDataChannel") consente ai browser
+* In questa proprietà viene salvato il canale dati attivo. Il canale dati ($RTCDataChannel$) consente ai browser
 * di scambiarsi uno stream di dati oltre a quelli audio e video.
 * 
 * @property -dataChannel
@@ -403,8 +354,8 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
 /** 
 * Costruttore della classe PeerConnection. Per prima cosa identifica il browser dell'utente. Poi, in base al browser
-* identificato, assegna alle proprietà della classe le funzioni corrette da invocare, quindi ad esempio "RTCPeerConnection"
-* conterrà "mozRTCPeerConnection" nel caso di Firefox e "webkitRTCPeerConnection" nel caso di Chrome.
+* identificato, assegna alle proprietà della classe le funzioni corrette da invocare, quindi ad esempio $RTCPeerConnection$
+* conterrà $mozRTCPeerConnection$ nel caso di Firefox e $webkitRTCPeerConnection$ nel caso di Chrome.
 * 
 * @method +init
 * @constructor
@@ -412,7 +363,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 */
 
 /** 
-* Inserisce un SDP come descrizione del peer remoto, chiamando il metodo corretto di RTCPeerConnection.
+* Inserisce un $SDP$ come descrizione del peer remoto, chiamando il metodo corretto di $RTCPeerConnection$.
 * 
 * @method +setSDP
 * @param {RTCSessionDescription} TODO, descrivere
@@ -420,7 +371,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 */
 
 /**
-* Aggiunge alla connessione peer to peer gli ICE candidates del peer remoto.
+* Aggiunge alla connessione peer to peer gli "ICE candidates" del peer remoto.
 * 
 * @method +addICE
 * @param {RTCIceCandidate} TODO, descrivere
@@ -438,7 +389,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
 /** 
 * Chiede all'utente il permesso di accedere alle periferiche di acquisizione. Ottenuto il permesso inserisce lo stream video 
-* locale nella pagina chiamando il metodo attachMediaStream. Poi procede a creare l'offerta (o la risposta nel caso isCaller 
+* locale nella pagina chiamando il metodo $attachMediaStream$. Poi procede a creare l'offerta (o la risposta nel caso $isCaller$ 
 * sia false) da trasmettere all'altro peer.
 * 
 * @method -getMedia
@@ -447,22 +398,22 @@ MyTalk.PeerConnection = Ember.Object.extend({
 
 /** 
 * Chiama il costruttore RTCPeerConnection per istanziare una nuova connessione, la configura e apre il canale dati. Quando gli 
-* ICE candidates sono pronti lo comunica al controller tramite la funzione onCandidatesReady. In seguito invoca il metodo getMedia.
+* "ICE candidates" sono pronti lo comunica al controller tramite la funzione $onCandidatesReady$. In seguito invoca il metodo $getMedia$.
 * 
 * @method +start
 * @param {function} Funzione che comunica al controller che il pacchetto da inviare all'altro peer è pronto
 * @param {function} Funzione che verrà chiamata alla chiusura della connessione
 * @param {function} Funzione da chiamare all'arrivo di un messaggio nel canale dati
-* @param {boolean} Rappresenta lo stato dell'utente (Chiamante | Chiamato). isCaller viene inizializzato con questo valore
+* @param {boolean} Rappresenta lo stato dell'utente (Chiamante | Chiamato). $isCaller$ viene inizializzato con questo valore
 * @return {void}
 */ 
 
 /** 
-* Configura il canale dati definendo le azioni da compiere per i quattro possibili eventi "onmessage", "onopen", "onerror" ed "onclose".
+* Configura il canale dati definendo le azioni da compiere per i quattro possibili eventi $onmessage$, $onopen$, $onerror$ ed $onclose$.
 * 
 * @method -setChannelEvents
 * @param {RTCDataChannel} TODO, descrivere
-* @param {function} Funzione del controller da invocare in seguito all'evento "onmessage".
+* @param {function} Funzione del controller da invocare in seguito all'evento $onmessage$.
 * @return {void}
 */
 

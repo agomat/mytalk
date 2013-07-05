@@ -56,7 +56,7 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
    * Il metodo si occupa di controllare che l'utente confermi la sua intenzione di eliminare il profilo
    * (la richiesta di conferma avviene tramite $confirm$ JavaScript).
    * Nel caso l'utente confermi questa decisione il metodo crea un'istanza del processore adeguato 
-   * al quale sarà delegato il lavoro di elimare effettivamente l'account.
+   * al quale sarà delegato il lavoro di eliminare effettivamente l'account.
    * Il metodo, inoltre richiama una il metodo $logout()$ per disconnettere l'utente dal sistema dopo l'eliminazione 
    * al fine di creare stati di inconsistenza.
    *

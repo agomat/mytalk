@@ -23,7 +23,7 @@
 MyTalk.LoggedIndexRoute = Ember.Route.extend({
   
   /**
-   *  Questo metodo permette di mostrare il template $list$ in modo tale che una volta loggati si mostri subito la lista $"Tutti i contatti"$ e il suo contenuto.
+   *  Questo metodo permette di mostrare il template $list$ in modo tale che una volta autenticati si mostri subito la lista $"Tutti i contatti"$ e il suo contenuto.
    *
    * @method -redirect                                     
    * @return {Void} 

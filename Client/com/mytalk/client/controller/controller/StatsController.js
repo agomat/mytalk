@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller deputato alla visualizzazione, delle statische delle chiamate effettuate.
+*  Controller deputato alla visualizzazione, delle statistiche globali delle chiamate effettuate/ricevute dall'utente autenticato al sistema.
 *
 */
 

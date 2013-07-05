@@ -60,7 +60,7 @@ MyTalk.IndexController = Ember.ObjectController.extend({
    * passandogli tutti i parametri ricevuti in ingresso.
    *
    * @method +login               
-   * @param {String} username dell'utente che effetua il login                                   
+   * @param {String} username dell'utente che effettua il login                                   
    * @param {String} password dell'utente che effettua il login                        
    * @return {Void} 
   */

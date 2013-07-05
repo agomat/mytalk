@@ -42,8 +42,8 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
   socket: undefined,
 
   /**
-  * Metodo getInstance del pattern Singleton. Crea una nuova connessione WebSocket se l'attributo
-  * _socket_ è nullo e lo salva in _socket_ rendendo l'atributo _socket_ 
+  * Metodo $getInstance$ del design pattern _Singleton_. Crea una nuova connessione WebSocket se l'attributo
+  * $socket$ è nullo e lo salva in $socket$ rendendo l'attributo 
   * disponibile a tutte le classi che vogliano usare questo Mixin. 
   * \\
   * Il metodo, oltre a creare la connessione, deve fornire la callback _onmessage_ all'oggetto
@@ -53,10 +53,10 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
   * atto a gestire la richiesta. Andrà invocato su di esso il metodo _process_ passandogli il
   * messaggio ricevuto dal server
   *
-  * @method +createSocket
+  * @method +getInstance
   * @return {Void}
   */
-  createSocket: function() {
+  getInstance: function() {
     // Lazy creation
     if(!this.get('socket')) {
       Ember.run.later(this, function(){

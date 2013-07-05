@@ -27,7 +27,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* Controller deputato alla gestione di una chiamata e della chat realativa, 
+* Controller deputato alla gestione di una chiamata e della chat, 
 * gestisce inoltre il template $calling$
 *
 */
@@ -51,7 +51,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   
   /**
-  * Proprietà necessaria determinare se si è o meno in questo sottostato 
+  * Proprietà necessaria a determinare se si è o meno in questo sottostato 
   * @property -isIncomingCall        
   * @type {Boolean}             
   *
@@ -60,7 +60,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   isIncomingCall: Ember.computed.equal('callState','incomingCall'),
   
   /**
-  * Proprietà necessaria determinare se si è o meno in questo sottostato 
+  * Proprietà necessaria a determinare se si è o meno in questo sottostato 
   * @property - isConnected        
   * @type {Boolean}             
   *
@@ -78,8 +78,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   messages: [],
   
   /**
-  * Proprietà che contine un oggetto MyTalk.CallInfo al cui interno 
-  * vengono salvate le statistiche di una chimata
+  * Proprietà che contiene un oggetto MyTalk.CallInfo al cui interno 
+  * vengono salvate le statistiche di una chiamata
   * @property +stats      
   * @type {MyTalk.CallInfo}             
   *
@@ -97,7 +97,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   bitrate:null,
 
   /**
-  * Proprietà che contiente la connessione peer
+  * Proprietà che contiene l'oggetto della connessione peer to peer
   * @property -RTCmanager       
   * @type {PeerConnection}             
   *
@@ -128,9 +128,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
 
   /**
-  * Viene invocato all'ingresso dell'utente nel route CallingRoute se isIncomingCall è falso, quindi se l'utente 
-  * è il chiamante. Crea il processo UserCall che trasmette al server i dati necessari ad avviare la comunicazione
-  * come l'utente da chiamare e i propri "Session Description Protocol" e "ICE candidates". Definisce le funzioni 
+  * Viene invocato all'ingresso dell'utente nel "Route" $CallingRoute$ se $isIncomingCall$ ha valore _false_, quindi se l'utente 
+  * è il chiamante. Crea il processore $UserCall$ che trasmette al server i dati necessari ad avviare la comunicazione,
+  * tra i quali, l'utente da chiamare e i propri "Session Description Protocol" e "ICE candidates". Definisce le funzioni 
   * che inviano i pacchetti al server e che gestiscono l'arrivo di un messaggio nel canale dati. Infine chiama il 
   * metodo start di PeerConnection.
   *
@@ -192,9 +192,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
   
   /**
-  * Molto simile al metodo call. Gestisce l'arrivo di una chiamata da parte di un altro utente. Genera il processo AcceptCall.
-  * Definisce una funzione che chiama i metodi setSDP e addICE di PeerConnection per aggiungere i pacchetti ricevuti. Invia
-  * i dati locali. Chiama il metodo start di PeerConnection ma qui con il booleano a false.
+  * Molto simile al metodo $call$. Gestisce l'arrivo di una chiamata da parte di un altro utente. Genera il processo $AcceptCall$.
+  * Definisce una funzione che chiama i metodi $setSDP$ e $addICE$ di $PeerConnection$ per aggiungere i pacchetti ricevuti. Invia
+  * i dati locali. Chiama il metodo $start$ di $PeerConnection$ con il booleano a false.
   *
   * @method +acceptCall 
   * @param {User} user è l'oggetto utente che ci sta contattando.
@@ -333,10 +333,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   /**
   * Questo metodo si occupa di inviare i messaggi scritti nella chat e di gestire il comportamento della vista della chat.
-  * Il metodo si occupa di: aggiornare l'array messages del controller inserendo i messaggi inviati,  
-  * invocare il metodo $send$ dell'RTCmanager necessario ad inviare il messaggio all'utente con il quale si sta comunicando e
-  * di effettuare lo scroll automatico della chat una volta aggiornato l'array message.
-  * Lo scroll automatico viene eseguito al fine di avere sempre in primo piano l'utlimo messaggio.
+  * Il metodo si occupa di: aggiornare l'array $messages$ del controller inserendo i messaggi inviati,  
+  * invocare il metodo $send$ di $RTCmanager$ necessario ad inviare il messaggio all'utente con il quale si sta comunicando e
+  * di effettuare lo scroll automatico della chat una volta aggiornato l'array $message$.
+  * Lo scroll automatico viene eseguito al fine di avere sempre in primo piano l'ultimo messaggio.
   *
   * @method +sendMessage 
   * @param {String} message è il testo del messaggio inviato.
@@ -371,11 +371,11 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   
   
   /**
-  * Questo metodo si occupa di ottenere dall'oggetto RTCmanager le statistiche della connessione peer.
-  * per fare questo il metodo sfrutta il metodo ononimo $getStats()$, proprietario dell'oggetto $RTCmanager.pc$
-  * il metodo ottiene tutti i dati necessari, i byte ricevuti/trasmessi e la velocità istantanea; inoltre si occupa
-  * di avviare il timer necessario all conteggio della durata della chiamata.
-  * il tutto viene eseguito ogni secondo in modo da garantire una giusta efficienza nel campionamento e nel conteggio
+  * Questo metodo si occupa di ottenere dall'oggetto $RTCmanager$ le statistiche della connessione peer.
+  * Per fare questo il metodo sfrutta il metodo omonimo $getStats()$, proprietario dell'oggetto $RTCmanager.pc$.
+  * Il metodo ottiene tutti i dati necessari, i byte ricevuti/trasmessi e la velocità istantanea; inoltre si occupa
+  * di avviare il timer necessario al conteggio della durata della chiamata.
+  * Il tutto viene eseguito ogni secondo in modo da garantire una giusta efficienza nel campionamento e nel conteggio
   * dei secondi della durata di una chiamata.
   *
   * @method -getStats

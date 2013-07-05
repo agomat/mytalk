@@ -60,11 +60,11 @@ MyTalk.ListController = Ember.ObjectController.extend({
   },
 
   /**
-   * Questo metodo è deputato alla rinominazione di una lista. 
+   * Questo metodo è deputato alla ridenominazione di una lista. 
    * Il metodo dopo aver ottenuto id e nome della lista mostra
    * un $prompt$ JavaScript  nel quale l'utente dovrà inserire il nuovo nome da assegnare alla lista in questione.
    * Prima di procedere con l'operazione il metodo verifica che il nome inserito sia valido, 
-   * in caso affermativo il metodo si occupa di creare un'istanza del processore delegato alla rinominazione della lista. 
+   * in caso affermativo il metodo si occupa di creare un'istanza del processore delegato alla ridenominazione della lista. 
    * Nel caso in cui il nuovo nome inserito non sia valido (il nome esiste già o è nullo) viene mostrato all'utente un messaggio d'errore con un alert JavaScript
    * impedendo cosi il proseguimento dell'operazione.
    * Il metodo infine deve richiamare il metodo $updateSelect$ del $LoggedController$ al fine di aggiornare 
@@ -112,7 +112,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
    * In caso negativo o nel caso in cui la stringa sia vuota il metodo deve impostare la propietà $unmatched$ a true.
    *
    * @method +filter
-   * @param {String} value contiene la stringa con cui fare la ricerca degli nutenti all'interno della lista.
+   * @param {String} value contiene la stringa con cui fare la ricerca degli utenti all'interno della lista.
    * @return {Void} 
   */
 
@@ -139,7 +139,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
   },
 
   /**
-   * Questo metodo è deputato al reset della ricerca delgli utenti nella lista corrente, 
+   * Questo metodo deve azzerrare i risultati della ricerca degli utenti della lista corrente, 
    * tale metodo deve impostare la proprietà $unmatched$ degli utenti a $false$ in modo tale 
    * che tutti gli utenti della lista siano mostrati.
    *

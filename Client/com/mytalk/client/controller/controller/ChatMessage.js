@@ -41,7 +41,7 @@ MyTalk.ChatMessage = Ember.Object.extend({
   sent: null,
   
   /**
-   * Proprietà contenente la data di invio o riezione del messaggio 
+   * Proprietà contenente la data di invio/ricezione del messaggio 
    * @property -date           
    * @type {Date}                   
    *

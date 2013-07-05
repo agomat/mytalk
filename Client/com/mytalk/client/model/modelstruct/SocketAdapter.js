@@ -23,14 +23,14 @@
 * ridefinire saranno invocati automaticamente da Ember.js ogni qual volta avvenga una modifica
 * ad un Model che estende _DS.Model_. Le modifiche che Ember.js osserva possono essere catalogate con le
 * classiche operazioni CRUD $Create$, $Read$, $Update$, $Delete$. In particolare ci interessa essere
-* notificati per gli aggiornameti dei seguenti cambiamenti a cui un Model è soggetto: $Crezione di un Record$, $Aggiornamento di un Record$
+* notificati per gli aggiornamenti dei seguenti cambiamenti a cui un Model è soggetto: $Creazione di un Record$, $Aggiornamento di un Record$
 * $Cancellazione di un Record$. _RESTAdapter_ supporta anche operazioni di $Read$ per rispondere
 * a query complesse che il client potrebbe avere bisogno. A questo proposito, dovendo minimizzare
 * le interazioni con il server in caso di lettura dei dati dal Model, queste funzionalità non
-* verranno implemente dal programmatore. Tali metodi tuttavia dovranno essere ridefiniti ed avranno corpo vuoto.
+* verranno implementate dal programmatore. Tali metodi tuttavia dovranno essere ridefiniti ed avranno corpo vuoto.
 * \\
 * La classe _SocketAdapter_ deve poter accedere alla classe _WebSocketConnection_ che detiene la
-* connessione attiva al socket. Questa classe deve essere accessibile mediante composizione dala classe
+* connessione attiva al socket. Questa classe deve essere accessibile mediante composizione dalla classe
 * _SocketAdapter_. I metodi che dovranno essere ridefiniti sono $createRecord$, $updateRecord$, e $deleteRecord$
 */
 
@@ -49,7 +49,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   bulkCommit: true,
 
   /**
-  * Il costruttore deve invocare il metodo _createSocket_ del Mixin WebSocketConnection in modo da
+  * Il costruttore deve invocare il metodo _getInstance_ del Mixin WebSocketConnection in modo da
   * ottenere nello scope della classe il riferimento alla connessione WebSocket corrente. Successivamente
   * deve invocare il costruttore della classe da cui deriva 
   *
@@ -59,7 +59,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Object}
   */
   init: function() {
-    this.createSocket();
+    this.getInstance();
     this._super();
   },
  
@@ -125,8 +125,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   },
 
  /**
-  * Questo me
-todo viene invocato alla creazione di un nuovo record di un Model.
+  * Questo metodo viene invocato alla creazione di un nuovo record di un Model.
   * \\
   * Deve ottenere il processore interrogando la transazione del parametro _record_. Il metodo
   * poi deve definire una callback da passare al processore come parametro del suo metodo _sendToServer_ assieme al record che è stato creato.

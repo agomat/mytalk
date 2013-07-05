@@ -101,8 +101,8 @@
 
 MyTalk.ProcessorFactory = Ember.Object.extend({
   /**
-  * Metodo getInstance del pattern Singleton. Crea una nuova connessione WebSocket se l'attributo
-  * _socket_ è nullo e lo salva in _socket_ rendendo l'atributo _socket_ 
+  * Crea una nuova connessione WebSocket se l'attributo
+  * _socket_ è nullo e lo salva in _socket_ rendendo l'attributo _socket_ 
   * disponibile a tutte le classi che vogliano usare questo Mixin. 
   * \\
   * Il metodo, oltre a creare la connessione, deve fornire la callback _onmessage_ all'oggetto

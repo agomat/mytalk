@@ -51,7 +51,7 @@ MyTalk.ARI = Ember.Object.extend({
 
   /**
    * Questo metodo si attiva ogni qual volta viene creata un'istanza della classe $ARI$, tale metodo si occupa di impostare i campi dati della classe.
-   * I campi dati $auth$ e $req$ vengono impostati rispettivamente con i parametri $a$ e $r$ passati al metodo, mentre per impostare il campo dati $info$ viene applicata la funzione javacript 
+   * I campi dati $auth$ e $req$ vengono impostati rispettivamente con i parametri $a$ e $r$ passati al metodo, mentre per impostare il campo dati $info$ viene applicata la funzione JavaScript 
    * _JSON.stringify()_  al parametro $i$ passato al metodo; tale funzione è necessaria al fine di convertire il JSON, ( contente le informazioni scambiate con il server ), in stringa.
    *
    * @method -init

@@ -41,7 +41,7 @@ MyTalk.CallInfo = Ember.Object.extend({
   receivedBytes: 0,
   
   /**
-   * Proprietà contiene la quantità di bite inviati 
+   * Proprietà contiene la quantità di byte inviati 
    * @property -sentBytes           
    * @type {Number}                   
    *
@@ -59,7 +59,7 @@ MyTalk.CallInfo = Ember.Object.extend({
   date:null,
 
   /**
-   * Proprietà necessaria al fine di determinare se la chiamta è stata effettuata o ricevuta
+   * Proprietà necessaria al fine di determinare se la chiamata è stata effettuata o ricevuta
    * @property -sender           
    * @type {Boolean}                   
    *

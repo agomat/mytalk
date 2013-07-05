@@ -25,7 +25,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
 
  /**
-   * Proprietà che contiene nomi e id delle liste nelle quali mettere un utente, questaq proprietà esclude sia 
+   * Proprietà che contiene nomi e id delle liste nelle quali mettere un utente, questa proprietà esclude sia 
    * la $Blacklist$ che la lista $Tutti i contatti$.
    * @property +filteredList          
    * @type {Array<Object>}                   
@@ -50,7 +50,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * senza così creare incoerenze o senza rischiare di sovrascrivere una lista già esistente con quella nuova.
    * Per far ciò il metodo aggiorna la proprietà $lastListId$, campo dati in cui viene mantenuto aggiornato 
    * l'id dell'ultima lista.
-   * Il metodo scorre l'intero gruppo di liste prendendo l'id di ognuna e ponenedolo in un array di supporto; 
+   * Il metodo scorre l'intero gruppo di liste prendendo l'id di ognuna e ponendolo in un array di supporto; 
    * questa operazione è resa necessaria al fine di poter ordinare l'array di supporto in ordine crescente 
    * per poi prelevare l'ultimo id che sicuramente sarà l'ultimo inserito.
    * A questo punto il metodo aggiorna il campo dati $lastListId$.
@@ -74,7 +74,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
  
  /**
    * Questo metodo è deputato alla ricerca di una lista.
-   * Il metodo riceve come argomento l'id della lista da cercare, se la ricarca da esito negativo il metodo
+   * Il metodo riceve come argomento l'id della lista da cercare, se la ricerca da esito negativo il metodo
    * ritornerà $falso$, $vero$ altrimenti.
    *
    * @param {Number} numero dell'id della lista cercare             

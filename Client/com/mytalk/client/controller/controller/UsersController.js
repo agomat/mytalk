@@ -65,8 +65,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
    * tutti gli utenti la cui proprietà $unmatched$ è impostata a $false$ mettendo tali utenti in un array
    * chiamato _fileteredUsers_, tale array viene ritornato alla vista che mostrandolo, 
    * stampa l'elenco degli utenti della lista corrente.
-   * Il metodo inoltre ordina gli utenti in base alla proprietà $online$, gli utenti online saranno messi in testa
-   * i rimamenti in coda.
+   * Il metodo inoltre ordina gli utenti in base alla proprietà $online$; gli utenti online saranno messi in testa,
+   * i rimanenti in coda.
    *
    * @method +filteredUsers                                     
    * @return {Array<User>} 
@@ -88,7 +88,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   }.property('content.@each.unmatched').cacheable(),
   
   /**
-   * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utente ad una nuova lista
+   * Questo metodo è deputato alle gestione iniziale dell'aggiunta di un utente ad una nuova lista
    * Il metodo occupa di mostrare il pop-up con una select HTML contenente l'elenco delle liste 
    * nelle quali poter aggiungere l'utente selezionato.
    * Il metodo si occupa di impostare i campi $userId$ e $userName$ 
@@ -107,7 +107,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di transitare nel template $calling$ dove inzierà 
+   * Questo metodo si occupa di transitare nel template $calling$ dove inizierà 
    * il processo di chiamata all'utente selezionato.
    *
    * @method +userCall 
@@ -147,7 +147,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   },
 
   /**
-   * Questo metodo si occupa di eseguire l'aggiunta vera e propria dell'utente all lista selezionata.
+   * Questo metodo si occupa di eseguire l'aggiunta vera e propria dell'utente alla lista selezionata.
    * Come prima cosa viene controllato che la lista nella quale si vuole aggiungere l'utente sia una lista valida,
    * (non deve essere: ne vuota ne Blacklist ne Tutti i contatti ne la lista corrente) ,
    * Terminato il controllo il metodo crea un'istanza del processore necessario per svolgere l'operazione di aggiunta. 

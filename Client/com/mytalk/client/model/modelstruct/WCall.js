@@ -44,7 +44,7 @@ MyTalk.WCall = DS.Model.extend({
 */
 
 /**
-* Memorizza il numero di $Byte$ recevuti dall'utente autenticato da quando si è registrato al sistema
+* Memorizza il numero di $byte$ ricevuti dall'utente autenticato da quando si è registrato al sistema
 * 
 * @property -totalByteReceived
 * @type {number}

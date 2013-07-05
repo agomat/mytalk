@@ -1,5 +1,5 @@
 /**
-* Filename: ProfileFromView.js
+* Filename: ProfileFormView.js
 * Package: com.mytalk.client.view.templateview
 * Dependencies: com.mytalk.client.controller.controller.ProfileController
 * Author: Griggio Massimo
@@ -21,7 +21,7 @@
 *
 */
 
-MyTalk.ProfileFromView = Ember.View.extend({
+MyTalk.ProfileFormView = Ember.View.extend({
 
   /**
    * Proprietà necessaria per impostare il tipo di vista 
@@ -105,11 +105,11 @@ MyTalk.ProfileFromView = Ember.View.extend({
  
   
   /**
-  * Questo metodo si occupa di riempire i campi della form con i dati attuali dell'utente. 
-  *
-  * @method -didInsertElement
-  * @return {Void}
-  * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
+   * Questo metodo si occupa di riempire i campi della form con i dati attuali dell'utente. 
+   *
+   * @method -didInsertElement
+   * @return {Void}
+   * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
   */
   
   didInsertElement: function() {
@@ -135,7 +135,6 @@ MyTalk.ProfileFromView = Ember.View.extend({
     var email = this.get('email');
     var surname = this.get('surname');
     var username = this.get('username');
-    alert("Non prende i nuovi dati\n\n" + name +"\n"+ surname +"\n"+ username +"\n"+ email +"\n"+ password +"\n"+ password_conf);
     this.get('controller').updateProfile(name, surname, username, email, password, password_conf);
   }
 });

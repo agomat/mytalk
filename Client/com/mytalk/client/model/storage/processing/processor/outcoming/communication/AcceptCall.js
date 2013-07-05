@@ -62,7 +62,7 @@ MyTalk.processor.AcceptCall = Ember.Object.extend(MyTalk.AbstractOutProcessorPro
   },
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _AcceptCall_ passando i propri dati
-  * di autentificazione e la propria configurazione WebRTC
+  * di autenticazione e la propria configurazione WebRTC
   *
   * @method +sendToServer
   * @param {WebSocket} instanza di connessione WebSocket

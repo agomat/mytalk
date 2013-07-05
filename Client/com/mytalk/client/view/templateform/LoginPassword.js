@@ -59,7 +59,7 @@ MyTalk.LoginPassword = Ember.TextField.extend({
   id: 'password',
   
   /**
-   * Proprietà necessaria per impostare a $password$ iòl tipo di dato dell'input area
+   * Proprietà necessaria per impostare a $password$ il tipo di dato dell'input area
    * @property +type           
    * @type {String}                   
    *

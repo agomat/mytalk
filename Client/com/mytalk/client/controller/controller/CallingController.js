@@ -109,7 +109,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   * Questo metodo viene invocato alla creazione di un'istanza di questo controller,
   * tale metodo garantisce l'aggiunta della callback $onclose$ dinamicamente.
   * Questa soluzione è stata pensata dai progettisti in quanto c'è la necessità di ottenere il $this$ cioè l'istanza attuale
-  * del controller, in modo tale da poter salvare e resettare le statistiche delle chiamate.
+  * del controller, in modo tale da poter salvare e reimpostare le statistiche delle chiamate.
   *
   * @method -init
   * @return {Void} 
@@ -320,7 +320,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   },
  
  /**
-  * Questo metodo si occupa di di resettare il campo dati contenente le statistiche
+  * Questo metodo si occupa di di reimpostare il campo dati contenente le statistiche
   * delle chiamate ricevute/effettuate.
   *
   * @method -clearStats

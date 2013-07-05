@@ -74,6 +74,7 @@
     <script type="text/javascript" src="com/mytalk/client/controller/router/IpcallRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/ProfileRoute.js"></script>
     <script type="text/javascript" src="com/mytalk/client/controller/router/StatsRoute.js"></script>
+    <script type="text/javascript" src="com/mytalk/client/controller/router/HistoryRoute.js"></script>
 
     
     <!-- bootstrap StateManager -->
@@ -673,15 +674,15 @@
     <script type="text/x-handlebars" data-template-name="history">
       <h3>Registro Chiamate</h3>
       <ul id="call_list">
-      {{#each call in controller}}
-        call.caller ; 
-      {{/each}}
-        <li class="call_out"> <!-- call_in -->
-          <div class="avatar35"><!--img fdi gravatar--></div>
+      {{#each call in controller.content}}
+        <li {{bindAttr class="caller:call_in:call_out"}}> 
+          <div class="avatar35"> foto </div>
           <div class="who_call">Nome Cognome</div>
-          <div class="data_call">02/07/2013 15:50</div>
-          <div class="duration_call">1h 5m 4s</div>
+          <div class="data_call">{{call.startDate}}</div>
+          <div class="duration_call">{{hourconversion call.duration}}</div>
         </li>
+      {{/each}}
+      {{controller}}
       </ul>
     </script>
 

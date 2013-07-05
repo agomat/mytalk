@@ -16,14 +16,19 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-*  Controller deputato alla visualizzazione, delle statische delle chiamate effettuate.
+*  Controller deputato alla visualizzazione, delle statische delle chiamate effettuate/ricevute.
 *
 */
 
 MyTalk.HistoryController = Ember.ArrayController.extend({
 //TODO doc
-	model: function() {
-    return MyTalk.Call.find(); 
-  }
+init:function(){
+  this._super();
+  var c=this.get('content');
+  c.forEach(function(t){
+    console.log(t.get('caller'));
+  });
+  
+}
 
 });

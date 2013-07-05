@@ -1,125 +1,125 @@
 #call_content {
-    padding: 10px;
-    overflow: hidden;
-    min-height: 500px;
+  padding: 10px;
+  overflow: hidden;
+  min-height: 500px;
 }
 
 .call_placeholder{
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #comunicazione{
-    height: 100%;
-    width:63%;
+  height: 100%;
+  width:63%;
 }
 
 #remote{
-    margin: auto 0; 
-    width: 100%;
-    margin-bottom: 20px;
-    border: 1px dotted #ddd;
+  margin: auto 0; 
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px dotted #ddd;
 }
 
 #local{
-    position: absolute;
-    width:10%;
+  position: absolute;
+  width:10%;
 }
 
 .display_none {
-    display: none;
+  display: none;
 }
 
 #comunicazione ul{
-    font-size: 1.1em;
-    padding: 0;
-    margin-top:20px;
+  font-size: 1.1em;
+  padding: 0;
+  margin-top:20px;
 }
 
 #comunicazione ul li{
-    padding: 2px 0;
-    margin: 0;
+  padding: 2px 0;
+  margin: 0;
 }
 #comunicazione ul li:before{
-    color: #009200;   
+  color: #009200;  
 }
 
 #comunicazione ul li span{
-    display: inline-block;
-    font-weight: bold;
-    font-size: 1.2em;
-    padding-right: 5px;
-    width: 150px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding-right: 5px;
+  width: 150px;
 
 }
 
 
 #chat{
-    float:right;
-    width:35%;
-    border: 1px solid #999;
-    border-radius: 15px;
-    height: 520px;
+  float:right;
+  width:35%;
+  border: 1px solid #999;
+  border-radius: 15px;
+  height: 520px;
 }
 
 #chat ul{
-    height: 78%;
-    margin: 10px 0 10px 0;
-    padding: 0;
-    overflow-y: auto;
+  height: 78%;
+  margin: 10px 0 10px 0;
+  padding: 0;
+  overflow-y: auto;
 }
 
 #chat ul li{
-    color:#555;
-    clear: both;
-    max-width: 60%;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    list-style-type: none;
-    min-width: 25%;
-    font-size: 1.2em;
+  color:#555;
+  clear: both;
+  max-width: 60%;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  list-style-type: none;
+  min-width: 25%;
+  font-size: 1.2em;
 }
 
 #chat form{
-    border-top: 1px solid #999;
-    padding-top:10px;
+  border-top: 1px solid #999;
+  padding-top:10px;
 }
 
 #chat textarea{
-    font-size: 1.1em;
-    float:left;
-    resize:none;
-    border:1px solid #999;
-    height: 60px;
-    width:73%;
-    margin-left:10px;
-    padding: 5px;
-    border-radius: 2px;
+  font-size: 1.1em;
+  float:left;
+  resize:none;
+  border:1px solid #999;
+  height: 60px;
+  width:73%;
+  margin-left:10px;
+  padding: 5px;
+  border-radius: 2px;
 }
 
 #chat button{
-    padding: 0!important;
-    font-size:1.1em;
-    height: 65px;
-    width: 15%;
-    margin: 2.5px 0 0 2%;
+  padding: 0!important;
+  font-size:1.1em;
+  height: 65px;
+  width: 15%;
+  margin: 2.5px 0 0 2%;
 }
 
 .sent_message{
-    float:right;
-    background-color: rgba(100,210,40,0.5);
-    border: 1px solid #009000;
+  float:right;
+  background-color: rgba(100,210,40,0.5);
+  border: 1px solid #009000;
 }
 
 .received_message{
-    float: left;
-    background-color: rgba(50,155,255,0.5);
-    border: 1px solid #000090;
+  float: left;
+  background-color: rgba(50,155,255,0.5);
+  border: 1px solid #000090;
 }
 
 .date{
-    color:#a2a2a2;
-    font-size:0.73em;
+  color:#a2a2a2;
+  font-size:0.73em;
 }
 
 .visible {

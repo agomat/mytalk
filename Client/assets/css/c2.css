@@ -1,7 +1,7 @@
 #menu_container{
   float:right;
-    position: relative;
-    background: white;
+  position: relative;
+  background: white;
   margin-top: 30px;
   margin-right: 3%;
   border: 1px dotted #ccc;
@@ -42,10 +42,10 @@
 }
 
 #menu_area{
-    display:none;
-    position: absolute;
-    top: 60px;
-    right: 5px;
+  display:none;
+  position: absolute;
+  top: 60px;
+  right: 5px;
 }
 
 #arrow { 
@@ -130,7 +130,7 @@
 }
 
 #auth_content ul li{ 
-    padding:3px 0 3px 15px;     
+  padding:3px 0 3px 15px;
 }
 
 #auth_content ul li img{ 

@@ -13,14 +13,14 @@
 .modal{
   position: absolute;
   width: 35%;
-    height: 250px;
-    top: 50%;
-    left: 50%;
-    margin-top: -125px;
-    margin-left: -15%;
-    background-color: #fff;
+  height: 250px;
+  top: 50%;
+  left: 50%;
+  margin-top: -125px;
+  margin-left: -15%;
+  background-color: #fff;
 
-    
+  
   border: 1px solid #999;
   border-radius: 2px;
   box-shadow: 0 0 44px #999;

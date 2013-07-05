@@ -1,8 +1,7 @@
 /**
 * Filename: ProfileFromView.js
 * Package: com.mytalk.client.view.templateview
-* Dependencies: com.mytalk.client.controller.controller.IndexController
-                com.mytalk.client.model..modelstruct.PersonalData
+* Dependencies: com.mytalk.client.controller.controller.ProfileController
 * Author: Griggio Massimo
 * Date: 2013-04-26
 *
@@ -10,6 +9,7 @@
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
+* 0.2     | 2013-07-02 | SC        | [+] Aggiunta metodo di autoinserimento valori
 * 0.1     | 2013-06-12 | MG        | [+] Scrittura classe
 *
 * This software is distributed under GNU/GPL 2.0.

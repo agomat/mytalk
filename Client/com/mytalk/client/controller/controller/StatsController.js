@@ -1,7 +1,7 @@
 /**
 * Filename: StatsController.js
 * Package: com.mytalk.client.controller.controller
-* Dependencies:
+* Dependencies: com.mytalk.client.model.storage.processing.processor.outcoming.stats.GetCalls
 * Author: Campese Stefano
 * Date: 2013-07-01
 *
@@ -32,5 +32,18 @@ MyTalk.StatsController = Ember.ObjectController.extend({
     this._super();
     this.set('content',MyTalk.WCall.find(0));
   },
+
+  /**
+   * Questo metodo deve invocare il processore $GetCalls$ al fine di poter aggiornare la lista
+   * delle chiamate effettuate e ricevute
+   *
+   * @method +getCalls                                 
+   * @return {Void} 
+  */
+  getCalls:function() {
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct( "GetCalls" );
+    processor.process();
+  }
 
 });

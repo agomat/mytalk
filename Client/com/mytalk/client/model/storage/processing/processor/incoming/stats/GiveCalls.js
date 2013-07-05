@@ -39,40 +39,7 @@ MyTalk.processor.GiveCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProdu
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    var obj = {
-          w_call:{
-            id: 0,
-            total_byte_sent: 6545,
-            total_byte_received: 5545,
-            total_duration: 2545,
-            list: [
-                    { id: 0, 
-                      speaker_id: 2, 
-                      caller:true,
-                      start_date:"02-02-2013 16:44:56",
-                      duration:600,
-                      byte_sent:10000,
-                      byte_received:10000
-                    },
-                    { id: 1, 
-                      speaker_id: 1, 
-                      caller:true,
-                      start_date:"02-02-2013 16:44:56",
-                      duration:600,
-                      byte_sent:10000,
-                      byte_received:10000
-                    },
-                    { id: 2, 
-                      speaker_id: 5, 
-                      caller:true,
-                      start_date:"02-02-2013 16:44:56",
-                      duration:600,
-                      byte_sent:10000,
-                      byte_received:10000
-                    },
-                  ]
-          }
-     };
+    var obj = JSON.parse(ari.info);
     var store = DS.get('defaultStore'),
       type = MyTalk.WCall,
       adapter = store.adapterForType(type);

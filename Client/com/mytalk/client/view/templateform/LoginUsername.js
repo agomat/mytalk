@@ -59,7 +59,7 @@ MyTalk.LoginUsername = Ember.TextField.extend({
   id: 'username',
 
   /**
-   * Proprietà necessaria per impostare a $text$ iòl tipo di dato dell'input area
+   * Proprietà necessaria per impostare a $text$ il tipo di dato dell'input area
    * @property +type           
    * @type {String}                   
    *

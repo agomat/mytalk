@@ -16,7 +16,7 @@
 * Software licensed to:
 * - Zucchetti SRL
 *
-* fornisce metodi per entrare o uscire dallo stato di ``autentificazione''
+* fornisce metodi per entrare o uscire dallo stato di ``autenticazione''
 *
 */
 

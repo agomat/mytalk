@@ -88,8 +88,8 @@ MyTalk.UsersController = Ember.ArrayController.extend({
   }.property('content.@each.unmatched').cacheable(),
   
   /**
-   * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utente ad una nuova listaò
-   * Il meetodo occupa di mostrare il pop-up con una select HTML contenente l'elenco delle liste 
+   * Questo metodo è deputato alle gestione inziale dell'aggiunta di un utente ad una nuova lista
+   * Il metodo occupa di mostrare il pop-up con una select HTML contenente l'elenco delle liste 
    * nelle quali poter aggiungere l'utente selezionato.
    * Il metodo si occupa di impostare i campi $userId$ e $userName$ 
    * rispettivamente con l'id e il nome dell'utente preso in considerazione

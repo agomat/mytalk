@@ -31,9 +31,9 @@ MyTalk.ListController = Ember.ObjectController.extend({
   /**
    * Questo metodo è deputato all'eliminazione di una lista. 
    * Il metodo crea un'istanza del processore delegato all'eliminazione della lista,
-   * prima di procedere con l'eliminazione si occupa di chiedere la conferma all'utente, in caso l'utente confermi la decisione , 
+   * prima di procedere con l'eliminazione si occupa di chiedere la conferma all'utente, in caso l'utente confermi la decisione, 
    * il metodo con l'eliminazione della lista invocando l'istanza del processore creata in precedenza e 
-   * delegtata dell'eliminazione della lista.
+   * delegata dell'eliminazione della lista.
    * Terminata l'operazione il metodo aggiorna il template mostrando la lista $Tutti i contatti$.
    * Il metodo infine deve richiamare il metodo $updateSelect$ del $LoggedController$ al fine di aggiornare 
    * la select nella quale si selezionano le liste nelle quali aggiungere gli utenti.
@@ -108,8 +108,8 @@ MyTalk.ListController = Ember.ObjectController.extend({
    * Questo metodo è deputato al filtraggio degli utenti, all'interno della lista corrente, in base alla ricerca effettuata.
    * Per effettuare tale operazione il metodo scorre tutti gli utenti della lista e controlla che la stringa di 
    * ricerca sia uguale alla proprietà $fullNameConc$ degli utenti.
-   * In caso affermativo il deve impostare il campo $unmatched$ degli utenti a false.
-   * In caso negativo o nel caso in cui la stringa sia vuota il deve impostare la propietà $unmatched$ a true.
+   * In caso affermativo il metodo deve impostare il campo $unmatched$ degli utenti a false.
+   * In caso negativo o nel caso in cui la stringa sia vuota il metodo deve impostare la propietà $unmatched$ a true.
    *
    * @method +filter
    * @param {String} value contiene la stringa con cui fare la ricerca degli nutenti all'interno della lista.

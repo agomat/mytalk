@@ -305,3 +305,10 @@
     width: 35%;
   }
 }
+
+#modifica_text span{
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
+  color: blue;
+}

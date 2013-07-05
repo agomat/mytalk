@@ -25,7 +25,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   sortProperties: ['name'],
 
  /**
-   * Proprietà che contiene nomi e id delle liste nelle quali mettere un utente, questà porpietà esclude sia 
+   * Proprietà che contiene nomi e id delle liste nelle quali mettere un utente, questaq proprietà esclude sia 
    * la $Blacklist$ che la lista $Tutti i contatti$.
    * @property +filteredList          
    * @type {Array<Object>}                   
@@ -47,13 +47,13 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
   /**
    * Questo metodo è deputato all'aggiornamento dell'ultimo id inserito di una lista, tale metodo infatti 
    * si occupa di osservare il model al fine di permettere il corretto inserimento di una nuova lista, 
-   * senza cosi creare incoerenze o sen za rischiare di sovrascrivere una lista già esistente con quella nuova.
-   * per far ciò l metodo aggiorna la proprietà lastListId, campo dati in cui viene mantenuto aggiornato 
-   * l'Id dell'ultima lista.
-   * Il metodo scorre l'intero gruppo di liste prendendo l'id di ognuna e ponenedolo in array di sopporto, 
-   * questa operazione è resa necessaria al fine di poter odrinare l'array di supporto in ornide crescente 
-   * per poi prelevare l'utlimo Id che siucuramente sarà l'ultimo inserito.
-   * Fatto questo il metodo aggiorna il campo dati lastListId.
+   * senza così creare incoerenze o senza rischiare di sovrascrivere una lista già esistente con quella nuova.
+   * Per far ciò il metodo aggiorna la proprietà $lastListId$, campo dati in cui viene mantenuto aggiornato 
+   * l'id dell'ultima lista.
+   * Il metodo scorre l'intero gruppo di liste prendendo l'id di ognuna e ponenedolo in un array di supporto; 
+   * questa operazione è resa necessaria al fine di poter ordinare l'array di supporto in ordine crescente 
+   * per poi prelevare l'ultimo id che sicuramente sarà l'ultimo inserito.
+   * A questo punto il metodo aggiorna il campo dati $lastListId$.
    
    *
    * @method -updateLastListId                                     
@@ -129,7 +129,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
    * Il metodo si occupa di controllare che il nome della nuova lista che si intende creare sia valido 
    * (il nome non deve essere nullo o esistere già).
    * Nel caso il nome sia valido il metodo crea un'istanza del processore adeguato 
-   * al quale sarà delegato il lavoro di creare la nuova lista.
+   * al quale sarà delegato il lavoro della creazione della nuova lista.
    * Nel caso in cui il nome non sia valido il metodo 
    * mostra un messaggio di errore tramite un alert di JavaScript.
    * Il metodo infine deve richiamare il metodo $updateSelect$ del controller al fine di aggiornare 

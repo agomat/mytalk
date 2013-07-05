@@ -678,7 +678,9 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="history">
-      <h3>Registro Chiamate</h3>
+      {{#if controller}}
+        <h3>Registro Chiamate</h3>
+      {{/if}}
       <ul id="call_list">
       {{#each call in controller}}
         <li {{bindAttr class="call.caller:call_in:call_out"}}> 

@@ -297,62 +297,64 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="users">  
-      <ul id="userlist"> 
-        {{#collection Ember.ListView contentBinding="controller.filteredUsers" height=477 rowHeight=60}}
-        
-         <li>
+      <ul id="userlist">
+        {{#if controller.filteredUsers}}
+          {{#collection Ember.ListView contentBinding="controller.filteredUsers" height=477 rowHeight=60}}
+           <li>
 
-            <div {{bindAttr class="online:online:offline"}}></div>
-            <div class="avatar48">
-             <img {{bindAttr src="avatarTiny"}} />
-            </div>
+              <div {{bindAttr class="online:online:offline"}}></div>
+              <div class="avatar48">
+               <img {{bindAttr src="avatarTiny"}} />
+              </div>
 
-            <div class="user_info">
-              <div><span>{{ name }} {{ surname }}</span></div>
-                {{ username }}
-            </div>
+              <div class="user_info">
+                <div><span>{{ name }} {{ surname }}</span></div>
+                  {{ username }}
+              </div>
 
-            <ul {{bindAttr class="online:callEnebled:callDisabled"}}>
-            
+              <ul {{bindAttr class="online:callEnebled:callDisabled"}}>
+              
 
-            {{#if controller.controllers.list.blackList}}
-                <li>
-                {{#if online}}
-                  <a class="call_user" href="#" {{ action "userCall" this }}> </a>
-                {{else}}
-                  <a class="call_user" href="#" {{ action "cantCall" this }}> </a>
-                {{/if}}
-
-                </li>
-                <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
-            {{else}}
-                {{#if controller.controllers.list.generalList}}
+              {{#if controller.controllers.list.blackList}}
                   <li>
                   {{#if online}}
                     <a class="call_user" href="#" {{ action "userCall" this }}> </a>
                   {{else}}
-                    <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
+                    <a class="call_user" href="#" {{ action "cantCall" this }}> </a>
                   {{/if}}
+
                   </li>
-                  <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
-                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
-                {{else}}
-                  <li>
-                  {{#if online}}
-                    <a class="call_user" href="#" {{ action "userCall" this }}> </a>
-                  {{else}}
-                    <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
-                  {{/if}}
-                  </li>
-                  <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
                   <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
-                  <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
-                {{/if}}
-            {{/if}}
-            </ul>
-          </li>
-        
-        {{/collection}}
+              {{else}}
+                  {{#if controller.controllers.list.generalList}}
+                    <li>
+                    {{#if online}}
+                      <a class="call_user" href="#" {{ action "userCall" this }}> </a>
+                    {{else}}
+                      <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
+                    {{/if}}
+                    </li>
+                    <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
+                    <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
+                  {{else}}
+                    <li>
+                    {{#if online}}
+                      <a class="call_user" href="#" {{ action "userCall" this }}> </a>
+                    {{else}}
+                      <a class="call_user" href="#" {{ action "cantCall" this }} > </a>
+                    {{/if}}
+                    </li>
+                    <li><a class="add_user" href="#" {{action "addUser" this }}></a></li>
+                    <li><a class="remove_user" href="#" {{action "deleteUser" this }}></a></li>
+                    <li><a class="blacklist_user" href="#" {{action "userToBlacklist" this }}></a></li>
+                  {{/if}}
+              {{/if}}
+              </ul>
+            </li>
+          {{/collection}}
+        {{else}}
+          <h2>Questa lista è vuota. Aggiungi a questa lista i contatti dalla lista generale</h2>
+        {{/if}}
 
       </ul>
 

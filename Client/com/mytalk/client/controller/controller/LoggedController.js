@@ -87,7 +87,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
         }
       });
       
-      if(test==true){
+      if(test){
         var newId = this.get('lastListId') + 1;
         this.set('lastListId',newId);
         var processorFactory = MyTalk.ProcessorFactory.create({});

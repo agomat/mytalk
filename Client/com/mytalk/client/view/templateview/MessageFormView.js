@@ -76,7 +76,7 @@ MyTalk.MessageFormView = Ember.View.extend({
   },
 
   /**
-   * Questo metodo si occupa di attivare alcune funzioni JQuery che permettendo di catturare
+   * Questo metodo si occupa di attivare alcune funzioni jQuery che permettendo di catturare
    * la pressione del tasto $Invio$ eseguendo l'invio del messaggio di testo all'altro peer
    *
    * @method -didInsertElement            

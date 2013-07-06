@@ -41,7 +41,7 @@ MyTalk.HeaderView = Ember.View.extend({
   name: "header",
 
   /**
-   * Questo metodo si occupa di attivare alcune funzioni JQuery per la vista.
+   * Questo metodo si occupa di attivare alcune funzioni jQuery per la vista.
    *
    * @method -didInsertElement            
    * @return {Void} 

@@ -1,7 +1,10 @@
-# Lanciare il server WebSocket
+## Progetto MyTalk - Parte Client in JavaScript/Ember.js
 
-Compilare ed eseguire il progetto nella folder `Server`
+### Autori
 
-# Lanciare correttamente il client
+* Agostinetto Mattia
+* Campese Stefano
+* Griggio Massimo
 
-Se Node.js è installato nel proprio sistema eseguire `node server.js`. In caso contrario `./deprecated_server.js`
+### Informazioni per l'installazione e per il deploy
+Si rimanda alla lettura del documento `Manuale Sviluppatore v1.0`

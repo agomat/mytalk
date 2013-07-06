@@ -43,7 +43,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
     var id = MyTalk.Call.find().get('length');
     var record = MyTalk.Call.createRecord({
       id: id,
-      speaker: params.speaker,
+      speaker: MyTalk.User.find(params.speaker),
       caller: params.caller,
       startDate: params.startDate,
       duration: params.duration,
@@ -82,7 +82,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
 
     var info = new Object();
     info.w_call = new Object();
-    info.w_call.list = [{id:0, speaker_id: record.get('speaker'), caller: record.get('caller'), start_date: record.get('startDate'), duration: record.get('duration'), byte_sent: record.get('byteSent'), byte_received: record.get('byteReceived')}];
+    info.w_call.list = [{id:0, speaker_id: record.get('speaker').get('id'), caller: record.get('caller'), start_date: record.get('startDate'), duration: record.get('duration'), byte_sent: record.get('byteSent'), byte_received: record.get('byteReceived')}];
     info.w_call.total_byte_sent = 0;
     info.w_call.total_byte_received = 0;
     info.w_call.total_duration = 0;

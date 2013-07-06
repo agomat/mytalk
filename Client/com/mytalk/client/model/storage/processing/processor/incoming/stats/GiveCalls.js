@@ -47,7 +47,6 @@ MyTalk.processor.GiveCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProdu
 
     adapter.load(store, type, obj);
     adapter.didFindRecord(store, type, obj,0);
-    window.ee = obj;
   },
 
   /**

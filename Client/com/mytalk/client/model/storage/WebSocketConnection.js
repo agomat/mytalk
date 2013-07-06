@@ -61,12 +61,9 @@ MyTalk.WebSocketConnection = Ember.Mixin.create({
     if(!this.get('socket')) {
       Ember.run.later(this, function(){
         var ws = new WebSocket(this.get('resource'));
-        ws.onopen = function() {
-          console.log('[WS] Connection established');
-        };
         ws.onclose = function() {
           console.log('[WS] Connection closed');
-          alert('Unable to reach the WebServer! Maybe it is down.');
+          alert('Impossibile connettersi al WebServer. Assicurarsi che sia in esecuzione.');
         };
         ws.onmessage = function(msg) {
           var ari = JSON.parse( msg.data );

@@ -37,6 +37,10 @@ MyTalk.User = DS.Model.extend( {
     return this.get('name').toLowerCase() + ' ' + this.get('surname').toLowerCase() + ' ' + this.get('username').toLowerCase() + "_" + this.get('id');
   }.property('name','surname','username'),
 
+  avatarSuperTiny: function() {
+    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=35&d=blank';
+  }.property('md5')
+
   avatarTiny: function() {
     return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=blank';
   }.property('md5'),
@@ -44,10 +48,6 @@ MyTalk.User = DS.Model.extend( {
   avatarBig: function() {
     return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=300&d=blank';
   }.property('md5'),
-
-  avatarSuperTiny: function() {
-    return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=35&d=blank';
-  }.property('md5')
 
 });
 
@@ -119,6 +119,14 @@ MyTalk.User = DS.Model.extend( {
 * Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} come concatenazione di _name_, _surname_ per poter evitare la concatenazione a livello di template (Handlebars)
 * 
 * @property -fullNameConc
+* @type {string}
+*
+*/
+
+/**
+* Proprietà calcolata da {\color{blue}\href{http://emberjs.com/api/classes/Ember.ComputedProperty.html}{Ember.ComputedProperty}} che combina la URI di Gravatar con l'hash MD5 del campo _md5_ al fine di ottenere la URL dell'avatar del contatto in formato molto piccolo
+*
+* @property -avatarSuperTiny
 * @type {string}
 *
 */

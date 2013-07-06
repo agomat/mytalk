@@ -2,7 +2,6 @@
 * Filename: SuccessfulLogin.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.user
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
-*               com.mytalk.client.model.modelstruct.Authentication
 *               com.mytalk.client.model.modelstruct.AppState
 *               com.mytalk.client.model.modelstruct.PersonalData
 *               com.mytalk.client.model.modelstruct.User

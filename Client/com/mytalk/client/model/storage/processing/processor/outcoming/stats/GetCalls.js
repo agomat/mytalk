@@ -2,9 +2,10 @@
 * Filename: GetCalls.js
 * Package: com.mytalk.client.model.storage.processing.processor.outcoming.stats
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
+*                com.mytalk.client.model.storage.ARI
 *                com.mytalk.client.model.modelstruct.Authentication
 *                com.mytalk.client.model.modelstruct.PersonalData
-*                com.mytalk.client.model.storage.ARI
+*                com.mytalk.client.model.modelstruct.WCall
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
@@ -31,7 +32,8 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   */
   name: 'GetCalls',
  /**
-  * TODO
+  * Il metodo deve creare un record nel model $WCall$ avente id 1 ed eseguire il "commit"
+  * di esso per poter inviare al server la richiesta $GetCalls$
   *
   * @method +process
   * @return {Void}

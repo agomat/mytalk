@@ -18,9 +18,9 @@
 *
 | Version | Date     | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.3    | 2013-07-02 | SC      | [+] Aggiunta funzionalità salva statistiche
-* 0.2    | 2013-06-07 | SC      | [+] Aggiunta funzionalità chat
-* 0.1    | 2013-04-23 | MA      | [+] Scrittura classe
+* 0.3     | 2013-07-02 | SC      | [+] Aggiunta funzionalità salva statistiche
+* 0.2     | 2013-06-07 | SC      | [+] Aggiunta funzionalità chat
+* 0.1     | 2013-04-23 | MA      | [+] Scrittura classe
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -42,12 +42,14 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */  
 
   callState: null,
+
   /**
   * Proprietà necessaria per la gestione dello stato dell'applicazione durante la chiamata 
   * @property -callStateBinding        
   * @type {Binding}             
   *
   */ 
+
   callStateBinding: Ember.Binding.oneWay('MyTalk.CallState.currentState.name'),
   
   /**
@@ -85,7 +87,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   *
   */
 
-  stats:MyTalk.CallInfo.create({}),
+  stats: MyTalk.CallInfo.create({}),
   
   /**
   * Proprietà necessaria a mostrare nella vista la velocità attuale di connessione
@@ -94,7 +96,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   *
   */
 
-  bitrate:null,
+  bitrate: null,
 
   /**
   * Proprietà che contiene l'oggetto della connessione peer to peer
@@ -103,7 +105,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   *
   */
 
-  RTCmanager: undefined,
+  RTCmanager: null,
   
   /**
   * Questo metodo viene invocato alla creazione di un'istanza di questo controller,
@@ -141,9 +143,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
   call: function(user) {
    //TODO verificare se sono impegnato in altra conversazione
-   var time=new moment().lang('it');
-   this.set('stats.date',time);
-   this.set('stats.sender',true);
+   this.set('stats.caller',true);
+   this.set('stats.speaker',user.get('id'));
    this.RTCmanager = MyTalk.PeerConnection.create();
    var processorFactory = MyTalk.ProcessorFactory.create({});
    var processor = processorFactory.createProcessorProduct("UserCall");
@@ -157,6 +158,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       speaker: user,
     });
     MyTalk.CallState.send('beingBusy', callData);
+    context.set( 'stats.date', new moment().lang('it') );
    };
 
    // callback 2
@@ -202,9 +204,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   acceptCall: function(user){
-   var time=new moment().lang('it');
-   this.set('stats.date',time);
-   this.set('stats.sender',false);
+   this.set('stats.caller',false);
+   this.set('stats.speaker',user.get('id'));
    MyTalk.CallState.get('isBusy').set('accepted', true);
    document.getElementById('ring').pause();
    this.RTCmanager = MyTalk.PeerConnection.create();
@@ -226,6 +227,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     });
 
     MyTalk.CallState.send('beingConnected',callData);
+    context.set( 'stats.date', new moment().lang('it') );
    };
 
    // callback 2
@@ -237,8 +239,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    };
 
    var onDataChannelMessage = function(message) {
-    var msg=context.get('messages');
-    var temp=[];
+    var msg = context.get('messages');
+    var temp = [];
 
     msg.forEach(function(t){
         temp.pushObject(t);
@@ -310,17 +312,18 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    var processor = processorFactory.createProcessorProduct( "AddCall" );
    var stats=this.get('stats');
     processor.process({
-      //speaker: stats.get('speaker'),
+      speaker: stats.get('speaker'),
+      caller: stats.get('caller'),
       startDate: stats.get('date'),
-      duration:stats.get('duration'),
-      sentBytes:stats.get('sentBytes'),
-      receivedBytes:stats.get('receivedBytes')
+      duration: stats.get('duration'),
+      sentBytes: stats.get('sentBytes'),
+      receivedBytes: stats.get('receivedBytes')
     });
 
   },
  
  /**
-  * Questo metodo si occupa di di reimpostare il campo dati contenente le statistiche
+  * Questo metodo si occupa di reimpostare il campo dati contenente le statistiche
   * delle chiamate ricevute/effettuate.
   *
   * @method -clearStats

@@ -1,7 +1,8 @@
 /**
 * Filename: GiveCalls.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.stats
-* Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
+* Dependencies:  com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
+*                com.mytalk.client.model.modelstruct.WCall
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
@@ -31,7 +32,7 @@ MyTalk.processor.GiveCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProdu
 
 
  /**
-  * TODO
+  * Il metodo deve caricare nel model WCall il campo informativo del pacchetto _ARI_
   *
   * @method +process
   * @param {String} Stringa JSON che rappresenta il pacchetto ARI
@@ -46,6 +47,7 @@ MyTalk.processor.GiveCalls = Ember.Object.extend(MyTalk.AbstractInProcessorProdu
 
     adapter.load(store, type, obj);
     adapter.didFindRecord(store, type, obj,0);
+    window.ee = obj;
   },
 
   /**

@@ -56,15 +56,15 @@ MyTalk.CallInfo = Ember.Object.extend({
    *
   */   
  
-  date:null,
+  date: null,
 
   /**
    * Proprietà necessaria al fine di determinare se la chiamata è stata effettuata o ricevuta
-   * @property -sender           
+   * @property -caller           
    * @type {Boolean}                   
    *
   */  
-  sender:null,
+  caller: null,
  
   /**
    * Proprietà contiene l'id dell'utente interlocutore
@@ -72,5 +72,5 @@ MyTalk.CallInfo = Ember.Object.extend({
    * @type {Number}                   
    *
   */ 
-  speaker:null,
+  speaker: null,
 }); 

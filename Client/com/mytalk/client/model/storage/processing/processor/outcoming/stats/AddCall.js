@@ -3,6 +3,7 @@
 * Package: com.mytalk.client.model.storage.processing.processor.outcoming.stats
 * Dependencies:  com.mytalk.client.model.storage.processing.processor.outcoming.AbstractOutProcessorProduct
 *                com.mytalk.client.model.storage.ARI
+*                com.mytalk.client.model.modelstruct.Call
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *
@@ -38,8 +39,24 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
   * @return {Void}
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
-  process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+  process: function (params) {
+    var id = MyTalk.Call.find().get('length');
+    var record = MyTalk.Call.createRecord({
+      id: id,
+      speaker: params.speaker,
+      caller: params.caller,
+      startDate: params.startDate,
+      duration: params.duration,
+      byteSent: params.sentBytes,
+      byteReceived: params.receivedBytes
+    });
+    var transaction = record.get('transaction');
+
+    transaction.reopen({
+      processor: this,
+    });
+
+    transaction.commit();
   },
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _AddCall_ 
@@ -52,8 +69,46 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
 
-  // TODO FARE METODO
+  sendToServer: function (socket, record, onSent) {
+    var ARI = new Object();
 
+    var auth = new Object();
+    auth.username = MyTalk.Authentication.find(0).get('username');
+    auth.password = MyTalk.Authentication.find(0).get('password');
+    auth.ip = MyTalk.PersonalData.find(0).get('ip');
+
+    ARI.auth = auth;
+    ARI.req = this.get('name');
+
+    var info = new Object();
+    info.w_call = new Object();
+    info.w_call.list = [{id:0, speaker_id: record.get('speaker'), caller: record.get('caller'), start_date: record.get('startDate'), duration: record.get('duration'), byte_sent: record.get('byteSent'), byte_received: record.get('byteReceived')}];
+    info.w_call.total_byte_sent = 0;
+    info.w_call.total_byte_received = 0;
+    info.w_call.total_duration = 0;
+
+    ARI.info = JSON.stringify(info);
+    
+    socket.send( JSON.stringify(ARI) );
+    onSent( this.getProcessorName(), true );
+
+    var calls = new Array();
+    MyTalk.Call.find().forEach(function(call){
+      calls.push(call);
+    });
+    calls.forEach(function(call){
+      call.deleteRecord();
+      call.get('stateManager').goToState('deleted');
+    });
+
+    /* TODO, alternativa
+    var lastId = record.get('transaction').get('lastId');
+    var lastRecord = MyTalk.Call.find(lastId);
+    lastRecord.deleteRecord();
+    lastRecord.get('stateManager').goToState('deleted');
+    */
+
+  },
 
   /**
   * Il metodo deve ritornare l'attributo _name_

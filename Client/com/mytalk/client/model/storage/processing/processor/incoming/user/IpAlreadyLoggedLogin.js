@@ -15,8 +15,9 @@
 *
 * Software licensed to:
 * - Zucchetti SRL
+*
 * Processore che viene eseguito quando il server rileva che l'utente con quell'IP è già autenticato nel sistema. Il client
-* deve ignorare questo tipo di richiesta e di conseguenza il metodo _process_ deve avere corpo vuoto
+* deve mostrare un messaggio informativo spiegando la causa dell'errore
 *
 */
 
@@ -24,7 +25,8 @@ MyTalk.processor.IpAlreadyLoggedLogin = Ember.Object.extend(MyTalk.AbstractInPro
   name: 'IpAlreadyLoggedLogin',
 
   process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
+    $('#loading_bar').css('visibility','hidden');
+    alert('Sei collegato con un IP assegnato ad un altro utente. Per favore aggiorna la pagina.');
   },
   
   getProcessorName: function () {

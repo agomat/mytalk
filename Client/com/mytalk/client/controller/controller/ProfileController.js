@@ -75,10 +75,9 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
   },
    
    /**
-   * Questo è necessario per poter procedere con la modifica dell'account utente
-   * il metodo ritorna alla vista i dati necessari a settare i campi dati $value$
-   * degli input, in modo tale da avere già i campi $name$, $surname$ ed $email$ già precompilati
-   * nel caso l'utente volesse modificare solo la password.
+   * Questo metodo è necessario per poter procedere con la modifica dell'account utente dalla
+   * vista.
+   * Il metodo ritorna alla vista i dati per precompilare il form di modifica dei dati personali.
    *
    * @method +returnAccount                                     
    * @return {Void} 

@@ -439,9 +439,6 @@ Ember.Handlebars.registerBoundHelper('calldate',function(date){
 
 });
 
-
-//moment().format('LLLL');
-
 Ember.Handlebars.registerBoundHelper('hourconversion',function(seconds){
   var hstring="";
   var h=parseInt(seconds/3600);

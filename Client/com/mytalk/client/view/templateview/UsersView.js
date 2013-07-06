@@ -38,5 +38,21 @@ MyTalk.UsersView= Ember.View.extend({
    *
   */
 
-  name: "users"
+  name: "users",
+
+  /**
+   * Questo metodo si occupa di attivare alcune funzioni JQuery per la vista.
+   *
+   * @method -didInsertElement            
+   * @return {Void} 
+   * @override \href{http://emberjs.com/api/modules/ember-views.html}{ember-view}$\href{https://github.com/emberjs/ember.js/blob/v1.0.0-rc.5/packages/ember-views/lib/views/view.js#L1603}{Ember.View}
+  */
+
+  didInsertElement: function(){
+    $.each( $('.modal_content select option'), function(i,v){
+     if( $(v).text() == "Tutti i contatti" || $(v).text() == "BlackList" ) {
+       $(v).hide();
+     }
+    });
+  }
 });

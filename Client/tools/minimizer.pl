@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Minimizza CSS/HTML/JavaScript di MyTalk e crea un ZIP in /tmp/Client.zip
-# Assicurarsi di avere le librerie minimizzate ed aggiornate nella folder /assets/lib
+# Assicurarsi di avere le librerie JavaScript minimizzate ed aggiornate nella folder /assets/lib
 # Dare --only-zip per zippare il Client senza minimizzare (debug mode)
 #
 # Dipendenze del Sistema Operativo UNIX: 
@@ -13,13 +13,16 @@
 use warnings;
 use strict;
 
+my $PROJECT_DIR = "../";
+my $COMPRESSOR = "yuicompressor-2.4.8.jar";
+
 unless (-e "/usr/bin/zip") {
 	print "ZIP non è installato nel proprio sistema operativo. Installarlo, per esempio, con sudo apt-get install zip\n";
 	exit;
 }
 
-unless (-e "yuicompressor-2.4.8.jar") {
-	print "yuicompressor-2.4.8.jar non trovato nella folder corrente\n";
+unless (-e $COMPRESSOR) {
+	print "$COMPRESSOR non trovato nella folder corrente\n";
 	exit;
 }
 
@@ -28,24 +31,24 @@ print "# Minimizza CSS/HTML/JavaScript di MyTalk e crea un ZIP in /tmp/Client.zi
 # Dare --only-zip per zippare il Client senza minimizzare (debug mode)\n\n>> Sto lavorando...\n";
 
 if (!defined $ARGV[0]) {
-		my $index = `cat index.html`; $index =~ s/`/'/g;
+		my $index = `cd $PROJECT_DIR && cat index.html`; $index =~ s/`/'/g;
 		my @js_library_file = $index =~ /<script type="text\/javascript" src="(assets\/lib\/.*?)">/g;
 		my @js_our_file = $index =~ /<script type="text\/javascript" src="(com\/.*?)">/g;
 		my @css_file = $index =~ /<link type="text\/css" rel="stylesheet" media="screen" href="(.*?)"\/>/g;
 		my $js_our_content = "";
 		my $css_content = "";
 		foreach my $i ( @js_our_file ) {
-			$js_our_content .= `cat $i`;
+			$js_our_content .= `cd $PROJECT_DIR && cat $i`;
 		}
 		foreach my $i ( @css_file ) {
-			$css_content .= `cat $i`;
+			$css_content .= `cd $PROJECT_DIR && cat $i`;
 		}
 
 		#1
 		open FILE, ">/tmp/mytalk.js" or die $!;
 		print FILE $js_our_content;
 		close FILE;
-		`java -jar yuicompressor-2.4.8.jar /tmp/mytalk.js > /tmp/app.js`;
+		`java -jar $COMPRESSOR /tmp/mytalk.js > /tmp/app.js`;
 
 		#2
 		my $jquery;
@@ -53,7 +56,7 @@ if (!defined $ARGV[0]) {
 			$jquery = $i if($i =~ /jquery/);
 		}
 		open FILE, ">/tmp/a.js" or die $!;
-		print FILE `cat $jquery`;
+		print FILE `cd $PROJECT_DIR && cat $jquery`;
 		close FILE;
 		########################################################
 		my $moment;
@@ -66,8 +69,8 @@ if (!defined $ARGV[0]) {
 				$handlebars = "$i.min.js"; 
 			}
 		}
-		$mh = `cat $moment`;
-		$mh .= `cat $handlebars`;
+		$mh = `cd $PROJECT_DIR && cat $moment`;
+		$mh .= `cd $PROJECT_DIR && cat $handlebars`;
 		open FILE, ">/tmp/b.js" or die $!;
 		print FILE $mh;
 		close FILE;
@@ -80,7 +83,7 @@ if (!defined $ARGV[0]) {
 			}
 		}
 		open FILE, ">/tmp/c.js" or die $!;
-		print FILE `cat $ember`;
+		print FILE `cd $PROJECT_DIR && cat $ember`;
 		close FILE;
 		########################################################
 		my $ember_data;
@@ -93,8 +96,8 @@ if (!defined $ARGV[0]) {
 			}
 			$list_view = $i if($i =~ /list\-view/);
 		}
-		$el = `cat $ember_data`;
-		$el .= `cat $list_view`;
+		$el = `cd $PROJECT_DIR && cat $ember_data`;
+		$el .= `cd $PROJECT_DIR && cat $list_view`;
 		open FILE, ">/tmp/d.js" or die $!;
 		print FILE $el;
 		close FILE;
@@ -103,7 +106,7 @@ if (!defined $ARGV[0]) {
 		open FILE, ">/tmp/a.css" or die $!;
 		print FILE $css_content;
 		close FILE;
-		`java -jar yuicompressor-2.4.8.jar /tmp/a.css > /tmp/css.css`;
+		`java -jar $COMPRESSOR /tmp/a.css > /tmp/css.css`;
 
 		#4
 		my $JS = '<link type="text/css" rel="stylesheet" media="screen" href="assets/css/css.css"/>';
@@ -126,9 +129,10 @@ if (!defined $ARGV[0]) {
 	
 		#5
 		`rm -rf /tmp/Client` if (-e "/tmp/Client");
-		`mkdir /tmp/Client && cp -r . /tmp/Client`;
+		`mkdir /tmp/Client && cp -r $PROJECT_DIR /tmp/Client`;
 		`rm -rf /tmp/Client/com`;
-		`cd /tmp/Client && rm README.md minimizer.pl server* yui*`;
+		`rm -rf /tmp/Client/tools`;
+		`rm /tmp/Client/README.md` if (-e "/tmp/Client/README.md");
 		`rm /tmp/Client/assets/lib/* && rm /tmp/Client/assets/css/* && cd /tmp && cp a.js Client/assets/lib && cp b.js Client/assets/lib && cp c.js Client/assets/lib && cp d.js Client/assets/lib && cp css.css Client/assets/css && cp app.js Client/assets/lib && cp index.html Client`;
 
 		#6

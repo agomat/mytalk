@@ -7,7 +7,7 @@
 * Diary:
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.4     | 2013-07-04 |    MF     | [+] Aggiunta campo dati statico id con getter e setter
+* 0.4     | 2013-07-04 |    MF     | [+] Aggiunta campo dati id con getter e setter
 * 0.3     | 2013-07-04 |	MF	   | [#] Modifica nome totalByteSent, totalByteReceived e totaleDuration
 * 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
 * 0.1	  |	2013-04-18 |    NT     | [+] Creazione classe e metodi   
@@ -31,7 +31,7 @@ public class WrapperCall{
 	 * @property -id
 	 * @type {Integer}
 	 */
-	private int id=0;
+	private int id;
 	/**
 	 * Rappresenta l'insieme delle chiamate
 	 * 
@@ -68,6 +68,7 @@ public class WrapperCall{
 	 */
 	public WrapperCall(List<Call> c){
 		list=c;
+		id=0;
 	}
 	/**
 	 * Ritorna la lista list

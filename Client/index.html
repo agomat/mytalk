@@ -22,6 +22,7 @@
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.6.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
     <script type="text/javascript" src="assets/lib/list-view.min.js"></script>
+    <script type="text/javascript" src="assets/lib/base64.js"></script>
 
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/client/MyTalk.js"></script>
@@ -206,6 +207,7 @@
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
+    <script type="text/javascript" src="com/mytalk/client/controller/communicator/FileTransfer.js"></script> 
 
     <!-- bootstrap jQuery stuffs -->
     <script type="text/javascript" src="assets/animation/animation.js"></script>
@@ -596,6 +598,9 @@
 
         <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><div></div> Rispondi</button>&nbsp;
         <button {{action "closeCall" this}} id="hangup_button" ><div></div>Riaggancia</button>
+
+<input onchange="addFiles(this.files)" type="file" id="files" name="files[]" multiple
+           style="height: 20px; "/>
 
         <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{hourconversion stats.duration}}</li>

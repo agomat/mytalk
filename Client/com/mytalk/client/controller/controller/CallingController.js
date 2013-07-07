@@ -154,6 +154,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    // callback 1
    var context = this;
    var beforeCandidatesCreation = function() {
+
+     // file-transfer
+     window.RTCmanager = context.RTCmanager;
+
     var callData = Ember.Object.create({
       path: 'isBusy.outcomingCall',
       RTCmanager: context.RTCmanager, 
@@ -239,20 +243,42 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    };
 
    var onDataChannelMessage = function(message) {
-    var msg = context.get('messages');
-    var temp = [];
+    window.messagi = message;
+          var WARI = JSON.parse(message.data);
+      FS.numOfChunksReceived++;
+      FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+      FS.filename = WARI.filename;
+      if( (WARI.chunkId + 1) == WARI.numOfChunks ){
+        FS.numOfChunksInFile = WARI.numOfChunks;
+        FS.hasEntireFile = true;
+        FS.saveFileLocally();
+      }
+      return;
+    try{
+      var WARI = JSON.parse(message.data);
+      FS.numOfChunksReceived++;
+      FS.chunks[WARI.chunkId] = WARI.chunk;
+      if( (WARI.chunkId + 1) == WARI.numOfChunks ){
+        FS.numOfChunksInFile = WARI.numOfChunks;
+        FS.hasEntireFile = true;
+        FS.saveFileLocally();
+      }
+    } catch(e) {
+      var msg = context.get('messages');
+      var temp = [];
 
-    msg.forEach(function(t){
-        temp.pushObject(t);
-    });
-    temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
-    context.set('messages',temp);
-    
-    Ember.run.later(this, function(){
-    $("#messages").animate({
-      scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
-      },300);
-    }, 300);
+      msg.forEach(function(t){
+          temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
+      
+      Ember.run.later(this, function(){
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
+    }
   
    };
 

@@ -38,7 +38,7 @@ Ember.Handlebars.registerBoundHelper('hourconversion',function(seconds){
 
 Ember.Handlebars.registerBoundHelper('conversion',function(bytes){
   var sizes = ['b', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return 'n/a';
+  if (bytes == 0) return '0';
   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
 });

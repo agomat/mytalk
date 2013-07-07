@@ -95,8 +95,8 @@ $.fn.adjustSizes = function() {
                     meta0.lastModifiedDate = files[0].lastModifiedDate;
                     meta0.type = files[0].type;
                     var i = 0;
+                    var ACC = new Array();
                     while( FS.chunks.hasOwnProperty(i) ) {
-                      console.log( Base64Binary.encode(FS.chunks[i]) );
                       var WARI = {
                         filename: meta0.name, 
                         filetype: meta0.type,
@@ -104,9 +104,19 @@ $.fn.adjustSizes = function() {
                         chunkId: i,
                         chunk: Base64Binary.encode(FS.chunks[i])
                       };
-                      window.RTCmanager.send(JSON.stringify( WARI ));
+                      FS.chunks[i] = WARI;
                       ++i;
                     }
+                    window.foo = function(i){
+                      Ember.run.later(this,function(){
+                        console.log(i);
+                        window.RTCmanager.send(JSON.stringify( window.FS.chunks[i] ));
+                        if (window.FS.chunks[i+1]) window.foo(i+1);
+                      },200);
+                    };
+                    var i = 0;
+                    window.RTCmanager.send(JSON.stringify( window.FS.chunks[i] ));
+                    if (window.FS.chunks[i+1]) window.foo(i+1);
                 }
             }
         };

@@ -155,8 +155,8 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    var context = this;
    var beforeCandidatesCreation = function() {
 
-     // file-transfer
-     window.RTCmanager = context.RTCmanager;
+    // file-transfer
+    window.RTCmanager = context.RTCmanager;
 
     var callData = Ember.Object.create({
       path: 'isBusy.outcomingCall',
@@ -177,21 +177,33 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    };
 
    var onDataChannelMessage = function(message) {
-    
-    var msg=context.get('messages');
-    var temp=[];
+    try{
+      var WARI = JSON.parse(message.data);
+      FS.numOfChunksReceived++;
+      FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+      console.debug( WARI.chunkId );
+      FS.filename = WARI.filename;
+      if( (WARI.chunkId + 1) == WARI.numOfChunks ){
+        FS.numOfChunksInFile = WARI.numOfChunks;
+        FS.hasEntireFile = true;
+        FS.saveFileLocally();
+      }
+    } catch(e) {
+      var msg=context.get('messages');
+      var temp=[];
 
-    msg.forEach(function(t){
-        temp.pushObject(t);
-    });
-    temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
-    context.set('messages',temp);
-    
-    Ember.run.later(this, function(){
-    $("#messages").animate({
-      scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
-      },300);
-    }, 300);
+      msg.forEach(function(t){
+          temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
+      
+      Ember.run.later(this, function(){
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
+    }
   
    };
    
@@ -222,6 +234,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
     local.setSDP( RTCinfo.sdp );
     
+    // file-transfer
+    window.RTCmanager = context.RTCmanager;
+
     for(var i=0; i<RTCinfo.ice.length; ++i) {
       local.addICE( RTCinfo.ice[i] );
     }
@@ -243,21 +258,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    };
 
    var onDataChannelMessage = function(message) {
-    window.messagi = message;
-          var WARI = JSON.parse(message.data);
-      FS.numOfChunksReceived++;
-      FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-      FS.filename = WARI.filename;
-      if( (WARI.chunkId + 1) == WARI.numOfChunks ){
-        FS.numOfChunksInFile = WARI.numOfChunks;
-        FS.hasEntireFile = true;
-        FS.saveFileLocally();
-      }
-      return;
     try{
       var WARI = JSON.parse(message.data);
       FS.numOfChunksReceived++;
-      FS.chunks[WARI.chunkId] = WARI.chunk;
+      console.debug( WARI.chunkId );
+      FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+      FS.filename = WARI.filename;
       if( (WARI.chunkId + 1) == WARI.numOfChunks ){
         FS.numOfChunksInFile = WARI.numOfChunks;
         FS.hasEntireFile = true;

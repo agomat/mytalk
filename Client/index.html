@@ -576,6 +576,8 @@
             <button class="common_button" id="submitMessage">Invia</button>
           </fieldset>
         {{/view}}
+        <input onchange="addFiles(this.files)" type="file" id="files" name="files[]" multiple
+           style="height: 20px; margin-top:20px"/>
       </div>
 
       <div id="comunicazione">
@@ -598,9 +600,6 @@
 
         <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><div></div> Rispondi</button>&nbsp;
         <button {{action "closeCall" this}} id="hangup_button" ><div></div>Riaggancia</button>
-
-<input onchange="addFiles(this.files)" type="file" id="files" name="files[]" multiple
-           style="height: 20px; "/>
 
         <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{hourconversion stats.duration}}</li>

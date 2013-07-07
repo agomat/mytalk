@@ -112,7 +112,6 @@ MyTalk.CallState = Ember.StateManager.create({
         }, 300);
         
         Ember.run.later(this, function() {
-          console.debug(MyTalk.CallState.get('isBusy').get('accepted'));
           if(!MyTalk.CallState.get('isBusy').get('accepted')) {
             var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
             var processorFactory = MyTalk.ProcessorFactory.create({});

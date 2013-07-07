@@ -40,7 +40,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
   process: function (params) {
-    var id = MyTalk.Call.find().get('length');
+    var id = MyTalk.Call.find().get('length') * 3; // TODO prima era 1 e senza il delete nel secondo metodo
     var record = MyTalk.Call.createRecord({
       id: id,
       speaker: MyTalk.User.find(params.speaker),
@@ -54,6 +54,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
 
     transaction.reopen({
       processor: this,
+      recordId: id
     });
 
     transaction.commit();
@@ -70,6 +71,7 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
   */
 
   sendToServer: function (socket, record, onSent) {
+    var recordId = record.get('transaction').get('recordId');
     var ARI = new Object();
 
     var auth = new Object();
@@ -88,26 +90,13 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
     info.w_call.total_duration = 0;
 
     ARI.info = JSON.stringify(info);
-    
+
     socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), true );
 
-    var calls = new Array();
-    MyTalk.Call.find().forEach(function(call){
-      calls.push(call);
-    });
-    calls.forEach(function(call){
-      call.deleteRecord();
-      call.get('stateManager').goToState('deleted');
-    });
-
-    /* TODO, alternativa
-    var lastId = record.get('transaction').get('lastId');
-    var lastRecord = MyTalk.Call.find(lastId);
-    lastRecord.deleteRecord();
-    lastRecord.get('stateManager').goToState('deleted');
-    */
-
+    var call = MyTalk.Call.find( recordId );
+    call.deleteRecord();
+    call.get('stateManager').goToState('deleted');
   },
 
   /**

@@ -42,13 +42,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
   mySDP: undefined,
   myICE: [],
   
-  trace: function(text) {
-    // This function is used for logging.
-    if (text[text.length - 1] == '\n') {
-      text = text.substring(0, text.length - 1);
-    }
-  },
-  
   init: function() {
     this._super();
     
@@ -141,13 +134,13 @@ MyTalk.PeerConnection = Ember.Object.extend({
   closeConnection: function(onClose) {
     this.myStream.stop();
     this.pc.close();
+    onClose( this.isCaller );
     this.myStream = undefined;
     this.pc = undefined;
     this.isCaller = false;
     this.dataChannel = undefined;
     this.mySDP = undefined;
     this.myICE = [];
-    onClose();
   },
   
   getMedia: function(peerConn, isCaller, onCandidatesReady,onDataChannelMessage) {

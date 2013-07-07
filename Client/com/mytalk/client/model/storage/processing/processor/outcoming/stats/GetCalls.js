@@ -40,7 +40,8 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
   process: function () {
-    var record = MyTalk.WCall.createRecord({id:1}); // fix! TODO in caso essistesse già!
+    var id = (MyTalk.WCall.find().get('length') + 1) * 3; // TODO buggable
+    var record = MyTalk.WCall.createRecord({id:id});
     record.get('stateManager').goToState('saved');
     record.deleteRecord();
     var transaction = record.get('transaction');
@@ -50,6 +51,7 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
     });
 
     transaction.commit();
+
   },
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _GetCalls_ 

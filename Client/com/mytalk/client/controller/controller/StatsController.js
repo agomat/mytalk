@@ -34,6 +34,23 @@ MyTalk.StatsController = Ember.ObjectController.extend({
   },
 
   /**
+   * Questo metodo deve invocare cancellare tutti i record del model $Call$
+   *
+   * @method -clearPrevCalls                                 
+   * @return {Void} 
+  */
+  clearPrevCalls:function() {
+    var calls = new Array();
+    MyTalk.Call.find().forEach(function(call){
+      calls.push(call);
+    });
+    calls.forEach(function(call){
+      call.deleteRecord();
+      call.get('stateManager').goToState('deleted');
+    });
+  },
+
+  /**
    * Questo metodo deve invocare il processore $GetCalls$ al fine di poter aggiornare la lista
    * delle chiamate effettuate e ricevute
    *
@@ -41,6 +58,7 @@ MyTalk.StatsController = Ember.ObjectController.extend({
    * @return {Void} 
   */
   getCalls:function() {
+    this.clearPrevCalls();
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct( "GetCalls" );
     processor.process();

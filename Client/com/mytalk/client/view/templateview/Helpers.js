@@ -1,6 +1,6 @@
 Ember.Handlebars.registerBoundHelper('date',function(date){
   if(date!=null){
-   return date.format("HH:mm:ss");
+    return date.format("HH:mm:ss");
   }
 });
 
@@ -24,10 +24,10 @@ Ember.Handlebars.registerBoundHelper('hourconversion',function(seconds){
   }
   if(min>0){
     if(min<10){
-     hstring+="0"+min+"m ";
+      hstring+="0"+min+"m ";
     }
     else{
-     hstring+=min+"m ";
+      hstring+=min+"m ";
     }
   }
   if(seconds>0){
@@ -37,28 +37,9 @@ Ember.Handlebars.registerBoundHelper('hourconversion',function(seconds){
 });
 
 Ember.Handlebars.registerBoundHelper('conversion',function(bytes){
-  var precision = 2;
-  var kilobyte = 1024;
-  var megabyte = kilobyte * 1024;
-  var gigabyte = megabyte * 1024;
-  var terabyte = gigabyte * 1024;
-  
-  if ((bytes >= 0) && (bytes < kilobyte)) {
-    return bytes + ' B';
- 
-  } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
-    return (bytes / kilobyte).toFixed(precision) + ' KB';
- 
-  } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
-    return (bytes / megabyte).toFixed(precision) + ' MB';
- 
-  } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
-    return (bytes / gigabyte).toFixed(precision) + ' GB';
- 
-  } else if (bytes >= terabyte) {
-    return (bytes / terabyte).toFixed(precision) + ' TB';
- 
-  } else {
-    return bytes + ' B';
-  }
+  var sizes = ['b', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes == 0) return 'n/a';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
 });
+

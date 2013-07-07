@@ -154,10 +154,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
    // callback 1
    var context = this;
    var beforeCandidatesCreation = function() {
-
-    // file-transfer
-    window.RTCmanager = context.RTCmanager;
-
     var callData = Ember.Object.create({
       path: 'isBusy.outcomingCall',
       RTCmanager: context.RTCmanager, 

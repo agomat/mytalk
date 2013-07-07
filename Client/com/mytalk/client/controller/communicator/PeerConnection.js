@@ -359,7 +359,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 * Inserisce un $SDP$ come descrizione del peer remoto, chiamando il metodo corretto di $RTCPeerConnection$.
 * 
 * @method +setSDP
-* @param {RTCSessionDescription} TODO, descrivere
+* @param {RTCSessionDescription} contiene la descrizione remota
 * @return {void}
 */
 
@@ -367,7 +367,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 * Aggiunge alla connessione peer to peer gli "ICE candidates" del peer remoto.
 * 
 * @method +addICE
-* @param {RTCIceCandidate} TODO, descrivere
+* @param {RTCIceCandidate} contiene una lista di "ICE Candidates"
 * @return {void}
 */
 
@@ -376,7 +376,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 * funzione del controller (passata per parametro) che comunica il termine della chiamata e modifica la vista.
 * 
 * @method +closeConnection
-* @param {function} TODO, descrivere
+* @param {function} callback che deve essere invocata dopo aver eseguito il rilascio delle periferiche audio/video
 * @return {void}
 */
 
@@ -405,7 +405,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
 * Configura il canale dati definendo le azioni da compiere per i quattro possibili eventi $onmessage$, $onopen$, $onerror$ ed $onclose$.
 * 
 * @method -setChannelEvents
-* @param {RTCDataChannel} TODO, descrivere
+* @param {RTCDataChannel} Oggetto $DataChannel$
 * @param {function} Funzione del controller da invocare in seguito all'evento $onmessage$.
 * @return {void}
 */
@@ -414,6 +414,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
 * Invia un messaggio attraverso il canale dati.
 * 
 * @method +send
-* @param {string} TODO, descrivere
+* @param {string} contiene il messaggio da inviare all'altro peer
 * @return {void}
 */

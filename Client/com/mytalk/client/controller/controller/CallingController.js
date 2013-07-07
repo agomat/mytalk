@@ -144,16 +144,16 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   call: function(user) {
-   //TODO verificare se sono impegnato in altra conversazione
-   this.set('stats.caller',true);
-   this.set('stats.speaker',user.get('id'));
-   this.RTCmanager = MyTalk.PeerConnection.create();
-   var processorFactory = MyTalk.ProcessorFactory.create({});
-   var processor = processorFactory.createProcessorProduct("UserCall");
+  //TODO verificare se sono impegnato in altra conversazione
+  this.set('stats.caller',true);
+  this.set('stats.speaker',user.get('id'));
+  this.RTCmanager = MyTalk.PeerConnection.create();
+  var processorFactory = MyTalk.ProcessorFactory.create({});
+  var processor = processorFactory.createProcessorProduct("UserCall");
 
    // callback 1
-   var context = this;
-   var beforeCandidatesCreation = function() {
+  var context = this;
+  var beforeCandidatesCreation = function() {
     var callData = Ember.Object.create({
       path: 'isBusy.outcomingCall',
       RTCmanager: context.RTCmanager, 
@@ -161,10 +161,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     });
     MyTalk.CallState.send('beingBusy', callData);
     context.set( 'stats.date', new moment().lang('it') );
-   };
+  };
 
    // callback 2
-   var onCandidatesReady = function(RTCinfo) {
+  var onCandidatesReady = function(RTCinfo) {
     document.getElementById('modem-dial').play();
     processor.process({
       speaker: user,
@@ -172,13 +172,13 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     });
    };
 
-   var onDataChannelMessage = function(message) {
-    
+  var onDataChannelMessage = function(message) {
+  
     var msg=context.get('messages');
     var temp=[];
 
     msg.forEach(function(t){
-        temp.pushObject(t);
+      temp.pushObject(t);
     });
     temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
     context.set('messages',temp);
@@ -189,10 +189,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       },300);
     }, 300);
   
-   };
+  };
    
-   this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
-   this.getStats();
+  this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
+  this.getStats();
   },
   
   /**
@@ -206,58 +206,58 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   acceptCall: function(user){
-   MyTalk.CallState.get('isBusy').set('accepted', true);
-   document.getElementById('ring').pause();
-   this.RTCmanager = MyTalk.PeerConnection.create();
-   var processorFactory = MyTalk.ProcessorFactory.create({});
-   var processor = processorFactory.createProcessorProduct("AcceptCall");
-   var context = this;
+    MyTalk.CallState.get('isBusy').set('accepted', true);
+    document.getElementById('ring').pause();
+    this.RTCmanager = MyTalk.PeerConnection.create();
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("AcceptCall");
+    var context = this;
 
-   // callback 1
-   var beforeCandidatesCreation = function(local) {
-    var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
-    local.setSDP( RTCinfo.sdp );
+    // callback 1
+    var beforeCandidatesCreation = function(local) {
+      var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
+      local.setSDP( RTCinfo.sdp );
     
-    for(var i=0; i<RTCinfo.ice.length; ++i) {
-      local.addICE( RTCinfo.ice[i] );
+      for(var i=0; i<RTCinfo.ice.length; ++i) {
+        local.addICE( RTCinfo.ice[i] );
     }
 
-    var callData = Ember.Object.create({
-      isCaller: false
-    });
+      var callData = Ember.Object.create({
+        isCaller: false
+      });
 
-    MyTalk.CallState.send('beingConnected',callData);
-    context.set( 'stats.date', new moment().lang('it') );
-   };
+      MyTalk.CallState.send('beingConnected',callData);
+      context.set( 'stats.date', new moment().lang('it') );
+    };
 
-   // callback 2
-   var onCandidatesReady = function(RTCinfo) {
-    processor.process({
-      speaker: user,
-      RTCinfo: JSON.stringify(RTCinfo) 
-    });
-   };
+    // callback 2
+    var onCandidatesReady = function(RTCinfo) {
+      processor.process({
+        speaker: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+    };
 
-   var onDataChannelMessage = function(message) {
-    var msg = context.get('messages');
-    var temp = [];
+    var onDataChannelMessage = function(message) {
+      var msg = context.get('messages');
+      var temp = [];
 
-    msg.forEach(function(t){
+      msg.forEach(function(t){
         temp.pushObject(t);
-    });
-    temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
-    context.set('messages',temp);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
     
-    Ember.run.later(this, function(){
-    $("#messages").animate({
-      scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
-      },300);
-    }, 300);
-  
-   };
+      Ember.run.later(this, function(){
+        $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
+    
+    };
 
-   this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
-   this.getStats();
+    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
+    this.getStats();
   },
 
   /**
@@ -270,30 +270,30 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   closeCall: function(user){
-   /*
-   // TODO: rifiutare la chiamata
-   var processorFactory = MyTalk.ProcessorFactory.create({});
-   var processor = processorFactory.createProcessorProduct("RefuseCall");
-   processor.process({});
-   */
-   // patch:
-   MyTalk.CallState.get('isBusy').set('accepted', true);
-   if(this.get('isConnected')) {
-    this.RTCmanager.closeConnection(this.onClose);
-    
-//     MyTalk.CallState.send('beingFree');
-   }
-   else {
-    //GESTIRE RIFIUTA CHIAMATA
-    var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
+    /*
+    // TODO: rifiutare la chiamata
     var processorFactory = MyTalk.ProcessorFactory.create({});
     var processor = processorFactory.createProcessorProduct("RefuseCall");
-    processor.process({
-      speaker: user,
-      RTCinfo: JSON.stringify(RTCinfo) 
-    });
-    this.onClose();
-   }
+    processor.process({});
+    */
+    // patch:
+    MyTalk.CallState.get('isBusy').set('accepted', true);
+    if(this.get('isConnected')) {
+     this.RTCmanager.closeConnection(this.onClose);
+    
+//  MyTalk.CallState.send('beingFree');
+    }
+    else {
+      //GESTIRE RIFIUTA CHIAMATA
+      var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
+      var processorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = processorFactory.createProcessorProduct("RefuseCall");
+      processor.process({
+        speaker: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+      this.onClose();
+    }
   },
 
   
@@ -308,9 +308,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
 
   saveStats:function(){
-   var processorFactory = MyTalk.ProcessorFactory.create({});
-   var processor = processorFactory.createProcessorProduct( "AddCall" );
-   var stats=this.get('stats');
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct( "AddCall" );
+    var stats=this.get('stats');
     processor.process({
       speaker: stats.get('speaker'),
       caller: stats.get('caller'),
@@ -319,7 +319,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       sentBytes: stats.get('sentBytes'),
       receivedBytes: stats.get('receivedBytes')
     });
-
   },
  
  /**
@@ -331,7 +330,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   clearStats:function(){
-   this.set('stats',MyTalk.CallInfo.create({}));
+    this.set('stats',MyTalk.CallInfo.create({}));
   },
 
   /**
@@ -347,29 +346,28 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   sendMessage:function(message){
-   var context=this.get('messages');
-   var temp=[];
+    var context=this.get('messages');
+    var temp=[];
 
-   if(context){
-    context.forEach(function(t){
-      temp.pushObject(t);
-    });
-    temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
-    this.RTCmanager.send(message);
-    this.set('messages',temp);
-   } else {
-    temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
-    this.RTCmanager.send(message);
-    this.set('messages',temp);
-    
-   }
+    if(context){
+      context.forEach(function(t){
+        temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
+      this.RTCmanager.send(message);
+      this.set('messages',temp);
+    }
+    else {
+      temp.pushObject(MyTalk.ChatMessage.create({text:message,sent:true,date:new moment()}));
+      this.RTCmanager.send(message);
+      this.set('messages',temp);
+    }
    
-   Ember.run.later(this, function(){
-    $("#messages").animate({
-      scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+    Ember.run.later(this, function(){
+      $("#messages").animate({
+        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
       },300);
-   }, 300);
-    
+    }, 300);
   },
   
   /**
@@ -385,42 +383,42 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   getStats: function() {
-   var bytePrev = 0;
-   var timestampPrev = 0;
-   var context = this;
-   var statCollector = setInterval(function() {
-    var display = function(str) {
-      context.set('bitrate',str);
-    }
-    if(context.RTCmanager.pc){
-    context.RTCmanager.pc.getStats(function(stats) {
-      var statsString = '';
-      var results = stats.result();
-      var bitrateText = 'N/A';
-      context.get('stats').set('duration',context.get('stats.duration')+1);
-      for (var i = 0; i < results.length; ++i) {
-       var res = results[i];
-        if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
-          context.get('stats').set('sentBytes',res.stat('bytesSent'));
-        }
-        if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
-          context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
-          var bytesNow = res.stat('bytesReceived');
-          if (timestampPrev > 0) {
-           var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
-            (res.timestamp - timestampPrev));
-           bitrateText = bitRate + ' kbits/sec';
-          }
-          timestampPrev = res.timestamp;
-          bytesPrev = bytesNow;
-        }
+    var bytePrev = 0;
+    var timestampPrev = 0;
+    var context = this;
+    var statCollector = setInterval(function() {
+      var display = function(str) {
+        context.set('bitrate',str);
       }
-      display(bitrateText);
-    });
-    }
-   else{
-    clearInterval(statCollector);
-   }
-   }, 1000);
+      if(context.RTCmanager.pc){
+        context.RTCmanager.pc.getStats(function(stats) {
+          var statsString = '';
+          var results = stats.result();
+          var bitrateText = 'N/A';
+          context.get('stats').set('duration',context.get('stats.duration')+1);
+          for (var i = 0; i < results.length; ++i) {
+            var res = results[i];
+            if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
+              context.get('stats').set('sentBytes',res.stat('bytesSent'));
+            }
+            if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
+              context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
+              var bytesNow = res.stat('bytesReceived');
+              if (timestampPrev > 0) {
+                var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
+                (res.timestamp - timestampPrev));
+                bitrateText = bitRate + ' kbits/sec';
+              }
+              timestampPrev = res.timestamp;
+              bytesPrev = bytesNow;
+            }
+          }
+          display(bitrateText);
+        });
+      }
+      else{
+        clearInterval(statCollector);
+      }
+    }, 1000);
   }
 });

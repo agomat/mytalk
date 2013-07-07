@@ -1,6 +1,6 @@
 Ember.Handlebars.registerBoundHelper('date',function(date){
   if(date!=null){
-   return date.format("HH:mm:ss");
+    return date.format("HH:mm:ss");
   }
 });
 
@@ -24,10 +24,10 @@ Ember.Handlebars.registerBoundHelper('hourconversion',function(seconds){
   }
   if(min>0){
     if(min<10){
-     hstring+="0"+min+"m ";
+      hstring+="0"+min+"m ";
     }
     else{
-     hstring+=min+"m ";
+      hstring+=min+"m ";
     }
   }
   if(seconds>0){
@@ -40,6 +40,6 @@ Ember.Handlebars.registerBoundHelper('conversion',function(bytes){
   var sizes = ['b', 'KB', 'MB', 'GB', 'TB'];
   if (bytes == 0) return 'n/a';
   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return (Math.round(bytes / Math.pow(1024, i))).toFixed(2) + ' ' + sizes[i];
+  return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
 });
 

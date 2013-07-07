@@ -686,7 +686,7 @@
       {{/if}}
       <ul id="call_list">
       {{#each call in controller}}
-        <li {{bindAttr class="call.caller:call_in:call_out"}}> 
+        <li {{bindAttr class="call.caller:call_out:call_in"}}> 
           <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
           <div class="who_call">{{call.speaker.name}} {{call.speaker.surname}}</div>
           <div class="data_call"> {{calldate call.startDate}}</div>

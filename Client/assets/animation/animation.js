@@ -73,10 +73,6 @@ $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
 }
 
-if(!console.debug) {
-  console.debug = console.log;
-}
-
     function addFiles(files) {
         var file = files[0]; // FileList object
         FS.prepareToReadFile(file.size);

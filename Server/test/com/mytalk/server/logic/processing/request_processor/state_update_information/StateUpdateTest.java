@@ -23,8 +23,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.UserNotExistingException;
 import com.mytalk.server.logic.processing.Convert;
 import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
+import com.mytalk.server.logic.processing.request_processor.world_information.UpdateAccount;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.Authentication;
 import com.mytalk.server.logic.shared.UserStatePack;
@@ -47,6 +50,7 @@ public class StateUpdateTest {
 	@Test
 	public void testManage() {
 		StateUpdate stateUpdate=new StateUpdate();
+		UpdateAccount updateAccount=new UpdateAccount();
 		Authentication auth=new Authentication("user3","user3","123.123.123.3");
 		PersonalData personalData=new PersonalData(4,"user3","user3","user3","user3","user3@mytalk.com","emailhash123123123","123.123.123.3");
 		WorldPersonalData wpd=new WorldPersonalData(personalData);
@@ -59,6 +63,26 @@ public class StateUpdateTest {
 		UserStatePack userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
 		User userEsito=userStatePack.getList();
 		User user=new User(4,"user3","user3","user3","emailhash123123123","123.123.123.3",true);
+		
+		assertEquals(userEsito.getId(),user.getId());
+		assertEquals(userEsito.getIp(),user.getIp());
+		assertEquals(userEsito.getMd5(),user.getMd5());
+		assertEquals(userEsito.getName(),user.getName());
+		assertEquals(userEsito.getSurname(),user.getSurname());
+		assertEquals(userEsito.getUsername(),user.getUsername());
+		assertEquals(userEsito.getOnline(),user.getOnline());
+		
+		PersonalData updatePersonalData=new PersonalData(4,"user3","user3","user03","user3","user3@mytalk.com","emailhash123123123","123.123.123.3");
+		wpd.setPersonalData(updatePersonalData);
+		pack.setWorldPersonalData(wpd);
+		packString=conv.convertJavaToJson(pack);
+		ARI ariUpdate= new ARI(auth,"UpdateAccount",packString);
+		ARI risposta=updateAccount.manage(ariUpdate);
+		esito=stateUpdate.manage(ariUpdate);
+		stringEsito=esito.getInfo();
+		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
+		userEsito=userStatePack.getList();
+		user=new User(4,"user3","user03","user3","emailhash123123123","123.123.123.3",true);
 		
 		assertEquals(userEsito.getId(),user.getId());
 		assertEquals(userEsito.getIp(),user.getIp());
@@ -92,7 +116,11 @@ public class StateUpdateTest {
 		assertEquals(u.getMd5(),userEsito.getMd5());
 		assertEquals(u.getIp(),userEsito.getIp());
 		assertEquals(u.getOnline(),userEsito.getOnline());
-		// Le due eccezioni non vengono lanciate per correttezza da costruzione
+		
+		/**
+		 *  Le due eccezioni UserNotExistingException e IdNotFoundException non vengono lanciate 
+		 *  per correttezza da costruzione
+		 */
 	}
 
 }

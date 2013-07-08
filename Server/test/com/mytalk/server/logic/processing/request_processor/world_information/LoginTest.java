@@ -104,7 +104,9 @@ public class LoginTest {
 		ariResult=login.manage(ari);
 		assertEquals("Login effettuato anche se viene fallita l'autenticazione","AuthenticationFailLogin",ariResult.getReq());
 		
-		//UserNotCorrespondingLogin non viene mai sollevata per costruzione
+		/**
+		 * UserNotCorrespondingLogin non viene mai sollevata per costruzione
+		 */
 		
 		authWrongTest.setIp("111.11.111.1");
 		authWrongTest.setPwd("user1");
@@ -122,7 +124,10 @@ public class LoginTest {
 		ariResult=login.manage(ari);
 		assertEquals("Tentativo di login con ip gia' assegnato ad un altro user","IpAlreadyLoggedLogin",ariResult.getReq());
 		
-		//UserNotLoggedException mai lanciata poiche' i candidati sono oggetti ricavati dal db e quindi consistenti
+		/**
+		 * UserNotLoggedException mai lanciata poiche' i candidati sono oggetti
+		 *  ricavati dal db e quindi consistenti
+		 */
 	}
 
 }

@@ -202,7 +202,7 @@ public class Processor implements IProcessor{
 			responseList.add(new Message(ipToSend,json));
 		}
 		
-		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutToAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount")){
+		if(esito.getReq().equals("SuccessfulLogin") || esito.getReq().equals("SuccessfulLogoutToAnonymous") || esito.getReq().equals("SuccessfulLogout") || esito.getReq().equals("SuccessfulDeleteAccount") || esito.getReq().equals("SuccessfulUpdateAccount")){
 			if(packInfo.getAuth().getUser()!=null){
 				ARI ari=stateUpdate.manage(packInfo);
 				String jsonAri=convert.convertJavaToJson(ari);

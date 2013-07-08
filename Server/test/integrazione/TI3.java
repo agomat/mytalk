@@ -23,15 +23,17 @@ public class TI3 {
 		public TestClient(URI serverURI){
 			super(serverURI);
 		}
-
+		/**
+		 * NON UTILE PER SCOPI DI TESTING
+		 */
 		@Override
 		public void onClose(int arg0, String arg1, boolean arg2) {
-			//NON UTILE PER SCOPI DI TESTING
 		}
-
+		/**
+		 * NON UTILE PER SCOPI DI TESTING
+		 */
 		@Override
 		public void onError(Exception arg0) {
-			//NON UTILE PER SCOPI DI TESTING
 		}
 
 		@Override
@@ -39,14 +41,16 @@ public class TI3 {
 			if(risp.equals(new String("{\"req\":\"CorruptedPack\"}")))
 				ricevuto=true;
 		}
-
+		/**
+		 * NON UTILE PER SCOPI DI TESTING
+		 */
 		@Override
 		public void onOpen(ServerHandshake arg0) {
-			//NON UTILE PER SCOPI DI TESTING
 		}
-		
+		/**
+		 * Invio di un messaggio non valido, il server tenta di processarlo e risponde comunicando il CorruptedPack
+		 */
 		public void sendMsg(){
-			//invio di un messaggio non valido, il server tenta di processarlo e risponde comunicando il CorruptedPack
 			this.send("{'auth':null,'req':'UserCall','info':null}");
 		}
 	}

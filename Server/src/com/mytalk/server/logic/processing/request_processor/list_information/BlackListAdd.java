@@ -50,11 +50,12 @@ public class BlackListAdd extends GenericRequest {
 	 * campo dati ari, viene creato un oggetto di tipo CSDAT1. Blacklist, utilizzato per aggiungere 
 	 * l'utente alla blacklist utilizzando l'oggetto DataAccess, classe appartenente al componente 
 	 * CSDAT2. Viene restituito un "SuccessfulBlackListAdd". Se non va a buon fine, vengono 
-	 * sollevate e catturate le seguenti eccezioni: "UserAlreadyBlacklistedException", "AuthenticationFailException", "UserNotExistingException",
-	 * "UsernameNotCorrespondingException", "IdNotFoundException", ritornando un pacchetto con campo richiesta
-	 * "AuthenticationFailBlackListAdd", "UserNotExistingBlackListAdd", 
-	 * "UsernameNotCorrespondingBlackListAdd" o "IdNotFoundBlackListAdd". In caso di pacchetto mal formato, 
-	 * viene restituito un "CorruptedPack"
+	 * sollevate e catturate le seguenti eccezioni: "UserAlreadyBlacklistedException", 
+	 * "AuthenticationFailException", "UserNotExistingException", "UsernameNotCorrespondingException", 
+	 * "IdNotFoundException", ritornando un pacchetto con campo richiesta "UserAlreadyBlacklisted", 
+	 * "AuthenticationFailBlackListAdd", "UserNotExistingBlackListAdd", "UserAlreadyBlacklisted", 
+	 * "User"UsernameNotCorrespondingBlackListAdd" o "IdNotFoundBlackListAdd". In caso di pacchetto 
+	 * mal formato, viene restituito un "CorruptedPack"
 	 *  
 	 *  @method +manage
 	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
@@ -87,7 +88,7 @@ public class BlackListAdd extends GenericRequest {
 
 				response=new ARI(null,"SuccessfulBlackListAdd",infoRequest);
 			}catch(UserAlreadyBlacklistedException uab){
-				response=new ARI(null,"UserAlreadyBlacklistedException",infoRequest);
+				response=new ARI(null,"UserAlreadyBlacklisted",infoRequest);
 			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailBlackListAdd",infoRequest);
 			} catch (UserNotExistingException une) {

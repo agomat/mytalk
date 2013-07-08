@@ -67,6 +67,9 @@ $.fn.adjustSizes = function() {
   date.width(maxDate);
 }
 
+$.fn.infobox = function() {
+  $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
+}
 
     function addFiles(files) {
         var file = files[0]; // FileList object
@@ -125,6 +128,5 @@ $.fn.adjustSizes = function() {
         reader.readAsArrayBuffer(blob);
         window.reader = reader;
     }
-
 
 window.FS = new client();

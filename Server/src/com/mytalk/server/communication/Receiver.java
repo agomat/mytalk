@@ -144,7 +144,7 @@ public class Receiver extends WebSocketServer{
 	public void onMessage(WebSocket conn, String msg) {
 		Calendar cal = Calendar.getInstance();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		System.out.println("["+dateFormat.format(cal.getTime())+"] New message Received");
+		System.out.println("["+dateFormat.format(cal.getTime())+"] New message Received: "+msg);
 		String wsIp=conn.getRemoteSocketAddress().toString();
 		wsIp=wsIp.substring(1);
 		Message newMsg=new Message(wsIp,msg);

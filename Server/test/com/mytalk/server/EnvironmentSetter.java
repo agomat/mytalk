@@ -72,22 +72,34 @@ public class EnvironmentSetter {
 	
 	public void initDB(){
 		try{
-			//users
+			/**
+			 * users
+			 */
 			String query=readFile("popolamentoTestUsers.sql");
 			executeQuery(query);
-			//blacklists
+			/**
+			 * blacklists
+			 */
 			query=readFile("popolamentoTestBlacklists.sql");
 			executeQuery(query);
-			//listnames
+			/**
+			 * listnames
+			 */
 			query=readFile("popolamentoTestListNames.sql");
 			executeQuery(query);
-			//onlineusers
+			/**
+			 * onlineusers
+			 */
 			query=readFile("popolamentoTestOnlineUsers.sql");
 			executeQuery(query);
-			//userlists
+			/**
+			 * userlists
+			 */
 			query=readFile("popolamentoTestUserLists.sql");
 			executeQuery(query);
-			//calls
+			/**
+			 * calls
+			 */
 			query=readFile("popolamentoTestCalls.sql");
 			executeQuery(query);
 			

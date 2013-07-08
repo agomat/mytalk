@@ -47,7 +47,7 @@ public class ListCreate extends GenericRequest {
 	 * una nuova lista utente utilizzando l'oggetto DataAccess, classe appartenente al componente 
 	 * CSDAT2. Viene restituito un "SuccessfulListCreate". Se non va a buon fine, vengono 
 	 * sollevate e catturate le seguenti eccezioni: "ListAlreadyExistsException", "AuthenticationFailException",
-	 *  "UsernameNotCorrespondingException", ritornando un pacchetto con campo richiesta ListAlreadyExistsException", 
+	 *  "UsernameNotCorrespondingException", ritornando un pacchetto con campo richiesta ListAlreadyExistsListCreate", 
 	 *  "AuthenticationFailListCreate" o "UsernameNotCorrespondingListCreate". In caso di pacchetto mal 
 	 *  formato, viene restituito un "CorruptedPack"
 	 *  
@@ -74,7 +74,7 @@ public class ListCreate extends GenericRequest {
 				da.listCreate(newList,userAuth);
 				response=new ARI(null,"SuccessfulListCreate",infoRequest);
 			}catch(ListAlreadyExistsException lae){
-				response=new ARI(null,"ListAlreadyExistsException",infoRequest);
+				response=new ARI(null,"ListAlreadyExistsListCreate",infoRequest);
 			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListCreate",infoRequest);
 			} catch (UsernameNotCorrespondingException e) {

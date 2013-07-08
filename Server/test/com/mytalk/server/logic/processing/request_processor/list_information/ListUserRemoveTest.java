@@ -91,7 +91,9 @@ public class ListUserRemoveTest {
 		ariResponse=listUserRemove.manage(ari);
 		assertEquals("Lista non esiste per questo user","ListNotExistingListUserRemove",ariResponse.getReq());
 		
-		//UsernameNotCorrespondingException non viene sollevata per costruzione
+		/**UsernameNotCorrespondingException non viene sollevata per 
+		 * costruzione
+		 */
 	}
 
 }

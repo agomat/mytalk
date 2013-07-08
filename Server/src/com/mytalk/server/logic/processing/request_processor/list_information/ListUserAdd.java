@@ -49,8 +49,9 @@ public class ListUserAdd extends GenericRequest{
 	 * appartenente al componente CSDAT2. Viene restituito un "SuccessfulListUserAdd". Se non va 
 	 * a buon fine, vengono sollevate e catturate le seguenti eccezioni: "UserAlreadyListedException", 
 	 * "AuthenticationFailException", "IdNotFoundException", "UserNotExistingException","ListNotExistingException" e "UsernameNotCorrespondingException",
-	 * ritornando un pacchetto con campo richiesta "AuthenticationFailListUserAdd", "IdNotFoundListUserAdd",
-	 *  "UserNotExistingListUserAdd", "ListNotExistingListUserAdd" o "UsernameNotCorrespondingListUserAdd".
+	 * ritornando un pacchetto con campo richiesta "AuthenticationFailListUserAdd", "UserAlreadyListed",
+	 *  "IdNotFoundListUserAdd", "UserNotExistingListUserAdd", "ListNotExistingListUserAdd" o 
+	 *  "UsernameNotCorrespondingListUserAdd".
 	 * In caso di pacchetto mal formato, viene restituito un "CorruptedPack"
 	 *  
 	 *  @method +manage
@@ -84,7 +85,7 @@ public class ListUserAdd extends GenericRequest{
 				response=new ARI(null,"SuccessfulListUserAdd",infoRequest);
 			}
 			catch(UserAlreadyListedException ual){
-				response=new ARI(null,"UserAlreadyListedException",infoRequest);
+				response=new ARI(null,"UserAlreadyListed",infoRequest);
 			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListUserAdd",infoRequest);
 			} catch (IdNotFoundException inf) {

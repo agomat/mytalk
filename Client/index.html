@@ -15,6 +15,7 @@
     <link type="text/css" rel="stylesheet" media="screen" href="assets/css/c4-logged.css"/>
     <link type="text/css" rel="stylesheet" media="screen" href="assets/css/profile.css"/>
     <link type="text/css" rel="stylesheet" media="screen" href="assets/css/stats.css"/>
+    <link type="text/css" rel="stylesheet" media="screen" href="assets/css/tipsy.css"/>
   
     <script type="text/javascript" src="assets/lib/jquery-2.0.2.min.js"></script> 
     <script type="text/javascript" src="assets/lib/moment.min.js"></script>
@@ -22,6 +23,7 @@
     <script type="text/javascript" src="assets/lib/ember-1.0.0-rc.6.js"></script> 
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
     <script type="text/javascript" src="assets/lib/list-view.min.js"></script>
+    <script type="text/javascript" src="assets/lib/jquery.tipsy.js"></script>
     <script type="text/javascript" src="assets/lib/base64.js"></script>
 
     <!-- bootstrap application -->
@@ -548,9 +550,9 @@
           {{/view}}
         </div>
         <div id="ip_yours">
-          <h3>Il tuo indirizzo IP</h3>
+          <h3>Il tuo indirizzo IP <div id="ipinfo" class="infobox" title="L'indirizzo IP &egrave; un indirizzo univoco assegnato ad ogni macchina connessa ad Internet."></div></h3>
           <p>
-            Fornisci ai tuoi amici questo indirizzo IP. Sarai repereribile da qualsiasi utente che conosca il tuo IP senza doversi registrare nel sistema!
+            Fornisci ai tuoi amici questo indirizzo IP: sarai repereribile da qualsiasi utente che conosca il tuo IP senza doversi registrare nel sistema!
           </p>
           <h4 id="ip_address"> {{ controller.myIP }} {{ controller.content.ip }} </h4>
         </div>
@@ -603,19 +605,30 @@
 
         <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{hourconversion stats.duration}}</li>
-          <li><span>Dati ricevuti:</span>{{conversion stats.receivedBytes}}</li>
-          <li><span>Dati trasmessi:</span>{{conversion stats.sentBytes}}</li>
-          <li><span>Velocit&agrave;:</span>{{bitrate}} kbits/sec</li>
-          <li><span>Round Trip Time:</span>{{rtt}} ms</li>
+          <li {{bindAttr class="stats.receivedBytes:display_yes:display_none"}}><span>Dati ricevuti:</span>{{conversion stats.receivedBytes}}</li>
+          <li {{bindAttr class="stats.sentBytes:display_yes:display_none"}}><span>Dati trasmessi:</span>{{conversion stats.sentBytes}}</li>
+          <li {{bindAttr class="bitrate:display_yes:display_none"}}><span>Velocit&agrave;:</span>{{bitrate}} kbits/sec</li>
+          <li {{bindAttr class="rtt:display_yes:display_none"}}><span>Round Trip Time:</span>{{rtt}} ms</li>
         </ul>
-        <div id="stats"></div>
-
+        
       </div>
     </div>
-    <audio id="ring" src="assets/sounds/ring.mp3" preload></audio>
-    <audio id="modem-dial" src="assets/sounds/modem-dial.mp3" preload></audio>
-    <audio id="closeCall" src="assets/sounds/close.mp3" preload></audio>
-    <audio id="busy" src="assets/sounds/busy.mp3" preload></audio>
+    <audio id="ring" preload>
+      <source src="assets/sounds/ring.ogg" type="audio/ogg"/>
+      <source src="assets/sounds/ring.mp3" type="audio/mpeg"/>
+    </audio>
+    <audio id="modem-dial" preload>
+      <source  src="assets/sounds/modem-dial.ogg" type="audio/ogg"/>
+      <source  src="assets/sounds/modem-dial.mp3" type="audio/mpeg"/>
+    </audio>
+    <audio id="closeCall" preload>
+      <source src="assets/sounds/close.ogg" type="audio/ogg"/>
+      <source src="assets/sounds/close.mp3" type="audio/mpeg"/>
+    </audio>
+    <audio id="busy" preload>
+      <source  src="assets/sounds/busy.ogg" type="audio/ogg"/>
+      <source  src="assets/sounds/busy.mp3" type="audio/mpeg"/>
+    </audio>
     </script>
     
     <script type="text/x-handlebars" data-template-name="profile">

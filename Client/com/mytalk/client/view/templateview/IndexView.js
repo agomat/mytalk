@@ -53,6 +53,7 @@ MyTalk.IndexView = Ember.View.extend({
   didInsertElement: function() {
     Ember.run.later(this, function(){
       $.fn.videoTutorial();
+      $.fn.infobox();
     }, 500);
   }
 });

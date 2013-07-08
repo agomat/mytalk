@@ -82,7 +82,10 @@ public class BlackListRemoveTest {
 		ariResponse=blackListRemove.manage(ari);
 		assertEquals("Nesssun user da togliere dalla blacklist ma processata","CorruptedPack",ariResponse.getReq());
 	
-		//UsernameNotCorrespondingException non viene mai sollevata perche' per creare l'user si usa il valore presente in authentication
+		/**
+		 * UsernameNotCorrespondingException non viene mai sollevata perche' 
+		 * per creare l'user si usa il valore presente in authentication
+		 */
 	}
 
 }

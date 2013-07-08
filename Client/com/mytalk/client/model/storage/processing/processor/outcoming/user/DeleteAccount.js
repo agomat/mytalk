@@ -39,6 +39,9 @@ MyTalk.processor.DeleteAccount = Ember.Object.extend(MyTalk.AbstractOutProcessor
   */
   process: function (params) {
     var record = MyTalk.Authentication.find( 0 );
+    if (!record.get('username')) {
+      return;
+    }
     record.deleteRecord();
     var transaction = record.get('transaction');
 

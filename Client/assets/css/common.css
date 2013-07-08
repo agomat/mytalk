@@ -201,3 +201,11 @@ a:hover{ color:#00b900;}
 ::-webkit-scrollbar-thumb:active{
   background: #00a200 -webkit-linear-gradient(rgb(0,180,0),rgb(0,140,0));
 }
+
+.infobox {
+  margin: 0;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  background: url(../img/info-icon.png) no-repeat;
+}

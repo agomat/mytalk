@@ -47,6 +47,9 @@ MyTalk.PeerConnection = Ember.Object.extend({
     
     if (navigator.mozGetUserMedia) {
       this.webrtcDetectedBrowser = "firefox";
+      
+      document.getElementById('statistiche').innerHTML = "<b>Purtroppo il browser che stai utilizzando non consente di visualizzare le statistiche della chiamata.</b>";
+      
       this.RTCPeerConnection = mozRTCPeerConnection;
       this.configuration = {iceServers: [{url: 'stun:216.93.246.18:3478'}, {url: 'stun:66.228.45.110:3478'}, {url: 'stun:173.194.78.127:19302'}]};
       this.RTCSessionDescription = mozRTCSessionDescription;
@@ -169,7 +172,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
       } 
     }
     function onError(e) {
-      alert('Non e\' stato possibile ottenere l\'accesso agli stream audio e video.\n' + e);
+      alert('Non siamo riusciti ad ottenere l\'accesso alle periferiche di acquisizione audio e video. Assicurati di aver concesso all\'applicazione i permessi necessari.');
     }
     this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
   },
@@ -204,6 +207,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
     };
     
     this.pc.oniceconnectionstatechange = function(evt) {
+      console.log(evt.target.iceConnectionState);
       if(evt.target.iceConnectionState == "disconnected") {
       context.closeConnection(onClose);
       }

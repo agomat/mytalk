@@ -4,63 +4,78 @@ USE MyTalk;
 
 CREATE TABLE IF NOT EXISTS Users
 (
-  username varchar(20)  NOT NULL,
-  id integer(10) UNIQUE NOT NULL AUTO_INCREMENT,
-  password varchar(32)  NOT NULL,
-  name varchar(50) NOT NULL,
-  surname varchar(50) NOT NULL,
-  email varchar(100)  NOT NULL,
-  emailhash varchar(32) NOT NULL,
+  username    VARCHAR(20)  NOT NULL,
+  id          INTEGER(10) UNIQUE NOT NULL AUTO_INCREMENT,
+  password    VARCHAR(32)  NOT NULL,
+  name        VARCHAR(50) NOT NULL,
+  surname     VARCHAR(50) NOT NULL,
+  email       VARCHAR(100)  NOT NULL,
+  emailhash   VARCHAR(32) NOT NULL,
   PRIMARY KEY (username)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Blacklists
 (
-        owner   VARCHAR(20) NOT NULL,
-        username  VARCHAR(50) NOT NULL,
-        PRIMARY KEY (owner,username),
-        FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE,
-        FOREIGN KEY (owner) REFERENCES Users(username) ON DELETE CASCADE
+  owner       VARCHAR(20) NOT NULL,
+  username    VARCHAR(50) NOT NULL,
+  PRIMARY KEY (owner,username),
+  FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE,
+  FOREIGN KEY (owner) REFERENCES Users(username) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Calls
 (
-        id      INTEGER(12) NOT NULL  AUTO_INCREMENT,
-        caller    VARCHAR(20) ,
-        receiver  VARCHAR(20) ,
-        duration  INTEGER(10) NOT NULL,
-        startdate VARCHAR(30)   NOT NULL,
-        byteSent  INTEGER(10) NOT NULL,
-        byteReceived  INTEGER(10) NOT NULL,
-        PRIMARY KEY (id),
-        FOREIGN KEY (caller) REFERENCES Users(username) ON DELETE SET NULL,
-        FOREIGN KEY (receiver) REFERENCES Users(username) ON DELETE SET NULL
+  id            INTEGER(12) NOT NULL  AUTO_INCREMENT,
+  caller        VARCHAR(20) ,
+  receiver      VARCHAR(20) ,
+  duration      INTEGER(10) NOT NULL,
+  startdate     VARCHAR(30)   NOT NULL,
+  byteSent      INTEGER(10) NOT NULL,
+  byteReceived  INTEGER(10) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (caller) REFERENCES Users(username) ON DELETE SET NULL,
+  FOREIGN KEY (receiver) REFERENCES Users(username) ON DELETE SET NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS ListNames
 (
   id      INTEGER(9)  NOT NULL  AUTO_INCREMENT,
-    name    VARCHAR(20) NOT NULL,
-    owner   VARCHAR(20) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (owner) REFERENCES Users(username) ON DELETE CASCADE
+  name    VARCHAR(20) NOT NULL,
+  owner   VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (owner) REFERENCES Users(username) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS UserLists
 (
-        idList    INTEGER(9)  NOT NULL,
-        username  VARCHAR(20) NOT NULL,
-        PRIMARY KEY (idList,username),
-        FOREIGN KEY (idList) REFERENCES ListNames(id) ON DELETE CASCADE,
-        FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
+  idList      INTEGER(9)  NOT NULL,
+  username    VARCHAR(20) NOT NULL,
+  PRIMARY KEY (idList,username),
+  FOREIGN KEY (idList) REFERENCES ListNames(id) ON DELETE CASCADE,
+  FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS OnlineUsers
  (
-  ip      varchar(40)  NOT NULL,
-  username   varchar(20),
+  ip          VARCHAR(40)  NOT NULL,
+  username    VARCHAR(20),
   PRIMARY KEY (ip),
   FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 ALTER TABLE ListNames AUTO_INCREMENT = 2;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS fill;
+CREATE PROCEDURE fill (n INT)
+BEGIN
+  DECLARE i INT DEFAULT 0;
+  DECLARE r INT;
+  ciclo: WHILE i < n DO
+    SET r = ROUND(RAND()*1000000);
+    INSERT IGNORE INTO Users (username,password,name,surname,email,emailhash) VALUES
+      (CONCAT("user",r),MD5("password"),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),"agomat@gmail.com",m$
+    SET i = i + 1;
+  END WHILE ciclo;
+END; //
+DELIMITER ;

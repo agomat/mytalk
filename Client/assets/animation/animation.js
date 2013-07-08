@@ -66,3 +66,7 @@ $.fn.adjustSizes = function() {
   });
   date.width(maxDate);
 }
+
+$.fn.infobox = function() {
+  $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
+}

@@ -172,7 +172,7 @@ MyTalk.PeerConnection = Ember.Object.extend({
       } 
     }
     function onError(e) {
-      alert('Non siamo riusciti ad ottenere l\'accesso alle periferiche di acquisizione audio e video. Assicurati di aver concesso all\'applicazione i permessi necessari.');
+      alert('Non siamo riusciti ad ottenere l\'accesso alle periferiche di acquisizione audio e video. Assicurati di aver concesso all\'applicazione i permessi necessari. Tuttavia WebRTC potrebbe non riconoscere correttamente la tua WebCam e/o il tuo microfono.');
     }
     this.getUserMedia({ "audio": true, "video": true }, onSuccess, onError);
   },

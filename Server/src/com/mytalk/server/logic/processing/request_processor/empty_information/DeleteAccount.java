@@ -25,6 +25,8 @@ package com.mytalk.server.logic.processing.request_processor.empty_information;
 import com.mytalk.server.exceptions.AuthenticationFailException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.UserStatePack;
+import com.mytalk.server.logic.shared.model_client.User;
 
 
 public class DeleteAccount extends GenericRequest{
@@ -51,9 +53,12 @@ public class DeleteAccount extends GenericRequest{
 	public ARI manage(ARI ari){
 		ARI response=null;
 		com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(ari.getAuth().getUser(), ari.getAuth().getPwd(), null, null, null,null);
+		User userClient=new User(user.getId(),user.getSurname(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),false);
 		try{
 			da.deleteAccount(user);
-			response=new ARI(null, "SuccessfulDeleteAccount", null);
+			UserStatePack usp=new UserStatePack(userClient);
+			String packString=conv.convertJavaToJson(usp);
+			response=new ARI(null, "SuccessfulDeleteAccount", packString);
 		}catch(AuthenticationFailException af){
 			response=new ARI(null, "AuthenticationFailDeleteAccount", null);
 		}

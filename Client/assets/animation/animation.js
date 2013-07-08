@@ -1,7 +1,9 @@
-$.fn.dropDownMenu = function() { 
+$.fn.dropDownMenu = function(dettach) { 
   $(document).unbind('click');
   $('#menu_area').unbind('click');
   $('#menu_label').unbind('click');
+
+  if( dettach ) return;
 
   $(document).click(function() {
     $("#menu_area").slideUp(200);
@@ -14,9 +16,9 @@ $.fn.dropDownMenu = function() {
   $('#menu_label').click(function(e) {
     e.stopPropagation();
     if ($('#menu_area').css('display') == 'block')
-     $('#menu_area').slideUp(200);
+      $('#menu_area').slideUp(200);
     else
-     $('#menu_area').slideDown(200);
+      $('#menu_area').slideDown(200);
   });
 
   $('#menu_area a').click(function(e) {
@@ -71,62 +73,6 @@ $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
 }
 
-    function addFiles(files) {
-        var file = files[0]; // FileList object
-        FS.prepareToReadFile(file.size);
-        var reader = new FileReader();
-        var chunkId = 0;
-        var chunksPerSlice = 20000;
-        var sliceSize = chunksPerSlice*FS.CHUNK_SIZE;
-        var blob;
-
-        reader.onloadend = function(evt) {
-            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-                FS.addChunks(evt.target.result);
-                chunkId++;
-                if((chunkId+1)*sliceSize < file.size){
-                    blob = file.slice(chunkId*sliceSize,(chunkId+1)*sliceSize);
-                    reader.readAsArrayBuffer(blob);
-                }else if(chunkId*sliceSize < file.size){
-                    blob = file.slice(chunkId*sliceSize,file.size);
-                    reader.readAsArrayBuffer(blob);
-                }else{
-                    meta0 = {};
-                    meta0.numOfChunks = FS.numOfChunksInFile;
-                    meta0.size = files[0].size;
-                    meta0.name = files[0].name;
-                    meta0.lastModifiedDate = files[0].lastModifiedDate;
-                    meta0.type = files[0].type;
-                    var i = 0;
-                    var ACC = new Array();
-                    while( FS.chunks.hasOwnProperty(i) ) {
-                      var WARI = {
-                        filename: meta0.name, 
-                        filetype: meta0.type,
-                        numOfChunks: meta0.numOfChunks,
-                        chunkId: i,
-                        chunk: Base64Binary.encode(FS.chunks[i])
-                      };
-                      FS.chunks[i] = WARI;
-                      ++i;
-                    }
-                    window.foo = function(i){
-                      Ember.run.later(this,function(){
-                        console.log(i);
-                        window.RTCmanager.send(JSON.stringify( window.FS.chunks[i] ));
-                        if (window.FS.chunks[i+1]) window.foo(i+1);
-                      },200);
-                    };
-                    var i = 0;
-                    window.RTCmanager.send(JSON.stringify( window.FS.chunks[i] ));
-                    if (window.FS.chunks[i+1]) window.foo(i+1);
-                }
-            }
-        };
-
-        blob = file.slice(chunkId*sliceSize,(chunkId+1)*sliceSize);
-        reader.readAsArrayBuffer(blob);
-        window.reader = reader;
-    }
-
-window.FS = new client();
+if(!console.debug) {
+  console.debug = console.log;
+}

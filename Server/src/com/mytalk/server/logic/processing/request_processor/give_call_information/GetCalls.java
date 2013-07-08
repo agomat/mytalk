@@ -84,7 +84,7 @@ public class GetCalls extends GenericRequest {
 				listOfCall=da.getCalls(userAuth);
 				for(int i=0;i<listOfCall.size();i++){
 					callServer=listOfCall.get(i); 
-					if(callServer.getCaller().equals(userAuth.getUsername())){ 
+					if(callServer.getCaller()!= null && callServer.getCaller().equals(userAuth.getUsername())){ 
 						caller=true;
 						speaker=da.getIdFromUsername(callServer.getReceiver());
 						listCallClient.add(new Call(callServer.getId(),speaker, caller, callServer.getStartdate(),callServer.getDuration() , callServer.getByteSent(),callServer.getByteReceived()));

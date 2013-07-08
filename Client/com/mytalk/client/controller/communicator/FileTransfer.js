@@ -122,7 +122,7 @@
             a.setAttribute('href', window.URL.createObjectURL(blob));
             document.body.appendChild(a);
             a.click();
-            window.FS = new client();
+            //window.FS = new client();
         },
 
         //init true if this peer initiated the connection

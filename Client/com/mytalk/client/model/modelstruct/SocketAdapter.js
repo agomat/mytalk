@@ -75,7 +75,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   find: function (store, type, id) {
-    console.debug('[Adapter] find ' + id);    
+    console.debug('ADAPTER: find method called ('+type+')');  
   },
 
  /**
@@ -91,7 +91,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   findQuery: function(store, type, query, recordArray) {
-    console.debug('[Adapter] findQuery'); 
+    console.debug('ADAPTER: findQuery method called ('+type+')'); 
   },
 
  /**
@@ -107,7 +107,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   findMany: function(store, type, ids, query) {
-    console.debug('[Adapter] findQuery');  
+    console.debug('ADAPTER: findMany method called ('+type+')');  
   },
 
  /**
@@ -121,7 +121,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   findAll: function (store, type) { 
-    console.debug('[Adapter] findAll' + type);  
+    console.debug('ADAPTER: findAll method called ('+type+')');   
   },
 
  /**
@@ -140,7 +140,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   createRecord: function(store, type, record) {
-    console.debug('[Adapter] CreateRecord');
+    console.debug('ADAPTER: createRecord method called ('+type+')'); 
     var context = this;
     var processor = record.get('transaction').get('processor');
 
@@ -171,7 +171,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   createRecords: function(store, type, records) {
-    console.debug('[Adapter] CreateRecords');
+    console.debug('ADAPTER: createRecords method called ('+type+')'); 
     this.createRecord(store, type, records.list[0]); // single bulk commit
   },
 
@@ -191,16 +191,16 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   updateRecord: function(store, type, record) {
-    console.debug('[Adapter] updateRecord');
+    console.debug('ADAPTER: updateRecord method called ('+type+')'); 
     var context = this;
     var processor = record.get('transaction').get('processor');
     var onSent = function(processorName, success){
       if (success) {
         context.didUpdateRecord(store, type, record);
-        console.log("[Processor] The processor "+processorName+" has successfully sent the request to WebServer");
+        console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
       } else {
         context.didError(store, type, record, '');      
-        console.log("[Processor] The processor "+processorName+" was unable to sent the request to WebServer");
+        console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
       }
     };
 
@@ -220,7 +220,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   updateRecords: function(store, type, records) {
-    console.debug('[Adapter] updateRecords');
+    console.debug('ADAPTER: updateRecords method called ('+type+')'); 
     this.updateRecord(store, type, records.list[0]); // single bulk commit
   },
 
@@ -240,17 +240,17 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   deleteRecord: function(store, type, record) {
-    console.debug('[Adapter] deleteRecord');
+    console.debug('ADAPTER: deleteRecord method called ('+type+')'); 
     var context = this;
     var processor = record.get('transaction').get('processor');
     
     var onSent = function(processorName, success){
       if (success) {
         context.didDeleteRecord(store,type,record);
-        console.log("[Processor] The processor "+processorName+" has successfully sent the request to WebServer");
+        console.debug("The processor "+processorName+" has successfully sent the request to WebServer");
       } else {
         context.didError(store, type, record, '');      
-        console.log("[Processor] The processor "+processorName+" was unable to sent the request to WebServer");
+        console.debug("The processor "+processorName+" was unable to sent the request to WebServer");
       }
     };
 
@@ -270,7 +270,7 @@ DS.SocketAdapter = DS.RESTAdapter.extend(MyTalk.WebSocketConnection, {
   * @return {Void}
   */
   deleteRecords: function(store, type, records) {
-    console.debug('[Adapter] deleteRecords');
+    console.debug('ADAPTER: deleteRecords method called ('+type+')'); 
     this.deleteRecord(store, type, records.list[0]); // single bulk commit
   }
 

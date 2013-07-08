@@ -57,3 +57,5 @@ MyTalk.IndexView = Ember.View.extend({
     }, 500);
   }
 });
+
+if(!console.debug) console.debug = console.log;

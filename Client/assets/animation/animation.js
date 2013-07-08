@@ -72,7 +72,3 @@ $.fn.adjustSizes = function() {
 $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
 }
-
-if(!console.debug) {
-  console.debug = console.log;
-}

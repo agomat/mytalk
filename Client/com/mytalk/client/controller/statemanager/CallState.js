@@ -56,6 +56,7 @@ MyTalk.CallState = Ember.StateManager.create({
       context.reopen( lastContext ); 
       manager.isBusy.set('callData', context);
       manager.transitionTo( context.get('path') );
+      $.fn.dropDownMenu(true);
     },
   }),
  
@@ -81,6 +82,7 @@ MyTalk.CallState = Ember.StateManager.create({
       manager.isBusy.set('callData', Ember.Object.create({}));
       manager.transitionTo( 'isNotBusy' );
       MyTalk.Router.router.transitionTo('logged.index');
+      $.fn.dropDownMenu();
     },
  
   /**

@@ -1,7 +1,9 @@
-$.fn.dropDownMenu = function() { 
+$.fn.dropDownMenu = function(dettach) { 
   $(document).unbind('click');
   $('#menu_area').unbind('click');
   $('#menu_label').unbind('click');
+
+  if( dettach ) return;
 
   $(document).click(function() {
     $("#menu_area").slideUp(200);
@@ -14,9 +16,9 @@ $.fn.dropDownMenu = function() {
   $('#menu_label').click(function(e) {
     e.stopPropagation();
     if ($('#menu_area').css('display') == 'block')
-     $('#menu_area').slideUp(200);
+      $('#menu_area').slideUp(200);
     else
-     $('#menu_area').slideDown(200);
+      $('#menu_area').slideDown(200);
   });
 
   $('#menu_area a').click(function(e) {

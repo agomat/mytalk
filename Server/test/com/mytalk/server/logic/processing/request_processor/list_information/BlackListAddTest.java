@@ -83,8 +83,13 @@ public class BlackListAddTest {
 		ariResponse=blackListAdd.manage(ari);
 		assertEquals("Nesssun user da aggiungere in blacklist ma processata","CorruptedPack",ariResponse.getReq());
 			
-	//UsernameNotCorrespondingException non viene mai sollevata perche' per creare l'user si usa il valore presente in authentication
-	//UsernameNotExisting non viene mai sollevata perche' vi e' l'eccezione IdNotFoundException che previene cio'
+	/**
+	 * UsernameNotCorrespondingException non viene mai sollevata perche' per 
+	 * creare l'user si usa il valore presente in authentication
+	 * UsernameNotExisting non viene mai sollevata perche' vi e' l'eccezione 
+	 * IdNotFoundException che previene cio'
+	 */
+	
 	}
 
 }

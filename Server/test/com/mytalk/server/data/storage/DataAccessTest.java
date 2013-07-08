@@ -53,15 +53,21 @@ public class DataAccessTest{
 		Method method = DataAccess.class.getDeclaredMethod("authenticateClient",args1);
 		method.setAccessible(true);
 			
-		//test autenticazione con password corretta
+		/**
+		 * Test autenticazione con password corretta
+		 */
 		boolean result1=(boolean)method.invoke(dataAccess, firstTestUser);
 		assertTrue("autenticazione non riuscita con password uguali",result1);
 		
-		//test autenticazione con password sbagliata
+		/**
+		 * Test autenticazione con password sbagliata
+		 */
 		boolean result2=(boolean)method.invoke(dataAccess, secondTestUser);
 		assertTrue("autenticazione riuscita, il metodo funziona anche con password errata",!result2);
 		
-		//test autenticazione di un utente non esistente
+		/**
+		 * Test autenticazione di un utente non esistente
+		 */
 		boolean result3=(boolean)method.invoke(dataAccess, thirdTestUser);
 		assertTrue("autenticazione di un utente inesistente riuscita",!result3);
 			
@@ -71,11 +77,15 @@ public class DataAccessTest{
 	public void checkCheckUserByIp() {
 		String existingIp="123.123.123.1";
 		String notExistingIp="1.1.1.1";
-		//test con ip di un utente presente nella tabella OnlineUsers
+		/**
+		 * Test con ip di un utente presente nella tabella OnlineUsers
+		 */
 		boolean result1=dataAccess.checkUserByIp(existingIp);
 		assertTrue("non e' stato trovato l'utente con ip "+existingIp,result1);
 		
-		//test con ip di un utente non presente nella tabella OnlineUsers
+		/**
+		 * Test con ip di un utente non presente nella tabella OnlineUsers
+		 */
 		boolean result2=dataAccess.checkUserByIp(notExistingIp);
 		assertTrue("e' stato trovato un utente con ip "+notExistingIp+" anche se non e' presente",!result2);
 		
@@ -87,11 +97,15 @@ public class DataAccessTest{
 		String notExistingUsername="random";
 		User toAuth=new User("user0","user0",null,null,null,null);
 		
-		//test con username presente nella tabella OnlineUsers
+		/**
+		 * Test con username presente nella tabella OnlineUsers
+		 */
 		boolean result1=dataAccess.checkUserByName(existingUsername, toAuth);
 		assertTrue("non e' stato trovato l'utente con username "+existingUsername,result1);
 		
-		//test con username non presente nella tabella OnlineUsers
+		/**
+		 * Test con username non presente nella tabella OnlineUsers
+		 */
 		boolean result2=dataAccess.checkUserByName(notExistingUsername, toAuth);
 		assertTrue("e' stato trovato un utente con username "+notExistingUsername+" anche se non presente",!result2);
 		
@@ -118,7 +132,9 @@ public class DataAccessTest{
 	public void checkCreateAccount(){
 		User testUser=new User("user10","user10","user10@mytalk.com","user10","user10","emailhash123123123");
 		
-		//test creazione di un nuovo utente
+		/**
+		 * Test creazione di un nuovo utente
+		 */
 		try{
 			dataAccess.createAccount(testUser);
 			UserDAO ud=new UserDAO();
@@ -135,7 +151,9 @@ public class DataAccessTest{
 	public void checkCreateAccountFail() throws UsernameAlreadyExistingException{
 		User testUser=new User("user0","user0","user0@mytalk.com","user0","user0","emailhash123123123");
 		
-		//test creazione di un utente avente un username gia' usato
+		/**
+		 * Test creazione di un utente avente un username gia' usato
+		 */
 		dataAccess.createAccount(testUser);
 	}
 	
@@ -144,7 +162,9 @@ public class DataAccessTest{
 		User toAuth=new User("user4","user4",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user4","111.111.111.1");
 		
-		//testo il metodo con un OnlineUser avente ip autenticato come anonimo e username non autenticato nel sistema
+		/**
+		 * Testo il metodo con un OnlineUser avente ip autenticato come anonimo e username non autenticato nel sistema
+		 */
 		try{
 			dataAccess.login(onUserTest, toAuth);
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -166,7 +186,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.2");
 		
-		//testo il metodo con un OnlineUser avente username gia' autenticato con un altro ip
+		/**
+		 * Testo il metodo con un OnlineUser avente username gia' autenticato con un altro ip
+		 */
 		dataAccess.login(onUserTest, toAuth);
 	}
 	
@@ -175,7 +197,9 @@ public class DataAccessTest{
 		User toAuth=new User("user5","user5",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user5","123.123.123.2");
 		
-		//testo il metodo con un OnlineUser avente ip gia' autenticato con un username
+		/**
+		 * Testo il metodo con un OnlineUser avente ip gia' autenticato con un username
+		 */
 		dataAccess.login(onUserTest, toAuth);
 	}
 
@@ -184,7 +208,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("user0","111.111.111.111");
 		
-		//testo il metodo con un OnlineUser avente un ip non autenticato come anonimo
+		/**
+		 * Testo il metodo con un OnlineUser avente un ip non autenticato come anonimo
+		 */
 		dataAccess.login(onUserTest, toAuth);
 	}
 	
@@ -193,7 +219,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		OnlineUser onUserTest=new OnlineUser("random","111.111.111.2");
 		
-		//testo il metodo con un OnlineUser avente username da autenticare non corrispondente al campo dell'oggetto da autenticare
+		/**
+		 * Testo il metodo con un OnlineUser avente username da autenticare non corrispondente al campo dell'oggetto da autenticare
+		 */
 		dataAccess.login(onUserTest, toAuth);
 	}
 	
@@ -202,12 +230,16 @@ public class DataAccessTest{
 		User testUser1=new User("user0","user0",null,null,null,null);
 		User testUser2=new User("user9","user9",null,null,null,null);
 		
-		//test con un User che ha liste
+		/**
+		 * Test con un User che ha liste
+		 */
 		List<ListName> list1=dataAccess.userLists(testUser1);
 		int count1=list1.size();
 		assertEquals("e' stato trovato un numero di liste diverso da quelle possedute dall'utente",2,count1);
 		
-		//test con un User che non ha liste
+		/**
+		 * Test con un User che non ha liste
+		 */
 		List<ListName> list2=dataAccess.userLists(testUser2);
 		int count2=list2.size();
 		assertEquals("sono state trovate liste per un utente che non ne ha",0,count2);
@@ -217,7 +249,9 @@ public class DataAccessTest{
 	public void checkLogout(){
 		OnlineUser testUser=new OnlineUser(null,"123.123.123.3");
 		
-		//test con un utente autenticato nel sistema
+		/**
+		 * Test con un utente autenticato nel sistema
+		 */
 		try{
 			dataAccess.logout(testUser);
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -232,7 +266,9 @@ public class DataAccessTest{
 	public void checkLogoutFail()throws LogoutException{
 		OnlineUser testUser=new OnlineUser(null,"123.123.123.123");
 		
-		//test con un utente non autenticato nel sistema
+		/**
+		 * Test con un utente non autenticato nel sistema
+		 */
 		dataAccess.logout(testUser);
 	}
 	
@@ -242,7 +278,9 @@ public class DataAccessTest{
 		 ListName list=new ListName();
 		 list.setId(2);
 		 
-		 //test con una lista di proprieta' dell'utente autenticato
+		 /**
+		  * Test con una lista di proprieta' dell'utente autenticato
+		  */
 		 try{
 			 List<User> listResult=dataAccess.getListUsers(list, toAuth);
 			 assertEquals("la lista ritornata dal metodo e' sbagliata",4,listResult.size());
@@ -257,7 +295,9 @@ public class DataAccessTest{
 		 ListName list=new ListName();
 		 list.setId(3);
 		 
-		 //test con una lista di proprieta' di un altro utente
+		 /**
+		  * Test con una lista di proprieta' di un altro utente
+		  */
 		 List<User> listResult=dataAccess.getListUsers(list, toAuth);
 	 }
 	
@@ -279,7 +319,9 @@ public class DataAccessTest{
 	public void checkListCreate()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
-		//testo la creazione della lista
+		/**
+		 * Testo la creazione della lista
+		 */
 		try{
 			dataAccess.listCreate(newList, toAuth);
 			ListNameDAO ld=new ListNameDAO();
@@ -297,7 +339,9 @@ public class DataAccessTest{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
 		
-		//test con una lista gia' presente per l'utente
+		/**
+		 * Test con una lista gia' presente per l'utente
+		 */
 		dataAccess.listCreate(newList, toAuth);
 	}
 	
@@ -306,7 +350,9 @@ public class DataAccessTest{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user2");
 		
-		//test con una lista di un altro utente rispetto all'autenticato
+		/**
+		 * Test con una lista di un altro utente rispetto all'autenticato
+		 */
 		dataAccess.listCreate(newList, toAuth);
 	}
 	
@@ -314,7 +360,9 @@ public class DataAccessTest{
 	public void checkListDelete()throws AuthenticationFailException{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user1");
-		//testo la cancellazione di una lista
+		/**
+		 * Testo la cancellazione di una lista
+		 */
 		try{
 			dataAccess.listDelete(newList, toAuth);
 			ListNameDAO ld=new ListNameDAO();
@@ -333,7 +381,9 @@ public class DataAccessTest{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("office","user1");
 		
-		//test di cancellazione di una lista che non esiste
+		/**
+		 * Test di cancellazione di una lista che non esiste
+		 */
 		dataAccess.listDelete(newList, toAuth);
 	}
 	
@@ -342,7 +392,9 @@ public class DataAccessTest{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		ListName newList=new ListName("friends","user2");
 		
-		//test di cancellazione di una lista di un altro utente
+		/**
+		 * Test di cancellazione di una lista di un altro utente
+		 */
 		dataAccess.listDelete(newList, toAuth);
 	}
 	
@@ -352,7 +404,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user5";
 		
-		//test di aggiunta di un utente a una lista
+		/**
+		 * Test di aggiunta di un utente a una lista
+		 */
 		try{
 			dataAccess.userListAdd(newList, toAdd, toAuth);
 			UserListDAO ld=new UserListDAO();
@@ -377,7 +431,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user4";
 		
-		//test di aggiunta di un utente a una lista che lo ha gia'
+		/**
+		 * Test di aggiunta di un utente a una lista che lo ha gia'
+		 */
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -387,7 +443,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
 		
-		//test di aggiunta di un utente che non e' registrato nel sistema
+		/**
+		 * Test di aggiunta di un utente che non e' registrato nel sistema
+		 */
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -397,7 +455,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user1";
 		
-		//test di aggiunta a una lista di se stesso
+		/**
+		 * Test di aggiunta a una lista di se stesso
+		 */
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -407,7 +467,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user0");
 		String toAdd="user4";
 		
-		//test di aggiunta a una lista appartenente a un altro utente
+		/**
+		 * Test di aggiunta a una lista appartenente a un altro utente
+		 */
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -417,7 +479,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("office","user1");
 		String toAdd="user4";
 		
-		//test di aggiunta a una lista non esistente
+		/**
+		 * Test di aggiunta a una lista non esistente
+		 */
 		dataAccess.userListAdd(newList, toAdd, toAuth);
 	}
 	
@@ -427,7 +491,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user3";
 		
-		//test di rimozione di un utente da una lista
+		/**
+		 * Test di rimozione di un utente da una lista
+		 */
 		try{
 			dataAccess.userListRemove(newList, toAdd, toAuth);
 			UserListDAO ld=new UserListDAO();
@@ -452,7 +518,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="user5";
 		
-		//test di rimozione di un utente da una lista che non lo ha
+		/**
+		 * Test di rimozione di un utente da una lista che non lo ha
+		 */
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
@@ -462,7 +530,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String toAdd="random";
 		
-		//test di rimozione di un utente che non e' registrato nel sistema
+		/**
+		 * Test di rimozione di un utente che non e' registrato nel sistema
+		 */
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
@@ -472,7 +542,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user0");
 		String toAdd="user2";
 		
-		//test di rimozione da una lista appartenente a un altro utente
+		/**
+		 * Test di rimozione da una lista appartenente a un altro utente
+		 */
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
@@ -482,14 +554,18 @@ public class DataAccessTest{
 		ListName newList=new ListName("office","user1");
 		String toAdd="user4";
 		
-		//test di rimozione da una lista non esistente
+		/**
+		 * Test di rimozione da una lista non esistente
+		 */
 		dataAccess.userListRemove(newList, toAdd, toAuth);
 	}
 	
 	@Test
 	public void checkLoginAsAnonymous(){
 		OnlineUser testUser=new OnlineUser(null,"123.123.123.123");
-		//test con un ip non in uso
+		/**
+		 * Test con un ip non in uso
+		 */
 		try{
 			dataAccess.loginAsAnonymous(testUser);
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -504,7 +580,9 @@ public class DataAccessTest{
 	public void checkLoginAsAnonymousFail()throws IpAlreadyLoggedException{
 		OnlineUser testUser=new OnlineUser(null,"123.123.123.0");
 		
-		//test con un ip gia' in uso
+		/**
+		 * Test con un ip gia' in uso
+		 */
 		dataAccess.loginAsAnonymous(testUser);
 	}
 	
@@ -520,7 +598,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user1");
 		
-		//test di aggiunta di un utente alla blacklist
+		/**
+		 * Test di aggiunta di un utente alla blacklist
+		 */
 		try{
 			dataAccess.blacklistAdd(toBlack, toAuth);
 			BlacklistDAO bd=new BlacklistDAO();
@@ -540,7 +620,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user1","user2");
 		
-		//test di aggiunta di un utente alla blacklist di un altro utente
+		/**
+		 * Test di aggiunta di un utente alla blacklist di un altro utente
+		 */
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
@@ -549,7 +631,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
-		//test di aggiunta di un utente gia' presente nella blacklist
+		/**
+		 * Test di aggiunta di un utente gia' presente nella blacklist
+		 */
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
@@ -558,7 +642,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user0");
 		
-		//test di aggiunta di se stesso alla blacklist
+		/**
+		 * Test di aggiunta di se stesso alla blacklist
+		 */
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
@@ -567,7 +653,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","random");
 		
-		//test di aggiunta di un utente inesistente alla blacklist
+		/**
+		 * Test di aggiunta di un utente inesistente alla blacklist
+		 */
 		dataAccess.blacklistAdd(toBlack, toAuth);
 	}
 	
@@ -576,7 +664,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user9");
 		
-		//test di rimozione di un utente dalla blacklist
+		/**
+		 * Test di rimozione di un utente dalla blacklist
+		 */
 		try{
 			dataAccess.blacklistRemove(toBlack, toAuth);
 			BlacklistDAO bd=new BlacklistDAO();
@@ -594,7 +684,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user1","user8");
 		
-		//test di rimozione di un utente dalla blacklist di un altro utente
+		/**
+		 * Test di rimozione di un utente dalla blacklist di un altro utente
+		 */
 		dataAccess.blacklistRemove(toBlack, toAuth);
 	}
 	
@@ -603,7 +695,9 @@ public class DataAccessTest{
 		User toAuth=new User("user0","user0",null,null,null,null);
 		Blacklist toBlack=new Blacklist("user0","user1");
 		
-		//test di rimozione di un utente non presente nella blacklist
+		/**
+		 * Test di rimozione di un utente non presente nella blacklist
+		 */
 		dataAccess.blacklistRemove(toBlack, toAuth);
 	}
 	
@@ -639,7 +733,9 @@ public class DataAccessTest{
 		User toChange=new User("user0","pwd","user0@prova.com","nome","cognome","emailhashNUOVO");
 		User toAuth=new User("user0","user0",null,null,null,null);
 		
-		//test di cambio di tutti i campi permessi
+		/**
+		 * Test di cambio di tutti i campi permessi
+		 */
 		try{
 			dataAccess.updateAccount(toChange, toAuth);
 			UserDAO ud=new UserDAO();
@@ -659,7 +755,9 @@ public class DataAccessTest{
 		User toAuth=new User("user1","user1",null,null,null,null);
 		User toChange=new User("user11","user11",null,null,null,null);
 		
-		//test di cambio dati di un altro user
+		/**
+		 * Test di cambio dati di un altro user
+		 */
 		dataAccess.updateAccount(toChange, toAuth);
 	}
 	
@@ -669,7 +767,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user0");
 		String newName="enemies";
 		
-		//test di rinomina di una lista esistente
+		/**
+		 * Test di rinomina di una lista esistente
+		 */
 		try{
 			dataAccess.renameList(newList, newName, toAuth);
 			ListNameDAO ld=new ListNameDAO();
@@ -691,7 +791,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user1");
 		String newName="enemies";
 		
-		//test con username da autenticare e proprietario della lista diversi
+		/**
+		 * Test con username da autenticare e proprietario della lista diversi
+		 */
 		dataAccess.renameList(newList, newName, toAuth);
 	}
 	
@@ -701,7 +803,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("office","user0");
 		String newName="friends";
 		
-		//test di rinomina di una lista non esistente
+		/**
+		 * Test di rinomina di una lista non esistente
+		 */
 		dataAccess.renameList(newList, newName, toAuth);
 	}
 	
@@ -711,7 +815,9 @@ public class DataAccessTest{
 		ListName newList=new ListName("friends","user0");
 		String newName="friends";
 		
-		//test di rinomina di una lista con un nome gia' usato
+		/**
+		 * Test di rinomina di una lista con un nome gia' usato
+		 */
 		dataAccess.renameList(newList, newName, toAuth);
 	}
 	
@@ -719,7 +825,9 @@ public class DataAccessTest{
 	public void checkGetUserById(){
 		int id=2;
 		
-		//test di ricerca di un user con id valido
+		/**
+		 * Test di ricerca di un user con id valido
+		 */
 		try{
 			User u=dataAccess.getUserById(id);
 			assertNotNull("non e` stato ritornato nessun oggetto User",u);
@@ -733,7 +841,9 @@ public class DataAccessTest{
 	public void checkGetUserByIdFail()throws IdNotFoundException{
 		int id=300;
 		
-		//test di ricerca di un User con id non presente
+		/**
+		 * Test di ricerca di un User con id non presente
+		 */
 		User u=dataAccess.getUserById(id);
 	}
 	
@@ -741,7 +851,9 @@ public class DataAccessTest{
 	public void checkGetUserIp(){
 		String username="user0";
 		
-		//test di ricerca di un username autenticato
+		/**
+		 * Test di ricerca di un username autenticato
+		 */
 		try{
 			String ip=dataAccess.getUserIp(username);
 			String expected="123.123.123.0";
@@ -755,7 +867,9 @@ public class DataAccessTest{
 	public void checkGetUserIpFailNotExisting()throws UserNotLoggedException{
 		String username="";
 		
-		//test di ricerca di un username vuoto
+		/**
+		 * Test di ricerca di un username vuoto
+		 */
 		String ip=dataAccess.getUserIp(username);
 	}
 	
@@ -763,7 +877,9 @@ public class DataAccessTest{
 	public void checkGetUserIpFail()throws UserNotLoggedException{
 		String username="user6";
 		
-		//test di ricerca di un username di un utente non autenticato
+		/**
+		 * Test di ricerca di un username di un utente non autenticato
+		 */
 		String ip=dataAccess.getUserIp(username);
 	}
 	
@@ -771,7 +887,9 @@ public class DataAccessTest{
 	public void checkGetIdFromUsername(){
 		String username="user0";
 		
-		//test di ricerca di un username esistente
+		/**
+		 * Test di ricerca di un username esistente
+		 */
 		try{
 			int id=dataAccess.getIdFromUsername(username);
 			int expected=1;
@@ -785,7 +903,9 @@ public class DataAccessTest{
 	public void checkGetIdFromUsernameFail()throws UserNotExistingException{
 		String username="random";
 		
-		//test di ricerca di un username non esistente
+		/**
+		 * Test di ricerca di un username non esistente
+		 */
 		int id=dataAccess.getIdFromUsername(username);
 	}
 	
@@ -793,7 +913,9 @@ public class DataAccessTest{
 	public void checkLogoutToAnonymous(){
 		OnlineUser user=new OnlineUser("user0","123.123.123.0");
 		
-		//test di logout di un utente autenticato
+		/**
+		 * Test di logout di un utente autenticato
+		 */
 		try{
 			dataAccess.logoutToAnonymous(user);
 			OnlineUserDAO od=new OnlineUserDAO();
@@ -808,7 +930,9 @@ public class DataAccessTest{
 	public void checkLogoutToAnonymousFail()throws LogoutException{
 		OnlineUser user=new OnlineUser("random","1.1.1.1");
 		
-		//test di logout di un utente non autenticato
+		/**
+		 * Test di logout di un utente non autenticato
+		 */
 		dataAccess.logoutToAnonymous(user);
 	}
 	
@@ -817,12 +941,16 @@ public class DataAccessTest{
 		Blacklist toCheckTrue=new Blacklist("user0","user9");
 		Blacklist toCheckFalse=new Blacklist("user0","random");
 		
-		//test di controllo di un user che e' nella blacklist dell'user0
+		/**
+		 * Test di controllo di un user che e' nella blacklist dell'user0
+		 */
 		boolean b=dataAccess.checkBlacklist(toCheckTrue);
 		assertTrue("l'utente non e' stato trovato nella blacklist",b);
 	
 		
-		//test di controllo di un user che non e' nella blacklist dell'user0
+		/**
+		 * Test di controllo di un user che non e' nella blacklist dell'user0
+		 */
 		boolean t=dataAccess.checkBlacklist(toCheckFalse);
 		assertTrue("l'utente e' stato trovato in blacklist pur non essendo presente",!t);
 

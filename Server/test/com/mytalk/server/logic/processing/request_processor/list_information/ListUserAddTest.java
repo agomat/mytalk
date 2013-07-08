@@ -91,7 +91,9 @@ public class ListUserAddTest {
 		ariResponse=listUserAdd.manage(ari);
 		assertEquals("Lista non esiste per questo user","ListNotExistingListUserAdd",ariResponse.getReq());
 		
-		//UsernameNotCorrespondingListUserAdd non viene sollevata per costruzione
+		/**UsernameNotCorrespondingListUserAdd non viene sollevata per 
+		 * costruzione
+		 */
 	}
 
 }

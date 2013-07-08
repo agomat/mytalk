@@ -53,7 +53,7 @@ public class ListUserRemove extends GenericRequest {
 	 *  al componente CSDAT2. Viene restituito un "SuccessfulListUserRemove". Se non va a buon
 	 *  fine, vengono sollevate e catturate le seguenti eccezioni: "UserNotListedException", "AuthenticationFailException", "IdNotFoundException",
 	 *  "UserNotExistingException", "ListNotExistingException" e "UsernameNotCorrespondingException", ritornando un pacchetto con
-	 *  richiesta "UserNotListedException", "AuthenticationFailListUserRemove", "IdNotFoundListUserRemove", 
+	 *  richiesta "UserNotListed", "AuthenticationFailListUserRemove", "IdNotFoundListUserRemove", 
 	 *  "UserNotExistingListUserRemove", "ListNotExistingListUserRemove" o  
 	 *  "UsernameNotCorrespondingListUserRemove". In caso di pacchetto mal formato,
 	 * viene restituito un "CorruptedPack"
@@ -88,7 +88,7 @@ public class ListUserRemove extends GenericRequest {
 				da.userListRemove(listName, user, userAuth);
 				response=new ARI(null,"SuccessfulListUserRemove",infoRequest);
 			}catch(UserNotListedException unl){
-				response=new ARI(null,"UserNotListedException",infoRequest);
+				response=new ARI(null,"UserNotListed",infoRequest);
 			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailListUserRemove",infoRequest);
 			}catch (IdNotFoundException e) {

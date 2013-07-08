@@ -53,7 +53,7 @@ public class BlackListRemove extends GenericRequest {
 	 * CSDAT2. Viene restituito un "SuccessfulBlackListRemove". Se non va a buon fine, vengono 
 	 * sollevate e catturate le seguenti eccezioni: "UserNotBlacklistedException", "AuthenticationFailException", 
 	 * "UsernameNotCorrespondingException", "IdNotFoundException", ritornando un pacchetto con campo richiesta 
-	 * "AuthenticationFailBlackListRemove", "UsernameNotCorrespondingBlackListRemove" o 
+	 * "AuthenticationFailBlackListRemove", "UsernameNotCorrespondingBlackListRemove", "UserNotBlacklisted" o 
 	 * "IdNotFoundBlackListRemove".In caso di pacchetto mal formato, viene restituito un "CorruptedPack"
 	 *  
 	 *  @method +manage
@@ -86,7 +86,7 @@ public class BlackListRemove extends GenericRequest {
 				da.blacklistRemove(blacklist,userAuth);
 				response=new ARI(null,"SuccessfulBlackListRemove",infoRequest);
 			}catch(UserNotBlacklistedException unb){
-				response=new ARI(null,"UserNotBlacklistedException",infoRequest);
+				response=new ARI(null,"UserNotBlacklisted",infoRequest);
 			}catch(AuthenticationFailException af){
 				response=new ARI(null,"AuthenticationFailBlackListRemove",null);
 			} catch (UsernameNotCorrespondingException e) {

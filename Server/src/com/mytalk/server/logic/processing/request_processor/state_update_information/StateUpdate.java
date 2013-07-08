@@ -42,8 +42,8 @@ public class StateUpdate extends GenericRequest{
 	public StateUpdate(){}
 	/**
 	 * Una volta ricevuto il pacchetto ARI in input si va a verificare come prima cosa il valore 
-	 * del campo richiesta del pacchetto per determinare se il nuovo stato e' online(Login) od 
-	 * offline(Logout, LogoutToAnonymous e DeleteAccount). Successivamente si procede con 
+	 * del campo richiesta del pacchetto per determinare se il nuovo stato e' online(Login e UpdateAccount)
+	 *  od offline(Logout, LogoutToAnonymous e DeleteAccount). Successivamente si procede con 
 	 * l'elaborazione dei dati, al fine di creare un pacchetto di informazione di tipo UserStatePack,
 	 *  contenente al suo interno un oggetto User che identifica tutte le informazioni relative 
 	 *  all'user che ha fatto il cambio stato, in particolare il suo nuovo stato, identificato da un 
@@ -68,7 +68,7 @@ public class StateUpdate extends GenericRequest{
 		String infoResponse;
 		User userClient=null;
 		boolean status=false;
-		if(ari.getReq().equals("Login")){
+		if(ari.getReq().equals("Login") || ari.getReq().equalsIgnoreCase("UpdateAccount")){
 			status=true;
 		}
 		if(ari.getReq().equals("DeleteAccount")){

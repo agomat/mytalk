@@ -68,7 +68,7 @@ public class StateUpdate extends GenericRequest{
 		String infoResponse;
 		User userClient=null;
 		boolean status=false;
-		if(ari.getReq().equals("Login") || ari.getReq().equalsIgnoreCase("UpdateAccount")){
+		if(ari.getReq().equals("Login") || ari.getReq().equals("UpdateAccount")){
 			status=true;
 		}
 		if(ari.getReq().equals("DeleteAccount")){

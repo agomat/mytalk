@@ -599,10 +599,10 @@
 
         <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{hourconversion stats.duration}}</li>
-          <li><span>Dati ricevuti:</span>{{conversion stats.receivedBytes}}</li>
-          <li><span>Dati trasmessi:</span>{{conversion stats.sentBytes}}</li>
-          <li><span>Velocit&agrave;:</span>{{bitrate}} kbits/sec</li>
-          <li><span>Round Trip Time:</span>{{rtt}} ms</li>
+          <li {{bindAttr class="stats.receivedBytes:display_yes:display_none"}}><span>Dati ricevuti:</span>{{conversion stats.receivedBytes}}</li>
+          <li {{bindAttr class="stats.sentBytes:display_yes:display_none"}}><span>Dati trasmessi:</span>{{conversion stats.sentBytes}}</li>
+          <li {{bindAttr class="bitrate:display_yes:display_none"}}><span>Velocit&agrave;:</span>{{bitrate}} kbits/sec</li>
+          <li {{bindAttr class="rtt:display_yes:display_none"}}><span>Round Trip Time:</span>{{rtt}} ms</li>
         </ul>
         <div id="stats"></div>
 

@@ -99,6 +99,15 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   bitrate: null,
 
   /**
+  * Proprietà necessaria a mostrare nella vista la latenza di connessione
+  * @property +rtt       
+  * @type {String}             
+  *
+  */
+
+  rtt: null,
+
+  /**
   * Proprietà che contiene l'oggetto della connessione peer to peer
   * @property -RTCmanager       
   * @type {PeerConnection}             
@@ -387,19 +396,21 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var timestampPrev = 0;
     var context = this;
     var statCollector = setInterval(function() {
-      var display = function(str) {
-        context.set('bitrate',str);
+      var display = function(b,r) {
+        context.set('bitrate',b);
+        context.set('rtt',r);
       }
       if(context.RTCmanager.pc){
         context.RTCmanager.pc.getStats(function(stats) {
           var statsString = '';
           var results = stats.result();
-          var bitrateText = 'N/A';
+          var bitrateText = rtt = 'N/A';
           context.get('stats').set('duration',context.get('stats.duration')+1);
           for (var i = 0; i < results.length; ++i) {
             var res = results[i];
             if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
               context.get('stats').set('sentBytes',res.stat('bytesSent'));
+              rtt = res.stat('googRtt');
             }
             if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
               context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
@@ -413,7 +424,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
               bytesPrev = bytesNow;
             }
           }
-          display(bitrateText);
+          display(bitrateText,rtt);
         });
       }
       else{

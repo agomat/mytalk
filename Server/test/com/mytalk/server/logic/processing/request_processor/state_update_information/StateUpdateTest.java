@@ -26,6 +26,7 @@ import com.mytalk.server.EnvironmentSetter;
 import com.mytalk.server.exceptions.IdNotFoundException;
 import com.mytalk.server.exceptions.UserNotExistingException;
 import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount;
 import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
 import com.mytalk.server.logic.processing.request_processor.world_information.UpdateAccount;
 import com.mytalk.server.logic.shared.ARI;
@@ -77,7 +78,7 @@ public class StateUpdateTest {
 		pack.setWorldPersonalData(wpd);
 		packString=conv.convertJavaToJson(pack);
 		ARI ariUpdate= new ARI(auth,"UpdateAccount",packString);
-		ARI risposta=updateAccount.manage(ariUpdate);
+		updateAccount.manage(ariUpdate);
 		esito=stateUpdate.manage(ariUpdate);
 		stringEsito=esito.getInfo();
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
@@ -99,23 +100,28 @@ public class StateUpdateTest {
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
 		userEsito=userStatePack.getList();
 		assertFalse(userEsito.getOnline());
+
+		DeleteAccount deleteAccount=new DeleteAccount();
+		Authentication authRightTest=new Authentication("user1","user1","123.123.123.3");
+		ARI ariDelete=new ARI(authRightTest,"DeleteAccount",null);
 		
-		ari.setReq("DeleteAccount");
-		User u=new User(4,"user3","user3","user3","md5","123.123.123.3",false);
-		UserStatePack packIn= new UserStatePack(u);
-		String packInString=conv.convertJavaToJson(packIn);
-		ari.setInfo(packInString);
-		esito=stateUpdate.manage(ari);
+		ARI ariResult=deleteAccount.manage(ari);
+		UserStatePack userPack=(UserStatePack)conv.convertJsonToJava(ariResult.getInfo(), UserStatePack.class);
+		User userTest=userPack.getList();
+		ariDelete.setInfo(ariResult.getInfo());
+
+
+		esito=stateUpdate.manage(ariDelete);
 		stringEsito=esito.getInfo();
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);
 		userEsito=userStatePack.getList();
-		assertEquals(u.getId(),userEsito.getId());
-		assertEquals(u.getUsername(),userEsito.getUsername());
-		assertEquals(u.getName(),userEsito.getName());
-		assertEquals(u.getSurname(),userEsito.getSurname());
-		assertEquals(u.getMd5(),userEsito.getMd5());
-		assertEquals(u.getIp(),userEsito.getIp());
-		assertEquals(u.getOnline(),userEsito.getOnline());
+		assertEquals(userTest.getId(),userEsito.getId());
+		assertEquals(userTest.getUsername(),userEsito.getUsername());
+		assertEquals(userTest.getName(),userEsito.getName());
+		assertEquals(userTest.getSurname(),userEsito.getSurname());
+		assertEquals(userTest.getMd5(),userEsito.getMd5());
+		assertEquals(userTest.getIp(),userEsito.getIp());
+		assertEquals(userTest.getOnline(),userEsito.getOnline());
 		
 		/**
 		 *  Le due eccezioni UserNotExistingException e IdNotFoundException non vengono lanciate 

@@ -198,6 +198,10 @@ public class Processor implements IProcessor{
 				ipToSend=message.getIp();
 			}
 			esito.setAuth(null);
+			if(packInfo.getReq().equals("DeleteAccount")){
+				packInfo.setInfo(esito.getInfo());
+				esito.setInfo(null);
+			}
 			String json=convert.convertJavaToJson(esito);
 			responseList.add(new Message(ipToSend,json));
 		}

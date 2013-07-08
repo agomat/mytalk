@@ -595,7 +595,8 @@
         {{/unless}}
 
         <button {{action "acceptCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="answer_button" ><div></div> Rispondi</button>&nbsp;
-        <button {{action "closeCall" this}} id="hangup_button" ><div></div>Riaggancia</button>
+        <button {{action "closeCall" this}} {{bindAttr class="isIncomingCall:display_yes:display_none"}} id="hangup_button" ><div></div>Riaggancia</button>
+        <button {{action "closeCall" this}} {{bindAttr class="isConnected:display_yes:display_none"}} id="hangup_button" ><div></div>Riaggancia</button>
 
         <ul id="statistiche" {{bindAttr class="isConnected:display_yes:display_none"}}> 
           <li><span>Tempo trascorso:</span>{{hourconversion stats.duration}}</li>

@@ -127,17 +127,17 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   init: function(){
-   this._super();
-   var context = this;
-   this.onClose = function( isCaller ) {
-    context.set('messages',[]);
-    if( isCaller ) {
-      context.saveStats();
-    }
-    context.clearStats();
-    document.getElementById('closeCall').play();
-    MyTalk.CallState.send('beingFree');
-   };
+    this._super();
+    var context = this;
+    this.onClose = function( isCaller ) {
+      context.set('messages',[]);
+      if( isCaller ) {
+        context.saveStats();
+      }
+      context.clearStats();
+      document.getElementById('closeCall').play();
+      MyTalk.CallState.send('beingFree');
+    };
   },
 
   /**
@@ -153,55 +153,55 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   call: function(user) {
-  //TODO verificare se sono impegnato in altra conversazione
-  this.set('stats.caller',true);
-  this.set('stats.speaker',user.get('id'));
-  this.RTCmanager = MyTalk.PeerConnection.create();
-  var processorFactory = MyTalk.ProcessorFactory.create({});
-  var processor = processorFactory.createProcessorProduct("UserCall");
+    //TODO verificare se sono impegnato in altra conversazione
+    this.set('stats.caller',true);
+    this.set('stats.speaker',user.get('id'));
+    this.RTCmanager = MyTalk.PeerConnection.create();
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("UserCall");
 
-   // callback 1
-  var context = this;
-  var beforeCandidatesCreation = function() {
-    var callData = Ember.Object.create({
-      path: 'isBusy.outcomingCall',
-      RTCmanager: context.RTCmanager, 
-      speaker: user,
-    });
-    MyTalk.CallState.send('beingBusy', callData);
-    context.set( 'stats.date', new moment().lang('it') );
-  };
+     // callback 1
+    var context = this;
+    var beforeCandidatesCreation = function() {
+      var callData = Ember.Object.create({
+        path: 'isBusy.outcomingCall',
+        RTCmanager: context.RTCmanager, 
+        speaker: user,
+      });
+      MyTalk.CallState.send('beingBusy', callData);
+      context.set( 'stats.date', new moment().lang('it') );
+    };
 
-   // callback 2
-  var onCandidatesReady = function(RTCinfo) {
-    document.getElementById('modem-dial').play();
-    processor.process({
-      speaker: user,
-      RTCinfo: JSON.stringify(RTCinfo) 
-    });
-   };
+     // callback 2
+    var onCandidatesReady = function(RTCinfo) {
+      document.getElementById('modem-dial').play();
+      processor.process({
+        speaker: user,
+        RTCinfo: JSON.stringify(RTCinfo) 
+      });
+    };
 
-  var onDataChannelMessage = function(message) {
-  
-    var msg=context.get('messages');
-    var temp=[];
-
-    msg.forEach(function(t){
-      temp.pushObject(t);
-    });
-    temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
-    context.set('messages',temp);
+    var onDataChannelMessage = function(message) {
     
-    Ember.run.later(this, function(){
-    $("#messages").animate({
-      scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
-      },300);
-    }, 300);
-  
-  };
-   
-  this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
-  this.getStats();
+      var msg=context.get('messages');
+      var temp=[];
+
+      msg.forEach(function(t){
+        temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
+      
+      Ember.run.later(this, function(){
+        $("#messages").animate({
+          scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
+    
+    };
+     
+    this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
+    this.getStats();
   },
   
   /**
@@ -229,7 +229,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     
       for(var i=0; i<RTCinfo.ice.length; ++i) {
         local.addICE( RTCinfo.ice[i] );
-    }
+      }
 
       var callData = Ember.Object.create({
         isCaller: false
@@ -288,9 +288,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     // patch:
     MyTalk.CallState.get('isBusy').set('accepted', true);
     if(this.get('isConnected')) {
-     this.RTCmanager.closeConnection(this.onClose);
+      this.RTCmanager.closeConnection(this.onClose);
     
-//  MyTalk.CallState.send('beingFree');
+      //MyTalk.CallState.send('beingFree');
     }
     else {
       //GESTIRE RIFIUTA CHIAMATA
@@ -305,7 +305,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     }
   },
 
-  
  /**
   * Questo metodo si occupa di salvare le statistiche dell'ultima chiamata ricevuta/effettuata.
   * Una volta invocato, questo metodo,crea un'istanza del processore adeguato 
@@ -314,7 +313,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   * @method -saveStats
   * @return {Void} 
   */
-
 
   saveStats:function(){
     var processorFactory = MyTalk.ProcessorFactory.create({});
@@ -418,7 +416,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
               if (timestampPrev > 0) {
                 var bitRate = Math.round((bytesNow - bytesPrev) * 8 /
                 (res.timestamp - timestampPrev));
-                bitrateText = bitRate + ' kbits/sec';
+                bitrateText = bitRate;
               }
               timestampPrev = res.timestamp;
               bytesPrev = bytesNow;

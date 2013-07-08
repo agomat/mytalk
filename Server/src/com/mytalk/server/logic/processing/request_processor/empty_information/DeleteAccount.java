@@ -23,6 +23,9 @@
 package com.mytalk.server.logic.processing.request_processor.empty_information;
 
 import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.LogoutException;
+import com.mytalk.server.exceptions.UserNotExistingException;
 import com.mytalk.server.logic.processing.request_processor.GenericRequest;
 import com.mytalk.server.logic.shared.ARI;
 import com.mytalk.server.logic.shared.UserStatePack;
@@ -43,7 +46,9 @@ public class DeleteAccount extends GenericRequest{
 	 *  del campo dati ari, per poi invocare, tramite un oggetto di DataAccess appartenente 
 	 *  alla componente CSDAT2, il metodo che si occupera' di eliminare l'utente. Tale operazione 
 	 *  puo' avere successo, restituendo "SuccessfulDeleteAccount", o insuccesso con
-	 *   "AuthenticationFailDeleteAccount" causato dal fallimento dell'autenticazione
+	 *   "AuthenticationFailDeleteAccount" causato dal fallimento dell'autenticazione.
+	 *   Per quanto riguarda le eccezioni LogoutException, UserNotExistingException e 
+	 *   IdNotFoundException esse non vengono mai sollevate per costruzione. 
 	 *  
 	 *  @method +manage
 	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
@@ -52,15 +57,28 @@ public class DeleteAccount extends GenericRequest{
 	 */
 	public ARI manage(ARI ari){
 		ARI response=null;
-		com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(ari.getAuth().getUser(), ari.getAuth().getPwd(), null, null, null,null);
-		User userClient=new User(user.getId(),user.getSurname(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),false);
+		com.mytalk.server.data.model.User userServer=new com.mytalk.server.data.model.User(ari.getAuth().getUser(), ari.getAuth().getPwd(), null, null, null,null);
 		try{
-			da.deleteAccount(user);
+			String username=da.getUsernameByIp(ari.getAuth().getIp());
+			Integer id=da.getIdFromUsername(username);
+			com.mytalk.server.data.model.User user=da.getUserById(id);
+			User userClient=new User(user.getId(),user.getSurname(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),false);
+			
+			da.deleteAccount(userServer);
 			UserStatePack usp=new UserStatePack(userClient);
 			String packString=conv.convertJavaToJson(usp);
 			response=new ARI(null, "SuccessfulDeleteAccount", packString);
 		}catch(AuthenticationFailException af){
 			response=new ARI(null, "AuthenticationFailDeleteAccount", null);
+		}catch (LogoutException e) {
+			// Auto-generated catch block
+			e.printStackTrace();
+		}catch (UserNotExistingException e) {
+			// Auto-generated catch block
+			e.printStackTrace();
+		} catch (IdNotFoundException e) {
+			// Auto-generated catch block
+			e.printStackTrace();
 		}
 		return response;
 	}

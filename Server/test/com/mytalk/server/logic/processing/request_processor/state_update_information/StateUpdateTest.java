@@ -101,16 +101,14 @@ public class StateUpdateTest {
 		userEsito=userStatePack.getList();
 		assertFalse(userEsito.getOnline());
 
-		DeleteAccount deleteAccount=new DeleteAccount();
-		Authentication authRightTest=new Authentication("user1","user1","123.123.123.3");
-		ARI ariDelete=new ARI(authRightTest,"DeleteAccount",null);
 		
+		DeleteAccount deleteAccount=new DeleteAccount();
+		Authentication authRightTest=new Authentication("user3","user3","123.123.123.3");
+		ARI ariDelete=new ARI(authRightTest,"DeleteAccount",null);
 		ARI ariResult=deleteAccount.manage(ari);
 		UserStatePack userPack=(UserStatePack)conv.convertJsonToJava(ariResult.getInfo(), UserStatePack.class);
 		User userTest=userPack.getList();
 		ariDelete.setInfo(ariResult.getInfo());
-
-
 		esito=stateUpdate.manage(ariDelete);
 		stringEsito=esito.getInfo();
 		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);

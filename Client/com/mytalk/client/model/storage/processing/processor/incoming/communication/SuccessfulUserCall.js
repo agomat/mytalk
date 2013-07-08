@@ -2,6 +2,7 @@
 * Filename: SuccessfulUserCall.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.communication
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
+*               com.mytalk.client.model.storage.processing.processor.outcoming.communication.RefuseCall
 *               com.mytalk.client.controller.statemanager.CallState
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
@@ -45,15 +46,24 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProce
   */
   process: function (ari) {
     var payload = JSON.parse( ari.info );
-    // TODO vedere se sono impegnato in altra conversazione
+    
+    if (MyTalk.CallState.currentState.name != 'isNotBusy'){
+      var processorFactory = MyTalk.ProcessorFactory.create({});
+      var processor = processorFactory.createProcessorProduct("RefuseCall");
+      processor.process({
+        speaker: MyTalk.User.find( payload.myUserId ),
+        RTCinfo: 'RefuseCall' 
+      });
+    }
+    else {
+      var callData = Ember.Object.create({
+        path: 'isBusy.incomingCall',
+        speaker: MyTalk.User.find( payload.myUserId ),
+        RTCinfo: JSON.parse(payload.RTCinfo)
+      });
 
-    var callData = Ember.Object.create({
-      path: 'isBusy.incomingCall',
-      speaker: MyTalk.User.find( payload.myUserId ),
-      RTCinfo: JSON.parse(payload.RTCinfo)
-    });
-
-    MyTalk.CallState.send('beingBusy', callData);
+      MyTalk.CallState.send('beingBusy', callData);
+    }
   },
 
   /**

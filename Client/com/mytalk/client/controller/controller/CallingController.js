@@ -153,7 +153,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   call: function(user) {
-    //TODO verificare se sono impegnato in altra conversazione
     this.set('stats.caller',true);
     this.set('stats.speaker',user.get('id'));
     this.RTCmanager = MyTalk.PeerConnection.create();
@@ -279,21 +278,11 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   */
 
   closeCall: function(user){
-    /*
-    // TODO: rifiutare la chiamata
-    var processorFactory = MyTalk.ProcessorFactory.create({});
-    var processor = processorFactory.createProcessorProduct("RefuseCall");
-    processor.process({});
-    */
-    // patch:
     MyTalk.CallState.get('isBusy').set('accepted', true);
     if(this.get('isConnected')) {
       this.RTCmanager.closeConnection(this.onClose);
-    
-      //MyTalk.CallState.send('beingFree');
     }
     else {
-      //GESTIRE RIFIUTA CHIAMATA
       var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
       var processorFactory = MyTalk.ProcessorFactory.create({});
       var processor = processorFactory.createProcessorProduct("RefuseCall");

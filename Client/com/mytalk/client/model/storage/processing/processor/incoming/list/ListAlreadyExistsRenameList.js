@@ -40,9 +40,7 @@ MyTalk.processor.ListAlreadyExistsRenameList = Ember.Object.extend(MyTalk.Abstra
   * @return {Void}
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
-  process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
-  },
+  process: function (ari) {},
 
   /**
   * Il metodo deve ritornare l'attributo _name_

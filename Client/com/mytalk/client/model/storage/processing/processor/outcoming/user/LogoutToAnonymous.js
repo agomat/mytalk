@@ -37,9 +37,8 @@ MyTalk.processor.LogoutToAnonymous = Ember.Object.extend(MyTalk.AbstractOutProce
   * @return {Void}
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
-  process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
-  },
+  process: function (ari) {},
+  
  /**
   * Il metodo deve inviare al server un ARI avente richiesta _LogoutToAnonymous_ per autenticarsi nel sistema
   *

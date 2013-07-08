@@ -39,9 +39,7 @@ MyTalk.processor.UserAlreadyBlacklisted = Ember.Object.extend(MyTalk.AbstractInP
   * @return {Void}
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
-  process: function (ari) {
-    console.debug("Processor "+this.get('name')+" non esistente TODO");
-  },
+  process: function (ari) {},
 
   /**
   * Il metodo deve ritornare l'attributo _name_

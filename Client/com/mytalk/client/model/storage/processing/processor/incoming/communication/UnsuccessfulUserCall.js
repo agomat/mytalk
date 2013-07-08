@@ -41,8 +41,11 @@ MyTalk.processor.UnsuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInPro
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
-    alert("Il chiamante ha rifiutato la chiamata");
+    var processorFactory = MyTalk.ProcessorFactory.create({});
+    var processor = processorFactory.createProcessorProduct("SuccessfulRefuseCall");
+    processor.process(ari);
   },
+  
   
   /**
   * Il metodo deve ritornare l'attributo _name_

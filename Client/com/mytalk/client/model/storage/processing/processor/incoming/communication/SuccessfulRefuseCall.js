@@ -40,11 +40,12 @@ MyTalk.processor.SuccessfulRefuseCall = Ember.Object.extend(MyTalk.AbstractInPro
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
+    document.getElementById('modem-dial').pause();
     document.getElementById('busy').play();
     RTCmanager = MyTalk.CallState.get('isBusy').get('callData').RTCmanager;
     RTCmanager.closeConnection(function(){});
     MyTalk.CallState.send('beingFree');
-    alert("L'utente desiderato è attualmente offline");
+    alert("MyTalk, messaggio gratuito: l'utente da lei chiamato potrebbe essere occupato o non raggiungibile, la preghiamo di riprovare più tardi, grazie!");
   },
   
   /**

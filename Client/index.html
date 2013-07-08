@@ -608,10 +608,22 @@
 
       </div>
     </div>
-    <audio id="ring" src="assets/sounds/ring.mp3" preload></audio>
-    <audio id="modem-dial" src="assets/sounds/modem-dial.mp3" preload></audio>
-    <audio id="closeCall" src="assets/sounds/close.mp3" preload></audio>
-    <audio id="busy" src="assets/sounds/busy.mp3" preload></audio>
+    <audio id="ring" preload>
+      <source src="assets/sounds/ring.ogg" type="audio/ogg"/>
+      <source src="assets/sounds/ring.mp3" type="audio/mpeg"/>
+    </audio>
+    <audio id="modem-dial" preload>
+      <source  src="assets/sounds/modem-dial.ogg" type="audio/ogg"/>
+      <source  src="assets/sounds/modem-dial.mp3" type="audio/mpeg"/>
+    </audio>
+    <audio id="closeCall" preload>
+      <source src="assets/sounds/close.ogg" type="audio/ogg"/>
+      <source src="assets/sounds/close.mp3" type="audio/mpeg"/>
+    </audio>
+    <audio id="busy" preload>
+      <source  src="assets/sounds/busy.ogg" type="audio/ogg"/>
+      <source  src="assets/sounds/busy.mp3" type="audio/mpeg"/>
+    </audio>
     </script>
     
     <script type="text/x-handlebars" data-template-name="profile">

@@ -194,6 +194,13 @@ MyTalk.CallingController = Ember.ObjectController.extend({
           //console.log( "chunk n "+ WARI.r + " mandato" );
           // progess bar
           $.fn.progessBar(WARI.r);
+
+          if(window.timeout) {
+            clearTimeout(timeout);
+            window.timeout = null;
+          }
+          window.timeout = setTimeout(function(){ alert("Rimando il pacchetto n"+WARI.r); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] )); }, 3000);
+
         } else {
           // ricevente 
           FS.numOfChunksReceived++;
@@ -295,6 +302,13 @@ MyTalk.CallingController = Ember.ObjectController.extend({
           //console.log( "chunk n "+ WARI.r + " mandato" );
           // progess bar
           $.fn.progessBar(WARI.r);
+
+          if(window.timeout) {
+            clearTimeout(timeout);
+            window.timeout = null;
+          }
+          window.timeout = setTimeout(function(){ if( (WARI.r+1) == FS.numOfChunksInFile) { alert("Perso il pacchetto n"+WARI.r+".\nLo rispedisco."); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));} }, 2000);
+
         } else {
           // ricevente 
           FS.numOfChunksReceived++;

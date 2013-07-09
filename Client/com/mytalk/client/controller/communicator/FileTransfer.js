@@ -27,9 +27,23 @@
         this.startTime;
         this.totalAvarageBw;
         this.filename;
+        this.metaInfo = {};
     };
 
     client.prototype = {
+
+        reset:function(){
+            this.numOfChunksInFile = 0;
+            this.numOfChunksInSlice = 0;
+            this.chunks = {};
+            this.chunkRead = 0;
+            this.numOfChunksInFile = 0;
+            this.hasEntireFile = 0;
+            this.metaInfo = {};
+            this.numOfChunksReceived = 0;
+            this.filename = null;
+        },
+
         configureBrowserSpecific:function () {
             if (window.mozRTCPeerConnection) {
                 this.requestThresh = 70; //how many chunk till new request

@@ -188,7 +188,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       try{
         //console.debug( ">> mandante -> "+ message.data );
         var WARI = JSON.parse(message.data);
-        if( WARI.r ) {
+        if( typeof WARI.r !== "undefined" ) {
           // manda il WARI.r - esmimo senza mime type
           window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));
           //console.log( "chunk n "+ WARI.r + " mandato" );
@@ -199,30 +199,44 @@ MyTalk.CallingController = Ember.ObjectController.extend({
             clearTimeout(timeout);
             window.timeout = null;
           }
-          window.timeout = setTimeout(function(){ alert("Rimando il pacchetto n"+WARI.r); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] )); }, 3000);
+          window.timeout = setTimeout(function(){ if( !WARI.l ) { alert("Rimando il pacchetto n"+WARI.r); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] )); } }, 3000);
+
+          if (WARI.l) {
+            setTimeout(function(){
+              $.fn.progessBar(-1);
+              FS.reset();
+            },3300);
+          } 
 
         } else {
           // ricevente 
-          FS.numOfChunksReceived++;
-          FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-          if ( WARI.chunkId == 0 ) {
+          if ( WARI.chunkId == -1 ) {
             FS.filename = WARI.filename;
             FS.numOfChunksInFile = WARI.numOfChunks;
             $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
           }
-          $.fn.progessBar(WARI.chunkId);
-          //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
-          if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
-            console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
-            FS.hasEntireFile = true;
-            FS.saveFileLocally();
-          } else {
-            // richiedi un chunk id -> WARI.chunkId+1
-            //console.debug("Chiedo il chunk n "+(WARI.chunkId+1));
-            var aux = new Object();
-            aux.r = WARI.chunkId+1;
-            window.RTCmanager.send( JSON.stringify(aux) );
+          else {
+            FS.numOfChunksReceived++;
+            FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+            $.fn.progessBar(WARI.chunkId);
+            //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
+            if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
+              //console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
+              FS.hasEntireFile = true;
+              FS.saveFileLocally();
+              FS.reset();
+              setTimeout(function(){
+                $.fn.progessBar(-1);
+              },3300);
+              return;
+            } 
           }
+          // richiedi un chunk id -> WARI.chunkId+1
+          var aux = new Object();
+          aux.r = WARI.chunkId+1;
+          if( (aux.r+1) == FS.numOfChunksInFile ) aux.l = true; // notifica che è l'ultimo
+          //console.log("Richiedo: "+aux.r);
+          window.RTCmanager.send( JSON.stringify(aux) );
         }
       } catch(e) {
         var msg=context.get('messages');
@@ -296,7 +310,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       try{
         //console.debug( ">> mandante -> "+ message.data );
         var WARI = JSON.parse(message.data);
-        if( WARI.r ) {
+        if( typeof WARI.r !== "undefined" ) {
           // manda il WARI.r - esmimo senza mime type
           window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));
           //console.log( "chunk n "+ WARI.r + " mandato" );
@@ -307,30 +321,44 @@ MyTalk.CallingController = Ember.ObjectController.extend({
             clearTimeout(timeout);
             window.timeout = null;
           }
-          window.timeout = setTimeout(function(){ if( (WARI.r+1) == FS.numOfChunksInFile) { alert("Perso il pacchetto n"+WARI.r+".\nLo rispedisco."); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));} }, 2000);
+          window.timeout = setTimeout(function(){ if( !WARI.l ) { alert("Rimando il pacchetto n"+WARI.r); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] )); } }, 3000);
+
+          if (WARI.l) {
+            setTimeout(function(){
+              $.fn.progessBar(-1);
+              FS.reset();
+            },3300);
+          } 
 
         } else {
           // ricevente 
-          FS.numOfChunksReceived++;
-          FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-          if ( WARI.chunkId == 0 ) {
+          if ( WARI.chunkId == -1 ) {
             FS.filename = WARI.filename;
             FS.numOfChunksInFile = WARI.numOfChunks;
             $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
           }
-          $.fn.progessBar(WARI.chunkId);
-          //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
-          if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
-            console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
-            FS.hasEntireFile = true;
-            FS.saveFileLocally();
-          } else {
-            // richiedi un chunk id -> WARI.chunkId+1
-            //console.debug("Chiedo il chunk n "+(WARI.chunkId+1));
-            var aux = new Object();
-            aux.r = WARI.chunkId+1;
-            window.RTCmanager.send( JSON.stringify(aux) );
+          else {
+            FS.numOfChunksReceived++;
+            FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+            $.fn.progessBar(WARI.chunkId);
+            //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
+            if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
+              //console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
+              FS.hasEntireFile = true;
+              FS.saveFileLocally();
+              FS.reset();
+              setTimeout(function(){
+                $.fn.progessBar(-1);
+              },3300);
+              return;
+            } 
           }
+          // richiedi un chunk id -> WARI.chunkId+1
+          var aux = new Object();
+          aux.r = WARI.chunkId+1;
+          if( (aux.r+1) == FS.numOfChunksInFile ) aux.l = true; // notifica che è l'ultimo
+          //console.log("Richiedo: "+aux.r);
+          window.RTCmanager.send( JSON.stringify(aux) );
         }
       } catch(e) {
       var msg = context.get('messages');

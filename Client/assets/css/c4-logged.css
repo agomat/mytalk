@@ -363,3 +363,10 @@
   height: 18px;
   float: right;
 }
+
+.progress-bar .file-name {
+  line-height: 20px;
+  font-size: 1em;
+  color: #555;
+  height: 20px;
+}

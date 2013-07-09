@@ -73,19 +73,21 @@ $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
 }
 
-$.fn.progessBar = function(progess, max, name) {
+$.fn.progessBar = function(progress, max, name) {
+  if (progress == -1)
+    $('.progress-bar').hide('slow');
   var progressbar = $('#progressbar');
   if (max) {
     progressbar.attr('max',max);
-    // name = name
+    $('#file_name').text(name);
     $('.progress-bar').show();
   }
   else {
     max = progressbar.attr('max');
   }
-  progess++;
-  progressbar.val(progess);
-  $('.progress-value').html((parseInt(progess*100/max)) + '%');
+  progress++;
+  progressbar.val(progress);
+  $('.progress-value').html((parseInt(progress*100/max)) + '%');
 }
 
     function addFiles(files) {
@@ -114,16 +116,14 @@ $.fn.progessBar = function(progess, max, name) {
                     meta0.name = files[0].name;
                     meta0.lastModifiedDate = files[0].lastModifiedDate;
                     meta0.type = files[0].type;
-                    var i = 0;
-                    var WARI = {
+                    
+                    FS.metaInfo = {
                       filename: meta0.name,
                       filetype: meta0.type,
-                      numOfChunks: meta0.numOfChunks, 
-                      chunkId: i,
-                      chunk: Base64Binary.encode(FS.chunks[i])
+                      numOfChunks: meta0.numOfChunks,
+                      chunkId: -1,
                     };
-                    FS.chunks[i] = WARI;
-                    ++i;
+                    var i = 0;
                     while( FS.chunks.hasOwnProperty(i) ) {
                       var WARI = {
                         chunkId: i,
@@ -133,7 +133,7 @@ $.fn.progessBar = function(progess, max, name) {
                       ++i;
                     }
                     // manda solo il primo chunk
-                    window.RTCmanager.send(JSON.stringify( window.FS.chunks[0] ));
+                    window.RTCmanager.send(JSON.stringify( FS.metaInfo ));
 
                     // progess bar
                     $.fn.progessBar(0, meta0.numOfChunks, meta0.name);
@@ -143,7 +143,6 @@ $.fn.progessBar = function(progess, max, name) {
 
         blob = file.slice(chunkId*sliceSize,(chunkId+1)*sliceSize);
         reader.readAsArrayBuffer(blob);
-        window.reader = reader;
     }
 
 

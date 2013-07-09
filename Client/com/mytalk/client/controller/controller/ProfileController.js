@@ -38,7 +38,7 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
   */
 
   updateProfile:function(newName, newSurname, newUsername, newEmail, newPassword, passwordConf){
-    var c=confirm("Sei sicuro di voler aggiornare i cambiamenti?");
+    var c=confirm("Sei sicuro di voler modificare i tuoi dati?");
     if(c){
       var processorFactory = MyTalk.ProcessorFactory.create({});
       var processor = processorFactory.createProcessorProduct( "UpdateAccount" );

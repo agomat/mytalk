@@ -578,6 +578,10 @@
         {{/view}}
         <input onchange="addFiles(this.files)" type="file" id="files" name="files[]" multiple
            style="height: 20px; margin-top:20px"/>
+        <div class="progress-bar">
+          <progress id="progressbar" value="0" max="600"></progress>
+          <span class="progress-value">0%</span>
+        </div>
       </div>
 
       <div id="comunicazione">

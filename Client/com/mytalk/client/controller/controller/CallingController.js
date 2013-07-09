@@ -162,6 +162,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
      // callback 1
     var context = this;
     var beforeCandidatesCreation = function() {
+
+      // file-transfer
+      window.RTCmanager = context.RTCmanager;
+
       var callData = Ember.Object.create({
         path: 'isBusy.outcomingCall',
         RTCmanager: context.RTCmanager, 
@@ -182,15 +186,36 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
     var onDataChannelMessage = function(message) {
       try{
+        //console.debug( ">> mandante -> "+ message.data );
         var WARI = JSON.parse(message.data);
-        FS.numOfChunksReceived++;
-        FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-        console.debug( WARI.chunkId );
-        FS.filename = WARI.filename;
-        if( (WARI.chunkId + 1) == WARI.numOfChunks ){
-          FS.numOfChunksInFile = WARI.numOfChunks;
-          FS.hasEntireFile = true;
-          FS.saveFileLocally();
+        if( WARI.r ) {
+          // manda il WARI.r - esmimo senza mime type
+          window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));
+          //console.log( "chunk n "+ WARI.r + " mandato" );
+          // progess bar
+          $.fn.progessBar(WARI.r);
+        } else {
+          // ricevente 
+          FS.numOfChunksReceived++;
+          FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+          if ( WARI.chunkId == 0 ) {
+            FS.filename = WARI.filename;
+            FS.numOfChunksInFile = WARI.numOfChunks;
+            $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
+          }
+          $.fn.progessBar(WARI.chunkId);
+          //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
+          if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
+            console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
+            FS.hasEntireFile = true;
+            FS.saveFileLocally();
+          } else {
+            // richiedi un chunk id -> WARI.chunkId+1
+            //console.debug("Chiedo il chunk n "+(WARI.chunkId+1));
+            var aux = new Object();
+            aux.r = WARI.chunkId+1;
+            window.RTCmanager.send( JSON.stringify(aux) );
+          }
         }
       } catch(e) {
         var msg=context.get('messages');
@@ -261,18 +286,39 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
    var onDataChannelMessage = function(message) {
-    try{
-      var WARI = JSON.parse(message.data);
-      FS.numOfChunksReceived++;
-      console.debug( WARI.chunkId );
-      FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-      FS.filename = WARI.filename;
-      if( (WARI.chunkId + 1) == WARI.numOfChunks ){
-        FS.numOfChunksInFile = WARI.numOfChunks;
-        FS.hasEntireFile = true;
-        FS.saveFileLocally();
-      }
-    } catch(e) {
+      try{
+        //console.debug( ">> mandante -> "+ message.data );
+        var WARI = JSON.parse(message.data);
+        if( WARI.r ) {
+          // manda il WARI.r - esmimo senza mime type
+          window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));
+          //console.log( "chunk n "+ WARI.r + " mandato" );
+          // progess bar
+          $.fn.progessBar(WARI.r);
+        } else {
+          // ricevente 
+          FS.numOfChunksReceived++;
+          FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
+          if ( WARI.chunkId == 0 ) {
+            FS.filename = WARI.filename;
+            FS.numOfChunksInFile = WARI.numOfChunks;
+            $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
+          }
+          $.fn.progessBar(WARI.chunkId);
+          //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
+          if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
+            console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
+            FS.hasEntireFile = true;
+            FS.saveFileLocally();
+          } else {
+            // richiedi un chunk id -> WARI.chunkId+1
+            //console.debug("Chiedo il chunk n "+(WARI.chunkId+1));
+            var aux = new Object();
+            aux.r = WARI.chunkId+1;
+            window.RTCmanager.send( JSON.stringify(aux) );
+          }
+        }
+      } catch(e) {
       var msg = context.get('messages');
       var temp = [];
 

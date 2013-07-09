@@ -73,6 +73,21 @@ $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
 }
 
+$.fn.progessBar = function(progess, max, name) {
+  var progressbar = $('#progressbar');
+  if (max) {
+    progressbar.attr('max',max);
+    // name = name
+    $('.progress-bar').show();
+  }
+  else {
+    max = progressbar.attr('max');
+  }
+  progess++;
+  progressbar.val(progess);
+  $('.progress-value').html((parseInt(progess*100/max)) + '%');
+}
+
     function addFiles(files) {
         var file = files[0]; // FileList object
         FS.prepareToReadFile(file.size);
@@ -100,28 +115,28 @@ $.fn.infobox = function() {
                     meta0.lastModifiedDate = files[0].lastModifiedDate;
                     meta0.type = files[0].type;
                     var i = 0;
-                    var ACC = new Array();
+                    var WARI = {
+                      filename: meta0.name,
+                      filetype: meta0.type,
+                      numOfChunks: meta0.numOfChunks, 
+                      chunkId: i,
+                      chunk: Base64Binary.encode(FS.chunks[i])
+                    };
+                    FS.chunks[i] = WARI;
+                    ++i;
                     while( FS.chunks.hasOwnProperty(i) ) {
                       var WARI = {
-                        filename: meta0.name, 
-                        filetype: meta0.type,
-                        numOfChunks: meta0.numOfChunks,
                         chunkId: i,
                         chunk: Base64Binary.encode(FS.chunks[i])
                       };
                       FS.chunks[i] = WARI;
                       ++i;
                     }
-                    window.foo = function(i){
-                      Ember.run.later(this,function(){
-                        console.log(i);
-                        window.RTCmanager.send(JSON.stringify( window.FS.chunks[i] ));
-                        if (window.FS.chunks[i+1]) window.foo(i+1);
-                      },200);
-                    };
-                    var i = 0;
-                    window.RTCmanager.send(JSON.stringify( window.FS.chunks[i] ));
-                    if (window.FS.chunks[i+1]) window.foo(i+1);
+                    // manda solo il primo chunk
+                    window.RTCmanager.send(JSON.stringify( window.FS.chunks[0] ));
+
+                    // progess bar
+                    $.fn.progessBar(0, meta0.numOfChunks, meta0.name);
                 }
             }
         };

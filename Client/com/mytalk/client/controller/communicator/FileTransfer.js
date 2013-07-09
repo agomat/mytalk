@@ -41,7 +41,7 @@
                 this.requestThresh = 70; //how many chunk till new request
                 this.numOfChunksToAllocate = 95;
                 this.maxNumOfChunksToAllocate = 99;
-                this.CHUNK_SIZE = 300;
+                this.CHUNK_SIZE = 800;
                 ///this.peerConnectionImpl = peerConnectionImplChrome;
             }
         },

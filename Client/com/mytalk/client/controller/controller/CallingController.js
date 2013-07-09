@@ -210,17 +210,17 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
         } else {
           // ricevente 
-          if ( WARI.chunkId == -1 ) {
+          if ( WARI.id == -1 ) {
             FS.filename = WARI.filename;
             FS.numOfChunksInFile = WARI.numOfChunks;
             $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
           }
           else {
             FS.numOfChunksReceived++;
-            FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-            $.fn.progessBar(WARI.chunkId);
-            //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
-            if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
+            FS.chunks[WARI.id] = Base64Binary.decode(WARI.chunk);
+            $.fn.progessBar(WARI.id);
+            //console.debug("Ricevuto "+ (WARI.id+1) +" chunk di "+FS.numOfChunksInFile);
+            if( (WARI.id + 1) == FS.numOfChunksInFile ){
               //console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
               FS.hasEntireFile = true;
               FS.saveFileLocally();
@@ -231,9 +231,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
               return;
             } 
           }
-          // richiedi un chunk id -> WARI.chunkId+1
+          // richiedi un chunk id -> WARI.id+1
           var aux = new Object();
-          aux.r = WARI.chunkId+1;
+          aux.r = WARI.id+1;
           if( (aux.r+1) == FS.numOfChunksInFile ) aux.l = true; // notifica che è l'ultimo
           //console.log("Richiedo: "+aux.r);
           window.RTCmanager.send( JSON.stringify(aux) );
@@ -332,17 +332,17 @@ MyTalk.CallingController = Ember.ObjectController.extend({
 
         } else {
           // ricevente 
-          if ( WARI.chunkId == -1 ) {
+          if ( WARI.id == -1 ) {
             FS.filename = WARI.filename;
             FS.numOfChunksInFile = WARI.numOfChunks;
             $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
           }
           else {
             FS.numOfChunksReceived++;
-            FS.chunks[WARI.chunkId] = Base64Binary.decode(WARI.chunk);
-            $.fn.progessBar(WARI.chunkId);
-            //console.debug("Ricevuto "+ (WARI.chunkId+1) +" chunk di "+FS.numOfChunksInFile);
-            if( (WARI.chunkId + 1) == FS.numOfChunksInFile ){
+            FS.chunks[WARI.id] = Base64Binary.decode(WARI.chunk);
+            $.fn.progessBar(WARI.id);
+            //console.debug("Ricevuto "+ (WARI.id+1) +" chunk di "+FS.numOfChunksInFile);
+            if( (WARI.id + 1) == FS.numOfChunksInFile ){
               //console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
               FS.hasEntireFile = true;
               FS.saveFileLocally();
@@ -353,9 +353,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
               return;
             } 
           }
-          // richiedi un chunk id -> WARI.chunkId+1
+          // richiedi un chunk id -> WARI.id+1
           var aux = new Object();
-          aux.r = WARI.chunkId+1;
+          aux.r = WARI.id+1;
           if( (aux.r+1) == FS.numOfChunksInFile ) aux.l = true; // notifica che è l'ultimo
           //console.log("Richiedo: "+aux.r);
           window.RTCmanager.send( JSON.stringify(aux) );

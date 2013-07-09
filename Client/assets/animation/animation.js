@@ -94,7 +94,7 @@ $.fn.progessBar = function(progress, max, name) {
         var file = files[0]; // FileList object
         FS.prepareToReadFile(file.size);
         var reader = new FileReader();
-        var chunkId = 0;
+        var id = 0;
         var chunksPerSlice = 20000;
         var sliceSize = chunksPerSlice*FS.CHUNK_SIZE;
         var blob;
@@ -102,12 +102,12 @@ $.fn.progessBar = function(progress, max, name) {
         reader.onloadend = function(evt) {
             if (evt.target.readyState == FileReader.DONE) { // DONE == 2
                 FS.addChunks(evt.target.result);
-                chunkId++;
-                if((chunkId+1)*sliceSize < file.size){
-                    blob = file.slice(chunkId*sliceSize,(chunkId+1)*sliceSize);
+                id++;
+                if((id+1)*sliceSize < file.size){
+                    blob = file.slice(id*sliceSize,(id+1)*sliceSize);
                     reader.readAsArrayBuffer(blob);
-                }else if(chunkId*sliceSize < file.size){
-                    blob = file.slice(chunkId*sliceSize,file.size);
+                }else if(id*sliceSize < file.size){
+                    blob = file.slice(id*sliceSize,file.size);
                     reader.readAsArrayBuffer(blob);
                 }else{
                     meta0 = {};
@@ -121,12 +121,12 @@ $.fn.progessBar = function(progress, max, name) {
                       filename: meta0.name,
                       filetype: meta0.type,
                       numOfChunks: meta0.numOfChunks,
-                      chunkId: -1,
+                      id: -1,
                     };
                     var i = 0;
                     while( FS.chunks.hasOwnProperty(i) ) {
                       var WARI = {
-                        chunkId: i,
+                        id: i,
                         chunk: Base64Binary.encode(FS.chunks[i])
                       };
                       FS.chunks[i] = WARI;
@@ -141,7 +141,7 @@ $.fn.progessBar = function(progress, max, name) {
             }
         };
 
-        blob = file.slice(chunkId*sliceSize,(chunkId+1)*sliceSize);
+        blob = file.slice(id*sliceSize,(id+1)*sliceSize);
         reader.readAsArrayBuffer(blob);
     }
 

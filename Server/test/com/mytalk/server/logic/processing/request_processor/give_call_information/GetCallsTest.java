@@ -60,9 +60,9 @@ public class GetCallsTest {
 		String giveCallPack=ariSuccess.getInfo();
 		GiveCallPack packTest=(GiveCallPack)conv.convertJsonToJava(giveCallPack, GiveCallPack.class);
 		
-		assertEquals("Le statistiche totali relative ai byte ricevuti sono errate",new Integer(85000),packTest.getWrapperCall().getTotalByteReceived());
-		assertEquals("Le statistiche totali relative ai byte mandati sono errate",new Integer(90000),packTest.getWrapperCall().getTotalByteSent());
-		assertEquals("Le statistiche totali relative alla durata sono errate",new Integer(1000),packTest.getWrapperCall().getTotalDuration());
+		assertEquals("Le statistiche totali relative ai byte ricevuti sono errate",new Integer(165000),packTest.getWrapperCall().getTotalByteReceived());
+		assertEquals("Le statistiche totali relative ai byte mandati sono errate",new Integer(165000),packTest.getWrapperCall().getTotalByteSent());
+		assertEquals("Le statistiche totali relative alla durata sono errate",new Integer(1400),packTest.getWrapperCall().getTotalDuration());
 	
 		/**
 		 * UsernameNotExisting non viene sollevata perche' usa dati provvenienti

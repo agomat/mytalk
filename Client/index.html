@@ -703,8 +703,13 @@
       {{#each call in controller}}
         {{#if call.duration}}
           <li {{bindAttr class="call.caller:call_out:call_in"}}> 
-            <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
-            <div class="who_call">{{call.speaker.name}} {{call.speaker.surname}}</div>
+            {{#if call.speaker}}  
+              <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
+              <div class="who_call">{{call.speaker.fullName}}</div>
+            {{else}}
+              <div class="avatar35"><img src="http://www.gravatar.com/avatar/null?s=35&d=blank" /> </div>
+              <div class="who_call"><em>Utente non più registrato</em></div>
+            {{/if}}
             <div class="data_call"> {{calldate call.startDate}}</div>
             <div class="duration_call">{{hourconversion call.duration}}</div>
           </li>

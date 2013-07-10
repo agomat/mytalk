@@ -115,6 +115,12 @@ MyTalk.RegisterFormView = Ember.View.extend({
 
   submit: function(event) {
     event.preventDefault();
+    $("input[name=name]").change();
+    $("input[name=surname]").change();
+    $("input[name=username]").change();
+    $("input[name=email]").change();
+    $("input[name=password]").change();
+    $("input[name=password_conf]").change();
     var name = this.get('name');
     var password = this.get('password');
     var password_conf = this.get('password_conf');

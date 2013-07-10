@@ -59,14 +59,17 @@ if (!defined $ARGV[0]) {
 		#2
 		my $jquery;
 		my $tipsy;
+		my $base64 = "";
 		foreach my $i ( @js_library_file ) {
 			$jquery = $i if($i =~ /jquery\-/);
 			$tipsy = $i if($i =~ /tipsy/);
+			$base64 = $i if($i =~ /base64/);
 		}
-		my $jt = `cd $PROJECT_DIR && cat $jquery`;
-		$jt .= `cd $PROJECT_DIR && cat $tipsy`;
+		my $jtb = `cd $PROJECT_DIR && cat $jquery`;
+		$jtb .= `cd $PROJECT_DIR && cat $tipsy`;
+		$jtb .= `cd $PROJECT_DIR && cat $base64` if(base64 != "");
 		open FILE, ">/tmp/a.js" or die $!;
-		print FILE $jt;
+		print FILE $jtb;
 		close FILE;
 		########################################################
 		my $moment;

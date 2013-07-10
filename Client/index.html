@@ -694,9 +694,9 @@
           <img src="assets/img/stats_big.png" alt="" />
           <ul>
          
-            <li id="global_time"><strong>Tempo totale in chiamata: </strong>{{hourconversion content.totalDuration}}</li>
-            <li id="global_inbyte"><strong>Totale dati ricevuti: </strong>{{conversion content.totalByteSent}}</li>
-            <li id="global_outbyte"><strong>Totale dati inviati: </strong>{{conversion content.totalByteReceived}}</li>
+            <li id="global_time" {{bindAttr class="content.totalDuration:dispay_yes:display_none"}}><strong>Tempo totale in chiamata: </strong>{{hourconversion content.totalDuration}}</li>
+            <li id="global_inbyte" {{bindAttr class="content.totalByteSent:dispay_yes:display_none"}}><strong>Totale dati ricevuti: </strong>{{conversion content.totalByteSent}}</li>
+            <li id="global_outbyte" {{bindAttr class="content.totalByteReceived:dispay_yes:display_none"}}><strong>Totale dati inviati: </strong>{{conversion content.totalByteReceived}}</li>
           
           </ul>
         </div>
@@ -710,12 +710,14 @@
       {{/if}}
       <ul id="call_list">
       {{#each call in controller}}
-        <li {{bindAttr class="call.caller:call_out:call_in"}}> 
-          <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
-          <div class="who_call">{{call.speaker.name}} {{call.speaker.surname}}</div>
-          <div class="data_call"> {{calldate call.startDate}}</div>
-          <div class="duration_call">{{hourconversion call.duration}}</div>
-        </li>
+        {{#if call.duration}}
+          <li {{bindAttr class="call.caller:call_out:call_in"}}> 
+            <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
+            <div class="who_call">{{call.speaker.name}} {{call.speaker.surname}}</div>
+            <div class="data_call"> {{calldate call.startDate}}</div>
+            <div class="duration_call">{{hourconversion call.duration}}</div>
+          </li>
+        {{/if}}
       {{/each}}
       </ul>
     </script>

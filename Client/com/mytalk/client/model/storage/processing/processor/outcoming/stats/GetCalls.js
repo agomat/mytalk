@@ -40,7 +40,8 @@ MyTalk.processor.GetCalls = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
   * @override CCMOD2.processing.processor.outcoming$AbstractOutProcessorProduct$
   */
   process: function () {
-    var id = (MyTalk.WCall.find().get('length') + 1) * 500; // TODO buggable
+    
+    var id = 'r'+Math.floor(Math.random()*999999*16);
     var record = MyTalk.WCall.createRecord({id:id});
     record.get('stateManager').goToState('saved');
     record.deleteRecord();

@@ -43,3 +43,6 @@ Ember.Handlebars.registerBoundHelper('conversion',function(bytes){
   return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
 });
 
+Handlebars.registerHelper('setIndex', function(value){
+    this.index = Number(value + 1); //I needed human readable index, not zero based
+});

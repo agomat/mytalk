@@ -29,6 +29,7 @@ MyTalk.processor.AuthenticationFailLogin = Ember.Object.extend(MyTalk.AbstractIn
     var record = MyTalk.Authentication.find(0);
     record.setProperties({username:"",password:""});
     record.get('stateManager').goToState('updated');
+    record.get('stateManager').goToState('saved');
     alert("Username o password non validi");
   },
   

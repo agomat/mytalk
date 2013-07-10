@@ -59,17 +59,14 @@ if (!defined $ARGV[0]) {
 		#2
 		my $jquery;
 		my $tipsy;
-		my $base = "";
 		foreach my $i ( @js_library_file ) {
 			$jquery = $i if($i =~ /jquery\-/);
 			$tipsy = $i if($i =~ /tipsy/);
-			$base = $i if($i =~ /base64/);
 		}
-		my $jtb = `cd $PROJECT_DIR && cat $jquery`;
-		$jtb .= `cd $PROJECT_DIR && cat $tipsy`;
-		$jtb .= `cd $PROJECT_DIR && cat $base` if($base ne "");
+		my $jt = `cd $PROJECT_DIR && cat $jquery`;
+		$jt .= `cd $PROJECT_DIR && cat $tipsy`;
 		open FILE, ">/tmp/a.js" or die $!;
-		print FILE $jtb;
+		print FILE $jt;
 		close FILE;
 		########################################################
 		my $moment;
@@ -101,18 +98,21 @@ if (!defined $ARGV[0]) {
 		########################################################
 		my $ember_data;
 		my $list_view;
-		my $el;
+		my $base = "";
+		my $elb;
 		foreach my $i ( @js_library_file ) {
 			if($i =~ /ember\-data/) {
 				$i =~ s/\.js//;
 				$ember_data = "$i.min.js"; 
 			}
 			$list_view = $i if($i =~ /list\-view/);
+			$base = $i if($i =~ /base64/);
 		}
-		$el = `cd $PROJECT_DIR && cat $ember_data`;
-		$el .= `cd $PROJECT_DIR && cat $list_view`;
+		$elb = `cd $PROJECT_DIR && cat $ember_data`;
+		$elb .= `cd $PROJECT_DIR && cat $list_view`;
+		$elb .= `cd $PROJECT_DIR && cat $base` if($base ne "");
 		open FILE, ">/tmp/d.js" or die $!;
-		print FILE $el;
+		print FILE $elb;
 		close FILE;
 
 		#3

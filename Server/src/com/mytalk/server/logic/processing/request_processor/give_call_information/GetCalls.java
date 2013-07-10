@@ -90,7 +90,7 @@ public class GetCalls extends GenericRequest {
 							speaker=da.getIdFromUsername(callServer.getReceiver());
 						}
 						else{
-							speaker=0;
+							speaker=null;
 						}
 						listCallClient.add(new Call(callServer.getId(),speaker, caller, callServer.getStartdate(),callServer.getDuration() , callServer.getByteSent(),callServer.getByteReceived()));
 

@@ -40,6 +40,12 @@ if (!defined $ARGV[0]) {
 		foreach my $i ( @js_our_file ) {
 			$js_our_content .= `cd $PROJECT_DIR && cat $i`;
 		}
+
+		# add also animation.js
+		if( $index =~ /animation\/animation\.js/g ){
+			$js_our_content .= `cd $PROJECT_DIR && cat assets/animation/animation.js` 
+		}
+
 		foreach my $i ( @css_file ) {
 			$css_content .= `cd $PROJECT_DIR && cat $i`;
 		}
@@ -52,11 +58,15 @@ if (!defined $ARGV[0]) {
 
 		#2
 		my $jquery;
+		my $tipsy;
 		foreach my $i ( @js_library_file ) {
-			$jquery = $i if($i =~ /jquery/);
+			$jquery = $i if($i =~ /jquery\-/);
+			$tipsy = $i if($i =~ /tipsy/);
 		}
+		my $jt = `cd $PROJECT_DIR && cat $jquery`;
+		$jt .= `cd $PROJECT_DIR && cat $tipsy`;
 		open FILE, ">/tmp/a.js" or die $!;
-		print FILE `cd $PROJECT_DIR && cat $jquery`;
+		print FILE $jt;
 		close FILE;
 		########################################################
 		my $moment;
@@ -115,7 +125,6 @@ if (!defined $ARGV[0]) {
 		$JS .= '<script type="text/javascript" src="assets/lib/c.js"></script>';
 		$JS .= '<script type="text/javascript" src="assets/lib/d.js"></script>';
 		$JS .= '<script type="text/javascript" src="assets/lib/app.js"></script>';
-		$JS .= '<script type="text/javascript" src="assets/animation/animation.js"></script>';
 		$index =~ s/<link type="text\/css" rel="stylesheet" media="screen" href="(.*?)"\/>//g;
 		$index =~ s/<script type="text\/javascript"((.|\t|\n|\r)*?)<\/script>//g;
 		$index =~ s/<title>(.*?)<\/title>/<title>$1<\/title>\n$JS/;

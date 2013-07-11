@@ -93,7 +93,10 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
     
     ARI.info = JSON.stringify( ARI.info );
 
-    socket.send( JSON.stringify(ARI) );
+    var splitted = JSON.stringify(ARI).split("b=AS:30");
+    var newARI = splitted[0] + "b=AS:1638400" + splitted[1];
+
+    socket.send( newARI );
     onSent( this.getProcessorName(), true );
   },
   /**

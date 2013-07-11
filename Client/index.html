@@ -24,6 +24,7 @@
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
     <script type="text/javascript" src="assets/lib/list-view.min.js"></script>
     <script type="text/javascript" src="assets/lib/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="assets/lib/base64.js"></script>
 
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/client/MyTalk.js"></script>
@@ -206,6 +207,7 @@
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
+    <script type="text/javascript" src="com/mytalk/client/controller/communicator/FileTransfer.js"></script> 
 
     <!-- bootstrap jQuery stuffs -->
     <script type="text/javascript" src="assets/animation/animation.js"></script>
@@ -574,6 +576,13 @@
             <button class="common_button" id="submitMessage">Invia</button>
           </fieldset>
         {{/view}}
+        <input onchange="addFiles(this.files)" type="file" id="files" name="files[]" multiple
+           style="height: 20px; margin-top:20px"/>
+        <div class="progress-bar">
+          <progress id="progressbar" value="0" max="600"></progress>
+          <span class="progress-value">0%</span><br />
+          <span class="file-name" id="file_name"></span>
+        </div>
       </div>
 
       <div id="comunicazione">
@@ -605,7 +614,7 @@
           <li {{bindAttr class="bitrate:display_yes:display_none"}}><span>Velocit&agrave;:</span>{{bitrate}} kbits/sec</li>
           <li {{bindAttr class="rtt:display_yes:display_none"}}><span>Round Trip Time:</span>{{rtt}} ms</li>
         </ul>
-
+        
       </div>
     </div>
     <audio id="ring" preload>

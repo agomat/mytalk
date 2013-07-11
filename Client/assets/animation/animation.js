@@ -72,3 +72,78 @@ $.fn.adjustSizes = function() {
 $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS});
 }
+
+$.fn.progessBar = function(progress, max, name) {
+  if (progress == -1)
+    $('.progress-bar').hide('slow');
+  var progressbar = $('#progressbar');
+  if (max) {
+    progressbar.attr('max',max);
+    $('#file_name').text(name);
+    $('.progress-bar').show();
+  }
+  else {
+    max = progressbar.attr('max');
+  }
+  progress++;
+  progressbar.val(progress);
+  $('.progress-value').html((parseInt(progress*100/max)) + '%');
+}
+
+    function addFiles(files) {
+        var file = files[0]; // FileList object
+        FS.prepareToReadFile(file.size);
+        var reader = new FileReader();
+        var id = 0;
+        var chunksPerSlice = 20000;
+        var sliceSize = chunksPerSlice*FS.CHUNK_SIZE;
+        var blob;
+
+        reader.onloadend = function(evt) {
+            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                FS.addChunks(evt.target.result);
+                id++;
+                if((id+1)*sliceSize < file.size){
+                    blob = file.slice(id*sliceSize,(id+1)*sliceSize);
+                    reader.readAsArrayBuffer(blob);
+                }else if(id*sliceSize < file.size){
+                    blob = file.slice(id*sliceSize,file.size);
+                    reader.readAsArrayBuffer(blob);
+                }else{
+                    meta0 = {};
+                    meta0.numOfChunks = FS.numOfChunksInFile;
+                    meta0.size = files[0].size;
+                    meta0.name = files[0].name;
+                    meta0.lastModifiedDate = files[0].lastModifiedDate;
+                    meta0.type = files[0].type;
+                    
+                    FS.metaInfo = {
+                      filename: meta0.name,
+                      filetype: meta0.type,
+                      numOfChunks: meta0.numOfChunks,
+                      id: -1,
+                    };
+                    var i = 0;
+                    while( FS.chunks.hasOwnProperty(i) ) {
+                      var WARI = {
+                        id: i,
+                        chunk: Base64Binary.encode(FS.chunks[i])
+                      };
+                      FS.chunks[i] = WARI;
+                      ++i;
+                    }
+                    // manda solo il primo chunk
+                    window.RTCmanager.send(JSON.stringify( FS.metaInfo ));
+
+                    // progess bar
+                    $.fn.progessBar(0, meta0.numOfChunks, meta0.name);
+                }
+            }
+        };
+
+        blob = file.slice(id*sliceSize,(id+1)*sliceSize);
+        reader.readAsArrayBuffer(blob);
+    }
+
+
+window.FS = new client();

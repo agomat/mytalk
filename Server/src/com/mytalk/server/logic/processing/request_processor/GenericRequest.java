@@ -98,7 +98,7 @@ public abstract class GenericRequest {
 	 */
 	public static boolean checkConnectionPackWellFormed(ConnectionPack pack){
 		boolean check=false;
-		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getRTCinfo()!=null && pack.getMyUserId()!=null && pack.getSpeakerUserId()!=null){
+		if(pack!=null && pack.getMyIp()!=null && pack.getSpeakerIp()!=null && pack.getRTCinfo()!=null && pack.getMyUserId()!=null){
 			check=true;
 		}
 		return check;

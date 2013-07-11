@@ -74,6 +74,14 @@ public class UserCallTest {
 		assertEquals("Dati corretti ma non viene processata la richiesta con auth","SuccessfulUserCall",ariResponse.getReq());
 		assertEquals("Ip a cui mandare errato","123.123.123.1",ariResponse.getAuth().getIp());
 		
+		packTest.setSpeakerUserId(null);
+		packTest.setSpeakerIp("111.111.111.0");
+		packString=conv.convertJavaToJson(packTest);
+		ari.setInfo(packString);
+		ariResponse=userCall.manage(ari);
+		assertEquals("Dati con campo speakerId null","SuccessfulUserCall",ariResponse.getReq());
+		assertEquals("Ip a cui mandare errato","111.111.111.0",ariResponse.getAuth().getIp());
+		
 		ConnectionPack packTest2=new ConnectionPack("123.123.123.0",1,"123.123.123.5",2,"sdp");
 		ari.setAuth(authStart);
 		String packString2=conv.convertJavaToJson(packTest2);

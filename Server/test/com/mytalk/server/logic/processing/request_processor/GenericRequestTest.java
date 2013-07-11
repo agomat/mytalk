@@ -94,11 +94,6 @@ public class GenericRequestTest {
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);
 		
-		pack.setMyUserId(0);
-		pack.setSpeakerUserId(null);
-		esito=GenericRequest.checkConnectionPackWellFormed(pack);
-		assertFalse("esito negativo",esito);
-		
 		pack=null;
 		esito=GenericRequest.checkConnectionPackWellFormed(pack);
 		assertFalse("esito negativo",esito);

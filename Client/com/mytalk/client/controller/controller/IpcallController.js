@@ -37,9 +37,9 @@ MyTalk.IpcallController = Ember.ObjectController.extend({
   
   ipCall: function(ip) {
     console.log('controller ipCAll: '+ip);
-    var record = MyTalk.User.createRecord({ip: ip});
+    var record = MyTalk.User.createRecord({ip: ip, name: "Utente", surname: "anonimo"});
     record.get('stateManager').goToState('saved');
-    this.transitionToRoute('calling', user);
+    this.transitionToRoute('calling', record);
     // TODO fare metodo ipCall
   }
 });

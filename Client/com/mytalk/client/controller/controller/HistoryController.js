@@ -21,6 +21,10 @@
 */
 
 MyTalk.HistoryController = Ember.ArrayController.extend({
+
+  sortProperties: ['startDate'],
+  sortAscending: false,
+
   /**
    * Questo metodo è necessario per collegare il controller al rispettivo model; tale
    * metodo viene invocato ogni qual volta viene creata un'istanza di questo controller.

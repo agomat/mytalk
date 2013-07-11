@@ -185,75 +185,20 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     var onDataChannelMessage = function(message) {
-      try{
-        //console.debug( ">> mandante -> "+ message.data );
-        var WARI = JSON.parse(message.data);
-        if( typeof WARI.r !== "undefined" ) {
-          // manda il WARI.r - esmimo senza mime type
-          window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));
-          //console.log( "chunk n "+ WARI.r + " mandato" );
-          // progess bar
-          $.fn.progessBar(WARI.r);
+      var msg=context.get('messages');
+      var temp=[];
 
-          if(window.timeout) {
-            clearTimeout(timeout);
-            window.timeout = null;
-          }
-          window.timeout = setTimeout(function(){ if( !WARI.l ) { alert("Rimando il pacchetto n"+WARI.r); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] )); } }, 3000);
-
-          if (WARI.l) {
-            setTimeout(function(){
-              $.fn.progessBar(-1);
-              FS.reset();
-            },3300);
-          } 
-
-        } else {
-          // ricevente 
-          if ( WARI.id == -1 ) {
-            FS.filename = WARI.filename;
-            FS.numOfChunksInFile = WARI.numOfChunks;
-            $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
-          }
-          else {
-            FS.numOfChunksReceived++;
-            FS.chunks[WARI.id] = Base64Binary.decode(WARI.chunk);
-            $.fn.progessBar(WARI.id);
-            //console.debug("Ricevuto "+ (WARI.id+1) +" chunk di "+FS.numOfChunksInFile);
-            if( (WARI.id + 1) == FS.numOfChunksInFile ){
-              //console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
-              FS.hasEntireFile = true;
-              FS.saveFileLocally();
-              FS.reset();
-              setTimeout(function(){
-                $.fn.progessBar(-1);
-              },3300);
-              return;
-            } 
-          }
-          // richiedi un chunk id -> WARI.id+1
-          var aux = new Object();
-          aux.r = WARI.id+1;
-          if( (aux.r+1) == FS.numOfChunksInFile ) aux.l = true; // notifica che è l'ultimo
-          //console.log("Richiedo: "+aux.r);
-          window.RTCmanager.send( JSON.stringify(aux) );
-        }
-      } catch(e) {
-        var msg=context.get('messages');
-        var temp=[];
-
-        msg.forEach(function(t){
-          temp.pushObject(t);
-        });
-        temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
-        context.set('messages',temp);
+      msg.forEach(function(t){
+        temp.pushObject(t);
+      });
+      temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
+      context.set('messages',temp);
       
-        Ember.run.later(this, function(){
-          $("#messages").animate({
-            scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
-          },300);
-        }, 300);
-      }
+      Ember.run.later(this, function(){
+        $("#messages").animate({
+          scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+        },300);
+      }, 300);
     };
      
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
@@ -306,61 +251,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
     };
 
-   var onDataChannelMessage = function(message) {
-      try{
-        //console.debug( ">> mandante -> "+ message.data );
-        var WARI = JSON.parse(message.data);
-        if( typeof WARI.r !== "undefined" ) {
-          // manda il WARI.r - esmimo senza mime type
-          window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] ));
-          //console.log( "chunk n "+ WARI.r + " mandato" );
-          // progess bar
-          $.fn.progessBar(WARI.r);
-
-          if(window.timeout) {
-            clearTimeout(timeout);
-            window.timeout = null;
-          }
-          window.timeout = setTimeout(function(){ if( !WARI.l ) { alert("Rimando il pacchetto n"+WARI.r); window.RTCmanager.send(JSON.stringify( window.FS.chunks[ WARI.r ] )); } }, 3000);
-
-          if (WARI.l) {
-            setTimeout(function(){
-              $.fn.progessBar(-1);
-              FS.reset();
-            },3300);
-          } 
-
-        } else {
-          // ricevente 
-          if ( WARI.id == -1 ) {
-            FS.filename = WARI.filename;
-            FS.numOfChunksInFile = WARI.numOfChunks;
-            $.fn.progessBar(0, FS.numOfChunksInFile, FS.filename);
-          }
-          else {
-            FS.numOfChunksReceived++;
-            FS.chunks[WARI.id] = Base64Binary.decode(WARI.chunk);
-            $.fn.progessBar(WARI.id);
-            //console.debug("Ricevuto "+ (WARI.id+1) +" chunk di "+FS.numOfChunksInFile);
-            if( (WARI.id + 1) == FS.numOfChunksInFile ){
-              //console.debug("Ho l'intero file formato da "+FS.numOfChunksInFile+ "chunks");
-              FS.hasEntireFile = true;
-              FS.saveFileLocally();
-              FS.reset();
-              setTimeout(function(){
-                $.fn.progessBar(-1);
-              },3300);
-              return;
-            } 
-          }
-          // richiedi un chunk id -> WARI.id+1
-          var aux = new Object();
-          aux.r = WARI.id+1;
-          if( (aux.r+1) == FS.numOfChunksInFile ) aux.l = true; // notifica che è l'ultimo
-          //console.log("Richiedo: "+aux.r);
-          window.RTCmanager.send( JSON.stringify(aux) );
-        }
-      } catch(e) {
+    var onDataChannelMessage = function(message) {
       var msg = context.get('messages');
       var temp = [];
 
@@ -369,13 +260,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
       temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
       context.set('messages',temp);
-    
+      
       Ember.run.later(this, function(){
         $("#messages").animate({
           scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
         },300);
       }, 300);
-    }
     };
 
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);

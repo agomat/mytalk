@@ -46,19 +46,25 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProce
   */
   process: function (ari) {
     var payload = JSON.parse( ari.info );
-    
+    var speaker;
+    if(payload.myUserId) {
+      speaker = MyTalk.User.find(payload.myUserId);
+    }
+    else {
+      speaker = MyTalk.User.createRecord({ip: payload.myIp, username: null, name: "Utente", surname: "Anonimo"});
+    }
     if (MyTalk.CallState.currentState.name != 'isNotBusy'){
       var processorFactory = MyTalk.ProcessorFactory.create({});
       var processor = processorFactory.createProcessorProduct("RefuseCall");
       processor.process({
-        speaker: MyTalk.User.find( payload.myUserId ),
+        speaker: speaker,
         RTCinfo: 'RefuseCall' 
       });
     }
     else {
       var callData = Ember.Object.create({
         path: 'isBusy.incomingCall',
-        speaker: MyTalk.User.find( payload.myUserId ),
+        speaker: speaker,
         RTCinfo: JSON.parse(payload.RTCinfo)
       });
 

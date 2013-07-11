@@ -24,7 +24,6 @@
     <script type="text/javascript" src="assets/lib/ember-data.js"></script>
     <script type="text/javascript" src="assets/lib/list-view.min.js"></script>
     <script type="text/javascript" src="assets/lib/jquery.tipsy.js"></script>
-    <script type="text/javascript" src="assets/lib/base64.js"></script>
 
     <!-- bootstrap application -->
     <script type="text/javascript" src="com/mytalk/client/MyTalk.js"></script>
@@ -207,7 +206,6 @@
 
     <!-- bootstrap RTCAdapter -->
     <script type="text/javascript" src="com/mytalk/client/controller/communicator/PeerConnection.js"></script> 
-    <script type="text/javascript" src="com/mytalk/client/controller/communicator/FileTransfer.js"></script> 
 
     <!-- bootstrap jQuery stuffs -->
     <script type="text/javascript" src="assets/animation/animation.js"></script>
@@ -576,13 +574,6 @@
             <button class="common_button" id="submitMessage">Invia</button>
           </fieldset>
         {{/view}}
-        <input onchange="addFiles(this.files)" type="file" id="files" name="files[]" multiple
-           style="height: 20px; margin-top:20px"/>
-        <div class="progress-bar">
-          <progress id="progressbar" value="0" max="600"></progress>
-          <span class="progress-value">0%</span><br />
-          <span class="file-name" id="file_name"></span>
-        </div>
       </div>
 
       <div id="comunicazione">
@@ -711,9 +702,14 @@
       <ul id="call_list">
       {{#each call in controller}}
         {{#if call.duration}}
-          <li {{bindAttr class="call.caller:call_out:call_in"}}> 
-            <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
-            <div class="who_call">{{call.speaker.name}} {{call.speaker.surname}}</div>
+          <li {{bindAttr class="call.caller:call_out:call_in"}}>
+            {{#if call.speaker}}
+              <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
+              <div class="who_call">{{call.speaker.fullName}}</div>
+            {{else}}
+              <div class="avatar35"><img src="http://www.gravatar.com/avatar/null?s=35&d=blank" /> </div>
+              <div class="who_call"><em>Utente non più registrato</em></div>
+            {{/if}}
             <div class="data_call"> {{calldate call.startDate}}</div>
             <div class="duration_call">{{hourconversion call.duration}}</div>
           </li>

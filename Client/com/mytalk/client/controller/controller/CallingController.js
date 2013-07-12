@@ -390,32 +390,30 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     var timestampPrev = 0;
     var context = this;
     var statCollector = setInterval(function() {
+      context.get('stats').set('duration',context.get('stats.duration')+1);
       var display = function(b,r) {
         context.set('bitrate',b);
         context.set('rtt',r);
       }
       if(context.RTCmanager.pc){
-        context.RTCmanager.pc.getStats(function(stats) {
+        context.RTCmanager.pc.getStats(function(stats) { // Not working /w Firefox
           var results = stats.result();
           var bitRate = rtt = 0;
-          context.get('stats').set('duration',context.get('stats.duration')+1);
-          if ( context.RTCmanager.get('webrtcDetectedBrowser') == 'chrome' ) {
-            for (var i = 0; i < results.length; ++i) {
-              var res = results[i];
-              if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
-                context.get('stats').set('sentBytes',res.stat('bytesSent'));
-                rtt = res.stat('googRtt');
+          for (var i = 0; i < results.length; ++i) {
+            var res = results[i];
+            if(res.type=='ssrc' && res.stat('googFrameHeightSent')){
+              context.get('stats').set('sentBytes',res.stat('bytesSent'));
+              rtt = res.stat('googRtt');
+            }
+            if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
+              context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
+              var bytesNow = res.stat('bytesReceived');
+              if (timestampPrev > 0) {
+                bitRate = Math.round((bytesNow - bytesPrev) * 8 /
+                (res.timestamp - timestampPrev));
               }
-              if (res.type == 'ssrc' && res.stat('googFrameHeightReceived')) {
-                context.get('stats').set('receivedBytes',res.stat('bytesReceived'));
-                var bytesNow = res.stat('bytesReceived');
-                if (timestampPrev > 0) {
-                  bitRate = Math.round((bytesNow - bytesPrev) * 8 /
-                  (res.timestamp - timestampPrev));
-                }
-                timestampPrev = res.timestamp;
-                bytesPrev = bytesNow;
-              }
+              timestampPrev = res.timestamp;
+              bytesPrev = bytesNow;
             }
           }
 

@@ -81,8 +81,17 @@ MyTalk.CallState = Ember.StateManager.create({
     beingFree: function (manager) {
       manager.isBusy.set('callData', Ember.Object.create({}));
       manager.transitionTo( 'isNotBusy' );
-      if(MyTalk.PersonalData.find(0).get('username')) MyTalk.Router.router.transitionTo('logged.index');
-      else MyTalk.Router.router.transitionTo('guest');
+      if(MyTalk.PersonalData.find(0).get('username')) {
+        MyTalk.Router.router.transitionTo('logged.index');
+      }
+      else {
+        MyTalk.Router.router.transitionTo('guest');
+        MyTalk.User.find().forEach(function(user){
+          user.set('name','');
+          user.get('stateManager').goToState('saved');
+          user.unloadRecord();
+        });
+      }
       $.fn.dropDownMenu();
     },
  

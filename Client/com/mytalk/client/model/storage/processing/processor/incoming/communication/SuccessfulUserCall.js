@@ -49,6 +49,7 @@ MyTalk.processor.SuccessfulUserCall = Ember.Object.extend(MyTalk.AbstractInProce
     var speaker = MyTalk.User.find(payload.myUserId);
     if(!speaker.get('name')) {
       speaker = MyTalk.User.createRecord({ip: payload.myIp, online:false, username: null, name: "Utente", surname: "anonimo"});
+      speaker.get('stateManager').goToState('saved');
     }
     if (MyTalk.CallState.currentState.name != 'isNotBusy'){
       var processorFactory = MyTalk.ProcessorFactory.create({});

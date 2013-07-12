@@ -45,7 +45,7 @@ MyTalk.processor.UserCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProdu
     var speaker = params.speaker;
     var RTCinfo = params.RTCinfo;
 
-    var nextId = MyTalk.Call.find().get('length');
+    var nextId = 'r'+MyTalk.Call.find().get('length');
     var record = MyTalk.Call.createRecord({id: nextId, speaker: speaker, caller: true, startDate: new Date() });
     var transaction = record.get('transaction');
 

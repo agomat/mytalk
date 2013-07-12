@@ -120,7 +120,9 @@ MyTalk.CallState = Ember.StateManager.create({
         MyTalk.Router.router.transitionTo('calling', manager.isBusy.get('callData').speaker );
         
         Ember.run.later(this, function() {
-          document.getElementById('ring').play();
+          if( $('#ring')[0] ) {
+            $('#ring')[0].play();
+          } 
         }, 300);
         
         Ember.run.later(this, function() {

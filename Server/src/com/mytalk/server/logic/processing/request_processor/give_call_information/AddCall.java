@@ -86,7 +86,7 @@ public class AddCall extends GenericRequest {
 			try{
 				callClient=listOfCall.get(0); 
 				caller=auth.getUser();
-				if(receiver!=null) {
+				if( callClient.getSpeakerId() != null) {
 					receiver=(da.getUserById(callClient.getSpeakerId())).getUsername();
 				}
 				duration=callClient.getDuration();

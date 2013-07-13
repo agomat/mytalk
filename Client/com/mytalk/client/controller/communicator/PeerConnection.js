@@ -205,7 +205,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
     };
     
     this.pc.oniceconnectionstatechange = function(evt) {
-      console.log(evt.target.iceConnectionState);
       if(evt.target.iceConnectionState == "disconnected") {
       context.closeConnection(onClose);
       }

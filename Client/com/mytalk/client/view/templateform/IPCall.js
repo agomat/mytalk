@@ -29,7 +29,7 @@ MyTalk.IPCall = Ember.TextField.extend({
    *
   */
   
-  attributeBindings: ["required"],
+  attributeBindings: ['pattern','required','onchange'],
    
    /**
    * Proprietà necessaria per impostare l'attributo $required$ a $true$
@@ -74,5 +74,24 @@ MyTalk.IPCall = Ember.TextField.extend({
    *
   */
 
-  placeholder: 'Indirizzo IP'
+  placeholder: 'Indirizzo IP',
+  
+  /**
+   * Proprietà necessaria per impostare l'attributo $onchange$ con la funzione relativa allo scatenamento dell'evento
+   * @property +onchange           
+   * @type {String}                   
+   *
+  */
+
+  onchange:"this.setCustomValidity( this.validity.patternMismatch ? 'Inserire un indirizzo IP corretto': '')",
+
+  /**
+   * Proprietà necessaria per impostare l'attributo $pattern$ con il pattern necessario alla verifica dell'
+   * indirizzo IP.
+   * @property +pattern           
+   * @type {String}                   
+   *
+  */ 
+
+  pattern:'([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})(:[0-9]{0,5})?'
 });

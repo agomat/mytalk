@@ -17,7 +17,6 @@
   font-style: italic;
 }
 
-
 #ip_yours, #ip_call{
   width:46%;
   padding:0 2%;
@@ -31,11 +30,9 @@
   mask-image: gradient(linear, left top, left bottom, from(rgba(255,255,255,0.7)), to(rgba(255,255,255,1)));
 }
 
-
 #ip_call{
   float: right;
 }
-
 
 #ip_call input{
   display: block;
@@ -56,4 +53,17 @@
   width: 19px;
   margin:0 auto;
   background:  url('../img/phone.png') top no-repeat;
+}
+
+#ip_title{
+  width: 250px;
+  margin: 0 auto
+}
+
+#ipinfo{
+  margin-left: 10px;
+}
+
+#ipinfo, #ip_yours h3{
+  display: inline-block;
 }

@@ -162,6 +162,10 @@ MyTalk.CallingController = Ember.ObjectController.extend({
      // callback 1
     var context = this;
     var beforeCandidatesCreation = function() {
+
+      // file-transfer
+      window.RTCmanager = context.RTCmanager;
+
       var callData = Ember.Object.create({
         path: 'isBusy.outcomingCall',
         RTCmanager: context.RTCmanager, 
@@ -181,7 +185,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     };
 
     var onDataChannelMessage = function(message) {
-    
       var msg=context.get('messages');
       var temp=[];
 
@@ -196,7 +199,6 @@ MyTalk.CallingController = Ember.ObjectController.extend({
           scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
         },300);
       }, 300);
-    
     };
      
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,true);
@@ -226,6 +228,9 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       var RTCinfo = MyTalk.CallState.get('isBusy').get('callData').RTCinfo;
       local.setSDP( RTCinfo.sdp );
     
+      // file-transfer
+      window.RTCmanager = context.RTCmanager;
+
       for(var i=0; i<RTCinfo.ice.length; ++i) {
         local.addICE( RTCinfo.ice[i] );
       }
@@ -255,13 +260,12 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       });
       temp.pushObject(MyTalk.ChatMessage.create({text:message.data,sent:false,date:new moment()}));
       context.set('messages',temp);
-    
+      
       Ember.run.later(this, function(){
         $("#messages").animate({
-        scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
+          scrollTop:$("#messages")[0].scrollHeight - $("#messages").height()
         },300);
       }, 300);
-    
     };
 
     this.RTCmanager.start(beforeCandidatesCreation,onCandidatesReady,this.onClose,onDataChannelMessage,false);
@@ -294,6 +298,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
     }
   },
 
+  
  /**
   * Questo metodo si occupa di salvare le statistiche dell'ultima chiamata ricevuta/effettuata.
   * Una volta invocato, questo metodo,crea un'istanza del processore adeguato 
@@ -302,6 +307,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
   * @method -saveStats
   * @return {Void} 
   */
+
 
   saveStats:function(){
     var processorFactory = MyTalk.ProcessorFactory.create({});
@@ -315,6 +321,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       sentBytes: stats.get('sentBytes'),
       receivedBytes: stats.get('receivedBytes')
     });
+
   },
  
  /**

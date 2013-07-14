@@ -38,6 +38,10 @@ MyTalk.processor.UsernameAlreadyExistingCreateAccount = Ember.Object.extend(MyTa
   * @override CCMOD2.processing.processor.incoming$AbstractInProcessorProduct$
   */
   process: function (ari) {
+    var record = MyTalk.PersonalData.find(0);
+    record.set('username','');
+    record.get('stateManager').goToState('updated');
+    record.get('stateManager').goToState('saved');
     alert("La registrazione non è andata a buon fine, l'username inserito esiste già. Prova a sceglierne un altro");
   },
   /**

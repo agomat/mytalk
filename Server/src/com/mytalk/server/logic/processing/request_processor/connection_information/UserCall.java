@@ -79,9 +79,11 @@ public class UserCall extends GenericRequest{
 					return new ARI(null,"CorruptedPack",infoRequest);
 				}
 				String callerUsername = da.getUserById(pack.getMyUserId()).getUsername();
-				String speakerUsername=da.getUserById(pack.getSpeakerUserId()).getUsername();
-				Blacklist blacklist=new Blacklist(speakerUsername,callerUsername);
-				checkPresence = da.checkBlacklist(blacklist);
+				if(pack.getSpeakerUserId()!=null){
+					String speakerUsername=da.getUserById(pack.getSpeakerUserId()).getUsername();
+					Blacklist blacklist=new Blacklist(speakerUsername,callerUsername);
+					checkPresence = da.checkBlacklist(blacklist);
+				}			
 			}
 			result=da.checkUserByIp(pack.getSpeakerIp());
 			if(result && !checkPresence){

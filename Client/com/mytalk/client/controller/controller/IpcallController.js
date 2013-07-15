@@ -36,7 +36,13 @@ MyTalk.IpcallController = Ember.ObjectController.extend({
   }.property('content'),
   
   ipCall: function(ip) {
-    console.log('controller ipCAll: '+ip);
-    // TODO fare metodo ipCall
+    if(MyTalk.PersonalData.find(0).get('ip') == ip) {
+      alert("Per chiamare te stesso apri una nuova scheda del browser e utilizza l'ip che ti verrà fornito dal sistema!")
+    }
+    else {
+      var record = MyTalk.User.createRecord({ip: ip, name: "Utente", surname: "anonimo", online: false});
+      record.get('stateManager').goToState('saved');
+      this.transitionToRoute('calling', record);
+    }
   }
 });

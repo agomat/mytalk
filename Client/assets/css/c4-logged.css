@@ -109,6 +109,10 @@
   cursor: pointer;
 }
 
+#empty_list {
+  padding: 5% 10%;
+}
+
 #liste .content a{
   width:80%;
   font-size: 1.2em;

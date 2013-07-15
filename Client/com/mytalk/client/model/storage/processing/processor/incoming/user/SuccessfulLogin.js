@@ -53,6 +53,14 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractInProcesso
     
     // creazione lista generale
     var record = MyTalk.List.createRecord({id:0, name:'Tutti i contatti'});
+    // FIXING AN EMBER-DATA BUG
+    if( MyTalk.User.find().get('length') == 0 ){
+      Ember.run.later(this,function(){
+        record.get('users').addObjects( MyTalk.User.find() );
+        record.get('stateManager').goToState('saved');
+      },0);
+    }
+    // END FIX
     record.get('users').addObjects( MyTalk.User.find() );
     var transaction = record.get('transaction');
     transaction.reopen({
@@ -66,7 +74,8 @@ MyTalk.processor.SuccessfulLogin = Ember.Object.extend(MyTalk.AbstractInProcesso
     adapter = store.adapterForType(MyTalk.PersonalData);
     adapter.didFindMany(store, MyTalk.PersonalData, worldPersonalData);
 
-    MyTalk.AppState.send("beingAuthenticated"); 
+    MyTalk.AppState.send("beingAuthenticated");
+     
   },
 
    sendToServer: function (socket, record, onSent) { // not override

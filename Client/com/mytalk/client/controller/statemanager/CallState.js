@@ -1,7 +1,7 @@
 /**
 * Filename: CallState.js
 * Package: com.mytalk.client.controller.statemanager
-* Dependencies: com.mytalk.client.controller.router.Router
+* Dependencies:
 * Author: Agostinetto Mattia
 * Date: 2013-04-23
 *
@@ -81,7 +81,17 @@ MyTalk.CallState = Ember.StateManager.create({
     beingFree: function (manager) {
       manager.isBusy.set('callData', Ember.Object.create({}));
       manager.transitionTo( 'isNotBusy' );
-      MyTalk.Router.router.transitionTo('logged.index');
+      if(MyTalk.PersonalData.find(0).get('username')) {
+        MyTalk.Router.router.transitionTo('logged.index');
+      }
+      else {
+        MyTalk.Router.router.transitionTo('guest');
+        MyTalk.User.find().forEach(function(user){
+          user.set('name','');
+          user.get('stateManager').goToState('saved');
+          user.unloadRecord();
+        });
+      }
       $.fn.dropDownMenu();
     },
  
@@ -110,7 +120,9 @@ MyTalk.CallState = Ember.StateManager.create({
         MyTalk.Router.router.transitionTo('calling', manager.isBusy.get('callData').speaker );
         
         Ember.run.later(this, function() {
-          document.getElementById('ring').play();
+          if( $('#ring')[0] ) {
+            $('#ring')[0].play();
+          } 
         }, 300);
         
         Ember.run.later(this, function() {

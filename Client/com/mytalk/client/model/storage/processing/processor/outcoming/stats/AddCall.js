@@ -91,7 +91,10 @@ MyTalk.processor.AddCall = Ember.Object.extend(MyTalk.AbstractOutProcessorProduc
 
     socket.send( JSON.stringify(ARI) );
     onSent( this.getProcessorName(), true );
-
+    
+    record.set('name','');
+    record.get('stateManager').goToState('saved');
+    record.unloadRecord();
   },
 
   /**

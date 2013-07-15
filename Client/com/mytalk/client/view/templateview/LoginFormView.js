@@ -99,6 +99,6 @@ MyTalk.LoginFormView = Ember.View.extend({
 
 Ember.TextField.reopen({
   attributeBindings: ['name'],
-  attributeBindings: ['id'],
+  attributeBindings: ['id']
 });
 

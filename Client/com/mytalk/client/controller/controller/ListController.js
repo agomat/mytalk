@@ -87,7 +87,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
         processor.process({
           listId: listId,
           newName: newName,
-          oldName: listName,
+          oldName: listName
         });
       }
     else {

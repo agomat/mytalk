@@ -1,6 +1,6 @@
 /**
 * Filename: CallState.js
-* Package: com.mytalk.client.controller.statemanager
+* Package: com.mytalk.client.model.statemanager
 * Dependencies:
 * Author: Agostinetto Mattia
 * Date: 2013-04-23
@@ -57,7 +57,7 @@ MyTalk.CallState = Ember.StateManager.create({
       manager.isBusy.set('callData', context);
       manager.transitionTo( context.get('path') );
       $.fn.dropDownMenu(true);
-    },
+    }
   }),
  
   /**
@@ -137,8 +137,7 @@ MyTalk.CallState = Ember.StateManager.create({
             MyTalk.CallState.send('beingFree');
           }
         }, 20000);
-
-      },
+      }
 
     }),
   /**
@@ -162,7 +161,7 @@ MyTalk.CallState = Ember.StateManager.create({
             RTCmanager.addICE( RTCinfo.ice[i] );
           }        
         }
-      },
+      }
 
     })
 

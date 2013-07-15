@@ -101,6 +101,5 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
         alert("Esiste già una lista con questo nome");
       }
     }  
-  },
-  
+  }
 });

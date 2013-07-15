@@ -47,7 +47,7 @@ MyTalk.ProfileController = Ember.ObjectController.extend({
        surname: newSurname,
        username: newUsername,
        email: newEmail,
-       password: newPassword,
+       password: newPassword
       });
     }
   },

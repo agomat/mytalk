@@ -73,7 +73,7 @@ MyTalk.ModifyEmail = Ember.TextField.extend({
    *
   */
 
-  placeholder: 'Email',
+  placeholder: 'Email'
 
   
 });

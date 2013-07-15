@@ -169,7 +169,7 @@ MyTalk.CallingController = Ember.ObjectController.extend({
       var callData = Ember.Object.create({
         path: 'isBusy.outcomingCall',
         RTCmanager: context.RTCmanager, 
-        speaker: user,
+        speaker: user
       });
       MyTalk.CallState.send('beingBusy', callData);
       context.set( 'stats.date', new moment().lang('it') );

@@ -234,7 +234,7 @@ MyTalk.UsersController = Ember.ArrayController.extend({
       var processorFactory = MyTalk.ProcessorFactory.create({});
       var processor = processorFactory.createProcessorProduct( "BlackListAdd" );
       processor.process({
-        userId: userId,
+        userId: userId
       });
     } 
   }

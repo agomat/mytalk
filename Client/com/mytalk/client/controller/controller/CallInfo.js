@@ -72,5 +72,5 @@ MyTalk.CallInfo = Ember.Object.extend({
    * @type {Number}                   
    *
   */ 
-  speaker: null,
+  speaker: null
 }); 

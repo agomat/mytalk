@@ -1,6 +1,6 @@
 /**
 * Filename: AppState.js
-* Package: com.mytalk.client.controller.statemanager
+* Package: com.mytalk.client.model.statemanager
 * Dependencies:
 * Author: Agostinetto Mattia
 * Date: 2013-04-23
@@ -9,7 +9,7 @@
 *
 | Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1     | 2013-04-23 | MA       | [+] Scrittura classe
+* 0.1     | 2013-04-23 | MA        | [+] Scrittura classe
 *
 * This software is distributed under GNU/GPL 2.0.
 *
@@ -51,7 +51,7 @@ MyTalk.AppState = Ember.StateManager.create({
     beingNotAuthenticated: function (manager, context) {
       manager.transitionTo('isNotAuthenticated');
       MyTalk.Router.router.transitionTo('guest');
-    },
+    }
   }),
 
   /**

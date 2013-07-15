@@ -29,7 +29,7 @@ MyTalk.StatsRoute = Ember.Route.extend({
   */
   renderTemplate: function() {
     this.render('stats', { into: 'index', outlet: 'content' });
-  },
+  }
 }); 
  
  

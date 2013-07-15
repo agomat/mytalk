@@ -72,7 +72,7 @@ MyTalk.ModifyName = Ember.TextField.extend({
    *
   */
   
-  placeholder: 'Nome',
+  placeholder: 'Nome'
    
 
   

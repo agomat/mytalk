@@ -72,8 +72,3 @@ $.fn.adjustSizes = function() {
 $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS, fade: true});
 }
-
-function copy() {
-  var ip = document.getElementById('ip_address').innerText;
-  window.prompt("Per copiare premi Ctrl+C e di seguito Invio", ip);
-}

@@ -127,6 +127,11 @@ MyTalk.ListController = Ember.ObjectController.extend({
     }
     else{
       context.get('content').get('users').setEach('unmatched',false);
+      Ember.run.later(this,function(){
+        context.get('content').get('users').forEach(function(entry){
+          entry.get('stateManager').goToState('saved');
+        });
+      },500);
     }
   },
 

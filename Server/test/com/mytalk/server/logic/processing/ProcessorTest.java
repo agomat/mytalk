@@ -1,13 +1,13 @@
 /**
 * Filename: ProcessorTest.java
 * Package: com.mytalk.server.logic.processing
-* Author: Michael Ferronato
+* Author: Armando Caprio
 * Date: 2013-05-20
 *
 * Diary:
 * Version | Date       | Developer | Changes
 * --------+------------+-----------+------------------
-* 0.1	  |	2013-05-20 |  MF       | [+] Inserimento classe, oggetti e costruttore     
+* 0.1	  |	2013-05-20 |  AC       | [+] Inserimento classe, oggetti e costruttore     
 *
 * This software is distributed under GNU/GPL 2.0.
 *

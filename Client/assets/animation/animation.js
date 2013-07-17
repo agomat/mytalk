@@ -47,28 +47,6 @@ $.fn.bindEnterKeyPressed = function() {
   });
 }
 
-$.fn.adjustSizes = function() { 
-  var maxWho = maxDate = 0,
-    who = $('.who_call'),
-    date = $('.data_call');
-
-  who.each(function(i,v){
-    var width = $(v).width();
-    if (width > maxWho) {
-      maxWho = width;
-    }
-  });
-  who.width(maxWho);
-
-  date.each(function(i,v){
-    var width = $(v).width();
-    if (width > maxDate) {
-      maxDate = width;
-    }
-  });
-  date.width(maxDate);
-}
-
 $.fn.infobox = function() {
   $('.infobox').tipsy({gravity: $.fn.tipsy.autoNS, fade: true});
 }

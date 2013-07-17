@@ -245,7 +245,6 @@ MyTalk.PeerConnection = Ember.Object.extend({
   },
   
   send: function(msg) {
-    window.MSG = msg;
     this.dataChannel.send(msg);
   }
     

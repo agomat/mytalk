@@ -700,23 +700,24 @@
       {{#if controller}}
         <h3>Registro Chiamate</h3>
       {{/if}}
-      <ul id="call_list">
+      <table id="call_list">
       {{#each call in controller}}
         {{#if call.duration}}
-          <li {{bindAttr class="call.caller:call_out:call_in"}}>
+          <tr {{bindAttr class="call.caller:call_out:call_in"}}>
+            <td class="inout_call"></td>
             {{#if call.speaker}}
-              <div class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </div>
-              <div class="who_call">{{call.speaker.fullName}}</div>
+              <td class="avatar35"><img {{bindAttr src="call.speaker.avatarSuperTiny"}} /> </td>
+              <td class="who_call">{{call.speaker.fullName}}</td>
             {{else}}
-              <div class="avatar35"><img src="http://www.gravatar.com/avatar/null?s=35&d=blank" /> </div>
-              <div class="who_call"><em>Utente non registrato</em></div>
+              <td class="avatar35"><img src="http://www.gravatar.com/avatar/null?s=35&d=blank" /> </td>
+              <td class="who_call"><em>Utente non registrato</em></td>
             {{/if}}
-            <div class="data_call"> {{calldate call.startDate}}</div>
-            <div class="duration_call">{{hourconversion call.duration}}</div>
-          </li>
+            <td class="data_call"> {{calldate call.startDate}}</td>
+            <td class="duration_call">{{hourconversion call.duration}}</td>
+          </tr>
         {{/if}}
       {{/each}}
-      </ul>
+      </table>
     </script>
 
   </body>

@@ -1,5 +1,5 @@
 /**
-* Filename: IndexController.js
+* Filename: GuestController.js
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.controller.statemanager.AppState
 *               com.mytalk.client.model.storage.processing.ProcessorFactory

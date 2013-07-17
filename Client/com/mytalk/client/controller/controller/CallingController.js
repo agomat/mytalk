@@ -3,7 +3,7 @@
 * Package: com.mytalk.client.controller.controller
 * Dependencies: com.mytalk.client.controller.controller.ChatMessage
 *          com.mytalk.client.controller.controller.CallInfo
-*          com.mytalk.client.controller.statemanager.CallState
+*          com.mytalk.client.model.statemanager.CallState
 *          com.mytalk.client.controller.comunicator.PeerConnection
 *          com.mytalk.client.model.storage.processing.ProcessorFactory
 *          com.mytalk.client.model.modelstruct.WCall

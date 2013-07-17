@@ -1,7 +1,7 @@
 /**
 * Filename: GuestController.js
 * Package: com.mytalk.client.controller.controller
-* Dependencies: com.mytalk.client.controller.statemanager.AppState
+* Dependencies: com.mytalk.client.model.statemanager.AppState
 *               com.mytalk.client.model.storage.processing.ProcessorFactory
 *               com.mytalk.client.model.storage.processing.processor.outcoming.CreateAccount
 * Author: Campese Stefano

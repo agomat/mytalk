@@ -2,7 +2,7 @@
 * Filename: SuccessfulAcceptCall.js
 * Package: com.mytalk.client.model.storage.processing.processor.incoming.communication
 * Dependencies: com.mytalk.client.model.storage.processing.processor.incoming.AbstractInProcessorProduct
-*               com.mytalk.client.controller.statemanager.CallState
+*               com.mytalk.client.model.statemanager.CallState
 * Author: Agostinetto Mattia
 * Date: 2013-05-01
 *

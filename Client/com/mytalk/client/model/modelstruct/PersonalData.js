@@ -32,7 +32,7 @@ MyTalk.PersonalData = DS.Model.extend({
 
   avatarTiny: function() {
     return 'http://www.gravatar.com/avatar/' + this.get('md5') + '?s=48&d=identicon';
-  }.property('md5'),
+  }.property('md5')
 
 });
 

@@ -71,7 +71,7 @@ MyTalk.ListController = Ember.ObjectController.extend({
     var listId = this.get('content').get('id');
     var listName = this.get('content').get('name');
     
-    var newName = prompt("Digita il nuovo nome della lista:");
+    var newName = $.trim(prompt("Digita il nuovo nome della lista:"));
     var lists = MyTalk.List.find();
     var test = true;
 

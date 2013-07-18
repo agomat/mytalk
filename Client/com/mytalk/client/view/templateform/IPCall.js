@@ -1,5 +1,5 @@
 /**
-* Filename: IPCAll.js
+* Filename: IPCall.js
 * Package: com.mytalk.client.view.templateform
 * Dependencies:
 * Author: Campese Stefano

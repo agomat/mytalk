@@ -76,7 +76,7 @@ MyTalk.LoggedController = Ember.ObjectController.extend({
 
   createList:function (){
 
-    var newName = prompt("Digita il nome della nuova lista: ");
+    var newName = $.trim(prompt("Digita il nome della nuova lista: "));
     if(newName) {
       var list=this.get('content');
       var test=true;

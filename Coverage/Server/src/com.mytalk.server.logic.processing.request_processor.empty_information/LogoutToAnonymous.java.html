@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>LogoutToAnonymous.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.empty_information</a> &gt; <span class="el_source">LogoutToAnonymous.java</span></div><h1>LogoutToAnonymous.java</h1><pre class="source lang-java linenums">/**
+* Filename: LogoutAsAnonymous.java
+* Package: com.mytalk.server.logic.processing.request_processor.empty_information
+* Author: Michael Ferronato
+* Date: 2013-05-17
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
+* 									     piu' espressivi e di facile comprensione
+* 0.1	  |	2013-05-17 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di passare da utente autenticato ad utente anonimo, un client
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.empty_information;
+
+import com.mytalk.server.data.model.OnlineUser;
+import com.mytalk.server.exceptions.LogoutException;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+
+public class LogoutToAnonymous extends GenericRequest {
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +LogoutToAnonymous
+	 */
+<span class="fc" id="L39">	public LogoutToAnonymous(){}</span>
+	
+	/**
+	 * Una volta ricevuto l'ARI, viene controllato se il pacchetto e' ben formato. Se la risposta 
+	 * e' negativa, viene ritornato un pacchetto con richiesta &quot;CorruptedPack&quot;. In seguito viene
+	 *  creato un oggetto di tipo OnlineUser con i dati presenti nell'Authentication del campo dati 
+	 *  ari. Tale oggetto viene utilizzato dal metodo di DataAccess, appartenente alla componente 
+	 *  CSDAT2, per consentire il cambiamento da autenticato ad anonimo. Nel caso in cui tutto 
+	 *  prosegue secondo i piani, viene restituito un &quot;SuccessfulLogoutToAnonymous&quot;, altrimenti 
+	 *  viene catturata l'eccezione &quot;LogoutException&quot; e ritornato un pacchetto con valore richiesta 
+	 *   &quot;UnsuccessfulLogoutToAnonymous&quot;
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari){
+<span class="fc" id="L57">		ARI response=null;</span>
+<span class="fc" id="L58">		Authentication auth=ari.getAuth();</span>
+<span class="fc" id="L59">		boolean checkAuth=checkAuthenticationWellFormed(auth);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if(!checkAuth){</span>
+<span class="fc" id="L61">			response=new ARI(null,&quot;CorruptedPack&quot;,null);</span>
+		}else{
+<span class="fc" id="L63">			OnlineUser onlineUser=new OnlineUser(auth.getUser(), auth.getIp());</span>
+			try {
+<span class="fc" id="L65">				da.logoutToAnonymous(onlineUser);</span>
+<span class="fc" id="L66">				response=new ARI(null, &quot;SuccessfulLogoutToAnonymous&quot;, null);</span>
+<span class="fc" id="L67">			} catch (LogoutException e) {</span>
+<span class="fc" id="L68">				response=new ARI(null, &quot;UnsuccessfulLogoutToAnonymous&quot;, null);</span>
+			}	
+		}
+<span class="fc" id="L71">		return response;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

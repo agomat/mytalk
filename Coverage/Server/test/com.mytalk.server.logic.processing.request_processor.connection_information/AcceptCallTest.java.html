@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AcceptCallTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.connection_information</a> &gt; <span class="el_source">AcceptCallTest.java</span></div><h1>AcceptCallTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: AcceptCallTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.connection_information
+* Author: Michael Ferronato
+* Date: 2013-05-08
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |2013-05-08  |   MF      | [+] Inserimento classe     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.connection_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.connection_information.AcceptCall;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.ConnectionPack;
+
+<span class="fc" id="L32">public class AcceptCallTest {</span>
+
+<span class="fc" id="L34">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L35">	private Convert conv=new Convert();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L39">		envSetter.cleanDB();</span>
+<span class="fc" id="L40">		envSetter.initDB();</span>
+<span class="fc" id="L41">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L45">		AcceptCall acceptCall=new AcceptCall();</span>
+<span class="fc" id="L46">		ConnectionPack packTest=new ConnectionPack(null,null,&quot;speakerIp&quot;,null,&quot;sdp&quot;);</span>
+<span class="fc" id="L47">		String packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L48">		ARI ari=new ARI(null,&quot;AcceptCall&quot;,packString);</span>
+<span class="fc" id="L49">		ARI ariResponse=acceptCall.manage(ari);</span>
+<span class="fc" id="L50">		assertEquals(&quot;Pacchetto in formato errato&quot;,&quot;CorruptedPack&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L52">		packTest=new ConnectionPack(&quot;123.123.123.0&quot;,null,&quot;123.123.123.1&quot;,null,&quot;sdp&quot;);</span>
+<span class="fc" id="L53">		packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L54">		ari=new ARI(null,&quot;AcceptCall&quot;,packString);</span>
+<span class="fc" id="L55">		ariResponse=acceptCall.manage(ari);</span>
+<span class="fc" id="L56">		assertEquals(&quot;Dati corretti ma non viene processata la richiesta&quot;,&quot;SuccessfulAcceptCall&quot;,ariResponse.getReq());</span>
+<span class="fc" id="L57">		assertEquals(&quot;Ip a cui mandare errato&quot;,&quot;123.123.123.1&quot;,ariResponse.getAuth().getIp());</span>
+		
+<span class="fc" id="L59">		packTest=new ConnectionPack(&quot;123.123.123.0&quot;,1,&quot;123.123.123.4&quot;,2,&quot;sdp&quot;);</span>
+<span class="fc" id="L60">		packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L61">		ari=new ARI(null,&quot;AcceptCall&quot;,packString);</span>
+<span class="fc" id="L62">		ariResponse=acceptCall.manage(ari);</span>
+<span class="fc" id="L63">		assertEquals(&quot;IpSpeaker non e' online ma viene processata lo stesso&quot;,&quot;UnsuccessfulAcceptCall&quot;,ariResponse.getReq());</span>
+<span class="fc" id="L64">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

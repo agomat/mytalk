@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ListDeleteTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.update_list_information</a> &gt; <span class="el_source">ListDeleteTest.java</span></div><h1>ListDeleteTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: ListDeleteTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.update_list_information
+* Author: Michael Ferronato
+* Date: 2013/05/08
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  | 2013/05/08 |   MF      | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.update_list_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.update_list_information.ListDelete;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.UpdateListPack;
+
+<span class="fc" id="L33">public class ListDeleteTest {</span>
+
+<span class="fc" id="L35">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L36">	private Convert conv=new Convert();</span>
+
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L40">		envSetter.cleanDB();</span>
+<span class="fc" id="L41">		envSetter.initDB();</span>
+<span class="fc" id="L42">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L46">		ListDelete listDelete=new ListDelete();</span>
+<span class="fc" id="L47">		Authentication auth=new Authentication(&quot;user1&quot;,&quot;user1&quot;,&quot;123.123.123.1&quot;);</span>
+<span class="fc" id="L48">		UpdateListPack listPack=new UpdateListPack(&quot;friends&quot;,&quot;user1&quot;,null);</span>
+<span class="fc" id="L49">		String packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L50">		ARI ari=new ARI(auth,&quot;ListDelete&quot;,packString);</span>
+		
+<span class="fc" id="L52">		ARI ariResponse=listDelete.manage(ari);</span>
+<span class="fc" id="L53">		assertEquals(&quot;Dati corretti ma non avviene l'eliminazione&quot;,&quot;SuccessfulListDelete&quot;,ariResponse.getReq());</span>
+	
+<span class="fc" id="L55">		listPack.setOwner(&quot;user2&quot;);</span>
+<span class="fc" id="L56">		packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L57">		ari.setInfo(packString);	</span>
+<span class="fc" id="L58">		ariResponse=listDelete.manage(ari);</span>
+<span class="fc" id="L59">		assertEquals(&quot;Username di auth e quello del owner sono diversi&quot;,&quot;UsernameNotCorrespondingListDelete&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L61">		listPack.setOwner(&quot;user1&quot;);</span>
+<span class="fc" id="L62">		packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L63">		ari.setInfo(packString);</span>
+<span class="fc" id="L64">		ariResponse=listDelete.manage(ari);</span>
+<span class="fc" id="L65">		assertEquals(&quot;Lista non esiste ma viene processata&quot;,&quot;ListNotExistingListDelete&quot;,ariResponse.getReq());</span>
+	
+<span class="fc" id="L67">		auth.setPwd(&quot;user3&quot;);</span>
+<span class="fc" id="L68">		ariResponse=listDelete.manage(ari);</span>
+<span class="fc" id="L69">		assertEquals(&quot;Autenticazione deve fallire&quot;,&quot;AuthenticationFailListDelete&quot;,ariResponse.getReq());</span>
+		
+		/**UsernameNotCorrespondingException non viene sollevata per formazione
+		 * 
+		 */
+<span class="fc" id="L74">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

@@ -62,7 +62,7 @@ public class ListUserRemoveTest {
 		assertEquals("Dati corretti ma non avviene la rimozione","SuccessfulListUserRemove",ariResponse.getReq());
 		
 		ariResponse=listUserRemove.manage(ari);
-		assertEquals("User non presente","UserNotListedException",ariResponse.getReq());
+		assertEquals("User non presente","UserNotListed",ariResponse.getReq());
 		
 		auth.setPwd("user1");
 		ariResponse=listUserRemove.manage(ari);

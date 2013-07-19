@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BlacklistDAO.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage.dao</a> &gt; <span class="el_source">BlacklistDAO.java</span></div><h1>BlacklistDAO.java</h1><pre class="source lang-java linenums">/**
+* Filename: BlacklistDAO.java
+* Package: com.mytalk.server.data.storage.dao
+* Author: Michael Ferronato
+* Date: 2013-04-16
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-16 |    MF     | [+] Creazione classe e definizione metodi  
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che offre operazioni di lettura e scrittura sul database riguardanti la tabella delle
+* blacklist
+*/
+
+package com.mytalk.server.data.storage.dao;
+
+import java.util.List;
+import org.hibernate.*;
+
+import com.mytalk.server.data.model.Blacklist;
+
+public class BlacklistDAO extends GenericDAO{
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non contiene campi dati
+	 * 
+	 * @method +BlacklistDAO
+	 */
+<span class="fc" id="L35">	public BlacklistDAO(){}</span>
+	
+	/**
+	 * salva nel database il record corrispondente all'oggetto blacklistObj passato
+	 * 
+	 * @method +save
+	 * @param {Blacklist} blacklistObj e' l'oggetto utilizzato da Hibernate per il salvataggio 
+	 * nel database
+	 * @return {void}
+	 */
+	public void save(Blacklist blacklistObj){
+<span class="fc" id="L46">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L47">		session.save(blacklistObj);</span>
+<span class="fc" id="L48">		t.commit();</span>
+<span class="fc" id="L49">	}</span>
+	
+	/**
+	 * Aggiorna nel database il record avente chiave primaria uguale a quella di blacklistObj 
+	 * usando gli attributi in blacklistObj
+	 * 
+	 * @method +update
+	 *  @param {Blacklist} blacklistObj e' l'oggetto che contiene i dati necessari per fare un 
+	 * aggiornamento nel database
+	 * @return {void}
+	 */
+	public void update(Blacklist blacklistObj){
+<span class="nc" id="L61">		Transaction t=session.beginTransaction();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if(blacklistObj.getUsername()==null){</span>
+<span class="nc" id="L63">			Blacklist blacklistEntity=(Blacklist) session.get(Blacklist.class,blacklistObj);</span>
+<span class="nc" id="L64">			blacklistObj.setUsername(blacklistEntity.getUsername());</span>
+		}
+<span class="nc" id="L66">		session.update(blacklistObj);</span>
+<span class="nc" id="L67">		t.commit();</span>
+<span class="nc" id="L68">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto Blacklist avente chiave primaria la coppia (primaryKeyOwner, primaryKeyUser);
+	 *  se non e' presente nel database tale record ritorna un oggetto 
+	 * Blacklist=null
+	 * 
+	 * @method +get
+	 * @param {String} primaryKeyOwner e' l'oggetto che contiene i dati del proprietario della
+	 * blacklist
+	 * @param {String} primaryKeyUser e' l'oggetto che contiene i dati dell'utente da mettere 
+	 * nella blacklist
+	 * @return {Blacklist}
+	 */
+	public Blacklist get(String primaryKeyOwner, String primaryKeyUser ){
+<span class="fc" id="L83">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L84">		Blacklist blacklistEntity = new Blacklist(primaryKeyOwner, primaryKeyUser);</span>
+<span class="fc" id="L85">		Blacklist blacklistObj=(Blacklist) session.get(Blacklist.class,blacklistEntity);</span>
+<span class="fc" id="L86">		t.commit();</span>
+<span class="fc" id="L87">		return blacklistObj;</span>
+	}
+	
+	/**
+	 * Ritorna una lista di oggetti Blacklist in cui l'attributo owner e' uguale a primaryKey, 
+	 * ovvero ritorna gli utenti in blacklist di un certo utente
+	 * 
+	 * @method +getUserBlacklist
+	 * @param {String} primaryKey e' l'oggetto che contiene i dati relativi all'utente da cercare
+	 * @return {List&lt;Blacklist&gt;}
+	 */
+	public List&lt;Blacklist&gt; getUserBlacklist(String primaryKey){
+<span class="fc" id="L99">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L100">		SQLQuery query=session.createSQLQuery(&quot;SELECT * FROM Blacklists WHERE owner='&quot;+primaryKey+&quot;'&quot;);</span>
+<span class="fc" id="L101">		List&lt;Blacklist&gt; ownerBlacklist=null;</span>
+<span class="fc" id="L102">		query=query.addEntity(Blacklist.class);</span>
+<span class="fc" id="L103">		ownerBlacklist=query.list();		</span>
+<span class="fc" id="L104">		t.commit();</span>
+<span class="fc" id="L105">		return ownerBlacklist;</span>
+	}
+	
+	/**
+	 * Elimina dal database il record avente chiave primaria uguale a quella di blacklistObj
+	 * 
+	 * @method +delete
+	 * @param {Blacklist} blacklistObj e' l'oggetto che contiene i dati necessari per fare 
+	 * un'eliminazione dal database
+	 * @return {void}
+	 */
+	public void delete(Blacklist blacklistObj){
+<span class="fc" id="L117">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L118">		session.delete(blacklistObj);</span>
+<span class="fc" id="L119">		t.commit();</span>
+<span class="fc" id="L120">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

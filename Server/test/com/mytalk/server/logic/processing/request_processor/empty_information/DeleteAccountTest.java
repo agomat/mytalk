@@ -41,19 +41,19 @@ public class DeleteAccountTest {
 	@Test
 	public void testManage() {
 		DeleteAccount deleteAccount=new DeleteAccount();
-		Authentication authRightTest=new Authentication("user1","user1","1.1.1.1");
+		Authentication authRightTest=new Authentication("user0","user0","123.123.123.0");
 		ARI ari=new ARI(authRightTest,"DeleteAccount",null);
 		
 		ARI ariResult=deleteAccount.manage(ari);
 		
 		assertEquals("Eliminazione non effettuata anche se l'account esiste","SuccessfulDeleteAccount",ariResult.getReq());
 	
-		Authentication authWrongTest=new Authentication("user2","user1","1.1.1.1");
+		Authentication authWrongTest=new Authentication("user0","user1","123.123.123.0");
 		ari.setAuth(authWrongTest);
 		
 		ariResult=deleteAccount.manage(ari);
 		
-		assertEquals("Eliminazione effettuata anche se autenticazione fallisce","AuthenticationFailDeleteAccount",ariResult.getReq());
+		assertNull("Eliminazione effettuata anche se autenticazione fallisce",ariResult);
 	}
 
 }

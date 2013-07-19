@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AddCallTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.give_call_information</a> &gt; <span class="el_source">AddCallTest.java</span></div><h1>AddCallTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: AddCallTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.give_call_information
+* Author: Michael Ferronato
+* Date: 2013-05-03
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013-05-03 |   MF      | [+] Inserimento classe  
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.give_call_information;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.GiveCallPack;
+import com.mytalk.server.logic.shared.model_client.Call;
+import com.mytalk.server.logic.shared.model_client.WrapperCall;
+
+<span class="fc" id="L38">public class AddCallTest {</span>
+	
+<span class="fc" id="L40">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L44">		envSetter.cleanDB();</span>
+<span class="fc" id="L45">		envSetter.initDB();</span>
+<span class="fc" id="L46">	}</span>
+
+	@Test
+	public void testManage() {
+		
+<span class="fc" id="L51">		Authentication authRightTest=new Authentication(&quot;user1&quot;,&quot;user1&quot;,&quot;1.1.1.1&quot;);</span>
+<span class="fc" id="L52">		Authentication authWrongTest=new Authentication(&quot;user1&quot;,&quot;user2&quot;,&quot;1.1.1.1&quot;);</span>
+<span class="fc" id="L53">		Call call1=new Call(1,3,true,&quot;2013-05-03 13.37:58&quot;,1000,100,100);</span>
+<span class="fc" id="L54">		Call call2=new Call(2,20,true,&quot;2013-05-03 13.37:58&quot;,1000,100,100);</span>
+<span class="fc" id="L55">		List&lt;Call&gt; callListTest=new ArrayList&lt;Call&gt;();</span>
+<span class="fc" id="L56">		callListTest.add(call1);</span>
+<span class="fc" id="L57">		WrapperCall wrapperTest=new WrapperCall(callListTest);</span>
+<span class="fc" id="L58">		GiveCallPack packTest=new GiveCallPack(wrapperTest);</span>
+<span class="fc" id="L59">		Convert conv=new Convert();</span>
+<span class="fc" id="L60">		String packJson=conv.convertJavaToJson(packTest);</span>
+		
+<span class="fc" id="L62">		ARI ariRightTest=new ARI(authRightTest,&quot;AddCall&quot;,packJson);</span>
+<span class="fc" id="L63">		ARI ariWrongTest=new ARI(authWrongTest,&quot;AddCall&quot;,packJson);</span>
+		
+<span class="fc" id="L65">		AddCall addCall=new AddCall();</span>
+
+<span class="fc" id="L67">		ARI ariSuccess=addCall.manage(ariRightTest);</span>
+<span class="fc" id="L68">		assertEquals(&quot;L'autenticazione e' corretta ma viene fallita l'autenticazione&quot;,&quot;SuccessfulAddCall&quot;, ariSuccess.getReq());</span>
+		
+<span class="fc" id="L70">		ARI ariUnsuccess=addCall.manage(ariWrongTest);</span>
+<span class="fc" id="L71">		assertEquals(&quot;L'autenticazione e' errata ma fa l'autenticazione lo stesso&quot;,&quot;AuthenticationFailAddCall&quot;, ariUnsuccess.getReq());</span>
+		
+<span class="fc" id="L73">		callListTest.remove(0);</span>
+<span class="fc" id="L74">		callListTest.add(call2);</span>
+<span class="fc" id="L75">		packJson=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L76">		ariRightTest= new ARI(authRightTest,&quot;AddCall&quot;,packJson);</span>
+<span class="fc" id="L77">		ARI ariIdNotRight=addCall.manage(ariRightTest);</span>
+<span class="fc" id="L78">		assertEquals(&quot;L'id fornito e' inesistente&quot;,&quot;IdNotFoundAddCall&quot;, ariIdNotRight.getReq());</span>
+	
+<span class="fc" id="L80">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

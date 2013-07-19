@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MainClass.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.communication</a> &gt; <span class="el_source">MainClass.java</span></div><h1>MainClass.java</h1><pre class="source lang-java linenums">/**
+* Filename: MainClass.java
+* Package: com.mytalk.server.communication
+* Author: Nicolo' Mazzucato
+* Date: 2013-05-14
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-05-14 |    NM     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che ha il compito di istanziare e avviare l'esecuzione dei thread di tipo Receiver, 
+* Dispatcher e Sender. Inoltre avvia il mapping di Hibernate e specifica su che porta e' in
+* ascolto il server
+*/
+
+
+package com.mytalk.server.communication;
+
+import java.net.InetSocketAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import com.mytalk.server.data.storage.HibernateUtil;
+
+<span class="nc" id="L33">public class MainClass {</span>
+
+	/**
+	 * Metodo che avvia il mapping di Hibernate, istanzia e avvia i thread di tipo Receiver, 
+	 * Dispatcher e Sender e invoca il metodo registerReceiver sull'oggetto Sender passando 
+	 * il riferimento all'oggetto Receiver
+	 * 
+	 * @method +main
+	 * @param {String[]} args e' l'oggetto che identifica i parametri di ingresso di tipo String
+	 * @return {void}
+	 */
+	public static void main(String[] args) {
+<span class="nc" id="L45">		new HibernateUtil();</span>
+<span class="nc" id="L46">		InetSocketAddress address=new InetSocketAddress(8887);</span>
+<span class="nc" id="L47">		Receiver receiver=new Receiver(address);</span>
+<span class="nc" id="L48">		Thread receiverThread= new Thread(receiver);</span>
+<span class="nc" id="L49">		Sender sender=new Sender();</span>
+<span class="nc" id="L50">		Thread senderThread=new Thread(sender);</span>
+<span class="nc" id="L51">		Dispatcher dispatcher=new Dispatcher();</span>
+<span class="nc" id="L52">		Thread dispatcherThread=new Thread(dispatcher);</span>
+<span class="nc" id="L53">		sender.registerReceiver(receiver);</span>
+<span class="nc" id="L54">		receiverThread.start();</span>
+<span class="nc" id="L55">		senderThread.start();</span>
+<span class="nc" id="L56">		dispatcherThread.start();</span>
+<span class="nc" id="L57">		Calendar cal = Calendar.getInstance();</span>
+<span class="nc" id="L58">		DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy/MM/dd HH:mm:ss&quot;);</span>
+<span class="nc" id="L59">		System.out.println(&quot;[&quot;+dateFormat.format(cal.getTime())+&quot;] Server started. Listening on port &quot;+address.getPort());</span>
+<span class="nc" id="L60">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

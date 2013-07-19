@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TI1.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">integrazione</a> &gt; <span class="el_source">TI1.java</span></div><h1>TI1.java</h1><pre class="source lang-java linenums">package integrazione;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.data.model.Blacklist;
+import com.mytalk.server.data.model.Call;
+import com.mytalk.server.data.model.ListName;
+import com.mytalk.server.data.model.OnlineUser;
+import com.mytalk.server.data.model.User;
+import com.mytalk.server.data.model.UserList;
+import com.mytalk.server.data.storage.dao.BlacklistDAO;
+import com.mytalk.server.data.storage.dao.CallDAO;
+import com.mytalk.server.data.storage.dao.GenericDAO;
+import com.mytalk.server.data.storage.dao.ListNameDAO;
+import com.mytalk.server.data.storage.dao.OnlineUserDAO;
+import com.mytalk.server.data.storage.dao.UserDAO;
+import com.mytalk.server.data.storage.dao.UserListDAO;
+
+<span class="nc" id="L23">public class TI1 {</span>
+
+<span class="nc" id="L25">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+	@Before
+	public void setTestEnvironment(){
+<span class="nc" id="L28">		envSetter.cleanDB();</span>
+<span class="nc" id="L29">		envSetter.initDB();</span>
+<span class="nc" id="L30">	}</span>
+	
+	@Test
+	public void userTest() {
+<span class="nc" id="L34">		User u=new User(&quot;nuovo&quot;,&quot;nuovo&quot;,&quot;nuovoutente@mytalk.com&quot;,&quot;nuovo&quot;,&quot;utente&quot;,&quot;emailhash&quot;);</span>
+<span class="nc" id="L35">		UserDAO ud=new UserDAO();</span>
+<span class="nc" id="L36">		ud.save(u);</span>
+<span class="nc" id="L37">		User u1=ud.get(u.getUsername());</span>
+<span class="nc" id="L38">		assertEquals(&quot;Oggetto User non salvato correttamente nel database&quot;,u,u1);</span>
+<span class="nc" id="L39">		u.setName(&quot;modificato&quot;);</span>
+<span class="nc" id="L40">		ud.update(u);</span>
+<span class="nc" id="L41">		User u2=ud.get(u.getUsername());</span>
+<span class="nc" id="L42">		assertEquals(&quot;Aggiornamento User non effettuato correttamente nel database&quot;,u2.getName(),&quot;modificato&quot;);</span>
+<span class="nc" id="L43">		ud.delete(u2);</span>
+<span class="nc" id="L44">		User u3=ud.get(u.getUsername());</span>
+<span class="nc" id="L45">		assertNull(&quot;Record User non cancellato correttamente dal database&quot;,u3);</span>
+<span class="nc" id="L46">	}</span>
+	
+	@Test
+	public void blacklistTest(){
+<span class="nc" id="L50">		Blacklist b=new Blacklist(&quot;user0&quot;,&quot;user3&quot;);</span>
+<span class="nc" id="L51">		BlacklistDAO bd=new BlacklistDAO();</span>
+<span class="nc" id="L52">		bd.save(b);</span>
+<span class="nc" id="L53">		Blacklist b1=bd.get(b.getOwner(),b.getUsername());</span>
+<span class="nc" id="L54">		assertEquals(&quot;Oggetto Blacklist non salvato correttamente nel database&quot;,b,b1);</span>
+<span class="nc" id="L55">		bd.delete(b1);</span>
+<span class="nc" id="L56">		Blacklist b3=bd.get(b.getOwner(),b.getUsername());</span>
+<span class="nc" id="L57">		assertNull(&quot;Record User non cancellato correttamente dal database&quot;,b3);</span>
+<span class="nc" id="L58">	}</span>
+	
+	@Test
+	public void userlistTest(){
+<span class="nc" id="L62">		UserList l=new UserList(2,&quot;user9&quot;);</span>
+<span class="nc" id="L63">		UserListDAO uld=new UserListDAO();</span>
+<span class="nc" id="L64">		uld.save(l);</span>
+<span class="nc" id="L65">		UserList ul=uld.get(l.getIdList(), l.getUsername());</span>
+<span class="nc" id="L66">		assertEquals(&quot;Oggetto UserList non salvato correttamente nel database&quot;,l,ul);</span>
+<span class="nc" id="L67">		uld.delete(l);</span>
+<span class="nc" id="L68">		UserList ul2=uld.get(l.getIdList(), l.getUsername());</span>
+<span class="nc" id="L69">		assertNull(&quot;Record UserList non cancellato correttamente dal database&quot;,ul2);</span>
+<span class="nc" id="L70">	}</span>
+
+	@Test
+	public void listnameTest(){
+<span class="nc" id="L74">		ListName l=new ListName(&quot;friends&quot;,&quot;user9&quot;);</span>
+<span class="nc" id="L75">		ListNameDAO lnd=new ListNameDAO();</span>
+<span class="nc" id="L76">		lnd.save(l);</span>
+<span class="nc" id="L77">		ListName l1=lnd.getByNameOwner(l);</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		if(!l1.getName().equals(l.getName())||!l1.getOwner().equals(l.getOwner()))</span>
+<span class="nc" id="L79">			fail(&quot;Oggetto ListName non salvato correttamente nel database&quot;);</span>
+<span class="nc" id="L80">		lnd.delete(l1);</span>
+<span class="nc" id="L81">		ListName l2=lnd.getByNameOwner(l);</span>
+<span class="nc" id="L82">		assertNull(&quot;Record ListName non cancellato correttamente dal database&quot;,l2);</span>
+<span class="nc" id="L83">	}</span>
+	
+	@Test
+	public void onlineuserTest(){
+<span class="nc" id="L87">		OnlineUser o=new OnlineUser(&quot;user5&quot;,&quot;111.111.111.11&quot;);</span>
+<span class="nc" id="L88">		OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="nc" id="L89">		od.save(o);</span>
+<span class="nc" id="L90">		OnlineUser o1=od.get(o.getIp());</span>
+<span class="nc" id="L91">		assertEquals(&quot;Oggetto OnlineUser non salvato correttamente nel database&quot;,o,o1);</span>
+<span class="nc" id="L92">		od.delete(o1);</span>
+<span class="nc" id="L93">		OnlineUser o2=od.get(o.getIp());</span>
+<span class="nc" id="L94">		assertNull(&quot;Record OnlineUser non cancellato correttamente dal database&quot;,o2);</span>
+<span class="nc" id="L95">	}</span>
+	
+	@Test
+	public void callTest(){
+<span class="nc" id="L99">		Call c=new Call(&quot;user9&quot;,&quot;user4&quot;,25,&quot;25-12-1990 14:14:14&quot;,22000,22000);</span>
+<span class="nc" id="L100">		c.setId(15);</span>
+<span class="nc" id="L101">		CallDAO cd=new CallDAO();</span>
+<span class="nc" id="L102">		cd.save(c);</span>
+<span class="nc" id="L103">		Call c1=cd.get(c.getId());</span>
+<span class="nc" id="L104">		assertEquals(&quot;Oggetto Call non salvato correttamente nel database&quot;,c,c1);</span>
+<span class="nc" id="L105">		c.setDuration(90);</span>
+<span class="nc" id="L106">		cd.update(c);</span>
+<span class="nc" id="L107">		Call c2=cd.get(c.getId());</span>
+<span class="nc" id="L108">		assertEquals(&quot;Aggiornamento Call non effettuato correttamente nel database&quot;,c2.getDuration(),90);</span>
+<span class="nc" id="L109">		cd.delete(c2);</span>
+<span class="nc" id="L110">		Call c3=cd.get(c.getId());</span>
+<span class="nc" id="L111">		assertNull(&quot;Record Call non cancellato correttamente dal database&quot;,c3);</span>
+<span class="nc" id="L112">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Message.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.communication.buffer</a> &gt; <span class="el_source">Message.java</span></div><h1>Message.java</h1><pre class="source lang-java linenums">/**
+* Filename: Message.java
+* Package: com.mytalk.server.communication.buffer
+* Author: Nicolo' Mazzucato
+* Date: 2013-15-05
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-15-05 |    NM     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che funge da contenitore di due stringhe: una rappresenta un indirizzo ip, mentre la
+* seconda rappresenta un oggetto JSON. e' indispensabile per lo strato Logic Layer avere un
+* indirizzo ip a cui rispondere alle richieste che quindi viene fornito passando oggetti di tipo
+* Message
+*/
+
+package com.mytalk.server.communication.buffer;
+
+public class Message {
+	
+	/**
+	 * Stringa dell'oggetto JSON
+	 * 
+	 * @property -json
+	 * @type {String}
+	 */
+	private String json;
+	
+	/**
+	 * Indirizzo ip del mittente/ricevente del messaggio
+	 * 
+	 * @property -ip
+	 * @type {String}
+	 */
+	private String ip;
+	
+	/**
+	 * Costruttore della classe Message
+	 * 
+	 * @method +Message
+	 * @param {String} newIp e' l'oggetto che identifica un indirizzo ip
+	 * @param {String} newJson e' l'oggetto che identifica un JSON
+	 */
+	
+<span class="fc" id="L52">	public Message(String newIp, String newJson){</span>
+<span class="fc" id="L53">		ip=newIp;</span>
+<span class="fc" id="L54">		json=newJson;</span>
+<span class="fc" id="L55">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo ip
+	 * 
+	 * @method +getIp
+	 * @return {String}
+	 */
+	public String getIp(){
+<span class="fc" id="L64">		return ip;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo ip uguale a newIp
+	 * @method +setIp
+	 * @param {String} newIp e' l'oggetto che identifica un indirizzo ip
+	 * @return {void}
+	 */
+	public void setIp(String newIp){
+<span class="nc" id="L74">		ip=newIp;</span>
+<span class="nc" id="L75">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo json
+	 * 
+	 * @method +getJson
+	 * @return {String}
+	 */
+	public String getJson(){
+<span class="nc" id="L84">		return json;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo json uguale a newJson
+	 * @method +setJson
+	 * @param {String} newJson e' l'oggetto che identifica un nuovo json
+	 * @return {void}
+	 */
+	public void setJson(String newJson){
+<span class="nc" id="L94">		json=newJson;</span>
+<span class="nc" id="L95">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

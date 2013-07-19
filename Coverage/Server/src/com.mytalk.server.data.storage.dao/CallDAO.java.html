@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>CallDAO.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage.dao</a> &gt; <span class="el_source">CallDAO.java</span></div><h1>CallDAO.java</h1><pre class="source lang-java linenums">/**
+* Filename: CallDAO.java
+* Package: com.mytalk.server.data.storage.dao
+* Author: Nicolo' Mazzucato
+* Date: 2013-04-15
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-16 |    NM     | [+] Creazione classe e definizione metodi  
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che offre operazioni di lettura e scrittura sul database riguardanti la tabella delle
+* chiamate
+*/
+
+package com.mytalk.server.data.storage.dao;
+
+import java.util.List;
+import org.hibernate.*;
+
+import com.mytalk.server.data.model.Call;
+
+public class CallDAO extends GenericDAO{
+
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi da inizializzare
+	 * 
+	 * @method +CallDAO
+	 */
+<span class="fc" id="L36">	public CallDAO(){}</span>
+	
+	/**
+	 * Salva nel database il record corrispondente all'oggetto callObj passato
+	 * 
+	 * @method +save
+	 * @param {Call} callObj e' l'oggetto utilizzato da Hibernate per il salvataggio nel database
+	 * @return {void}
+	 */
+	public void save(Call callObj){
+<span class="fc" id="L46">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L47">		session.save(callObj);</span>
+<span class="fc" id="L48">		t.commit();</span>
+<span class="fc" id="L49">	}</span>
+	
+	/**
+	 * Aggiorna nel database il record avente chiave primaria uguale a quella di callObj usando
+	 *  gli attributi in callObj
+	 *  
+	 *  @method +update
+	 *  @param {Call} callObj e' l'oggetto utilizzato da Hibernate per fare l'aggiornamento del
+	 *  database
+	 *  @return {void}
+	 */
+	public void update(Call callObj){
+<span class="nc" id="L61">		Transaction t=session.beginTransaction();</span>
+<span class="nc" id="L62">		Call callEntity=(Call) session.get(Call.class, callObj.getId());</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if(callObj.getCaller()==null){</span>
+<span class="nc" id="L64">			callObj.setCaller(callEntity.getCaller());</span>
+		}
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if(callObj.getReceiver()==null){</span>
+<span class="nc" id="L67">			callObj.setReceiver(callEntity.getReceiver());</span>
+		}
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if(callObj.getByteReceived()==0){</span>
+<span class="nc" id="L70">			callObj.setByteReceived(callEntity.getByteReceived());</span>
+		}
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if(callObj.getByteSent()==0){</span>
+<span class="nc" id="L73">			callObj.setByteSent(callEntity.getByteSent());</span>
+		}
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if(callObj.getDuration()==0){</span>
+<span class="nc" id="L76">			callObj.setDuration(callEntity.getDuration());</span>
+		}
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if(callObj.getStartdate()==null){</span>
+<span class="nc" id="L79">			callObj.setStartdate(callEntity.getStartdate());</span>
+		}
+<span class="nc" id="L81">		session.update(callObj);</span>
+<span class="nc" id="L82">		t.commit();</span>
+<span class="nc" id="L83">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto Call avente chiave primaria l'intero primaryKey; se non e' presente nel 
+	 * database tale record ritorna un oggetto Call=null
+	 * 
+	 * @method +get
+	 * @param {int} primaryKey e' il valore utilizzato da Hibernate per ottenere una determinata 
+	 * entita' dal database
+	 * @return {Call}
+	 */
+	public Call get(int primaryKey){
+<span class="fc" id="L95">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L96">		Call callObj=(Call) session.get(Call.class,primaryKey);</span>
+<span class="fc" id="L97">		t.commit();</span>
+<span class="fc" id="L98">		return callObj;</span>
+	}
+	
+	/**
+	 * Ritorna una lista di oggetti Call corrispondenti a record del database aventi come 
+	 * attributo caller o receiver la stringa primaryKey, ovvero ritorna la lista di chiamate in 
+	 * cui l'utente primaryKey figura come caller o receiver
+	 * 
+	 * @method +getAllUserCalls
+	 * @param {String} primaryKey e' l'oggetto utilizzato per ottenere tutte le chiamate di un 
+	 * certo utente identificato da tale oggetto
+	 * @return {List&lt;Call&gt;}
+	 */
+	public List&lt;Call&gt; getAllUserCalls(String primaryKey){
+<span class="fc" id="L112">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L113">		List&lt;Call&gt; listOfUserCalls=null;</span>
+<span class="fc" id="L114">		SQLQuery query=session.createSQLQuery(&quot;SELECT * FROM Calls WHERE caller='&quot;+primaryKey+&quot;' OR receiver='&quot;+primaryKey+&quot;'&quot;);</span>
+<span class="fc" id="L115">		query=query.addEntity(Call.class);</span>
+<span class="fc" id="L116">		listOfUserCalls=query.list();</span>
+<span class="fc" id="L117">		t.commit();</span>
+<span class="fc" id="L118">		return listOfUserCalls;</span>
+	}
+		
+	/**
+	 * Elimina dal database il record avente chiave primaria uguale a quella di callObj	
+	 * 
+	 * @method +delete
+	 * @param {Call} callObj e' l'oggetto utilizzato da Hibernate per eliminare un record dal 
+	 * database
+	 * @return {void}
+	 */
+	public void delete(Call callObj){
+<span class="nc" id="L130">		Transaction t=session.beginTransaction();</span>
+<span class="nc" id="L131">		session.delete(callObj);</span>
+<span class="nc" id="L132">		t.commit();</span>
+<span class="nc" id="L133">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

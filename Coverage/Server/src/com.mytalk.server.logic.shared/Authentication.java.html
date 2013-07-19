@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Authentication.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared</a> &gt; <span class="el_source">Authentication.java</span></div><h1>Authentication.java</h1><pre class="source lang-java linenums">/**
+* Filename: Authentication.java
+* Package: com.mytalk.server.logic.shared
+* Author: Nicolo' Toso
+* Date: 2013-04-29
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che rappresenta le informazioni necessarie per fare l'autenticazione
+*/
+package com.mytalk.server.logic.shared;
+
+public class Authentication{
+	
+	/**
+	 * Identifica l'username che rappresenta l'utente
+	 * 
+	 * @property -username
+	 * @type {String}
+	 */
+	private String username;
+	
+	/**
+	 * Identifica la password associata all'username
+	 * 
+	 * @property -password
+	 * @type {String}
+	 */
+	private String password;
+	
+	/**
+	 * Identifica l'indirizzo ip dell'utente
+	 * 
+	 * @property -ip
+	 * @type {String}
+	 */
+	private String ip;
+	
+	/**
+	 * Costruttore della classe che inzializza i campi dati username, password e ip
+	 * 
+	 * @method +Authentication
+	 * @param {String} user e' l'oggetto che viene assegnato al campo dati username
+	 * @param {String} pwd e' l'oggetto che viene assegnato al campo dati password
+	 * @param {String} i e' l'oggetto che viene assegnato al campo dati ip
+	 * @return {Authentication}
+	 */
+<span class="fc" id="L57">	public Authentication(String user, String pwd, String i)</span>
+	{
+<span class="fc" id="L59">		username=user;</span>
+<span class="fc" id="L60">		password=pwd;</span>
+<span class="fc" id="L61">		ip=i;</span>
+<span class="fc" id="L62">	}</span>
+	
+	/**
+	 * Imposta il valore nel campo dati username
+	 * 
+	 * @method +setUser
+	 * @param {String} u e' l'oggetto che viene assegnato al campo dati username
+	 * @return {void}
+	 */
+	public void setUser(String u){
+<span class="fc" id="L72">		username=u;</span>
+<span class="fc" id="L73">	}</span>
+	
+	/**
+	 * Ritorna il valore del campo dati username
+	 * 
+	 * @method +getUser
+	 * @return {String}
+	 */
+	public String getUser(){
+<span class="fc" id="L82">		return username;</span>
+	}
+	
+	/**
+	 * Imposta il valore nel campo dati password
+	 * 
+	 * @method +setPwd
+	 * @param {String} p e' l'oggetto che viene assegnato al campo dati password
+	 * @return {void}
+	 */
+	public void setPwd(String p){
+<span class="fc" id="L93">		password=p;</span>
+<span class="fc" id="L94">	}</span>
+	
+	/**
+	 * Ritorna il valore del campo dati password
+	 * 
+	 * @method +getPwd
+	 * @return {String}
+	 */
+	public String getPwd(){
+<span class="fc" id="L103">		return password;</span>
+	}
+	
+	/**
+	 * Imposta il valore nel campo dati ip
+	 * 
+	 * @method +setIp
+	 * @param {String} i e' l'oggetto che viene assegnato al campo dati ip
+	 * @return {void}
+	 */
+	public void setIp(String i){
+<span class="fc" id="L114">		ip=i;</span>
+<span class="fc" id="L115">	}</span>
+	
+	/**
+	 * Ritorna il valore del campo dati ip
+	 * 
+	 * @method +getIp
+	 * @return {String}
+	 */
+	public String getIp(){
+<span class="fc" id="L124">		return ip;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Call.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared.model_client</a> &gt; <span class="el_source">Call.java</span></div><h1>Call.java</h1><pre class="source lang-java linenums">/**
+* Filename: Call.java
+* Package: com.mytalk.server.logic.shared.model_client
+* Author: Nicolo' Toso
+* Date: 2013-04-18
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.4     | 2013-07-04 |    MF     | [+] Aggiunta campo dati id con getter e setter
+* 0.3     | 2013-07-04 |	MF	   | [#] Modifica nome speaker, byteSent, byteReceived e startDate
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-18 |    NT     | [+] Creazione classe e metodi   
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che contiene tutte le informazioni riguardanti la chiamata
+*/
+
+package com.mytalk.server.logic.shared.model_client;
+
+public class Call{
+	/**
+	 * Rappresenta un id univoco della chiamata
+	 * 
+	 * @property -id
+	 * @type {Integer}
+	 */
+	private Integer id;
+	/**
+	 * Rappresenta l'id associato all'interlocutore della chiamata
+	 * 
+	 * @property -speaker_id
+	 * @type {Integer}
+	 */ 
+	private Integer speaker_id; 
+	/**
+	 * Identifica se chi richiede tale chiamata era il chiamante oppure no
+	 * 
+	 * @property -caller
+	 * @type {boolean}
+	 */
+	private boolean caller;
+	/**
+	 * Rappresenta la data in cui \`e stata effettuata la chiamata
+	 * 
+	 * @property -start_date
+	 * @type {String}
+	 */
+	private String start_date;
+	/**
+	 * Rappresenta la durata della telefonata
+	 * 
+	 * @property -duration
+	 * @type {Integer}
+	 */
+	private Integer duration;
+	/**
+	 * Rappresenta il numero di byte inviati
+	 * 
+	 * @property -byte_sent
+	 * @type {Integer}
+	 */
+	private Integer byte_sent;
+	/**
+	 * Rappresenta il numero di byte ricevuti
+	 * 
+	 * @property -byte_received
+	 * @type {Integer}
+	 */
+	private Integer byte_received;
+	
+	/**
+	 * Costruttore della classe che inizializza i campi dati speaker_id, caller, startData, duration, 
+	 * byte_sent e byte_received
+	 * 
+	 * @method +Call
+	 * @param {Integer} s e' l'oggetto utilizzato per inizializzare il campo dati speaker_id
+	 * @param {boolean} c e' l'oggetto utilizzato per inizializzare il campo dati caller
+	 * @param {String} sd e' l'oggetto utilizzato per inizializzare il campo dati start_date
+	 * @param {Integer} d e' l'oggetto utilizzato per inizializzare il campo dati duration
+	 * @param {Integer} bs e' l'oggetto utilizzato per inizializzare il campo dati byte_sent
+	 * @param {Integer} br e' l'oggetto utilizzato per inizializzare il campo dati byte_received
+	 */
+<span class="fc" id="L88">	public Call(int i,Integer s, boolean c, String sd, Integer d, Integer bs, Integer br){</span>
+<span class="fc" id="L89">		id=i;</span>
+<span class="fc" id="L90">		speaker_id=s;</span>
+<span class="fc" id="L91">		byte_sent=bs;</span>
+<span class="fc" id="L92">		byte_received=br;</span>
+<span class="fc" id="L93">		duration=d;</span>
+<span class="fc" id="L94">		start_date=sd;</span>
+<span class="fc" id="L95">		caller=c;</span>
+<span class="fc" id="L96">	}</span>
+	/**
+	 *  Ritorna il valore del campo id
+	 *  
+	 *  @method +getId
+	 *  @return {Integer}
+	 */
+	public Integer getId(){
+<span class="nc" id="L104">		return id;</span>
+	}
+	/**
+	 * Imposta il campo dati id
+	 * 
+	 * @method +setId
+	 * @param {Integer} i e' l'oggetto assegnato al campo dati id
+	 * @return {void}
+	 */
+	public void setId(Integer i){
+<span class="nc" id="L114">		id=i;</span>
+<span class="nc" id="L115">	}</span>
+	/**
+	 * Ritorna il campo dati speaker_id
+	 * 
+	 * @method +getSpeakerId
+	 * @return {Integer}
+	 */
+	public Integer getSpeakerId(){
+<span class="fc" id="L123">		return speaker_id;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati speaker_id
+	 * 
+	 * @method +setSpeakerId
+	 * @param {Integer} n e' l'oggetto assegnato al campo dati speaker_id
+	 * @return {void}
+	 */
+	public void setSpeakerId(Integer n){
+<span class="nc" id="L134">		speaker_id=n;</span>
+<span class="nc" id="L135">	}</span>
+	
+	/**
+	 * Ritorna il campo dati caller
+	 * 
+	 * @method +getCaller
+	 * @return {boolean}
+	 */
+	public boolean getCaller(){
+<span class="nc" id="L144">		return caller;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati caller
+	 * 
+	 * @method +setCaller
+	 * @param {boolean} s e' l'oggetto assegnato al campo dati caller
+	 * @return {void}
+	 */
+	public void setCaller(boolean s){
+<span class="nc" id="L155">		caller=s;</span>
+<span class="nc" id="L156">	}</span>
+	
+	/**
+	 * Ritorna il campo dati duration
+	 * 
+	 * @method +getDuration
+	 * @return {Integer}
+	 */
+	public Integer getDuration(){
+<span class="fc" id="L165">		return duration;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati duration
+	 * 
+	 * @method +setDuration
+	 * @param {Integer} t e' l'oggetto assegnato al campo dati duration
+	 * @return {void}
+	 */
+	public void setDuration(Integer t){
+<span class="nc" id="L176">		duration=t;</span>
+<span class="nc" id="L177">	}</span>
+	
+	/**
+	 * Ritorna il campo dati byte_sent
+	 * 
+	 * @method +getByteSent
+	 * @return {Integer}
+	 */
+	public Integer getByteSent(){
+<span class="fc" id="L186">		return byte_sent;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati byte_sent
+	 * 
+	 * @method +setByteSent
+	 * @param {Integer} n e' l'oggetto assegnato al campo dati byte_sent
+	 * @return {void}
+	 */
+	public void setByteSent(Integer n){
+<span class="nc" id="L197">		byte_sent=n;</span>
+<span class="nc" id="L198">	}</span>
+	
+	/**
+	 * Ritorna il campo dati byte_received
+	 * 
+	 * @method +getByteReceived
+	 * @return {Integer}
+	 */
+	public Integer getByteReceived(){
+<span class="fc" id="L207">		return byte_received;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati byte_received
+	 * 
+	 * @method +setByteReceived
+	 * @param {Integer} n e' l'oggetto assegnato al campo dati byte_received
+	 * @return {void}
+	 */
+	public void setByteReceived(Integer n){
+<span class="nc" id="L218">		byte_received=n;</span>
+<span class="nc" id="L219">	}</span>
+	
+	/**
+	 * Ritorna il campo dati start_date
+	 * 
+	 * @method +getStartDate
+	 * @return {String}
+	 */
+	public String getStartDate(){
+<span class="fc" id="L228">		return start_date;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati start_date
+	 * 
+	 * @method +setStartDate
+	 * @param {String} t e' l'oggetto assegnato al campo dati startDate
+	 * @return {void}
+	 */
+	public void setStartDate(String t){
+<span class="nc" id="L239">		start_date=t;</span>
+<span class="nc" id="L240">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

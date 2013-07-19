@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Convert.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing</a> &gt; <span class="el_source">Convert.java</span></div><h1>Convert.java</h1><pre class="source lang-java linenums">/**
+* Filename: Convert.java
+* Package: com.mytalk.server.logic.shared
+* Author: Nicolo' Toso
+* Date: 2013-04-29
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-13 |    NT     | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli piu' espressivi  
+* 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che ha la funzione di incapsulare le operazioni necessarie per la traduzione di un
+* oggetto Java in JSON e viceversa. Essa utilizza metodi propri della libreria esterna Gson.
+*/
+package com.mytalk.server.logic.processing;
+
+import com.google.gson.*;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Information;
+
+
+public class Convert {
+	
+	/**
+	 * Identifica l'oggetto Gson necessario per utilizzare i metodi messi a disposizione dalla 
+	 * libreria Gson
+	 * 
+	 * @property -gson
+	 * @type {Gson}
+	 */
+<span class="fc" id="L39">	private Gson gson=new Gson();</span>
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +Convert
+	 */
+<span class="fc" id="L46">	public Convert(){}</span>
+	
+	/**
+	 * Riceve in input una stringa JSON e utilizzando l'oggetto gson converte tale stringa in 
+	 * un oggetto ARI, e restituisce tale oggetto
+	 * 
+	 * @method +convertJsonToJava
+	 * @param {String} stringJson e' l'oggetto che viene convertito utilizzando la libreria esterna
+	 * Gson in un oggetto ARI
+	 * @return {ARI}
+	 */
+	public ARI convertJsonToJava(String stringJson){		
+<span class="nc" id="L58">		ARI infoObject =gson.fromJson(stringJson, ARI.class);</span>
+<span class="nc" id="L59">		return infoObject;</span>
+	}
+	
+	/**
+	 * Riceve in input una stringa JSON e un oggetto Class&lt;?&gt; necessario per dire qual e' la 
+	 * classe target della conversione; viene utilizzato l'oggetto gson che converte la stringa 
+	 * in un oggetto definito dalla classe target, e restituisce tale oggetto
+	 * 
+	 * @method +convertJsonToJava
+	 * @param {String} stringJson e' l'oggetto che viene convertito utilizzando la libreria esterna
+	 * Gson in un oggetto Information
+	 * @param {Class&lt;?&gt;} info e' l'oggetto di utilita' per definire il tipo di destinazione della
+	 * conversione
+	 * @return {Information}
+	 */
+	public Information convertJsonToJava(String stringJson,Class&lt;?&gt; info){	
+<span class="fc" id="L75">		Information infoEntity=(Information)gson.fromJson(stringJson,info);</span>
+<span class="fc" id="L76">		return infoEntity;</span>
+	}
+	
+	/**
+	 * Riceve un oggetto ARI in input e utilizzando l'oggetto gson converte tale oggetto in
+	 *  una stringa che viene poi restituita
+	 *  
+	 * @method +convertJavaToJson 
+	 * @param {ARI} object e' l'oggetto che viene convertito in una stringa utilizzando la libreria
+	 * esterna Gson
+	 * @return {String}
+	 */
+	public String convertJavaToJson(ARI object){
+<span class="nc" id="L89">	String stringJson = gson.toJson(object);</span>
+<span class="nc" id="L90">	return stringJson;</span>
+	}
+	
+	/**
+	 * Riceve un oggetto Information in input e utilizzando l'oggetto gson converte tale oggetto 
+	 * in una stringa che viene poi restituita
+	 *  
+	 * @method +convertJavaToJson 
+	 * @param {Information} object e' l'oggetto che viene convertito in una stringa utilizzando
+	 *  la libreria esterna Gson
+	 * @return {String}
+	 */
+	public String convertJavaToJson(Information infoObject){
+<span class="fc" id="L103">		String stringJson = gson.toJson(infoObject);</span>
+<span class="fc" id="L104">		return stringJson;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ARI.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared</a> &gt; <span class="el_source">ARI.java</span></div><h1>ARI.java</h1><pre class="source lang-java linenums">/**
+* Filename: ARI.java
+* Package: com.mytalk.server.logic.shared
+* Author: Nicolo' Toso
+* Date: 2013-04-29
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che rappresenta la struttura del pacchetto che viene scambiato tra client e server
+*/
+package com.mytalk.server.logic.shared;
+
+public class ARI{
+	
+	/**
+	 * Identifica l'oggetto che contiene i dati di autenticazione
+	 * 
+	 * @property -auth
+	 * @type {Authentication}
+	 */
+	private Authentication auth;
+	
+	/**
+	 * Identifica il tipo di richiesta
+	 * 
+	 * @property -req
+	 * @type {String}
+	 */
+	private String req;
+	/**
+	 * Identifica il JSON contenente i dati necessari per la richiesta
+	 * 
+	 * @property -info
+	 * @type {String}
+	 */
+	private String info;
+	
+	/**
+	 * Costruttore della classe che inizializza i campi dati auth, req e info con i valori in input
+	 * 
+	 * @method +ARI
+	 * @param {Authentication} a e' l'oggetto utilizzato per inizializzare il campo dati auth
+	 * @param {String} r e' l'oggetto utilizzato per inizializzare il campo dati req
+	 * @param {String} i e' l'oggetto utilizzato per inizializzare il campo dati info
+	 */
+<span class="fc" id="L55">	public ARI(Authentication a, String r, String i){</span>
+<span class="fc" id="L56">		auth=a;</span>
+<span class="fc" id="L57">		req=r;</span>
+<span class="fc" id="L58">		info=i;</span>
+<span class="fc" id="L59">	}</span>
+	
+	/**
+	 * Imposta il valore nel campo dati auth
+	 * 
+	 * @method +setAuth
+	 * @param {Authentication} a e' l'oggetto che viene assegnato al campo dati auth
+	 * @return {void}
+	 */
+	public void setAuth(Authentication a){
+<span class="fc" id="L69">		auth=a;</span>
+<span class="fc" id="L70">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto riferito dal campo dati auth
+	 * 
+	 * @method +getAuth
+	 * @return {Authentication}
+	 */
+	public Authentication getAuth(){
+<span class="fc" id="L79">		return auth;</span>
+	}
+	
+	/**
+	 * Imposta il valore nel campo dati req
+	 * 
+	 * @method +setReq
+	 * @param {String} r e' l'oggetto che viene assegnato al campo dati req
+	 * @return {void}
+	 */
+	public void setReq(String r){
+<span class="fc" id="L90">		req=r;</span>
+<span class="fc" id="L91">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto riferito dal campo dati req
+	 * 
+	 * @method +getReq
+	 * @return {String}
+	 */
+	public String getReq(){
+<span class="fc" id="L100">		return req;</span>
+	}
+	
+	/**
+	 * Imposta il valore nel campo dati req
+	 * 
+	 * @method +setInfo
+	 * @param {String} i e' l'oggetto che viene assegnato al campo dati info
+	 * @return {void}
+	 */
+	public void setInfo(String i){
+<span class="fc" id="L111">		info=i;</span>
+<span class="fc" id="L112">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto riferito dal campo dati info
+	 * 
+	 * @method +getInfo
+	 * @return {String}
+	 */
+	public String getInfo(){
+<span class="fc" id="L121">		return info;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

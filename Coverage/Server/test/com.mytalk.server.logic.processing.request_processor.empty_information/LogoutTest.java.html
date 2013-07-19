@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>LogoutTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.empty_information</a> &gt; <span class="el_source">LogoutTest.java</span></div><h1>LogoutTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: LogoutTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.empty_information
+* Author: Michael Ferronato
+* Date: 2013-05-07
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013-05-07 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.empty_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.request_processor.empty_information.Logout;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+
+<span class="fc" id="L31">public class LogoutTest {</span>
+
+<span class="fc" id="L33">	private EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L37">		envSetter.cleanDB();</span>
+<span class="fc" id="L38">		envSetter.initDB();</span>
+<span class="fc" id="L39">	}</span>
+	
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L44">		Logout logout=new Logout();</span>
+<span class="fc" id="L45">		Authentication auth=new Authentication(null,null,&quot;123.123.123.2&quot;);</span>
+		
+<span class="fc" id="L47">		ARI ari=new ARI(auth,&quot;Logout&quot;,null);</span>
+<span class="fc" id="L48">		ARI ariResult=logout.manage(ari);</span>
+<span class="fc" id="L49">		assertEquals(&quot;Logout fallito nonostante dati coerenti&quot;,&quot;SuccessfulLogout&quot;,ariResult.getReq());</span>
+<span class="fc" id="L50">		assertEquals(&quot;User sloggato errato&quot;,&quot;user2&quot;,ariResult.getAuth().getUser());</span>
+		
+<span class="fc" id="L52">		auth.setIp(&quot;123.123.123.4&quot;);</span>
+<span class="fc" id="L53">		ari.setAuth(auth);</span>
+<span class="fc" id="L54">		ariResult=logout.manage(ari);</span>
+<span class="fc" id="L55">		assertEquals(&quot;Logout di un user non loggato&quot;,&quot;UnsuccessfulLogout&quot;,ariResult.getReq());</span>
+		
+<span class="fc" id="L57">		ari.getAuth().setIp(null);</span>
+<span class="fc" id="L58">		ariResult=logout.manage(ari);</span>
+<span class="fc" id="L59">		assertEquals(&quot;Autenticazione mal formata&quot;,&quot;CorruptedPack&quot;,ariResult.getReq());</span>
+		
+<span class="fc" id="L61">		auth.setIp(&quot;123.123.123.1&quot;);</span>
+<span class="fc" id="L62">		ari=new ARI(auth,&quot;Logout&quot;,null);</span>
+<span class="fc" id="L63">		ariResult=logout.manage(ari);</span>
+<span class="fc" id="L64">		assertEquals(&quot;Logout di un anonimo fallito nonostante dati coerenti&quot;,&quot;SuccessfulLogout&quot;,ariResult.getReq());</span>
+<span class="fc" id="L65">		assertEquals(&quot;User sloggato errato&quot;,null,ariResult.getAuth().getUser());</span>
+		
+		
+<span class="fc" id="L68">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

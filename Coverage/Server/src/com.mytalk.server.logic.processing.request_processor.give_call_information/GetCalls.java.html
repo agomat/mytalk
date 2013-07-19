@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GetCalls.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.give_call_information</a> &gt; <span class="el_source">GetCalls.java</span></div><h1>GetCalls.java</h1><pre class="source lang-java linenums">/**
+* Filename: GetCalls.java
+* Package: com.mytalk.server.logic.processing.request_processor.give_call_information
+* Author: Michael Ferronato
+* Date: 2013-05-01 
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.4     | 2013-07-04 |    MF     | [#] Modifica alla creazione di un oggeto Call in seguito a modifica
+* 									 della struttura della classe Call
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-22 |    MF     | [+] Modifica dei nomi del metodo manage al fine di renderli
+* 									     piu' espressivi e di facile comprensione
+* 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di restituire la lista delle chiamate relative al client che ne fa richiesta
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.give_call_information;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.UserNotExistingException;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.GiveCallPack;
+import com.mytalk.server.logic.shared.model_client.Call;
+import com.mytalk.server.logic.shared.model_client.WrapperCall;
+
+public class GetCalls extends GenericRequest {
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +GetCalls
+	 */
+<span class="fc" id="L47">	public GetCalls(){}</span>
+
+	/**
+	 * Una volta ricevuto il pacchetto ARI e controllato che sia ben formato, viene creato un 
+	 * oggetto di tipo CSDAT1.model.User, contenente le informazioni dell'Authentication del 
+	 * campo dati ari. Tale oggetto viene utilizzato per ricavare la lista delle chiamate di 
+	 * tale utente, rappresentandole in modo tale da distinguere le chiamate effettuate da quelle 
+	 * ricevute. Inoltre vengono incrementati i contatori della durata e dei byte inviati e ricevuti 
+	 * al fine di fornire le statistiche. Infine viene restituito un nuovo pacchetto ARI che 
+	 * contiene il messaggio &quot;GiveCalls&quot; e l'informazione desiderata. Se i controlli non sono 
+	 * stati superati, viene restituito un pacchetto con campo richiesta &quot;AuthenticationFailGetCalls&quot;
+	 *  (autenticazione fallita) o &quot;UsernameNotExistingGetCalls&quot; (username non esistente). In caso di 
+	 *  pacchetto non ben formato, viene restituito un &quot;CorruptedPack&quot;
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari) {
+<span class="fc" id="L67">		ARI response=null;</span>
+<span class="fc" id="L68">		Authentication auth=ari.getAuth();</span>
+<span class="fc" id="L69">		boolean checkAuth=checkAuthenticationWellFormed(auth);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if(!checkAuth){</span>
+<span class="nc" id="L71">			response=new ARI(null,&quot;CorruptedPack&quot;,null);</span>
+		}
+		else{
+<span class="fc" id="L74">			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);</span>
+<span class="fc" id="L75">			List&lt;com.mytalk.server.data.model.Call&gt; listOfCall=null;</span>
+<span class="fc" id="L76">			com.mytalk.server.data.model.Call callServer=null;</span>
+<span class="fc" id="L77">			List&lt;Call&gt; listCallClient=new ArrayList&lt;Call&gt;();</span>
+<span class="fc" id="L78">			boolean caller=false;</span>
+<span class="fc" id="L79">			Integer speaker=null;</span>
+<span class="fc" id="L80">			GiveCallPack giveCallPack=null;</span>
+<span class="fc" id="L81">			String infoResponse=null;</span>
+<span class="fc" id="L82">			WrapperCall wrapperCall=new WrapperCall(listCallClient);</span>
+			try{
+<span class="fc" id="L84">				listOfCall=da.getCalls(userAuth);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				for(int i=0;i&lt;listOfCall.size();i++){</span>
+<span class="fc" id="L86">					callServer=listOfCall.get(i); </span>
+<span class="fc bfc" id="L87" title="All 4 branches covered.">					if(callServer.getCaller()!= null &amp;&amp; callServer.getCaller().equals(userAuth.getUsername())){ </span>
+<span class="fc" id="L88">						caller=true;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">						if(callServer.getReceiver()!=null){</span>
+<span class="nc" id="L90">							speaker=da.getIdFromUsername(callServer.getReceiver());</span>
+						}
+						else{
+<span class="fc" id="L93">							speaker=null;</span>
+						}
+<span class="fc" id="L95">						listCallClient.add(new Call(callServer.getId(),speaker, caller, callServer.getStartdate(),callServer.getDuration() , callServer.getByteSent(),callServer.getByteReceived()));</span>
+
+<span class="fc" id="L97">						wrapperCall.increaseTotalByteSent(callServer.getByteSent());</span>
+<span class="fc" id="L98">						wrapperCall.increaseTotalByteReceived(callServer.getByteReceived());</span>
+<span class="fc" id="L99">						wrapperCall.increaseTotalDuration(callServer.getDuration());</span>
+					}
+					else{
+<span class="fc" id="L102">						caller=false;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">						if(callServer.getCaller()!=null){</span>
+<span class="fc" id="L104">							speaker=da.getIdFromUsername(callServer.getCaller());</span>
+						}
+						else{
+<span class="fc" id="L107">							speaker=null;</span>
+						}
+						
+<span class="fc" id="L110">						listCallClient.add(new Call(callServer.getId(),speaker, caller, callServer.getStartdate(), callServer.getDuration(), callServer.getByteReceived(),callServer.getByteSent()));</span>
+						
+<span class="fc" id="L112">						wrapperCall.increaseTotalByteSent(callServer.getByteReceived());</span>
+<span class="fc" id="L113">						wrapperCall.increaseTotalByteReceived(callServer.getByteSent());</span>
+<span class="fc" id="L114">						wrapperCall.increaseTotalDuration(callServer.getDuration());</span>
+					}			
+				}
+<span class="fc" id="L117">				wrapperCall.setList(listCallClient);</span>
+<span class="fc" id="L118">				giveCallPack=new GiveCallPack(wrapperCall);</span>
+<span class="fc" id="L119">				infoResponse=conv.convertJavaToJson(giveCallPack);</span>
+<span class="fc" id="L120">				response=new ARI(null,&quot;GiveCalls&quot;,infoResponse);</span>
+<span class="fc" id="L121">			}catch(AuthenticationFailException af){</span>
+<span class="fc" id="L122">				response=new ARI(null,&quot;AuthenticationFailGetCalls&quot;,null);</span>
+<span class="nc" id="L123">			} catch (UserNotExistingException e) {</span>
+<span class="nc" id="L124">				response=new ARI(null,&quot;UsernameNotExistingGetCalls&quot;,null);</span>
+			}	
+		}
+<span class="fc" id="L127">		return response;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

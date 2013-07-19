@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>CreateAccount.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.world_information</a> &gt; <span class="el_source">CreateAccount.java</span></div><h1>CreateAccount.java</h1><pre class="source lang-java linenums">/**
+* Filename: CreateAccount.java
+* Package: com.mytalk.server.logic.processing.request_processor.world_information
+* Author: Nicolo' Toso
+* Date: 2013-05-02
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli piu' espressivi
+* 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di creare un nuovo account del client che ne fa richiesta
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.world_information;
+
+import com.mytalk.server.data.storage.MD5Converter;
+import com.mytalk.server.exceptions.UsernameAlreadyExistingException;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.model_client.PersonalData;
+
+public class CreateAccount extends GenericRequest{
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +CreateAccount
+	 */
+<span class="fc" id="L39">	public CreateAccount(){}</span>
+	
+	/**
+	 * Una volta ricevuto il pacchetto ARI, si controlla se e' ben formato. Se la risposta e' negativa,
+	 *  viene restituito un &quot;CorruptedPack&quot;. Viceversa, si crea un oggetto di tipo 
+	 *  CSDAT1.model.User, contenente le informazioni presenti nel campo dati ari. Inoltre vengono 
+	 *  codificati l'indirizzo email e la password, in modo tale da salvarle codificate e non 
+	 *  inviarle in chiaro. Infine, chiamando il metodo opportuno del DataAccess (appartenente alla 
+	 *  componente CSDAT2), si prosegue con l'aggiunta dell'account, che non implica il login 
+	 *  automatico da parte dell'utente. Si ritorna un nuovo pacchetto ARI, specificando che 
+	 *  l'aggiunta e' andata a buon fine: &quot;SuccessfulCreateAccount&quot;. Altrimenti viene catturata la seguente 
+	 *  eccezione &quot;UsernameAlreadyExistingException&quot; e ritornato un pacchetto con valore richiesta 
+	 *  &quot;UsernameAlreadyExistingCreateAccount&quot;
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari){
+<span class="fc" id="L59">		String infoRequest=ari.getInfo();</span>
+<span class="fc" id="L60">		ARI response=null;</span>
+<span class="fc" id="L61">		WorldPack pack=(WorldPack)conv.convertJsonToJava(infoRequest, WorldPack.class);</span>
+<span class="fc" id="L62">		boolean checkPack=checkWorldPackWellFormed(pack);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if(!checkPack){</span>
+<span class="nc" id="L64">			response=new ARI(null,&quot;CorruptedPack&quot;,infoRequest);</span>
+		}else{
+<span class="fc" id="L66">			PersonalData personalData=pack.getWorldPersonalData().getPersonalData();</span>
+<span class="fc" id="L67">			String md5=MD5Converter.getHashMD5(personalData.getEmail());</span>
+<span class="fc" id="L68">			String pwdHash=MD5Converter.getHashMD5(personalData.getPassword());</span>
+<span class="fc" id="L69">			com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(personalData.getUsername(), pwdHash,personalData.getEmail(), personalData.getName(), personalData.getSurname(),md5);</span>
+			try{
+<span class="fc" id="L71">				da.createAccount(user);</span>
+<span class="fc" id="L72">				response=new ARI(null, &quot;SuccessfulCreateAccount&quot;, infoRequest);</span>
+<span class="fc" id="L73">			}catch(UsernameAlreadyExistingException uae){</span>
+<span class="fc" id="L74">				response=new ARI(null, &quot;UsernameAlreadyExistingCreateAccount&quot;, infoRequest);</span>
+			}
+		}
+<span class="fc" id="L77">		return response;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

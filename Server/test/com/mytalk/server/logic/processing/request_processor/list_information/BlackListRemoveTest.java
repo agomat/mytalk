@@ -62,7 +62,7 @@ public class BlackListRemoveTest {
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlackListRemove",ariResponse.getReq());
 		
 		ariResponse=blackListRemove.manage(ari);
-		assertEquals("User non presente in blacklist ma la richiesta viene processata lo stesso","UserNotBlacklistedException",ariResponse.getReq());
+		assertEquals("User non presente in blacklist ma la richiesta viene processata lo stesso","UserNotBlacklisted",ariResponse.getReq());
 	
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListRemove",packString);

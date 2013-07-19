@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WorldPack.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared</a> &gt; <span class="el_source">WorldPack.java</span></div><h1>WorldPack.java</h1><pre class="source lang-java linenums">/**
+* Filename: WorldPack.java
+* Package: com.mytalk.server.logic.shared
+* Author: Nicolo' Toso
+* Date: 2013-04-23
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-23 |    NT     | [+] Creazione classe e costruttore
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che rappresenta l'insieme di tutte le informazioni riguardanti gli utenti, ossia la 
+* lista degli utenti, le liste personali, la blacklist e i dati personali di un utente
+*/
+
+package com.mytalk.server.logic.shared;
+
+import com.mytalk.server.logic.shared.model_client.WorldList;
+import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
+
+public class WorldPack extends Information{
+	/**
+	 * Oggetto che rappresenta l'insieme delle informazioni sulle liste
+	 * 
+	 * @property -worldList
+	 * @type {WorldList}
+	 */
+	private WorldList worldList;
+	
+	/**
+	 * Oggetto che rappresenta l'insieme delle informazioni riguardati i dati personali 
+	 * degli utenti
+	 * 
+	 * @property -worldPersonalData
+	 * @type {WorldPersonalData}
+	 */
+	private WorldPersonalData worldPersonalData;
+	
+	/**
+	 * Costruttore della classe che inizializza i campi dati worldList e worldPersonalData
+	 * 
+	 * @method +WorldPack
+	 * @param {WorldList} wpl e' l'oggetto utilizzato per inizializzare il campo dati worldList
+	 * @param {WorldPersonalData} wppd e l'oggetto utilizzato per inizializzare il campo dati
+	 * worldPersonalData
+	 */
+<span class="fc" id="L53">	public WorldPack(WorldList wpl,WorldPersonalData wppd){</span>
+<span class="fc" id="L54">		worldList=wpl;</span>
+<span class="fc" id="L55">		worldPersonalData=wppd;</span>
+<span class="fc" id="L56">	}</span>
+	
+	/**
+	 * Imposta il campo dati nell'oggetto worldList
+	 * 
+	 * @method +setWorldList
+	 * @param {WorldList} wpl e' l'oggetto assegnato al campo dati worldList
+	 * @return {void}
+	 */
+	public void setWorldList(WorldList wpl){
+<span class="nc" id="L66">		worldList=wpl;</span>
+<span class="nc" id="L67">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'oggetto worldList
+	 * 
+	 * @method +getWorldList
+	 * @return {WorldList}
+	 */
+	public WorldList getWorldList(){
+<span class="fc" id="L76">		return worldList;</span>
+	}
+	
+	/**
+	 * Imposta il campo dati nell'oggetto worldPersonalData
+	 * 
+	 * @method +setWorldPersonalData
+	 * @param {WorldList} wppd e' l'oggetto assegnato al campo dati worldPersonalData
+	 * @return {void}
+	 */
+	public void setWorldPersonalData(WorldPersonalData wppd){
+<span class="fc" id="L87">		worldPersonalData=wppd;</span>
+<span class="fc" id="L88">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'oggetto worldPersonalData
+	 * 
+	 * @method +getWorldPersonalData
+	 * @return {WorldPersonalData}
+	 */
+	public WorldPersonalData getWorldPersonalData(){
+<span class="fc" id="L97">		return worldPersonalData;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

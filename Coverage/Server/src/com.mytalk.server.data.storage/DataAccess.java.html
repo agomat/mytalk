@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>DataAccess.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage</a> &gt; <span class="el_source">DataAccess.java</span></div><h1>DataAccess.java</h1><pre class="source lang-java linenums">/**
+* Filename: DataAccess.java
+* Package: com.mytalk.server.data.storage
+* Author: Michael Ferronato
+* Date: 2013-04-12
+*
+* Diary:
+*
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.4     | 2013-07-02 |    NM     | [+] Aggiunto metodo updateAccount e relativi commenti
+* 0.3     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2     | 2013-04-15 |	NM	   | [+] Inseriti metodi alla classe
+* 0.1	  |	2013-04-12 |    MF     | [+] Creazione classe    
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Fornisce le operazioni disponibili allo strato superiore sotto forma di metodi pubblici, le quali
+* usano classi del package com.mytalk.server.storage.dao per avere accesso al database
+*/
+
+package com.mytalk.server.data.storage;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.mytalk.server.data.model.*;
+import com.mytalk.server.data.storage.dao.*;
+import com.mytalk.server.exceptions.*;
+
+
+public class DataAccess implements IDataAccess{
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi da inizializzare
+	 * 
+	 * @method +DataAccess
+	 */
+<span class="fc" id="L41">	public DataAccess(){}</span>
+	
+	/**
+	 * Metodo che controlla se l'oggetto userObj ha parametri username e password esistenti e 
+	 * corrispondenti nel database. In caso positivo ritorna true altrimenti ritorna false
+	 * 
+	 * @method +authenticateClient
+	 * @param {User} userObj e' l'oggetto sul quale il metodo agisce
+	 * @return {boolean}
+	 */
+	private boolean authenticateClient(User userObj){
+<span class="fc" id="L52">		boolean esito=false;</span>
+<span class="fc" id="L53">		UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L54">		User userEntity=ud.get(userObj.getUsername());</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if(userEntity==null){</span>
+<span class="fc" id="L56">			GenericDAO.closeSession();</span>
+<span class="fc" id="L57">			return esito;</span>
+		}else{
+<span class="fc" id="L59">			String pwdUserEntity=userEntity.getPassword();</span>
+<span class="fc" id="L60">			String pwdUserObj=userObj.getPassword();</span>
+<span class="fc" id="L61">			pwdUserObj=MD5Converter.getHashMD5(pwdUserObj);</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">			if(userEntity!=null &amp;&amp; pwdUserEntity.equals(pwdUserObj)){</span>
+<span class="fc" id="L63">				esito=true;</span>
+			}
+<span class="fc" id="L65">			GenericDAO.closeSession();</span>
+<span class="fc" id="L66">			return esito;</span>
+		}
+	}
+		
+	/**
+	 * Cerca nel database un utente autenticato con ip passato e in caso positivo ritorna true, 
+	 * altrimenti ritorna false
+	 * 
+	 * @method +checkUserByIp
+	 * @param {String} ip e' l'indirizzo ip utilizzato per la ricerca 
+	 * @return {boolean}
+	 */
+	public boolean checkUserByIp(String ip){
+<span class="fc" id="L79">		OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L80">		boolean online=false;</span>
+<span class="fc" id="L81">		OnlineUser user=od.get(ip);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if(user!=null){</span>
+<span class="fc" id="L83">			online=true;</span>
+		}
+<span class="fc" id="L85">		GenericDAO.closeSession();</span>
+<span class="fc" id="L86">		return online;</span>
+	}
+	
+	/**
+	 * Cerca nel database un utente autenticato con username name, ritornando true in caso 
+	 * positivo o false in caso negativo
+	 * 
+	 * @method +checkUserByName
+	 * @param {String} name e' il nome utilizzato per la ricerca
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @exception {AuthenticationFailException} viene sollevata se fallisce l'autenticazione
+	 */
+	public boolean checkUserByName(String name, User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L99">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L101">			OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L102">			String ip=od.getUserIp(name);</span>
+<span class="fc" id="L103">			boolean online=false;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if(ip!=null){</span>
+<span class="fc" id="L105">				online=true;</span>
+			}
+<span class="fc" id="L107">			GenericDAO.closeSession();</span>
+<span class="fc" id="L108">			return online;</span>
+		}else{
+<span class="nc" id="L110">			GenericDAO.closeSession();</span>
+<span class="nc" id="L111">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Cerca nel database un utente autenticato con ip passato e ritorna l'username associato
+	 * a quell'ip; se non lo trova solleva un'eccezione di tipo LogoutException
+	 * 
+	 * @method +getUsernameByIp
+	 * @param {String} ip e' l'indirizzo ip necessario per la ricerca
+	 * @return {String}
+	 * @exception {LogoutException} viene sollevata se l'username non risulta online
+	 */
+	public String getUsernameByIp(String ip) throws LogoutException{
+<span class="fc" id="L125">		OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L126">		boolean check=od.checkIpConnected(ip);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if(check){</span>
+<span class="fc" id="L128">			String username=od.getUsernameByIp(ip);</span>
+<span class="fc" id="L129">			GenericDAO.closeSession();</span>
+<span class="fc" id="L130">			return username;</span>
+		}
+		else{
+<span class="fc" id="L133">			GenericDAO.closeSession();</span>
+<span class="fc" id="L134">			throw new LogoutException();</span>
+		}
+	}
+	
+	/**
+	 * Aggiunge un record di un utente con l'oggetto toCreate passato; solleva
+	 * UsernameAlreadyExistingException se l'username dell'utente da creare non e' unico nel database
+	 * 
+	 * @method +createAccount
+	 * @param {User} toCreate e' l'oggetto che contiene i dati necessari per la creazione 
+	 * dell'account
+	 * @return {void}
+	 * @exception {UsernameAlreadyExistingException} viene sollevata se l'username e' gia' presente
+	 */
+	public void createAccount(User toCreate) throws UsernameAlreadyExistingException{
+<span class="fc" id="L149">		UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L150">		User existant=ud.get(toCreate.getUsername());</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if(existant!=null){</span>
+<span class="fc" id="L152">			GenericDAO.closeSession();</span>
+<span class="fc" id="L153">			throw new UsernameAlreadyExistingException();</span>
+		}else{
+<span class="fc" id="L155">			ud.save(toCreate);</span>
+<span class="fc" id="L156">			GenericDAO.closeSession();</span>
+		}
+<span class="fc" id="L158">	}</span>
+	
+	/**
+	 * Aggiorna nel database un record di un utente autenticato nel sistema con solo indirizzo 
+	 * ip corrispondente a user.ip, aggiungendo l'username in user.username; solleva un'eccezione
+	 *  UsernameNotCorrespondingException se l'utente che si autentica non e' lo stesso che ha inviato la 
+	 *  richiesta da autenticare; solleva IpNotLoggedException se l'utente non risulta gia' autenticato con 
+	 *  solo indirizzo ip; solleva UserAlreadyLoggedException se un utente sta cercando di autenticarsi 
+	 *  con un nome gia' autenticato con altro indirizzo ip; solleva IpAlreadyLoggedException se l'ip 
+	 *  dell'utente che si autentica e' gia' in uso da un altro utente
+	 *  
+	 *  @method +login
+	 *  @param {OnlineUser} user e' l'oggetto che contiene tutti i dati necessari per fare il login
+	 *  @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 *  @return {void}
+	 *  @exception {AuthenticationFailException} viene sollevata se fallisce l'autenticazione
+	 *  @exception {UsernameNotCorrespondingException} viene sollevata se i dati di autenticazione e di login
+	 *  sono inconsistenti
+	 *  @exception {IpNotLoggedException} viene sollevata se l'ip del utente che fa il login non e' online
+	 *  @exception {UserAlreadyLoggedException} viene sollevata se l'utente e' gia' online
+	 *  @exception {IpAlreadyLoggedException} viene sollevata se l'ip dell'utente e' gia' online
+	 */
+	public void login(OnlineUser user, User authenticate) throws AuthenticationFailException, UsernameNotCorrespondingException, IpNotLoggedException, UserAlreadyLoggedException, IpAlreadyLoggedException{
+<span class="fc" id="L181">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L183">			String onlineUsername=user.getUsername();</span>
+<span class="fc" id="L184">			String authUsername=authenticate.getUsername();</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if(!onlineUsername.equals(authUsername)){ //username di authenticate e di user non corrispondenti</span>
+<span class="fc" id="L186">				GenericDAO.closeSession();</span>
+<span class="fc" id="L187">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L189">				OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L190">				String userIp=user.getIp();</span>
+<span class="fc" id="L191">				String userName=user.getUsername();</span>
+<span class="fc" id="L192">				boolean connected=od.checkIpConnected(userIp);</span>
+<span class="fc" id="L193">				boolean userConnected=od.checkUsernameConnected(userName);</span>
+<span class="fc" id="L194">				OnlineUser newOnline=od.get(userIp);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">				if(!connected){		//ip gia' connesso</span>
+<span class="fc" id="L196">					GenericDAO.closeSession();</span>
+<span class="fc" id="L197">					throw new IpNotLoggedException();</span>
+				}
+<span class="fc bfc" id="L199" title="All 2 branches covered.">				else if(userConnected){	//username gia' connesso</span>
+<span class="fc" id="L200">					GenericDAO.closeSession();</span>
+<span class="fc" id="L201">					throw new UserAlreadyLoggedException();</span>
+				}
+<span class="fc bfc" id="L203" title="All 2 branches covered.">				else if(newOnline.getUsername()!=null){		//ip gia' in uso da un user</span>
+<span class="fc" id="L204">					GenericDAO.closeSession();</span>
+<span class="fc" id="L205">					throw new IpAlreadyLoggedException();</span>
+				}else{
+<span class="fc" id="L207">					newOnline.setUsername(userName);</span>
+<span class="fc" id="L208">					od.update(newOnline);</span>
+<span class="fc" id="L209">					GenericDAO.closeSession();	</span>
+				}
+			}
+		}else{
+<span class="fc" id="L213">			GenericDAO.closeSession();</span>
+<span class="fc" id="L214">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L216">	}</span>
+	
+	/**
+	 * Restituisce le liste dell'utente authenticate che autentica la richiesta
+	 * 
+	 * @method +userLists
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List&lt;ListName&gt;}
+	 * @exception {AuthenticationFailException} viene sollevata se fallisce l'autenticazione
+	 */
+	public List&lt;ListName&gt; userLists(User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L227">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L229">			String user=authenticate.getUsername();</span>
+<span class="fc" id="L230">			ListNameDAO ld=new ListNameDAO();</span>
+<span class="fc" id="L231">			List&lt;ListName&gt; list=ld.getUserLists(user);</span>
+<span class="fc" id="L232">			GenericDAO.closeSession();</span>
+<span class="fc" id="L233">			return list;</span>
+		}else{
+<span class="nc" id="L235">			GenericDAO.closeSession();</span>
+<span class="nc" id="L236">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Restituisce gli utenti della lista list di proprieta' dell'utente che ha autenticato 
+	 * la richiesta; solleva UsernameNotCorrespondingException se la lista passata non e' di proprieta' 
+	 * dell'utente autenticato
+	 * 
+	 * @method +getListUsers
+	 * @param {ListName} list e' l'oggetto che contiene i dati necessari della lista
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List&lt;User&gt;} 
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e 
+	 * l'username proprietario della lista non corrispondono 
+	 */
+	public List&lt;User&gt; getListUsers(ListName list, User authenticate) throws AuthenticationFailException, UsernameNotCorrespondingException{
+<span class="fc" id="L254">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L256">			UserListDAO ld=new UserListDAO();</span>
+<span class="fc" id="L257">			int listId=list.getId();</span>
+<span class="fc" id="L258">			ListNameDAO lnd=new ListNameDAO();</span>
+<span class="fc" id="L259">			ListName listCheck=lnd.get(listId);</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">			if(!listCheck.getOwner().equals(authenticate.getUsername())){ //controllo che la lista sia effettivamente dell'utente</span>
+<span class="fc" id="L261">				GenericDAO.closeSession();</span>
+<span class="fc" id="L262">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L264">				List&lt;UserList&gt; associations=ld.getUsersInList(listId);</span>
+<span class="fc" id="L265">				UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L266">				List&lt;User&gt; users=new ArrayList&lt;User&gt;();</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">				for(int i=0; i&lt;associations.size();i++){</span>
+<span class="fc" id="L268">					String username=associations.get(i).getUsername();</span>
+<span class="fc" id="L269">					User u=ud.get(username);</span>
+<span class="fc" id="L270">					users.add(u);</span>
+				}
+<span class="fc" id="L272">				GenericDAO.closeSession();</span>
+<span class="fc" id="L273">				return users;</span>
+			}
+		}else{
+<span class="nc" id="L276">			GenericDAO.closeSession();</span>
+<span class="nc" id="L277">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Restituisce gli utenti registrati che risultano al momento autenticati con username
+	 * 
+	 * @method +getOnlineUsers
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List&lt;User&gt;}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 */
+	public List&lt;User&gt; getOnlineUsers(User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L290">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L292">			OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L293">			List&lt;OnlineUser&gt; list=od.getOnlineUsers();</span>
+<span class="fc" id="L294">			List&lt;User&gt; users=new ArrayList&lt;User&gt;();</span>
+<span class="fc" id="L295">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L296">			String username=null;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">			for(int i=0;i&lt;list.size();i++){</span>
+<span class="fc" id="L298">				username=list.get(i).getUsername();</span>
+<span class="fc" id="L299">				User u=ud.get(username);</span>
+<span class="fc" id="L300">				users.add(u);</span>
+			}
+<span class="fc" id="L302">			GenericDAO.closeSession();</span>
+<span class="fc" id="L303">			return users;</span>
+		}else{
+<span class="nc" id="L305">			GenericDAO.closeSession();</span>
+<span class="nc" id="L306">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Restituisce gli utenti registrati che non risultano al momento autenticati con
+	 * username
+	 * 
+	 * @method +getOfflineUsers
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List&lt;User&gt;}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 */
+	public List&lt;User&gt; getOfflineUsers(User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L320">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L322">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L323">			List&lt;User&gt; users=ud.getOfflineUsers();</span>
+<span class="fc" id="L324">			GenericDAO.closeSession();</span>
+<span class="fc" id="L325">			return users;</span>
+		}else{
+<span class="nc" id="L327">			GenericDAO.closeSession();</span>
+<span class="nc" id="L328">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Elimina un record di un utente autenticato avente lo stesso indirizzo ip dell'oggetto 
+	 * user passato
+	 * 
+	 * @method +logout
+	 * @param {OnlineUser} user e' l'oggetto che contiene i dati necessari al logout
+	 * @return {void}
+	 * @exception {LogoutException} viene sollevata se l'utente che richiede il logout non e' online
+	 */
+	public void logout(OnlineUser user)throws LogoutException{
+<span class="fc" id="L342">		OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L343">		String ip=user.getIp();</span>
+<span class="fc" id="L344">		user=od.get(ip);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">		if(user==null){</span>
+<span class="fc" id="L346">			GenericDAO.closeSession();</span>
+<span class="fc" id="L347">			throw new LogoutException();</span>
+		}else{
+<span class="fc" id="L349">			od.delete(user);</span>
+<span class="fc" id="L350">			GenericDAO.closeSession();</span>
+		}
+<span class="fc" id="L352">	}</span>
+	
+	/**
+	 * Crea un record di una lista utente corrispondente a list; solleva ListAlreadyExistsException 
+	 * se la lista che si sta creando esiste gia'; solleva UsernameNotCorrespondingException se la lista 
+	 * da creare non e' dell'utente che ha autenticato la richiesta
+	 * 
+	 * @method +listCreate
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista da creare
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {ListAlreadyExistsException} viene sollevata se la lista esiste gia'
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e 
+	 * l'username proprietario della lista non corrispondono
+	 */
+	public void listCreate(ListName list, User authenticate) throws AuthenticationFailException,ListAlreadyExistsException,UsernameNotCorrespondingException{
+<span class="fc" id="L369">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L371">			String authUsername=authenticate.getUsername();</span>
+<span class="fc" id="L372">			String listUsername=list.getOwner();</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">			if(!listUsername.equals(authUsername)){</span>
+<span class="fc" id="L374">				GenericDAO.closeSession();</span>
+<span class="fc" id="L375">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L377">				ListNameDAO ld=new ListNameDAO();</span>
+<span class="fc" id="L378">				ListName listFound=ld.getByNameOwner(list);</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">				if (listFound!=null){</span>
+<span class="fc" id="L380">					GenericDAO.closeSession();</span>
+<span class="fc" id="L381">					throw new ListAlreadyExistsException(); </span>
+				}else{
+<span class="fc" id="L383">					ld.save(list);</span>
+<span class="fc" id="L384">					GenericDAO.closeSession();</span>
+				}
+			}
+		}else{
+<span class="fc" id="L388">			GenericDAO.closeSession();</span>
+<span class="fc" id="L389">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L391">	}</span>
+	
+	/**
+	 * Elimina il record corrispondente alla lista list passata; solleva ListNotExistingException se 
+	 * la lista che si sta eliminando non esiste; solleva UsernameNotCorrespondingException se la lista 
+	 * da eliminare non e' dell'utente che ha autenticato la richiesta
+	 * 
+	 * @method +listDelete
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista da eliminare
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {ListNotExistingException} viene sollevata se la lista da eliminare non esiste
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e 
+	 * l'username proprietario della lista non corrispondono
+	 */
+	public void listDelete(ListName list, User authenticate) throws AuthenticationFailException,ListNotExistingException,UsernameNotCorrespondingException{
+<span class="fc" id="L408">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L410">			String authUsername=authenticate.getUsername();</span>
+<span class="fc" id="L411">			String listUsername=list.getOwner();</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">			if(!listUsername.equals(authUsername)){</span>
+<span class="fc" id="L413">				GenericDAO.closeSession();</span>
+<span class="fc" id="L414">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L416">				ListNameDAO ld=new ListNameDAO();</span>
+<span class="fc" id="L417">				ListName listFound=ld.getByNameOwner(list);</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">				if (listFound==null){</span>
+<span class="fc" id="L419">					GenericDAO.closeSession();</span>
+<span class="fc" id="L420">					throw new ListNotExistingException(); //la lista non esiste</span>
+				}else{
+<span class="fc" id="L422">					ld.delete(listFound);</span>
+<span class="fc" id="L423">					GenericDAO.closeSession();</span>
+				}
+			}
+		}else{
+<span class="fc" id="L427">			GenericDAO.closeSession();</span>
+<span class="fc" id="L428">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L430">	}</span>
+	
+	/**
+	 * Aggiunge l'utente con username user alla lista list; solleva UserAlreadyListedException se l'utente 
+	 * da aggiungere e' gia' presente nella lista; solleva UserNotExistingException se user non e' il nome 
+	 * di un utente valido o se e' il nome dell'utente proprietario della lista; solleva 
+	 * ListNotExistingException se la lista a cui aggiungere l'utente non esiste; solleva
+	 *  UsernameNotCorrespondingException se la lista a cui aggiungere l'utente non e' di proprieta' 
+	 *  dell'utente che ha autenticato la richiesta
+	 *  
+	 *  @method +userListAdd
+	 *  @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista
+	 *  @param {String} user e' l'oggetto che identifica l'utente da aggiungere alla lista
+	 *  @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 *  @return {void}
+	 *  @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 *  @exception {UserAlreadyListedException} viene sollevata se l'utente e' gia' presente nella lista
+	 *  @exception {UserNotExistingException} viene sollevata se l'utente da inserire non esiste
+	 *  @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e 
+	 *  l'username proprietario della lista non corrispondono
+	 *  @exception {ListNotExistingException} viene sollevata se la lista non esiste
+	 */
+	public void userListAdd(ListName list,String user, User authenticate) throws AuthenticationFailException,UserAlreadyListedException, UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
+<span class="fc" id="L453">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L455">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L456">			User toCheck=ud.get(user);</span>
+<span class="fc" id="L457">			String username=authenticate.getUsername();</span>
+<span class="fc bfc" id="L458" title="All 4 branches covered.">			if(toCheck==null || user.equals(username)){</span>
+<span class="fc" id="L459">				GenericDAO.closeSession();</span>
+<span class="fc" id="L460">				throw new UserNotExistingException();</span>
+			}else{
+<span class="fc" id="L462">				String owner=list.getOwner();</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">				if(!owner.equals(username)){</span>
+<span class="fc" id="L464">					GenericDAO.closeSession();</span>
+<span class="fc" id="L465">					throw new UsernameNotCorrespondingException();</span>
+				}else{
+<span class="fc" id="L467">					ListNameDAO ld=new ListNameDAO();</span>
+<span class="fc" id="L468">					ListName dbList=ld.getByNameOwner(list);</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">					if(dbList==null){</span>
+<span class="fc" id="L470">						GenericDAO.closeSession();</span>
+<span class="fc" id="L471">						throw new ListNotExistingException();</span>
+					}else{
+<span class="fc" id="L473">						Integer Id=dbList.getId();</span>
+<span class="fc" id="L474">						UserListDAO uld=new UserListDAO();</span>
+<span class="fc" id="L475">						UserList u=uld.get(Id,user);</span>
+<span class="fc bfc" id="L476" title="All 2 branches covered.">						if(u!=null){</span>
+<span class="fc" id="L477">							GenericDAO.closeSession();</span>
+<span class="fc" id="L478">							throw new UserAlreadyListedException(); //l'utente e` gia` nella lista</span>
+						}else{
+<span class="fc" id="L480">							UserList newUser=new UserList(Id,user);</span>
+<span class="fc" id="L481">							uld.save(newUser);</span>
+<span class="fc" id="L482">							GenericDAO.closeSession();</span>
+						}
+					}
+				}
+			}
+		}else{
+<span class="fc" id="L488">			GenericDAO.closeSession();</span>
+<span class="fc" id="L489">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L491">	}</span>
+	
+	/**
+	 * Rimuove l'utente con username user dalla lista list; solleva UserNotListedException se l'utente da 
+	 * aggiungere non e' presente nella lista; solleva UserNotExistingException se user non e' il nome 
+	 * di un utente valido; solleva ListNotExistingException se la lista a cui rimuovere l'utente non 
+	 * esiste; solleva UsernameNotCorrespondingException se la lista a cui rimuovere l'utente non e' di 
+	 * proprieta' dell'utente che ha autenticato la richiesta
+	 * 
+	 * @method +userListRemove
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista
+	 * @param {String} user e' l'oggetto che contiene l'username da rimuovere dalla lista
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UserNotListedException} viene sollevata se l'utente non e' presente nella lista
+	 * @exception {UserNotExistingException} viene sollevata se l'utente non esiste
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e
+	 *  l'username proprietario della lista non corrispondono
+	 *@exception  {ListNotExistingException} viene sollevata se la lista non esiste
+	 */
+	public void userListRemove(ListName list,String user, User authenticate) throws AuthenticationFailException,UserNotListedException,UserNotExistingException, UsernameNotCorrespondingException, ListNotExistingException{
+<span class="fc" id="L513">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L515">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L516">			User toCheck=ud.get(user);</span>
+<span class="fc" id="L517">			String username=authenticate.getUsername();</span>
+<span class="fc bfc" id="L518" title="All 4 branches covered.">			if(toCheck==null || user.equals(username)){</span>
+<span class="fc" id="L519">				GenericDAO.closeSession();</span>
+<span class="fc" id="L520">				throw new UserNotExistingException();</span>
+			}else{
+<span class="fc" id="L522">				String owner=list.getOwner();</span>
+<span class="fc bfc" id="L523" title="All 2 branches covered.">				if(!owner.equals(username)){</span>
+<span class="fc" id="L524">					GenericDAO.closeSession();</span>
+<span class="fc" id="L525">					throw new UsernameNotCorrespondingException();</span>
+				}else{
+<span class="fc" id="L527">					ListNameDAO ld=new ListNameDAO();</span>
+<span class="fc" id="L528">					ListName dbList=ld.getByNameOwner(list);</span>
+<span class="fc bfc" id="L529" title="All 2 branches covered.">					if(dbList==null){</span>
+<span class="fc" id="L530">						GenericDAO.closeSession();</span>
+<span class="fc" id="L531">						throw new ListNotExistingException();</span>
+					}else{
+<span class="fc" id="L533">						Integer Id=dbList.getId();</span>
+<span class="fc" id="L534">						UserListDAO uld=new UserListDAO();</span>
+<span class="fc" id="L535">						UserList u=uld.get(Id,user);</span>
+<span class="fc bfc" id="L536" title="All 2 branches covered.">						if(u==null){</span>
+<span class="fc" id="L537">							GenericDAO.closeSession();</span>
+<span class="fc" id="L538">							throw new UserNotListedException(); //l'utente non e` presente nella lista</span>
+						}else{
+<span class="fc" id="L540">							uld.delete(u);</span>
+<span class="fc" id="L541">							GenericDAO.closeSession();</span>
+						}
+					}
+				}
+			}
+		}else{
+<span class="fc" id="L547">			GenericDAO.closeSession();</span>
+<span class="fc" id="L548">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L550">	}</span>
+	
+	/**
+	 * Aggiunge un record di utente autenticato con solo indirizzo ip corrispondente all'oggetto
+	 * user passato; solleva IpAlreadyLoggedException se e' gia' presente un record con lo stesso indirizzo
+	 * ip
+	 * 
+	 * @method +loginAsAnonymous
+	 * @param {OnlineUser} user e' l'oggetto che contiene i dati necessari a fare il login anonimo
+	 * @return {void}
+	 * @exception {IpAlreadyLoggedException} viene sollevata l'ip e' gia' online
+	 */
+	public void loginAsAnonymous(OnlineUser user)throws IpAlreadyLoggedException{
+<span class="fc" id="L563">		OnlineUserDAO ou=new OnlineUserDAO();</span>
+<span class="fc" id="L564">		String ip=user.getIp();</span>
+<span class="fc" id="L565">		String username=user.getUsername();</span>
+<span class="pc bpc" id="L566" title="1 of 2 branches missed.">		if(username!=null){</span>
+<span class="nc" id="L567">			user.setUsername(null);</span>
+		}
+<span class="fc" id="L569">		boolean checkIp=ou.checkIpConnected(ip);</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">		if(checkIp){</span>
+<span class="fc" id="L571">			GenericDAO.closeSession();</span>
+<span class="fc" id="L572">			throw new IpAlreadyLoggedException();</span>
+		}else{
+<span class="fc" id="L574">			ou.save(user);</span>
+<span class="fc" id="L575">			GenericDAO.closeSession();</span>
+		}
+<span class="fc" id="L577">	}</span>
+	
+	/**
+	 * Restituisce gli utenti nella blacklist dell'utente corrispondente a authenticate
+	 * 
+	 * @method +getUserBlacklist
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari all'autenticazione
+	 * e a definire l'utente che richiede la blacklist
+	 * @return {List&lt;User&gt;}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 */
+	public List&lt;User&gt; getUserBlacklist(User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L589">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L591">			List&lt;User&gt; listOfUser=new ArrayList&lt;User&gt;();</span>
+<span class="fc" id="L592">			Blacklist b=null;</span>
+<span class="fc" id="L593">			BlacklistDAO bd=new BlacklistDAO();</span>
+<span class="fc" id="L594">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L595">			String username=authenticate.getUsername();</span>
+<span class="fc" id="L596">			List&lt;Blacklist&gt; blacklistList=bd.getUserBlacklist(username);</span>
+<span class="fc bfc" id="L597" title="All 2 branches covered.">			for(int i=0;i&lt;blacklistList.size();i++){</span>
+<span class="fc" id="L598">				b=blacklistList.get(i);</span>
+<span class="fc" id="L599">				listOfUser.add(ud.get(b.getUsername()));</span>
+			}
+<span class="fc" id="L601">			GenericDAO.closeSession();</span>
+<span class="fc" id="L602">			return listOfUser; </span>
+		}else{
+<span class="nc" id="L604">			GenericDAO.closeSession();</span>
+<span class="nc" id="L605">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Aggiunge un record di un utente con username b.username alla blacklist dell'utente b.owner; 
+	 * solleva UserAlreadyBlacklistedException se il record in questione esiste gia'; solleva 
+	 * UsernameNotCorrespondingException se b.owner non corrisponde all'username dell'utente che ha 
+	 * autenticato la richiesta; solleva UserNotExistingException se il parametro b.username non corrisponde 
+	 * all'username di un utente esistente
+	 * 
+	 * @method +blacklistAdd
+	 * @param {Blacklist} b e' l'oggetto che contiene i dati necessari a fare l'aggiunta alla 
+	 * blacklist
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UserAlreadyBlacklistedException} viene sollevata se l'utente e' gia' nella blacklist
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e
+	 * l'username che ne fa richiesta non corrispondono
+	 * @exception {UserNotExistingException} viene sollevata se l'utente da aggiungere alla blacklist
+	 * non esiste
+	 */
+	public void blacklistAdd(Blacklist b, User authenticate) throws AuthenticationFailException,UserAlreadyBlacklistedException, UsernameNotCorrespondingException, UserNotExistingException{
+<span class="fc" id="L629">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L630" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L631">			String owner=b.getOwner();</span>
+<span class="fc" id="L632">			String username=authenticate.getUsername();</span>
+<span class="fc" id="L633">			String toBlacklist=b.getUsername();</span>
+<span class="fc" id="L634">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L635">			User u=ud.get(toBlacklist);</span>
+<span class="fc bfc" id="L636" title="All 4 branches covered.">			if(u==null || username.equals(toBlacklist)){</span>
+<span class="fc" id="L637">				GenericDAO.closeSession();</span>
+<span class="fc" id="L638">				throw new UserNotExistingException();</span>
+			}else{
+<span class="fc bfc" id="L640" title="All 2 branches covered.">				if(!owner.equals(username)){</span>
+<span class="fc" id="L641">					GenericDAO.closeSession();</span>
+<span class="fc" id="L642">					throw new UsernameNotCorrespondingException();</span>
+				}else{
+<span class="fc" id="L644">					BlacklistDAO bd=new BlacklistDAO();</span>
+<span class="fc" id="L645">					Blacklist checkUser=bd.get(owner, toBlacklist);</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">					if(checkUser!=null){</span>
+<span class="fc" id="L647">						GenericDAO.closeSession();</span>
+<span class="fc" id="L648">						throw new UserAlreadyBlacklistedException();</span>
+					}else{
+<span class="fc" id="L650">						bd.save(b);</span>
+<span class="fc" id="L651">						GenericDAO.closeSession();</span>
+					}
+				}
+			}
+		}else{
+<span class="fc" id="L656">			GenericDAO.closeSession();</span>
+<span class="fc" id="L657">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L659">	}</span>
+		
+	/**
+	 * Rimuove un record di un utente con username b.username dalla blacklist dell'utente b.owner;
+	 *  solleva UserNotBlacklistedException se il record in questione non esiste; solleva 
+	 *  UsernameNotCorrespondingException se b.owner non corrisponde all'username dell'utente che ha 
+	 *  autenticato la richiesta
+	 *  
+	 *  @method +blacklistRemove
+	 *  @param {Blacklist} b e' l'oggetto che contiene i dati dell'utente da togliere dalla blacklist
+	 *  @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 *  @return {void}
+	 *  @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 *  @exception {UserNotBlacklistedException} viene sollevata se l'utente non e' presente nella blacklist
+	 *  @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e
+	 * l'username che ne fa richiesta non corrispondono
+	 */
+	public void blacklistRemove(Blacklist b, User authenticate) throws AuthenticationFailException,UserNotBlacklistedException, UsernameNotCorrespondingException{
+<span class="fc" id="L677">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L679">			String owner=b.getOwner();</span>
+<span class="fc" id="L680">			String username=authenticate.getUsername();</span>
+<span class="fc" id="L681">			String toBlacklist=b.getUsername();</span>
+<span class="fc bfc" id="L682" title="All 2 branches covered.">			if(!owner.equals(username)){</span>
+<span class="fc" id="L683">				GenericDAO.closeSession();</span>
+<span class="fc" id="L684">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L686">				BlacklistDAO bd=new BlacklistDAO();</span>
+<span class="fc" id="L687">				Blacklist checkUser=bd.get(owner, toBlacklist);</span>
+<span class="fc bfc" id="L688" title="All 2 branches covered.">				if(checkUser==null){</span>
+<span class="fc" id="L689">					GenericDAO.closeSession();</span>
+<span class="fc" id="L690">					throw new UserNotBlacklistedException();</span>
+				}else{
+<span class="fc" id="L692">					bd.delete(checkUser);</span>
+<span class="fc" id="L693">					GenericDAO.closeSession();</span>
+				}
+			}
+		}else{
+<span class="fc" id="L697">			GenericDAO.closeSession();</span>
+<span class="fc" id="L698">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L700">	}</span>
+		
+	/**
+	 * restituisce una lista di oggetti Call che rappresentano le chiamate in cui l'utente 
+	 * authenticate figura come caller o receiver
+	 * 
+	 * @method +getCalls
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {List&lt;Call&gt;}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 */
+	public List&lt;Call&gt; getCalls(User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L712">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L713" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L714">			String username=authenticate.getUsername();</span>
+<span class="fc" id="L715">			CallDAO cd=new CallDAO();</span>
+<span class="fc" id="L716">			List&lt;Call&gt; calls=cd.getAllUserCalls(username);</span>
+<span class="fc" id="L717">			GenericDAO.closeSession();</span>
+<span class="fc" id="L718">			return calls;</span>
+		}else{
+<span class="fc" id="L720">			GenericDAO.closeSession();</span>
+<span class="fc" id="L721">			throw new AuthenticationFailException();</span>
+		}
+	}
+	
+	/**
+	 * Aggiunge un record di una chiamata corrispondente all'oggetto call passato
+	 * 
+	 * @method +addCall
+	 * @param {Call} callObj e' l'oggetto che contiene i dati relativi alla chiamanta da aggiungere
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 */
+	public void addCall(Call callObj, User authenticate) throws AuthenticationFailException{
+<span class="fc" id="L735">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L736" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L737">			CallDAO cd=new CallDAO();</span>
+<span class="fc" id="L738">			cd.save(callObj);</span>
+<span class="fc" id="L739">			GenericDAO.closeSession();</span>
+		}else{
+<span class="fc" id="L741">			GenericDAO.closeSession();</span>
+<span class="fc" id="L742">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L744">	}</span>
+	
+	
+	/**
+	 * Elimina il record di un utente corrispondente all'oggetto userObj passato
+	 * 
+	 * @method +deleteAccount
+	 * @param {User} userObj e' l'oggetto che contiene i dati dell'account da eliminare
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 */
+	public void deleteAccount(User userObj) throws AuthenticationFailException{
+<span class="fc" id="L756">		boolean authenticated=authenticateClient(userObj);</span>
+<span class="pc bpc" id="L757" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L758">			UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L759">			User u=ud.get(userObj.getUsername());</span>
+<span class="fc" id="L760">			ud.delete(u);</span>
+<span class="fc" id="L761">			GenericDAO.closeSession();</span>
+		}else{
+<span class="nc" id="L763">			GenericDAO.closeSession();</span>
+<span class="nc" id="L764">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L766">	}</span>
+	
+	/**
+	 * Aggiorna i dati dell'utente usando quelli contenuti nell'oggetto user passato; solleva 
+	 * UsernameNotCorrespondingException se user.username non corrisponde all'username dell'utente
+	 *  che ha autenticato la richiesta
+	 *  
+	 * @method +updateAccount
+	 * @param {User} user e' l'oggetto utilizzato per fare l'aggiornamento del record 
+	 * corrispondente
+	 * @param {User} authenticate e' l'oggetto utilizzato per fare l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e
+	 * l'username che ne fa richiesta non corrispondono
+	 */
+	public void updateAccount(User user, User authenticate) throws AuthenticationFailException, UsernameNotCorrespondingException{
+<span class="fc" id="L783">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="pc bpc" id="L784" title="1 of 2 branches missed.">		if(authenticated==true){</span>
+<span class="fc" id="L785">			String usernameAuth=authenticate.getUsername();</span>
+<span class="fc" id="L786">			String usernameNew=user.getUsername();</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">			if(!usernameAuth.equals(usernameNew)){</span>
+<span class="fc" id="L788">				GenericDAO.closeSession();</span>
+<span class="fc" id="L789">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L791">				UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L792">				User dbUser=ud.get(usernameNew);</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">				if(!dbUser.getEmail().equals(user.getEmail())){</span>
+<span class="fc" id="L794">					dbUser.setEmail(user.getEmail());</span>
+<span class="fc" id="L795">					dbUser.setEmailHash(user.getEmailHash());</span>
+				}
+<span class="fc bfc" id="L797" title="All 2 branches covered.">				if(!dbUser.getPassword().equals(user.getPassword())){</span>
+<span class="fc" id="L798">					dbUser.setPassword(user.getPassword());</span>
+				}
+<span class="pc bpc" id="L800" title="1 of 2 branches missed.">				if(!dbUser.getName().equals(user.getName())){</span>
+<span class="fc" id="L801">					dbUser.setName(user.getName());</span>
+				}
+<span class="fc bfc" id="L803" title="All 2 branches covered.">				if(!dbUser.getSurname().equals(user.getSurname())){</span>
+<span class="fc" id="L804">					dbUser.setSurname(user.getSurname());</span>
+				}
+<span class="fc" id="L806">				ud.update(dbUser);</span>
+<span class="fc" id="L807">				GenericDAO.closeSession();</span>
+			}
+		}else{
+<span class="nc" id="L810">			GenericDAO.closeSession();</span>
+<span class="nc" id="L811">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L813">	}</span>
+	
+	/**
+	 * Rinomina la lista list con un nuovo nome name; solleva UsernameNotCorrespondingException se
+	 * la lista non e' di proprieta' dell'utente che ha autenticato la richiesta; solleva 
+	 * ListNotExistingException se la lista passata, a cui cambiare nome, non esiste; solleva 
+	 * ListAlreadyExistsException se la lista per quell'utente con quel nome esiste gia'
+	 * 
+	 * @method +renameList
+	 * @param {ListName} list e' l'oggetto che contiene i dati relativi alla lista da rinominare
+	 * @param {String} name e' l'oggetto che contiene il nuovo nome della lista
+	 * @param {User} authenticate e' l'oggetto che contiene i dati necessari per l'autenticazione
+	 * @return {void}
+	 * @exception {AuthenticationFailException} viene sollevata quando fallisce l'autenticazione
+	 * @exception {UsernameNotCorrespondingException} viene sollevata se l'username di autenticazione e 
+	 * l'username del proprietario della lista non corrispondono
+	 * @exception {ListNotExistingException} viene sollevata se la lista da rinominare non esiste
+	 * @exception {ListAlreadyExistsException} viene sollevata se il nuovo nome corrisponde ad un'altra
+	 * lista di proprieta' dello stesso utente
+	 */
+	public void renameList(ListName list, String name, User authenticate) throws AuthenticationFailException,UsernameNotCorrespondingException,ListNotExistingException,ListAlreadyExistsException{
+<span class="fc" id="L834">		boolean authenticated=authenticateClient(authenticate);</span>
+<span class="fc bfc" id="L835" title="All 2 branches covered.">		if(authenticated==true){</span>
+<span class="fc" id="L836">			String usernameAuth=authenticate.getUsername();</span>
+<span class="fc" id="L837">			String usernameList=list.getOwner();</span>
+<span class="fc bfc" id="L838" title="All 2 branches covered.">			if(!usernameAuth.equals(usernameList)){</span>
+<span class="fc" id="L839">				GenericDAO.closeSession();</span>
+<span class="fc" id="L840">				throw new UsernameNotCorrespondingException();</span>
+			}else{
+<span class="fc" id="L842">				ListNameDAO ld=new ListNameDAO();</span>
+<span class="fc" id="L843">				ListName checkList=ld.getByNameOwner(list);</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">				if(checkList==null){</span>
+<span class="fc" id="L845">					GenericDAO.closeSession();</span>
+<span class="fc" id="L846">					throw new ListNotExistingException();</span>
+				}else{
+<span class="fc" id="L848">					ListName newList=new ListName(name,usernameList);</span>
+<span class="fc" id="L849">					ListName checkName=ld.getByNameOwner(newList);</span>
+<span class="fc bfc" id="L850" title="All 2 branches covered.">					if(checkName!=null){</span>
+<span class="fc" id="L851">						GenericDAO.closeSession();</span>
+<span class="fc" id="L852">						throw new ListAlreadyExistsException();</span>
+					}else{
+<span class="fc" id="L854">						checkList.setName(name);</span>
+<span class="fc" id="L855">						ld.update(checkList);</span>
+<span class="fc" id="L856">						GenericDAO.closeSession();</span>
+					}
+				}
+			}
+		}else{
+<span class="fc" id="L861">			GenericDAO.closeSession();</span>
+<span class="fc" id="L862">			throw new AuthenticationFailException();</span>
+		}
+<span class="fc" id="L864">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto user avente parametro id uguale a quello passato; solleva IdNotFoundException 
+	 * se non esiste un record avente l'id cercato
+	 * 
+	 * @method +getUserById
+	 * @param {int} id e' il valore dell'id dell'utente da cercare
+	 * @return {User}
+	 * @exception {IdNotFoundException} viene sollevata se l'id non e' associato a nessun utente registrato
+	 */
+	public User getUserById(int id) throws IdNotFoundException{
+<span class="fc" id="L876">		UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L877">		User requested=ud.getById(id);</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">		if(requested==null){</span>
+<span class="fc" id="L879">			GenericDAO.closeSession();</span>
+<span class="fc" id="L880">			throw new IdNotFoundException();</span>
+		}else{
+<span class="fc" id="L882">			GenericDAO.closeSession();</span>
+<span class="fc" id="L883">			return requested;</span>
+		}
+	}
+	
+	/**
+	 * Ritorna l'indirizzo ip dell'utente autenticato con username username; solleva UserNotLoggedException 
+	 * se l'utente username non e' autenticato
+	 * 
+	 * @method +getUserIp
+	 * @param {String} username e' l'oggetto che contiene i dati relativi all'utente di cui cercare 
+	 * l'indirizzo ip
+	 * @return {String}
+	 * @exception {UserNotLoggedException} viene sollevata se l'utente non e' autenticato
+	 */
+	public String getUserIp(String username)throws UserNotLoggedException{
+<span class="fc" id="L898">		OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc bfc" id="L899" title="All 2 branches covered.">		if(username.isEmpty()){</span>
+<span class="fc" id="L900">			GenericDAO.closeSession();</span>
+<span class="fc" id="L901">			throw new UserNotLoggedException();</span>
+		}else{
+<span class="fc" id="L903">			String ip=od.getUserIp(username);</span>
+<span class="fc bfc" id="L904" title="All 2 branches covered.">			if(ip==null){</span>
+<span class="fc" id="L905">				GenericDAO.closeSession();</span>
+<span class="fc" id="L906">				throw new UserNotLoggedException();</span>
+			}else{
+<span class="fc" id="L908">				GenericDAO.closeSession();</span>
+<span class="fc" id="L909">				return ip;</span>
+			}
+		}
+	}
+	
+	/**
+	 * Ritorna l'id dell'utente con username username; solleva UserNotExistingException se non esiste un
+	 * utente con tale username
+	 * 
+	 * @method +getIdFromUsername
+	 * @param {String} username e' l'oggetto che contiene i dati dell'utente di cui trovare l'id
+	 * @return {int}
+	 * @exception {UserNotExistingException} viene sollevata se l'utente non esiste
+	 */
+	public int getIdFromUsername(String username)throws UserNotExistingException{
+<span class="fc" id="L924">		UserDAO ud=new UserDAO();</span>
+<span class="fc" id="L925">		User user=ud.get(username);</span>
+<span class="fc bfc" id="L926" title="All 2 branches covered.">		if(user==null){</span>
+<span class="fc" id="L927">			GenericDAO.closeSession();</span>
+<span class="fc" id="L928">			throw new UserNotExistingException();</span>
+		}else{
+<span class="fc" id="L930">			GenericDAO.closeSession();</span>
+<span class="fc" id="L931">			int id=user.getId();</span>
+<span class="fc" id="L932">			return id;</span>
+		}
+	}
+	
+	/**
+	 * Imposta a null il valore username di un record di un utente autenticato corrispondente a
+	 * user; solleva LogoutException se non esiste un record corrispondente a user
+	 * 
+	 * @method +logoutToAnonymous
+	 * @param {OnlineUser} user e' l'oggetto che contiene i dati necessarie per il logout ad anonimo
+	 * @return {void}
+	 * @exception {LogoutException} viene sollevata se l'utente non e' online
+	 */
+	public void logoutToAnonymous(OnlineUser user)throws LogoutException{
+<span class="fc" id="L946">		OnlineUserDAO od=new OnlineUserDAO();</span>
+<span class="fc" id="L947">		String ip=user.getIp();</span>
+<span class="fc" id="L948">		OnlineUser unlogged=od.get(ip);</span>
+<span class="fc bfc" id="L949" title="All 2 branches covered.">		if(unlogged==null){</span>
+<span class="fc" id="L950">			GenericDAO.closeSession();</span>
+<span class="fc" id="L951">			throw new LogoutException();</span>
+		}else{
+<span class="fc" id="L953">			unlogged.setUsername(null);</span>
+<span class="fc" id="L954">			od.update(unlogged);</span>
+<span class="fc" id="L955">			GenericDAO.closeSession();</span>
+		}
+<span class="fc" id="L957">	}</span>
+	
+	/**
+	 * 
+	 * Verifica se esiste un record corrispondente all'oggetto passato blacklistObj e in caso 
+	 * postivo restituisce true, altrimenti restituisce false
+	 * 
+	 * @method +checkBlacklist
+	 * @param {Blacklist} blacklistObj e' l'oggetto che contiene i dati dell'utente della blacklist
+	 * da verificare
+	 * @return {boolean}
+	 * 
+	 */
+	public boolean checkBlacklist(Blacklist blacklistObj){
+<span class="fc" id="L971">		BlacklistDAO bd=new BlacklistDAO();</span>
+<span class="fc" id="L972">		String owner=blacklistObj.getOwner();</span>
+<span class="fc" id="L973">		String user=blacklistObj.getUsername();</span>
+<span class="fc" id="L974">		Blacklist checkUser=bd.get(owner, user);</span>
+<span class="fc" id="L975">		boolean result=false;</span>
+<span class="fc bfc" id="L976" title="All 2 branches covered.">		if(checkUser!=null){</span>
+<span class="fc" id="L977">			result=true;</span>
+		}
+<span class="fc" id="L979">		GenericDAO.closeSession();</span>
+<span class="fc" id="L980">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

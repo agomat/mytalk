@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.model</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">/**
+* Filename: User.java
+* Package: com.mytalk.server.data.model
+* Author: Nicolo' Toso
+* Date: 2013-04-11
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-11 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Rappresenta un utente registrato nel sistema MyTalk
+*/
+
+package com.mytalk.server.data.model;
+
+public class User{
+	/**
+	 * Numero identificativo dell'utente, di utilita' per il client
+	 * 
+	 * @property -id
+	 * @type {int}
+	 */
+<span class="fc" id="L30">	private int id=0;</span>
+	/**
+	 * Username dell'utente
+	 * 
+	 * @property -username
+	 * @type {String}
+	 */
+	private String username;
+	/**
+	 * Password dell'utente
+	 * 
+	 * @property -password
+	 * @type {String}
+	 */
+	private String password;
+	/**
+	 * Nome dell'utente
+	 * 
+	 * @property -name
+	 * @type {String}
+	 */
+	private String name;
+	/**
+	 * Cognome dell'utente
+	 * 
+	 * @property -surname
+	 * @type {String}
+	 */
+	private String surname;
+	/**
+	 * Indirizzo e-mail dell'utente
+	 * 
+	 * @property -email
+	 * @type {String}
+	 */
+	private String email;
+	/**
+	 * Hash md5 dell'indirizzo e-mail dell'utente, di utilita' per il client 
+	 * 
+	 * @property -emailHash
+	 * @type {String}
+	 */
+	private String emailHash;
+
+	/**
+	 * Costruttore della classe con corpo vuoto necessario al framework Hibernate
+	 * 
+	 * @method +User
+	 */
+<span class="fc" id="L79">	public User (){}</span>
+	
+	/**
+	 * Costruttore della classe che inizializza i campi dati username, password, email, name,
+	 * surname ed emailHash
+	 * 
+	 * @method +User
+	 * @param {String} us e' utilizzato per inizializzare il campo dati username
+	 * @param {String} pwd e' utilizzato per inizializzare il campo dati password
+	 * @param {String} mail e' utlilizzato per inizializzare il campo dati email
+	 * @param {String} n e' utilizzato per inizializzare il campo dati name
+	 * @param {String} s e' utlizzato per inizializzare il campo dati surname
+	 * @param {String} eh e' utilizzato per inizializzare il campo dati emailHash  
+	 */
+<span class="fc" id="L93">	public User(String us, String pwd, String mail, String n, String s, String eh){</span>
+<span class="fc" id="L94">		username=us;</span>
+<span class="fc" id="L95">		password=pwd;</span>
+<span class="fc" id="L96">		email=mail;</span>
+<span class="fc" id="L97">		name=n;</span>
+<span class="fc" id="L98">		surname=s;</span>
+<span class="fc" id="L99">		emailHash=eh;</span>
+<span class="fc" id="L100">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo id
+	 * 
+	 * @method +getId
+	 * @return {int}
+	 */
+	public int getId(){
+<span class="fc" id="L109">		return id;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo id uguale a n
+	 * 
+	 * @method +setId
+	 * @param {int} n e' il valore assegnato al campo dati id
+	 * @return {void}
+	 */
+	public void setId(int n){
+<span class="fc" id="L120">		id=n;</span>
+<span class="fc" id="L121">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo username
+	 * 
+	 * @method +getUsername
+	 * @return {String}
+	 */
+	public String getUsername(){
+<span class="fc" id="L130">		return username;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo username uguale a u
+	 * 
+	 * @method +setUsername
+	 * @param {String} u e' il valore assegnato al campo dati username
+	 * @return {void}
+	 */
+	public void setUsername(String u){
+<span class="fc" id="L141">		username=u;</span>
+<span class="fc" id="L142">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo password
+	 * 
+	 * @method +getPassword
+	 * @return {String}
+	 */
+	public String getPassword(){
+<span class="fc" id="L151">		return password;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo password uguale a p
+	 * 
+	 * @method +setPassword
+	 * @param {String} p e' l'oggetto assegnato al campo dati password
+	 * @return {void}
+	 */
+	public void setPassword(String p){
+<span class="fc" id="L162">		password=p;</span>
+<span class="fc" id="L163">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo name
+	 * 
+	 * @method +getName
+	 * @return {String}
+	 */
+	public String getName(){
+<span class="fc" id="L172">		return name;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo name uguale a n
+	 * 
+	 * @method +setName
+	 * @param {String} n e' l'oggetto assegnato al campo dati name
+	 * @return {void}
+	 */
+	public void setName(String n){
+<span class="fc" id="L183">		name=n;</span>
+<span class="fc" id="L184">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo surname
+	 * 
+	 * @method +getSurname
+	 * @return {String}
+	 */
+	public String getSurname(){
+<span class="fc" id="L193">		return surname;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo surname uguale a s
+	 * 
+	 * @method +setSurname
+	 * @param {String} s e' l'oggetto assegnato al campo dati surname
+	 * @return {void}
+	 */
+	public void setSurname(String s){
+<span class="fc" id="L204">		surname=s;</span>
+<span class="fc" id="L205">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo email
+	 * 
+	 * @method +getEmail
+	 * @return {String}
+	 */
+	public String getEmail(){
+<span class="fc" id="L214">		return email;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo email uguale a e
+	 * 
+	 * @method +setEmail
+	 * @param {String} e e' l'oggetto assegnato al campo dati email
+	 * @return {void}
+	 */
+	public void setEmail(String e){
+<span class="fc" id="L225">		email=e;</span>
+<span class="fc" id="L226">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo emailHash
+	 * 
+	 * @method +getEmailHash
+	 * @return {String}
+	 */
+	public String getEmailHash(){
+<span class="fc" id="L235">		return emailHash;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo emailHash uguale a e
+	 * 
+	 * @method +setEmailHash
+	 * @param {String} e e' l'oggetto assegnato al campo dati emailHash
+	 * @return {void}
+	 */	
+	public void setEmailHash(String e){
+<span class="fc" id="L246">		emailHash=e;</span>
+<span class="fc" id="L247">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

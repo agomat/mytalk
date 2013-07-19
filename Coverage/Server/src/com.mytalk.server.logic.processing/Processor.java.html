@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Processor.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing</a> &gt; <span class="el_source">Processor.java</span></div><h1>Processor.java</h1><pre class="source lang-java linenums">/**
+* Filename: Processor.java
+* Package: com.mytalk.server.logic.shared
+* Author: Nicolo' Toso
+* Date: 2013-04-29
+*
+* Diary:
+*
+* Version |
+Date
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.4     | 2013-07-02 |    MF     | [+] Aggiunta nuova richiesta nella hashmap UpdateAccount 
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli piu' espressivi
+* 0.1	  |	2013-04-29 |    NT     | [+] Creazione classe, costruttore e metodi   
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che a partire da una stringa JSON ottenuta da un oggetto Message ricevuto dalla
+* componente CSCOM1, la interpreta utilizzando la classe Convert, ottenendo un oggetto ARI
+* dal quale ricavare il valore del campo req corrispondente al tipo di richiesta sotto forma
+* di stringa. Tale stringa assieme ad una mappa di stringhe propria della classe permette,
+* attraverso l'uso di riflessione, di determinare la classe sulla quale invocare il metodo 
+* manage(ARI) che processa i dati ricevuti. Una volta ottenuti i risultati del metodo manage,
+* impacchetta tali risultati in un oggetto Message da restituire come risposta, alla componente
+* CSCOM1
+*/
+
+package com.mytalk.server.logic.processing;
+
+import com.google.gson.JsonSyntaxException;
+import com.mytalk.server.communication.buffer.Message;
+import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import java.util.*;
+
+public class Processor implements IProcessor{
+	/**
+	 * Identifica la mappa di stringhe necessaria per il mapping della richiesta
+	 * 
+	 * @property -hashmap
+	 * @type {Map&lt;String, String&gt;}
+	 */
+	private Map&lt;String, String&gt; hashmap;
+	
+	/**
+	 * Identifica un oggetto di tipo CSLOG1.Convert utilizzato per fare la traduzione 
+	 * da stringa JSON a oggetto Java
+	 * 
+	 * @property -convert
+	 * @type {Convert}
+	 */
+<span class="nc" id="L63">	private Convert convert=new Convert();</span>
+	
+	/**
+	 * Identifica un oggetto di tipo CSLOG1.StateUpdate utilizzato per creare il pacchetto 
+	 * necessario per segnalare un cambiamento di stato di un user autenticato
+	 * 
+	 * @property -stateUpdate
+	 * @type {StateUpdate}
+	 */
+<span class="nc" id="L72">	private StateUpdate stateUpdate=new StateUpdate();</span>
+	
+	/**
+	 * Costruttore della classe il quale inizializza la mappa mettendo come 
+	 * indice il nome delle richiesta e come valore il nome della classe con il percorso intero,
+	 * questo per ogni richiesta possibile
+	 * 
+	 * @method +Processor
+	 */
+<span class="nc" id="L81">	public Processor(){</span>
+<span class="nc" id="L82">		hashmap = new HashMap&lt;String, String&gt;();</span>
+		
+<span class="nc" id="L84">		hashmap.put(&quot;AcceptCall&quot;,&quot;com.mytalk.server.logic.processing.request_processor.connection_information.AcceptCall&quot;);</span>
+<span class="nc" id="L85">		hashmap.put(&quot;RefuseCall&quot;,&quot;com.mytalk.server.logic.processing.request_processor.connection_information.RefuseCall&quot;);</span>
+<span class="nc" id="L86">		hashmap.put(&quot;UserCall&quot;,&quot;com.mytalk.server.logic.processing.request_processor.connection_information.UserCall&quot;);</span>
+		
+<span class="nc" id="L88">		hashmap.put(&quot;CreateAccount&quot;,&quot;com.mytalk.server.logic.processing.request_processor.world_information.CreateAccount&quot;);</span>
+<span class="nc" id="L89">		hashmap.put(&quot;DeleteAccount&quot;,&quot;com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount&quot;);</span>
+<span class="nc" id="L90">		hashmap.put(&quot;Login&quot;,&quot;com.mytalk.server.logic.processing.request_processor.world_information.Login&quot;);</span>
+<span class="nc" id="L91">		hashmap.put(&quot;UpdateAccount&quot;,&quot;com.mytalk.server.logic.processing.request_processor.world_information.UpdateAccount&quot;);</span>
+<span class="nc" id="L92">		hashmap.put(&quot;LoginAsAnonymous&quot;,&quot;com.mytalk.server.logic.processing.request_processor.world_information.LoginAsAnonymous&quot;);</span>
+<span class="nc" id="L93">		hashmap.put(&quot;Logout&quot;,&quot;com.mytalk.server.logic.processing.request_processor.empty_information.Logout&quot;);</span>
+<span class="nc" id="L94">		hashmap.put(&quot;LogoutToAnonymous&quot;,&quot;com.mytalk.server.logic.processing.request_processor.empty_information.LogoutToAnonymous&quot;);</span>
+		
+<span class="nc" id="L96">		hashmap.put(&quot;BlackListAdd&quot;,&quot;com.mytalk.server.logic.processing.request_processor.list_information.BlackListAdd&quot;);</span>
+<span class="nc" id="L97">		hashmap.put(&quot;BlackListRemove&quot;,&quot;com.mytalk.server.logic.processing.request_processor.list_information.BlackListRemove&quot;);</span>
+<span class="nc" id="L98">		hashmap.put(&quot;ListCreate&quot;,&quot;com.mytalk.server.logic.processing.request_processor.update_list_information.ListCreate&quot;);</span>
+<span class="nc" id="L99">		hashmap.put(&quot;ListDelete&quot;,&quot;com.mytalk.server.logic.processing.request_processor.update_list_information.ListDelete&quot;);</span>
+<span class="nc" id="L100">		hashmap.put(&quot;ListUserAdd&quot;,&quot;com.mytalk.server.logic.processing.request_processor.list_information.ListUserAdd&quot;);</span>
+<span class="nc" id="L101">		hashmap.put(&quot;ListUserRemove&quot;,&quot;com.mytalk.server.logic.processing.request_processor.list_information.ListUserRemove&quot;);</span>
+<span class="nc" id="L102">		hashmap.put(&quot;UpdateListName&quot;,&quot;com.mytalk.server.logic.processing.request_processor.update_list_information.UpdateListName&quot;);</span>
+		
+<span class="nc" id="L104">		hashmap.put(&quot;AddCall&quot;,&quot;com.mytalk.server.logic.processing.request_processor.give_call_information.AddCall&quot;);</span>
+<span class="nc" id="L105">		hashmap.put(&quot;GetCalls&quot;,&quot;com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls&quot;);</span>
+
+<span class="nc" id="L107">	}</span>
+		
+	/**
+	 * Metodo che riceve in input un oggetto Message contenente l'indirizzo IP del client 
+	 * che ha fatto la richiesta e una stringa JSON, e restituisce in output una lista di oggetti 
+	 * Message contenenti la risposta alla richiesta fatta. La stringa presente nel oggetto 
+	 * Message in input viene convertita, utilizzando l'oggetto convert, in un oggetto Java di 
+	 * tipo ARI. Ottenuto l'oggetto ARI il metodo procede verificando la presenza dei dati di 
+	 * autenticazione in tale oggetto, ai quali imposta il valore relativo all'indirizzo ip uguale 
+	 * all'indirizzo ricevuto nell'oggetto Message; nel caso in cui l'autenticazione sia assente 
+	 * viene creato un oggetto Authentication con il solo indirizzo ip impostato. Successivamente 
+	 * si procede con l'identificazione del tipo di richiesta utilizzando la stringa relativa alla 
+	 * richiesta, presente nell'oggetto ARI, come indice nella mappa; ottenuta la classe 
+	 * corrispondente si utilizza la tecnica della riflessione propria di Java per invocare su 
+	 * tale classe il metodo manage, il quale processera' la richiesta e i relativi dati associati
+	 *  alla parte informazione del pacchetto ARI e restituira' la risposta a tale richiesta sotto 
+	 *  forma di oggetto ARI. Una volta ottenuto l'oggetto di risposta, su di esso viene fatta 
+	 *  una verifica se il campo ip dei dati di autenticazione e' impostato oppure no, in modo 
+	 *  tale da determinare l'indirizzo ip di destinazione del pacchetto, nel caso in cui abbia 
+	 *  valore nullo allora l'ip di destinazione sara' quello del client che ha fatto la richiesta. 
+	 *  In seguito si esegue un primo controllo sul campo richiesta dell'oggetto di risposta serve 
+	 *  a determinare se la risposta non necessita di essere inviata a nessun client, ossia se si 
+	 *  tratta della risposta ad un logout o a un rifiuto di chiamata non riuscito poiche' al client 
+	 *  tale informazione non interessa; nel caso in cui non si tratti di queste risposte allora 
+	 *  viene creato e aggiunto alla lista da restituire un oggetto Message contenente la 
+	 *  conversione in stringa JSON del pacchetto ARI di risposta e l'indirizzo IP al quale mandare 
+	 *  tale risposta. Il secondo controllo si esegue sul campo richiesta dell'oggetto ARI di 
+	 *  risposta, al fine di determinare se il tipo di risposta indica un operazione di cambio 
+	 *  stato completata con successo, in tale caso e' necessario notificare il cambio di stato a 
+	 *  tutti gli altri utenti utilizzando il campo dati stateUpdate, il quale restituisce 
+	 *  un pacchetto da inviare contenente i dati dell'user che ha cambiato stato. Fatto cio' viene 
+	 *  creato ed aggiunto un oggetto di tipo Message contenente la conversione JSON del pacchetto 
+	 *  restituito da stateUpdate e come indirizzo ip la stringa broadcast la quale sara' 
+	 *  interpretata a dovere nella componente CSCOM1
+	 * 
+	 * @method +processRequest
+	 * @param {Message} message e' l'oggetto che viene processato, il quale contiene le informazioni 
+	 * relative alla richiesta da processare
+	 * @return {List&lt;Message&gt;}
+	 * @exception {JsonSyntaxException} viene sollevata se il JSON contenuto nell'oggetto message
+	 * non e' ben formato sintatticamente
+	 */
+	public List&lt;Message&gt; processRequest(Message message) throws JsonSyntaxException {
+<span class="nc" id="L150">		ARI packInfo=convert.convertJsonToJava(message.getJson());			</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if(packInfo.getAuth()!=null){</span>
+<span class="nc" id="L152">			packInfo.getAuth().setIp(message.getIp());</span>
+		}
+		else{
+<span class="nc" id="L155">			packInfo.setAuth(new Authentication(null,null,message.getIp()));</span>
+		}
+<span class="nc" id="L157">		String request=packInfo.getReq();</span>
+<span class="nc" id="L158">		ARI esito=null;</span>
+<span class="nc" id="L159">		String ipToSend=null;</span>
+<span class="nc" id="L160">		List&lt;Message&gt; responseList=new ArrayList&lt;Message&gt;();</span>
+		try{
+<span class="nc" id="L162">			String r= hashmap.get(request);</span>
+<span class="nc" id="L163">			Class&lt;?&gt; cl=Class.forName(r);</span>
+<span class="nc" id="L164">			Object obj=cl.newInstance();</span>
+<span class="nc" id="L165">			Method m= cl.getDeclaredMethod(&quot;manage&quot;, ARI.class);</span>
+<span class="nc" id="L166">			esito=(ARI)m.invoke(obj, packInfo);	</span>
+<span class="nc" id="L167">		}catch(ClassNotFoundException cnfe){</span>
+			// Auto-generated catch block
+<span class="nc" id="L169">			cnfe.printStackTrace();</span>
+<span class="nc" id="L170">		} catch (SecurityException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L172">			e.printStackTrace();</span>
+<span class="nc" id="L173">		} catch (NoSuchMethodException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L175">			e.printStackTrace();</span>
+<span class="nc" id="L176">		} catch (IllegalArgumentException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L178">			e.printStackTrace();</span>
+<span class="nc" id="L179">		} catch (InstantiationException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L181">			e.printStackTrace();</span>
+<span class="nc" id="L182">		} catch (IllegalAccessException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L184">			e.printStackTrace();</span>
+<span class="nc" id="L185">		} catch (InvocationTargetException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L187">			e.printStackTrace();</span>
+		}
+		
+<span class="nc bnc" id="L190" title="All 6 branches missed.">		if(!packInfo.getReq().equals(&quot;Logout&quot;) &amp;&amp; !packInfo.getReq().equals(&quot;LogoutToAnonymous&quot;) &amp;&amp; !esito.getReq().equals(&quot;UnsuccessfulRefuseCall&quot;)){</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			if(esito.getAuth()!=null){</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">				if(esito.getAuth().getUser()!=null){</span>
+<span class="nc" id="L193">					packInfo.getAuth().setUser(esito.getAuth().getUser());</span>
+				}
+<span class="nc" id="L195">				ipToSend=esito.getAuth().getIp();</span>
+			}
+			else{
+<span class="nc" id="L198">				ipToSend=message.getIp();</span>
+			}
+<span class="nc" id="L200">			esito.setAuth(null);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			if(packInfo.getReq().equals(&quot;DeleteAccount&quot;)){</span>
+<span class="nc" id="L202">				packInfo.setInfo(esito.getInfo());</span>
+<span class="nc" id="L203">				esito.setInfo(null);</span>
+			}
+<span class="nc" id="L205">			String json=convert.convertJavaToJson(esito);</span>
+<span class="nc" id="L206">			responseList.add(new Message(ipToSend,json));</span>
+		}
+		
+<span class="nc bnc" id="L209" title="All 10 branches missed.">		if(esito.getReq().equals(&quot;SuccessfulLogin&quot;) || esito.getReq().equals(&quot;SuccessfulLogoutToAnonymous&quot;) || esito.getReq().equals(&quot;SuccessfulLogout&quot;) || esito.getReq().equals(&quot;SuccessfulDeleteAccount&quot;) || esito.getReq().equals(&quot;SuccessfulUpdateAccount&quot;)){</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if(packInfo.getAuth().getUser()!=null){</span>
+<span class="nc" id="L211">				ARI ari=stateUpdate.manage(packInfo);</span>
+<span class="nc" id="L212">				String jsonAri=convert.convertJavaToJson(ari);</span>
+<span class="nc" id="L213">				responseList.add(new Message(&quot;broadcast&quot;,jsonAri));</span>
+			}
+		}
+<span class="nc" id="L216">		return responseList;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

@@ -61,7 +61,7 @@ public class BlackListAddTest {
 		assertEquals("Dati corretti ma non viene processata la richiesta","SuccessfulBlackListAdd",ariResponse.getReq());
 		
 		ariResponse=blackListAdd.manage(ari);
-		assertEquals("User gia' in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklistedException",ariResponse.getReq());
+		assertEquals("User gia' in blacklist ma viene aggiunto lo stesso","UserAlreadyBlacklisted",ariResponse.getReq());
 	
 		Authentication new_auth=new Authentication("user1","user2","123.123.123.1");
 		ari=new ARI(new_auth,"BlackListAdd",packString);

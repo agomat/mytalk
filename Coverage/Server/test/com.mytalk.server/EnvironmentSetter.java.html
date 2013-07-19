@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>EnvironmentSetter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server</a> &gt; <span class="el_source">EnvironmentSetter.java</span></div><h1>EnvironmentSetter.java</h1><pre class="source lang-java linenums">/**
+ * Filename: EnvironmentSetter.java
+ * Package: com.mytalk.server
+ * Author: Nicolo' Mazzucato
+ * Date: 2013-05-06
+ *
+ * Diary:
+ * Version | Date       | Developer | Changes
+ * --------+------------+-----------+------------------
+ * 0.1	   | 2013-05-06 |    NM     | [+] Inserimento classe e metodi   
+ *
+ * This software is distributed under GNU/GPL 2.0.
+ *
+ * Software licensed to:
+ * - Zucchetti SRL
+ */
+
+package com.mytalk.server;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.mytalk.server.data.storage.HibernateUtil;
+
+
+<span class="fc" id="L38">public class EnvironmentSetter {</span>
+
+	public void executeQuery(String q){
+<span class="fc" id="L41">		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();</span>
+<span class="fc" id="L42">		Session session = sessionFactory.openSession();</span>
+<span class="fc" id="L43">		Transaction t = session.beginTransaction();</span>
+<span class="fc" id="L44">		Query query = session.createSQLQuery(q);</span>
+<span class="fc" id="L45">		query.executeUpdate();</span>
+<span class="fc" id="L46">		t.commit();</span>
+<span class="fc" id="L47">		session.close();</span>
+<span class="fc" id="L48">	}</span>
+	
+	public void cleanDB(){		
+<span class="fc" id="L51">		executeQuery(&quot;DELETE FROM OnlineUsers&quot;);</span>
+<span class="fc" id="L52">		executeQuery(&quot;DELETE FROM Calls&quot;);</span>
+<span class="fc" id="L53">		executeQuery(&quot;DELETE FROM UserLists&quot;);</span>
+<span class="fc" id="L54">		executeQuery(&quot;DELETE FROM ListNames&quot;);</span>
+<span class="fc" id="L55">		executeQuery(&quot;DELETE FROM Blacklists&quot;);</span>
+<span class="fc" id="L56">		executeQuery(&quot;DELETE FROM Users&quot;);		</span>
+<span class="fc" id="L57">	}</span>
+	
+	private static String readFile(String path) throws IOException {
+<span class="fc" id="L60">		URL url = EnvironmentSetter.class.getResource(path);</span>
+<span class="fc" id="L61">		File file = new File(url.getPath());</span>
+<span class="fc" id="L62">		FileInputStream stream = new FileInputStream(file);</span>
+		try {
+<span class="fc" id="L64">		    FileChannel fc = stream.getChannel();</span>
+<span class="fc" id="L65">		    MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());</span>
+<span class="fc" id="L66">		    return Charset.defaultCharset().decode(bb).toString();</span>
+		}
+<span class="nc" id="L68">		finally{</span>
+<span class="pc" id="L69">			stream.close();</span>
+<span class="nc" id="L70">		}</span>
+	}
+	
+	public void initDB(){
+		try{
+			/**
+			 * users
+			 */
+<span class="fc" id="L78">			String query=readFile(&quot;popolamentoTestUsers.sql&quot;);</span>
+<span class="fc" id="L79">			executeQuery(query);</span>
+			/**
+			 * blacklists
+			 */
+<span class="fc" id="L83">			query=readFile(&quot;popolamentoTestBlacklists.sql&quot;);</span>
+<span class="fc" id="L84">			executeQuery(query);</span>
+			/**
+			 * listnames
+			 */
+<span class="fc" id="L88">			query=readFile(&quot;popolamentoTestListNames.sql&quot;);</span>
+<span class="fc" id="L89">			executeQuery(query);</span>
+			/**
+			 * onlineusers
+			 */
+<span class="fc" id="L93">			query=readFile(&quot;popolamentoTestOnlineUsers.sql&quot;);</span>
+<span class="fc" id="L94">			executeQuery(query);</span>
+			/**
+			 * userlists
+			 */
+<span class="fc" id="L98">			query=readFile(&quot;popolamentoTestUserLists.sql&quot;);</span>
+<span class="fc" id="L99">			executeQuery(query);</span>
+			/**
+			 * calls
+			 */
+<span class="fc" id="L103">			query=readFile(&quot;popolamentoTestCalls.sql&quot;);</span>
+<span class="fc" id="L104">			executeQuery(query);</span>
+			
+			
+<span class="nc" id="L107">		}catch(IOException exc){fail(&quot;File per la inizializzazione del DB non trovato&quot;);}</span>
+		
+<span class="fc" id="L109">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

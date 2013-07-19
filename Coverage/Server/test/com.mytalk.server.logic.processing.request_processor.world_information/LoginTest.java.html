@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>LoginTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.world_information</a> &gt; <span class="el_source">LoginTest.java</span></div><h1>LoginTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: LoginTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.world_information
+* Author: Michael Ferronato
+* Date: 2013-05-07
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013-05-07 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.world_information;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.shared.model_client.UserList;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.world_information.Login;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.model_client.PersonalData;
+import com.mytalk.server.logic.shared.model_client.User;
+
+<span class="fc" id="L39">public class LoginTest {</span>
+
+<span class="fc" id="L41">	private EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L42">	private Convert conv=new Convert();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L46">		envSetter.cleanDB();</span>
+<span class="fc" id="L47">		envSetter.initDB();</span>
+<span class="fc" id="L48">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L52">		Login login=new Login();</span>
+<span class="fc" id="L53">		Authentication authRightTest=new Authentication(&quot;user1&quot;,&quot;user1&quot;,&quot;123.123.123.1&quot;);</span>
+		
+<span class="fc" id="L55">		ARI ari=new ARI(authRightTest,&quot;Login&quot;,null);</span>
+<span class="fc" id="L56">		ARI ariResult=login.manage(ari);</span>
+<span class="fc" id="L57">		assertEquals(&quot;Login fallito ma i dati sono corretti&quot;,&quot;SuccessfulLogin&quot;,ariResult.getReq());</span>
+		
+<span class="fc" id="L59">		String worldPackString=ariResult.getInfo();</span>
+<span class="fc" id="L60">		WorldPack packTest=(WorldPack)conv.convertJsonToJava(worldPackString, WorldPack.class);</span>
+		
+<span class="fc" id="L62">		List&lt;User&gt; list=packTest.getWorldList().getList();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		for(int i=0;i&lt;list.size();i++){	</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if(list.get(i).getUsername().equals(&quot;user1&quot;)){</span>
+<span class="nc" id="L65">				fail(&quot;E' presente anche lui stesso&quot;);</span>
+			}
+<span class="fc bfc" id="L67" title="All 6 branches covered.">			if(list.get(i).getUsername().equals(&quot;user0&quot;) || list.get(i).getUsername().equals(&quot;user2&quot;) || list.get(i).getUsername().equals(&quot;user3&quot;)){</span>
+<span class="fc" id="L68">				assertTrue(list.get(i).getUsername(),list.get(i).getOnline());	</span>
+			}
+			else{
+<span class="fc" id="L71">				assertFalse(list.get(i).getUsername(),list.get(i).getOnline());</span>
+			}
+		}
+		
+<span class="fc" id="L75">		List&lt;UserList&gt; listUserList=packTest.getWorldList().getUserList();</span>
+<span class="fc" id="L76">		List&lt;Integer&gt; listTest=new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L77">		listTest.add(new Integer(1));</span>
+<span class="fc" id="L78">		listTest.add(new Integer(3));</span>
+<span class="fc" id="L79">		listTest.add(new Integer(4));</span>
+<span class="fc" id="L80">		listTest.add(new Integer(5));</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for(int j=0;j&lt;listUserList.size();j++){</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for(int k=0;k&lt;listUserList.get(j).getList().size();k++){</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">				if(listUserList.get(j).getName().equals(&quot;Blacklist&quot;)){</span>
+<span class="nc" id="L84">					assertEquals(listUserList.get(j).getList().get(k),new Integer(8));</span>
+				}
+<span class="fc bfc" id="L86" title="All 2 branches covered.">				if(listUserList.get(j).getName().equals(&quot;friends&quot;)){</span>
+<span class="fc" id="L87">					assertEquals(listUserList.get(j).getList().get(k),listTest.get(k));</span>
+				}
+			}
+		}
+		
+<span class="fc" id="L92">		PersonalData pd=packTest.getWorldPersonalData().getPersonalData();</span>
+<span class="fc" id="L93">		assertEquals(&quot;123.123.123.1&quot;,pd.getIp());</span>
+<span class="fc" id="L94">		assertEquals(&quot;user1&quot;,pd.getUsername());</span>
+<span class="fc" id="L95">		assertEquals(&quot;user1&quot;,pd.getSurname());</span>
+<span class="fc" id="L96">		assertEquals(&quot;user1&quot;,pd.getName());</span>
+<span class="fc" id="L97">		assertEquals(&quot;24c9e15e52afc47c225b757e7bee1f9d&quot;,pd.getPassword());</span>
+<span class="fc" id="L98">		assertEquals(&quot;user1@mytalk.com&quot;,pd.getEmail());</span>
+<span class="fc" id="L99">		assertEquals(&quot;emailhash123123123&quot;,pd.getMd5());</span>
+		
+<span class="fc" id="L101">		Authentication authWrongTest=new Authentication(&quot;user1&quot;,&quot;user0&quot;,&quot;111.111.111.1&quot;);</span>
+		
+<span class="fc" id="L103">		ari=new ARI(authWrongTest,&quot;Login&quot;,null);</span>
+<span class="fc" id="L104">		ariResult=login.manage(ari);</span>
+<span class="fc" id="L105">		assertEquals(&quot;Login effettuato anche se viene fallita l'autenticazione&quot;,&quot;AuthenticationFailLogin&quot;,ariResult.getReq());</span>
+		
+		/**
+		 * UserNotCorrespondingLogin non viene mai sollevata per costruzione
+		 */
+		
+<span class="fc" id="L111">		authWrongTest.setIp(&quot;111.11.111.1&quot;);</span>
+<span class="fc" id="L112">		authWrongTest.setPwd(&quot;user1&quot;);</span>
+<span class="fc" id="L113">		ari.setAuth(authWrongTest);</span>
+<span class="fc" id="L114">		ariResult=login.manage(ari);</span>
+<span class="fc" id="L115">		assertEquals(&quot;Tentativo di login con ip non loggato&quot;,&quot;IpNotLoggedLogin&quot;,ariResult.getReq());</span>
+		
+		
+<span class="fc" id="L118">		ari.setAuth(authRightTest);</span>
+<span class="fc" id="L119">		ariResult=login.manage(ari);</span>
+<span class="fc" id="L120">		assertEquals(&quot;Tentativo di login con user gia' loggato&quot;,&quot;UserAlreadyLoggedLogin&quot;,ariResult.getReq());</span>
+		
+<span class="fc" id="L122">		authRightTest=new Authentication(&quot;user5&quot;,&quot;user5&quot;,&quot;123.123.123.0&quot;);</span>
+<span class="fc" id="L123">		ari.setAuth(authRightTest);</span>
+<span class="fc" id="L124">		ariResult=login.manage(ari);</span>
+<span class="fc" id="L125">		assertEquals(&quot;Tentativo di login con ip gia' assegnato ad un altro user&quot;,&quot;IpAlreadyLoggedLogin&quot;,ariResult.getReq());</span>
+		
+		/**
+		 * UserNotLoggedException mai lanciata poiche' i candidati sono oggetti
+		 *  ricavati dal db e quindi consistenti
+		 */
+<span class="fc" id="L131">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

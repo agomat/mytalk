@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GetCallsTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.give_call_information</a> &gt; <span class="el_source">GetCallsTest.java</span></div><h1>GetCallsTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: GetCallsTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.give_call_information
+* Author: Michael Ferronato
+* Date: 2013-05-04
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013-05-04 |   MF      | [+] Inserimento classe  
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.give_call_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.give_call_information.GetCalls;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.GiveCallPack;
+
+<span class="fc" id="L33">public class GetCallsTest {</span>
+<span class="fc" id="L34">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L35">	private Convert conv=new Convert();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L39">		envSetter.cleanDB();</span>
+<span class="fc" id="L40">		envSetter.initDB();</span>
+<span class="fc" id="L41">	}</span>
+		
+	@Test
+	public void testManage() {
+		
+<span class="fc" id="L46">		Authentication authRightTest=new Authentication(&quot;user1&quot;,&quot;user1&quot;,&quot;1.1.1.1&quot;);</span>
+<span class="fc" id="L47">		Authentication authWrongTest=new Authentication(&quot;user1&quot;,&quot;user2&quot;,&quot;1.1.1.1&quot;);</span>
+		
+<span class="fc" id="L49">		ARI ariRightTest=new ARI(authRightTest,&quot;GetCalls&quot;,null);</span>
+<span class="fc" id="L50">		ARI ariWrongTest=new ARI(authWrongTest,&quot;GetCalls&quot;,null);</span>
+		
+<span class="fc" id="L52">		GetCalls getCallsTest=new GetCalls();</span>
+		
+<span class="fc" id="L54">		ARI ariSuccess=getCallsTest.manage(ariRightTest);</span>
+<span class="fc" id="L55">		assertEquals(&quot;L'autenticazione e' corretta ma viene fallita l'autenticazione&quot;,&quot;GiveCalls&quot;, ariSuccess.getReq());</span>
+		
+<span class="fc" id="L57">		ARI ariUnsuccess=getCallsTest.manage(ariWrongTest);</span>
+<span class="fc" id="L58">		assertEquals(&quot;L'autenticazione e' corretta ma viene fallita l'autenticazione&quot;,&quot;AuthenticationFailGetCalls&quot;, ariUnsuccess.getReq());</span>
+	
+<span class="fc" id="L60">		String giveCallPack=ariSuccess.getInfo();</span>
+<span class="fc" id="L61">		GiveCallPack packTest=(GiveCallPack)conv.convertJsonToJava(giveCallPack, GiveCallPack.class);</span>
+		
+<span class="fc" id="L63">		assertEquals(&quot;Le statistiche totali relative ai byte ricevuti sono errate&quot;,new Integer(165000),packTest.getWrapperCall().getTotalByteReceived());</span>
+<span class="fc" id="L64">		assertEquals(&quot;Le statistiche totali relative ai byte mandati sono errate&quot;,new Integer(165000),packTest.getWrapperCall().getTotalByteSent());</span>
+<span class="fc" id="L65">		assertEquals(&quot;Le statistiche totali relative alla durata sono errate&quot;,new Integer(1400),packTest.getWrapperCall().getTotalDuration());</span>
+	
+		/**
+		 * UsernameNotExisting non viene sollevata perche' usa dati provvenienti
+		 *  dal db e quindi consistenti
+		 */
+<span class="fc" id="L71">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

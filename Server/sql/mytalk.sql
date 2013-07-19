@@ -64,18 +64,3 @@ CREATE TABLE IF NOT EXISTS OnlineUsers
 ) ENGINE=InnoDB;
 
 ALTER TABLE ListNames AUTO_INCREMENT = 2;
-
-DELIMITER //
-DROP PROCEDURE IF EXISTS fill;
-CREATE PROCEDURE fill (n INT)
-BEGIN
-  DECLARE i INT DEFAULT 0;
-  DECLARE r INT;
-  ciclo: WHILE i < n DO
-    SET r = ROUND(RAND()*1000000);
-    INSERT IGNORE INTO Users (username,password,name,surname,email,emailhash) VALUES
-      (CONCAT("user",r),MD5("password"),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),SUBSTRING(MD5(RAND()) FROM 1 FOR 7),"agomat@gmail.com",m$
-    SET i = i + 1;
-  END WHILE ciclo;
-END; //
-DELIMITER ;

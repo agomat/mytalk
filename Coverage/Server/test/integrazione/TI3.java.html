@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TI3.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">integrazione</a> &gt; <span class="el_source">TI3.java</span></div><h1>TI3.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package integrazione;</span>
+
+import static org.junit.Assert.*;
+
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+import org.junit.Test;
+
+import com.mytalk.server.communication.Dispatcher;
+import com.mytalk.server.communication.Receiver;
+import com.mytalk.server.communication.Sender;
+import com.mytalk.server.data.storage.HibernateUtil;
+
+<span class="nc" id="L18">public class TI3 {</span>
+
+<span class="nc" id="L20">	private Boolean ricevuto=false;</span>
+	
+	class TestClient extends WebSocketClient{
+<span class="nc" id="L23">		public TestClient(URI serverURI){</span>
+<span class="nc" id="L24">			super(serverURI);</span>
+<span class="nc" id="L25">		}</span>
+		/**
+		 * NON UTILE PER SCOPI DI TESTING
+		 */
+		@Override
+		public void onClose(int arg0, String arg1, boolean arg2) {
+<span class="nc" id="L31">		}</span>
+		/**
+		 * NON UTILE PER SCOPI DI TESTING
+		 */
+		@Override
+		public void onError(Exception arg0) {
+<span class="nc" id="L37">		}</span>
+
+		@Override
+		public void onMessage(String risp) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">			if(risp.equals(new String(&quot;{\&quot;req\&quot;:\&quot;CorruptedPack\&quot;}&quot;)))</span>
+<span class="nc" id="L42">				ricevuto=true;</span>
+<span class="nc" id="L43">		}</span>
+		/**
+		 * NON UTILE PER SCOPI DI TESTING
+		 */
+		@Override
+		public void onOpen(ServerHandshake arg0) {
+<span class="nc" id="L49">		}</span>
+		/**
+		 * Invio di un messaggio non valido, il server tenta di processarlo e risponde comunicando il CorruptedPack
+		 */
+		public void sendMsg(){
+<span class="nc" id="L54">			this.send(&quot;{'auth':null,'req':'UserCall','info':null}&quot;);</span>
+<span class="nc" id="L55">		}</span>
+	}
+	
+	@Test
+	public void test() {
+<span class="nc" id="L60">		new HibernateUtil();</span>
+<span class="nc" id="L61">		Receiver receiver=new Receiver(new InetSocketAddress(8887));</span>
+<span class="nc" id="L62">		Thread receiverThread= new Thread(receiver);</span>
+<span class="nc" id="L63">		Dispatcher dispatcher=new Dispatcher();</span>
+<span class="nc" id="L64">		Thread dispatcherThread=new Thread(dispatcher);</span>
+<span class="nc" id="L65">		Sender sender=new Sender();</span>
+<span class="nc" id="L66">		Thread senderThread=new Thread(sender);</span>
+<span class="nc" id="L67">		sender.registerReceiver(receiver);</span>
+<span class="nc" id="L68">		senderThread.start();</span>
+<span class="nc" id="L69">		receiverThread.start();</span>
+<span class="nc" id="L70">		dispatcherThread.start();</span>
+		try {
+<span class="nc" id="L72">			TestClient tc=new TestClient(new URI(&quot;ws://localhost:8887&quot;));</span>
+<span class="nc" id="L73">			tc.connect();</span>
+<span class="nc" id="L74">			Thread t=new Thread(){</span>
+				public void run(){
+					try {
+<span class="nc" id="L77">						sleep(2000);</span>
+<span class="nc" id="L78">					} catch (InterruptedException e) {</span>
+<span class="nc" id="L79">						e.printStackTrace();</span>
+					}
+<span class="nc" id="L81">				}</span>
+			};
+<span class="nc" id="L83">			t.start();</span>
+			try {
+<span class="nc" id="L85">				t.join();</span>
+<span class="nc" id="L86">			} catch (InterruptedException e) {</span>
+<span class="nc" id="L87">				e.printStackTrace();</span>
+			}
+<span class="nc" id="L89">			tc.sendMsg();</span>
+<span class="nc" id="L90">			Thread p=new Thread(){</span>
+				public void run(){
+					try {
+<span class="nc" id="L93">						sleep(10000);</span>
+<span class="nc" id="L94">					} catch (InterruptedException e) {</span>
+<span class="nc" id="L95">						e.printStackTrace();</span>
+					}
+<span class="nc" id="L97">				}</span>
+			};
+<span class="nc" id="L99">			p.start();</span>
+			try {
+<span class="nc" id="L101">				p.join();</span>
+<span class="nc" id="L102">			} catch (InterruptedException e) {</span>
+<span class="nc" id="L103">				e.printStackTrace();</span>
+			}
+<span class="nc" id="L105">			assertTrue(&quot;Messaggio di risposta non ricevuto entro 10 secondi, comunicazione con il server non funzionante&quot;,ricevuto);</span>
+<span class="nc" id="L106">		} catch (URISyntaxException e) {</span>
+<span class="nc" id="L107">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L109">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

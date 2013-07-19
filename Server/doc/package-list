@@ -1,0 +1,17 @@
+com.mytalk.server.communication
+com.mytalk.server.communication.buffer
+com.mytalk.server.data.model
+com.mytalk.server.data.storage
+com.mytalk.server.data.storage.dao
+com.mytalk.server.exceptions
+com.mytalk.server.logic.processing
+com.mytalk.server.logic.processing.request_processor
+com.mytalk.server.logic.processing.request_processor.connection_information
+com.mytalk.server.logic.processing.request_processor.empty_information
+com.mytalk.server.logic.processing.request_processor.give_call_information
+com.mytalk.server.logic.processing.request_processor.list_information
+com.mytalk.server.logic.processing.request_processor.state_update_information
+com.mytalk.server.logic.processing.request_processor.update_list_information
+com.mytalk.server.logic.processing.request_processor.world_information
+com.mytalk.server.logic.shared
+com.mytalk.server.logic.shared.model_client

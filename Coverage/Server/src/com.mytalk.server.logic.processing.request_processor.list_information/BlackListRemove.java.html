@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BlackListRemove.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.list_information</a> &gt; <span class="el_source">BlackListRemove.java</span></div><h1>BlackListRemove.java</h1><pre class="source lang-java linenums">/**
+* Filename: BlackListRemove.java
+* Package: com.mytalk.server.logic.processing.request_processor.list_information
+* Author: Michael Ferronato
+* Date: 2013-05-01 
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-22 |    MF     | [#] Modifica dei nomi del metodo manage al fine di renderli
+* 									     piu' espressivi e di facile comprensione
+* 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di rimuovere un utente dalla blacklist del client che ne fa la richiesta.
+*/
+
+
+
+package com.mytalk.server.logic.processing.request_processor.list_information;
+
+import java.util.List;
+
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.UserNotBlacklistedException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
+
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ListPack;
+import com.mytalk.server.logic.shared.model_client.UserList;
+
+public class BlackListRemove extends GenericRequest {
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +BlackListRemove
+	 */
+<span class="fc" id="L47">	public BlackListRemove(){}</span>
+	
+	/**
+	 * Una volta ricevuto l'ARI e fatti i controlli di pacchetto ben formato, usando i dati ricevuti dal 
+	 * campo dati ari, viene creato un oggetto di tipo CSDAT1. Blacklist, utilizzato per rimuovere 
+	 * l'utente dalla blacklist utilizzando l'oggetto DataAccess, classe appartenente al componente 
+	 * CSDAT2. Viene restituito un &quot;SuccessfulBlackListRemove&quot;. Se non va a buon fine, vengono 
+	 * sollevate e catturate le seguenti eccezioni: &quot;UserNotBlacklistedException&quot;, &quot;AuthenticationFailException&quot;, 
+	 * &quot;UsernameNotCorrespondingException&quot;, &quot;IdNotFoundException&quot;, ritornando un pacchetto con campo richiesta 
+	 * &quot;AuthenticationFailBlackListRemove&quot;, &quot;UsernameNotCorrespondingBlackListRemove&quot;, &quot;UserNotBlacklisted&quot; o 
+	 * &quot;IdNotFoundBlackListRemove&quot;.In caso di pacchetto mal formato, viene restituito un &quot;CorruptedPack&quot;
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari) {
+<span class="fc" id="L65">		ARI response=null;</span>
+<span class="fc" id="L66">		Authentication auth=ari.getAuth();</span>
+<span class="fc" id="L67">		String infoRequest=ari.getInfo();</span>
+<span class="fc" id="L68">		ListPack pack=(ListPack)conv.convertJsonToJava(infoRequest,ListPack.class);</span>
+<span class="fc" id="L69">		boolean checkAuth=checkAuthenticationWellFormed(auth);</span>
+<span class="fc" id="L70">		boolean checkPack=checkListPackWellFormed(pack);</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">		if(!checkAuth || !checkPack){</span>
+<span class="fc" id="L72">			response=new ARI(null,&quot;CorruptedPack&quot;,infoRequest);</span>
+		}	
+		else{
+<span class="fc" id="L75">			com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);			</span>
+<span class="fc" id="L76">			List&lt;UserList&gt; listUserList=pack.getList(); </span>
+<span class="fc" id="L77">			UserList userList=null;</span>
+<span class="fc" id="L78">			com.mytalk.server.data.model.Blacklist blacklist=null;</span>
+<span class="fc" id="L79">			List&lt;Integer&gt; listUser=null;</span>
+<span class="fc" id="L80">			String user=null;</span>
+			try{ 
+<span class="fc" id="L82">				userList=listUserList.get(0); </span>
+<span class="fc" id="L83">				listUser=userList.getList();</span>
+<span class="fc" id="L84">				user=(da.getUserById(listUser.get(0))).getUsername();</span>
+<span class="fc" id="L85">				blacklist=new com.mytalk.server.data.model.Blacklist(auth.getUser(),user);</span>
+<span class="fc" id="L86">				da.blacklistRemove(blacklist,userAuth);</span>
+<span class="fc" id="L87">				response=new ARI(null,&quot;SuccessfulBlackListRemove&quot;,infoRequest);</span>
+<span class="fc" id="L88">			}catch(UserNotBlacklistedException unb){</span>
+<span class="fc" id="L89">				response=new ARI(null,&quot;UserNotBlacklisted&quot;,infoRequest);</span>
+<span class="fc" id="L90">			}catch(AuthenticationFailException af){</span>
+<span class="fc" id="L91">				response=new ARI(null,&quot;AuthenticationFailBlackListRemove&quot;,null);</span>
+<span class="nc" id="L92">			} catch (UsernameNotCorrespondingException e) {</span>
+<span class="nc" id="L93">				response=new ARI(null,&quot;UsernameNotCorrespondingBlackListRemove&quot;,null);</span>
+<span class="fc" id="L94">			}catch (IdNotFoundException inf) {</span>
+<span class="fc" id="L95">				response=new ARI(null,&quot;IdNotFoundBlackListRemove&quot;,null);</span>
+			}
+		}	
+<span class="fc" id="L98">		return response;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

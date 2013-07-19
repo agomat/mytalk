@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserList.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.model</a> &gt; <span class="el_source">UserList.java</span></div><h1>UserList.java</h1><pre class="source lang-java linenums">/**
+* Filename: UserList.java
+* Package: com.mytalk.server.data.model
+* Author: Nicolo' Toso
+* Date: 2013-04-11
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-11 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Rappresenta la relazione di utente in una lista di un altro utente
+*/
+
+package com.mytalk.server.data.model;
+
+import java.io.Serializable;
+
+public class UserList implements Serializable{
+	
+	/**
+	 * Id della lista a cui si riferisce l'utente aggiunto
+	 * 
+	 * @property -idList
+	 * @type {int}
+	 */
+	private int idList;
+	
+	/**
+	 * Utente aggiunto alla lista specificata
+	 * 
+	 * @property -username
+	 * @type {String}
+	 */
+	private String username;
+	
+	/**
+	 * Costruttore della classe con corpo vuoto necessario al framework Hibernate
+	 * 
+	 * @method +UserList
+	 */
+<span class="fc" id="L48">	public UserList(){}</span>
+
+	/**
+	 * Costruttore della classe che inizializza i campi dati idList e username
+	 * 
+	 * @method +UserList
+	 * @param {int} ident e' utilizzato per inizializzare il campo dati idList
+	 * @param {String} us e' utilizzato per inizializzare il campo dati username
+	 */
+<span class="fc" id="L57">	public UserList(int ident, String us){</span>
+<span class="fc" id="L58">		idList=ident;</span>
+<span class="fc" id="L59">		username=us;</span>
+<span class="fc" id="L60">	}</span>
+
+	/**
+	 * Ritorna il valore dell'attributo idList
+	 * 
+	 * @method	+getIdList
+	 * @return {int}
+	 */
+	public int getIdList(){
+<span class="fc" id="L69">		return idList;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo idList uguale a n
+	 * 
+	 * @method +setIdList
+	 * @param {int} n e' il valore assegnato al campo dati idList
+	 * @return {void}
+	 */
+	public void setIdList(int n){
+<span class="fc" id="L80">		idList=n;</span>
+<span class="fc" id="L81">	}</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo username
+	 * 
+	 * @method +getUsername
+	 * @return {String}
+	 */
+	public String getUsername(){
+<span class="fc" id="L90">		return username;</span>
+	}
+	
+	/**
+	 * Imposta il valore dell'attributo username uguale a s
+	 * 
+	 * @method setUsername
+	 * @param {String} s e' l'oggetto assegnato al campo dati username
+	 * @return {void}
+	 */
+	public void setUsername(String s){
+<span class="fc" id="L101">		username=s;</span>
+<span class="fc" id="L102">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

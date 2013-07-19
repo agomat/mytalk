@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GenericDAOTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage.dao</a> &gt; <span class="el_source">GenericDAOTest.java</span></div><h1>GenericDAOTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: GenericDAOTest.java
+* Package: com.mytalk.server.data.storage.dao
+* Author: Armando Caprio
+* Date: 2013/04/25
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013/04/25 |    AC     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+package com.mytalk.server.data.storage.dao;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+<span class="fc" id="L25">public class GenericDAOTest extends GenericDAO{</span>
+
+	@Test
+	public void connectionTest() {
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">		if(session==null){</span>
+<span class="nc" id="L30">			fail(&quot;La sessione non viene inizializzata nel costruttore&quot;);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">		}else if(!session.isOpen()){</span>
+<span class="nc" id="L32">			fail(&quot;La sessione viene inizializzata nel costruttore ma non aperta&quot;);</span>
+		}
+		
+<span class="fc" id="L35">		UserDAO userDAO = new UserDAO();</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">		if(session==null){</span>
+<span class="nc" id="L37">			fail(&quot;La sessione viene persa dopo che creo un nuovo oggetto DAO&quot;);</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">		}else if(!session.isOpen()){</span>
+<span class="nc" id="L39">			fail(&quot;La sessione viene  chiusa dopo che creo un nuovo oggetto DAO&quot;);</span>
+		}
+		
+<span class="fc" id="L42">		GenericDAO.closeSession();</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if(session==null){</span>
+<span class="nc" id="L44">			fail(&quot;La sessione viene persa quando la chiudo&quot;);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		}else if(session.isOpen()){</span>
+<span class="nc" id="L46">			fail(&quot;La sessione non viene chiusa correttamente quando chiamo il metodo closeSession()&quot;);</span>
+		}
+		
+<span class="fc" id="L49">		CallDAO callDAO = new CallDAO();</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if(session==null){</span>
+<span class="nc" id="L51">			fail(&quot;La sessione viene persa quando creo un nuovo DAO con la sessione chiusa&quot;);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		}else if(!session.isOpen()){</span>
+<span class="nc" id="L53">			fail(&quot;Con la sessione chiusa manualmente: non viene aperta quando creo un nuovo DAO&quot;);</span>
+		}	
+<span class="fc" id="L55">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

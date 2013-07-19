@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ListUserRemoveTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.list_information</a> &gt; <span class="el_source">ListUserRemoveTest.java</span></div><h1>ListUserRemoveTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: ListUserRemoveTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.list_information
+* Author: Michael Ferronato
+* Date: 2013/05/08
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  | 2013/05/08 |   MF      | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.list_information;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.list_information.ListUserRemove;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ListPack;
+import com.mytalk.server.logic.shared.model_client.UserList;
+
+<span class="fc" id="L37">public class ListUserRemoveTest {</span>
+
+<span class="fc" id="L39">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L40">	private Convert conv=new Convert();</span>
+
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L44">		envSetter.cleanDB();</span>
+<span class="fc" id="L45">		envSetter.initDB();</span>
+<span class="fc" id="L46">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L50">		ListUserRemove listUserRemove=new ListUserRemove();</span>
+<span class="fc" id="L51">		Authentication auth=new Authentication(&quot;user0&quot;,&quot;user0&quot;,&quot;123.123.123.0&quot;);</span>
+<span class="fc" id="L52">		List&lt;Integer&gt; list=new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L53">		list.add(4);</span>
+<span class="fc" id="L54">		UserList userList=new UserList(0,&quot;friends&quot;,list);</span>
+<span class="fc" id="L55">		List&lt;UserList&gt; listUserList=new ArrayList&lt;UserList&gt;();</span>
+<span class="fc" id="L56">		listUserList.add(userList);</span>
+<span class="fc" id="L57">		ListPack listPack=new ListPack(listUserList);</span>
+<span class="fc" id="L58">		String packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L59">		ARI ari=new ARI(auth,&quot;ListUserRemove&quot;,packString);</span>
+		
+<span class="fc" id="L61">		ARI ariResponse=listUserRemove.manage(ari);</span>
+<span class="fc" id="L62">		assertEquals(&quot;Dati corretti ma non avviene la rimozione&quot;,&quot;SuccessfulListUserRemove&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L64">		ariResponse=listUserRemove.manage(ari);</span>
+<span class="fc" id="L65">		assertEquals(&quot;User non presente&quot;,&quot;UserNotListed&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L67">		auth.setPwd(&quot;user1&quot;);</span>
+<span class="fc" id="L68">		ariResponse=listUserRemove.manage(ari);</span>
+<span class="fc" id="L69">		assertEquals(&quot;Autenticazione deve fallire&quot;,&quot;AuthenticationFailListUserRemove&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L71">		auth.setPwd(&quot;user0&quot;);</span>
+<span class="fc" id="L72">		list.remove(0);</span>
+<span class="fc" id="L73">		list.add(30);</span>
+<span class="fc" id="L74">		packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L75">		ari.setInfo(packString);</span>
+<span class="fc" id="L76">		ariResponse=listUserRemove.manage(ari);</span>
+<span class="fc" id="L77">		assertEquals(&quot;Id non corrisponde a nessun user&quot;,&quot;IdNotFoundListUserRemove&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L79">		list.remove(0);</span>
+<span class="fc" id="L80">		list.add(1);</span>
+<span class="fc" id="L81">		packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L82">		ari.setInfo(packString);</span>
+<span class="fc" id="L83">		ariResponse=listUserRemove.manage(ari);</span>
+<span class="fc" id="L84">		assertEquals(&quot;User non puo' rimuovere se stesso&quot;,&quot;UserNotExistingListUserRemove&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L86">		userList.setName(&quot;lista&quot;);</span>
+<span class="fc" id="L87">		list.remove(0);</span>
+<span class="fc" id="L88">		list.add(7);</span>
+<span class="fc" id="L89">		packString=conv.convertJavaToJson(listPack);</span>
+<span class="fc" id="L90">		ari.setInfo(packString);</span>
+<span class="fc" id="L91">		ariResponse=listUserRemove.manage(ari);</span>
+<span class="fc" id="L92">		assertEquals(&quot;Lista non esiste per questo user&quot;,&quot;ListNotExistingListUserRemove&quot;,ariResponse.getReq());</span>
+		
+		/**UsernameNotCorrespondingException non viene sollevata per 
+		 * costruzione
+		 */
+<span class="fc" id="L97">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

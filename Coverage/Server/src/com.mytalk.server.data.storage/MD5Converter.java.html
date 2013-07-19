@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MD5Converter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage</a> &gt; <span class="el_source">MD5Converter.java</span></div><h1>MD5Converter.java</h1><pre class="source lang-java linenums">/**
+* Filename: MD5converter.java
+* Package: com.mytalk.server.logic
+* Author: Nicolo' Mazzucato
+* Date: 2013-05-22
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-05-22 |    NM     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe di utilita' che espone un metodo per eseguire l'hash md5 di una stringa
+*/
+
+
+package com.mytalk.server.data.storage;
+
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+<span class="nc" id="L29">public class MD5Converter {</span>
+
+	/**
+	 * Ritorna la stringa che corrisponde all'hash md5 della stringa passata
+	 * 
+	 * @method +getHashMD5
+	 * @param {String} s e' l'oggetto che contiene la stringa da convertire in MD5
+	 * @return {String}
+	 */
+	public static String getHashMD5(String s){
+<span class="fc" id="L39">		String string=null;</span>
+		try {
+<span class="fc" id="L41">			byte[] byteMail= s.getBytes(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L42">			MessageDigest md=MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="fc" id="L43">			byte[] digest=md.digest(byteMail);</span>
+<span class="fc" id="L44">			BigInteger integer=new BigInteger(1,digest);</span>
+<span class="fc" id="L45">			string=integer.toString(16);	</span>
+<span class="nc" id="L46"> 		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L47">			return s;</span>
+<span class="nc" id="L48">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L49">			return s;</span>
+		}
+<span class="fc" id="L51">		return string;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

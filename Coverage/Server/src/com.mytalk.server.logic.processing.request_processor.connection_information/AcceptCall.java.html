@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AcceptCall.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.connection_information</a> &gt; <span class="el_source">AcceptCall.java</span></div><h1>AcceptCall.java</h1><pre class="source lang-java linenums">/**
+* Filename: AcceptCall.java
+* Package: com.mytalk.server.logic.processing.request_processor.connection_information
+* Author: Nicolo' Toso
+* Date: 2013-05-02
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili nel metodo manage al
+* 										 fine di renderli piu' espressivi ed eliminazione import superflui
+* 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che riceve un pacchetto ARI che, nel campo Information, contiene le informazioni
+* necessarie per il corretto funzionamento riguardo l'accettazione della chiamata da parte del
+* ricevente
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.connection_information;
+
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ConnectionPack;
+
+public class AcceptCall extends GenericRequest{
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +AcceptCall
+	 */
+<span class="fc" id="L40">	public AcceptCall(){}</span>
+	
+	/**
+	 * Una volta ricevuto l'ARI, viene catturata la parte Information, necessaria per creare 
+	 * il ConnectionPack, i cui dati sono necessari per processare la richiesta. Nel caso in cui 
+	 * viene superato il controllo della presenza di tutti i campi necessari in tale pacchetto, 
+	 * si puo' controllare se l'indirizzo Ip e' online. Se presente, si puo' rispondere con un nuovo 
+	 * pacchetto ARI, specificando che la richiesta e' andata a buon fine: &quot;SuccessfulAcceptCall&quot;.
+	 *  In tale pacchetto e' presente la stessa Information ricevuta e, riguardo l'Authentication, 
+	 *  viene creato un oggetto Authentication contenente l'indirizzo ip del ricevente. 
+	 *  In caso opposto, si segnalera' che la richiesta non ha avuto successo: 
+	 *  &quot;UnsuccessfulAcceptCall&quot;, anche in questo caso il campo Information rimane invariato e non 
+	 *  vi e' la parte Authentication
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari){
+<span class="fc" id="L60">		String infoRequest=ari.getInfo();</span>
+<span class="fc" id="L61">		ARI response=null;</span>
+<span class="fc" id="L62">		Authentication auth=null;</span>
+<span class="fc" id="L63">		ConnectionPack pack=(ConnectionPack)conv.convertJsonToJava(infoRequest, ConnectionPack.class);</span>
+<span class="fc" id="L64">		boolean checkPack=checkAnonymousConnectionPackWellFormed(pack);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if(!checkPack){</span>
+<span class="fc" id="L66">			response=new ARI(null,&quot;CorruptedPack&quot;,infoRequest);</span>
+		}
+		else {
+<span class="fc" id="L69">			boolean result=da.checkUserByIp(pack.getSpeakerIp());</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">			if(result){</span>
+<span class="fc" id="L71">				auth=new Authentication(null, null, pack.getSpeakerIp());</span>
+<span class="fc" id="L72">				response=new ARI(auth, &quot;SuccessfulAcceptCall&quot;,infoRequest);</span>
+			}
+			else{
+<span class="fc" id="L75">				response=new ARI(null, &quot;UnsuccessfulAcceptCall&quot;, infoRequest);</span>
+			}
+		}
+<span class="fc" id="L78">		return response;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

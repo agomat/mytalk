@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BufferIncoming.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.communication.buffer</a> &gt; <span class="el_source">BufferIncoming.java</span></div><h1>BufferIncoming.java</h1><pre class="source lang-java linenums">/**
+* Filename: BufferIncoming.java
+* Package: com.mytalk.server.comunication.buffer
+* Author: Nicolo' Mazzucato
+* Date: 2013-05-14
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-05-14 |    NM     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che memorizza oggetti Message relativi alle richieste in arrivo dai client in modo da
+* renderli disponibili per il processing. La classe implementa il pattern singleton in modo che
+* esista solo un oggetto di questo tipo
+*/
+
+
+package com.mytalk.server.communication.buffer;
+
+import java.util.Vector;
+
+<span class="fc" id="L28">public class BufferIncoming implements Buffer{</span>
+	
+	/**
+	 * Contenitore di oggetti Message
+	 * 
+	 * @property -buffer 
+	 * @type {Vector&lt;Message&gt;}
+	 */
+	private Vector&lt;Message&gt; buffer;
+	
+	/**
+	 * Costruttore di oggetti BufferIncoming che inizializza il campo dati buffer con un vettore di 
+	 * oggetti Message
+	 * 
+	 * @method -BufferIncoming
+	 * 
+	 */
+<span class="fc" id="L45">	private BufferIncoming(){</span>
+<span class="fc" id="L46">		buffer=new Vector&lt;Message&gt;();</span>
+<span class="fc" id="L47">	}</span>
+	
+	/**
+	 * Riferimento all'unica istanza della classe presente
+	 * 
+	 * @property -instance
+	 * @type {BufferIncoming}
+	 */
+<span class="fc" id="L55">	private static final BufferIncoming instance = new BufferIncoming();</span>
+	
+	/**
+	 * Ritorna il valore dell'attributo instance
+	 * 
+	 * @method +getInstance
+	 * @return {BufferIncoming}
+	 */
+	public static BufferIncoming getInstance() {
+<span class="fc" id="L64">        return instance;</span>
+    }
+	
+	/**
+	 * Inserisce l'oggetto Message passato nel contenitore buffer; l'inserimento viene fatto
+	 * in coda al contenitore; se il contenitore era vuoto prima dell'inserimento il metodo 
+	 * sveglia il thread consumatore
+	 * 
+	 * @method +push
+	 * @param {Message} packet e' l'oggetto che identifica la coppia indirizzo ip e json
+	 * @return {void}
+	 */
+	public synchronized void push(Message packet){
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if(buffer.isEmpty()){</span>
+<span class="fc" id="L78">			notify();</span>
+		}
+<span class="fc" id="L80">		buffer.add(packet);</span>
+<span class="fc" id="L81">	}</span>
+	
+	/**
+	 * Rimuove e ritorna un oggetto Message dal contenitore buffer; la rimozione viene fatta 
+	 * in testa al contenitore; se il contenitore e' vuoto non c'e' niente da rimuovere e il 
+	 * thread consumatore viene messo in attesa
+	 * 
+	 * @method +pop
+	 * @return {Message}
+	 */
+	public synchronized Message pop(){
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if(buffer.isEmpty()){</span>
+			try {
+<span class="nc" id="L94">				wait();</span>
+<span class="nc" id="L95">			} catch (InterruptedException e) {</span>
+<span class="nc" id="L96">				e.printStackTrace();</span>
+			}
+		}
+<span class="fc" id="L99">		Message msg=buffer.firstElement();</span>
+<span class="fc" id="L100">		buffer.remove(msg);</span>
+<span class="fc" id="L101">		return msg;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

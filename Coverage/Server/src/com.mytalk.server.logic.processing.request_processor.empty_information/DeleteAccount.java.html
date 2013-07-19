@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>DeleteAccount.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.empty_information</a> &gt; <span class="el_source">DeleteAccount.java</span></div><h1>DeleteAccount.java</h1><pre class="source lang-java linenums">/**
+* Filename: DeleteAccount.java
+* Package: com.mytalk.server.logic.processing.request_processor.empty_information
+* Author: Nicolo' Toso
+* Date: 2013-05-02
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  | 2013-05-13 |    NT	   | [#] Modifica dei nomi di alcune variabili in tutti i metodi al
+* 										 fine di renderli piu' espressivi
+* 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di eliminare l'account dell'utente.
+*/
+
+package com.mytalk.server.logic.processing.request_processor.empty_information;
+
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.LogoutException;
+import com.mytalk.server.exceptions.UserNotExistingException;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.UserStatePack;
+import com.mytalk.server.logic.shared.model_client.User;
+
+
+public class DeleteAccount extends GenericRequest{
+
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +DeleteAccount
+	 */
+<span class="fc" id="L42">	public DeleteAccount(){}</span>
+	
+	/**
+	 *  Una volta ricevuto l'ARI, viene creato un User con i dati presenti nell'Authentication 
+	 *  del campo dati ari, per poi invocare, tramite un oggetto di DataAccess appartenente 
+	 *  alla componente CSDAT2, il metodo che si occupera' di eliminare l'utente. Tale operazione 
+	 *  puo' avere successo, restituendo &quot;SuccessfulDeleteAccount&quot;, o insuccesso con
+	 *   &quot;AuthenticationFailDeleteAccount&quot; causato dal fallimento dell'autenticazione.
+	 *   Per quanto riguarda le eccezioni LogoutException, UserNotExistingException e 
+	 *   IdNotFoundException esse non vengono mai sollevate per costruzione. 
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari){
+<span class="fc" id="L59">		ARI response=null;</span>
+<span class="fc" id="L60">		com.mytalk.server.data.model.User userServer=new com.mytalk.server.data.model.User(ari.getAuth().getUser(), ari.getAuth().getPwd(), null, null, null,null);</span>
+		try{
+<span class="fc" id="L62">			String username=da.getUsernameByIp(ari.getAuth().getIp());</span>
+<span class="fc" id="L63">			Integer id=da.getIdFromUsername(username);</span>
+<span class="fc" id="L64">			com.mytalk.server.data.model.User user=da.getUserById(id);</span>
+<span class="fc" id="L65">			User userClient=new User(user.getId(),user.getSurname(),user.getName(),user.getSurname(),user.getEmailHash(),ari.getAuth().getIp(),false);</span>
+			
+<span class="fc" id="L67">			da.deleteAccount(userServer);</span>
+<span class="fc" id="L68">			UserStatePack usp=new UserStatePack(userClient);</span>
+<span class="fc" id="L69">			String packString=conv.convertJavaToJson(usp);</span>
+<span class="fc" id="L70">			response=new ARI(null, &quot;SuccessfulDeleteAccount&quot;, packString);</span>
+<span class="nc" id="L71">		}catch(AuthenticationFailException af){</span>
+<span class="nc" id="L72">			response=new ARI(null, &quot;AuthenticationFailDeleteAccount&quot;, null);</span>
+<span class="fc" id="L73">		}catch (LogoutException e) {</span>
+			// Auto-generated catch block
+<span class="fc" id="L75">			e.printStackTrace();</span>
+<span class="nc" id="L76">		}catch (UserNotExistingException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L78">			e.printStackTrace();</span>
+<span class="nc" id="L79">		} catch (IdNotFoundException e) {</span>
+			// Auto-generated catch block
+<span class="nc" id="L81">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L83">		return response;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

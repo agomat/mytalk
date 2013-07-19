@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>DeleteAccountTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.empty_information</a> &gt; <span class="el_source">DeleteAccountTest.java</span></div><h1>DeleteAccountTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: DeleteAccountTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.empty_information
+* Author: Michael Ferronato
+* Date: 2013-05-06
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  | 2013-05-06 |   MF      | [+] Inserimento classe    
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.empty_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+
+<span class="fc" id="L31">public class DeleteAccountTest {</span>
+
+<span class="fc" id="L33">	private EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L37">		envSetter.cleanDB();</span>
+<span class="fc" id="L38">		envSetter.initDB();</span>
+<span class="fc" id="L39">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L43">		DeleteAccount deleteAccount=new DeleteAccount();</span>
+<span class="fc" id="L44">		Authentication authRightTest=new Authentication(&quot;user0&quot;,&quot;user0&quot;,&quot;123.123.123.0&quot;);</span>
+<span class="fc" id="L45">		ARI ari=new ARI(authRightTest,&quot;DeleteAccount&quot;,null);</span>
+		
+<span class="fc" id="L47">		ARI ariResult=deleteAccount.manage(ari);</span>
+		
+<span class="fc" id="L49">		assertEquals(&quot;Eliminazione non effettuata anche se l'account esiste&quot;,&quot;SuccessfulDeleteAccount&quot;,ariResult.getReq());</span>
+	
+<span class="fc" id="L51">		Authentication authWrongTest=new Authentication(&quot;user0&quot;,&quot;user1&quot;,&quot;123.123.123.0&quot;);</span>
+<span class="fc" id="L52">		ari.setAuth(authWrongTest);</span>
+		
+<span class="fc" id="L54">		ariResult=deleteAccount.manage(ari);</span>
+		
+<span class="fc" id="L56">		assertNull(&quot;Eliminazione effettuata anche se autenticazione fallisce&quot;,ariResult);</span>
+<span class="fc" id="L57">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

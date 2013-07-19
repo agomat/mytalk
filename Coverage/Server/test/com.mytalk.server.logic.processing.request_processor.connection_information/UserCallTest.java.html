@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserCallTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.connection_information</a> &gt; <span class="el_source">UserCallTest.java</span></div><h1>UserCallTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: UserCall.java
+* Package: com.mytalk.server.logic.processing.request_processor.connection_information
+* Author: Michael Ferronato
+* Date: 2013-05-08
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |2013-05-08  |   MF      | [+] Inserimento classe    
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.connection_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.connection_information.UserCall;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ConnectionPack;
+
+<span class="fc" id="L33">public class UserCallTest {</span>
+
+<span class="fc" id="L35">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L36">	private Convert conv=new Convert();</span>
+
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L40">		envSetter.cleanDB();</span>
+<span class="fc" id="L41">		envSetter.initDB();</span>
+<span class="fc" id="L42">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L46">		UserCall userCall=new UserCall();</span>
+<span class="fc" id="L47">		ConnectionPack packTest=new ConnectionPack(null,null,&quot;&quot;,null,&quot;sdp&quot;);</span>
+<span class="fc" id="L48">		String packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L49">		Authentication authStart=new Authentication(null,null,&quot;123.123.123.0&quot;);</span>
+<span class="fc" id="L50">		ARI ari=new ARI(authStart,&quot;UserCall&quot;,packString);</span>
+<span class="fc" id="L51">		ARI ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L52">		assertEquals(&quot;Pacchetto formato errato&quot;,&quot;CorruptedPack&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L54">		Authentication auth=new Authentication(&quot;user0&quot;,&quot;user0&quot;,&quot;123.123.123.0&quot;);</span>
+<span class="fc" id="L55">		ari.setAuth(auth);</span>
+<span class="fc" id="L56">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L57">		assertEquals(&quot;Pacchetto formato errato con auth completa&quot;,&quot;CorruptedPack&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L59">		auth.setPwd(null);</span>
+<span class="fc" id="L60">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L61">		assertEquals(&quot;Autenticazione mal formata&quot;,&quot;CorruptedPack&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L63">		ari.setAuth(authStart);</span>
+<span class="fc" id="L64">		packTest=new ConnectionPack(&quot;123.123.123.0&quot;,1,&quot;123.123.123.1&quot;,2,&quot;sdp&quot;);</span>
+<span class="fc" id="L65">		packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L66">		ari.setInfo(packString);</span>
+<span class="fc" id="L67">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L68">		assertEquals(&quot;Dati corretti ma non viene processata la richiesta&quot;,&quot;SuccessfulUserCall&quot;,ariResponse.getReq());</span>
+<span class="fc" id="L69">		assertEquals(&quot;Ip a cui mandare errato&quot;,&quot;123.123.123.1&quot;,ariResponse.getAuth().getIp());</span>
+		
+<span class="fc" id="L71">		auth.setPwd(&quot;user0&quot;);</span>
+<span class="fc" id="L72">		ari.setAuth(auth);</span>
+<span class="fc" id="L73">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L74">		assertEquals(&quot;Dati corretti ma non viene processata la richiesta con auth&quot;,&quot;SuccessfulUserCall&quot;,ariResponse.getReq());</span>
+<span class="fc" id="L75">		assertEquals(&quot;Ip a cui mandare errato&quot;,&quot;123.123.123.1&quot;,ariResponse.getAuth().getIp());</span>
+		
+<span class="fc" id="L77">		packTest.setSpeakerUserId(null);</span>
+<span class="fc" id="L78">		packTest.setSpeakerIp(&quot;111.111.111.0&quot;);</span>
+<span class="fc" id="L79">		packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L80">		ari.setInfo(packString);</span>
+<span class="fc" id="L81">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L82">		assertEquals(&quot;Dati con campo speakerId null&quot;,&quot;SuccessfulUserCall&quot;,ariResponse.getReq());</span>
+<span class="fc" id="L83">		assertEquals(&quot;Ip a cui mandare errato&quot;,&quot;111.111.111.0&quot;,ariResponse.getAuth().getIp());</span>
+		
+<span class="fc" id="L85">		ConnectionPack packTest2=new ConnectionPack(&quot;123.123.123.0&quot;,1,&quot;123.123.123.5&quot;,2,&quot;sdp&quot;);</span>
+<span class="fc" id="L86">		ari.setAuth(authStart);</span>
+<span class="fc" id="L87">		String packString2=conv.convertJavaToJson(packTest2);</span>
+<span class="fc" id="L88">		ari.setInfo(packString2);</span>
+<span class="fc" id="L89">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L90">		assertEquals(&quot;IpSpeaker non e' online ma viene processata lo stesso&quot;,&quot;UnsuccessfulUserCall&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L92">		ari.setAuth(auth);</span>
+<span class="fc" id="L93">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L94">		assertEquals(&quot;IpSpeaker non e' online ma viene processata lo stesso con auth&quot;,&quot;UnsuccessfulUserCall&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L96">		packTest.setSpeakerIp(&quot;123.123.123.2&quot;);</span>
+<span class="fc" id="L97">		packTest.setSpeakerUserId(3);</span>
+<span class="fc" id="L98">		packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L99">		ari.setInfo(packString);</span>
+<span class="fc" id="L100">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L101">		assertEquals(&quot;IpSpeaker non e' online ma viene processata lo stesso con auth&quot;,&quot;UnsuccessfulUserCall&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L103">		auth.setUser(&quot;user0&quot;);</span>
+<span class="fc" id="L104">		packTest.setMyUserId(15);</span>
+<span class="fc" id="L105">		packString=conv.convertJavaToJson(packTest);</span>
+<span class="fc" id="L106">		ari.setInfo(packString);</span>
+<span class="fc" id="L107">		ariResponse=userCall.manage(ari);</span>
+<span class="fc" id="L108">		assertEquals(&quot;Autenticazione deve fallire&quot;,&quot;IdNotFoundUserCall&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L110">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

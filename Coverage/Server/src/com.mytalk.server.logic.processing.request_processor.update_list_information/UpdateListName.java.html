@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UpdateListName.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.update_list_information</a> &gt; <span class="el_source">UpdateListName.java</span></div><h1>UpdateListName.java</h1><pre class="source lang-java linenums">/**
+* Filename: UpdateListName.java
+* Package: com.mytalk.server.logic.processing.request_processor.update_list_information
+* Author: Michael Ferronato
+* Date: 2013-05-01 
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2	  |	2013-05-22 |    MF     | [#] Modifica dei nomi del metodo manage al fine di renderli
+* 									     piu' espressivi e di facile comprensione
+* 0.1	  |	2013-05-01 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di modificare il nome di una lista del client che ne fa richiesta
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.update_list_information;
+
+import com.mytalk.server.data.model.ListName;
+import com.mytalk.server.exceptions.AuthenticationFailException;
+import com.mytalk.server.exceptions.ListAlreadyExistsException;
+import com.mytalk.server.exceptions.ListNotExistingException;
+import com.mytalk.server.exceptions.UsernameNotCorrespondingException;
+import com.mytalk.server.logic.processing.request_processor.GenericRequest;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.UpdateListPack;
+
+public class UpdateListName extends GenericRequest {
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +UpdateListName
+	 */
+<span class="fc" id="L42">	public UpdateListName(){}</span>
+
+	/**
+	 * Una volta ricevuto l'ARI e fatti i controlli di pacchetto ben formato, usando i dati ricevuti 
+	 * dal campo dati ari, viene creato un oggetto di tipo CSDAT1. ListName, utilizzato per 
+	 * modificare il nome di una lista utilizzando l'oggetto DataAccess, classe appartenente al 
+	 * componente CSDAT2. Viene restituito un &quot;SuccessfulRenameList&quot;. Se non va a buon fine, 
+	 * vengono sollevate  e catturate le seguenti eccezioni: &quot;AuthenticationFailException&quot;,
+	 *  &quot;ListNotExistingException&quot;, &quot;ListAlreadyExistsException&quot; e &quot;UsernameNotCorrespondingException&quot;, ritornando un pacchetto
+	 *  con campo richiesta &quot;AuthenticationFailRenameList&quot;,n&quot;ListNotExistingRenameList&quot;, 
+	 *  &quot;ListAlreadyExistsRenameList&quot; o &quot;UsernameNotCorrespondingRenameList&quot;. In caso di pacchetto mal 
+	 *  formato, viene restituito un &quot;CorruptedPack&quot;
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari) {
+<span class="fc" id="L61">		ARI response=null;</span>
+<span class="fc" id="L62">		Authentication auth=ari.getAuth();</span>
+<span class="fc" id="L63">		com.mytalk.server.data.model.User userAuth=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);</span>
+<span class="fc" id="L64">		String infoRequest=ari.getInfo();</span>
+<span class="fc" id="L65">		UpdateListPack pack=(UpdateListPack)conv.convertJsonToJava(infoRequest, UpdateListPack.class);</span>
+<span class="fc" id="L66">		boolean checkPack=checkUpdateListPackWellFormed(pack);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if(!checkPack){</span>
+<span class="nc" id="L68">			response=new ARI(null,&quot;CorruptedPack&quot;,infoRequest);</span>
+		}else{
+<span class="fc" id="L70">			String listOwner=pack.getOwner();</span>
+<span class="fc" id="L71">			String listName=pack.getListName();</span>
+<span class="fc" id="L72">			String newListName=pack.getNewListName();</span>
+<span class="fc" id="L73">			ListName list=new ListName(listName,listOwner);</span>
+			try {
+<span class="fc" id="L75">				da.renameList(list, newListName, userAuth);</span>
+<span class="fc" id="L76">				response=new ARI(null,&quot;SuccessfulRenameList&quot;,infoRequest);</span>
+<span class="fc" id="L77">			} catch (AuthenticationFailException e) {</span>
+<span class="fc" id="L78">				response=new ARI(null, &quot;AuthenticationFailRenameList&quot;, infoRequest);</span>
+<span class="fc" id="L79">			} catch (ListNotExistingException e) {</span>
+<span class="fc" id="L80">				response=new ARI(null, &quot;ListNotExistingRenameList&quot;, infoRequest);</span>
+<span class="fc" id="L81">			} catch (ListAlreadyExistsException e) {</span>
+<span class="fc" id="L82">				response=new ARI(null, &quot;ListAlreadyExistsRenameList&quot;, infoRequest);</span>
+<span class="fc" id="L83">			} catch (UsernameNotCorrespondingException e) {</span>
+<span class="fc" id="L84">				response=new ARI(null, &quot;UsernameNotCorrespondingRenameList&quot;, infoRequest);</span>
+			}
+		}
+<span class="fc" id="L87">		return response;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

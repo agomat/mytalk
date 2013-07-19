@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UpdateAccountTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.world_information</a> &gt; <span class="el_source">UpdateAccountTest.java</span></div><h1>UpdateAccountTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: UpdateAccountTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.world_information
+* Author: 
+* Date:
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	           |           | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.world_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.model_client.PersonalData;
+import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
+
+<span class="nc" id="L34">public class UpdateAccountTest {</span>
+
+<span class="nc" id="L36">	private EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="nc" id="L37">	private Convert conv=new Convert();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="nc" id="L41">		envSetter.cleanDB();</span>
+<span class="nc" id="L42">		envSetter.initDB();</span>
+<span class="nc" id="L43">	}</span>
+	@Test
+	public void testManage() {
+<span class="nc" id="L46">		UpdateAccount updateAccount=new UpdateAccount();</span>
+<span class="nc" id="L47">		Authentication auth=new Authentication(&quot;user1&quot;,&quot;user1&quot;,&quot;123.123.123.1&quot;);</span>
+<span class="nc" id="L48">		PersonalData personalData=new PersonalData(2,&quot;user1&quot;,&quot;user1&quot;,&quot;user1&quot;,&quot;user1&quot;,&quot;user1@mytalk.com&quot;,&quot;us01us01us01us01us01us01us01us01&quot;,&quot;123.123.123.1&quot;);</span>
+<span class="nc" id="L49">		WorldPersonalData wpd=new WorldPersonalData(personalData);</span>
+<span class="nc" id="L50">		WorldPack pack=new WorldPack(null,wpd);</span>
+<span class="nc" id="L51">		String packString=conv.convertJavaToJson(pack);</span>
+<span class="nc" id="L52">		ARI ari=new ARI(auth,&quot;UpdateAccount&quot;,packString);</span>
+		
+<span class="nc" id="L54">		ARI response=updateAccount.manage(ari);</span>
+<span class="nc" id="L55">		assertEquals(&quot;Dati corretti ma fallisce&quot;,&quot;SuccessfulUpdateAccount&quot;,response.getReq());</span>
+		
+<span class="nc" id="L57">		auth.setUser(&quot;user2&quot;);</span>
+<span class="nc" id="L58">		response=updateAccount.manage(ari);</span>
+<span class="nc" id="L59">		assertEquals(&quot;Dati di autenticazione errati ma non viene notificato&quot;,&quot;AuthenticationFailUpdateAccount&quot;,response.getReq());</span>
+		
+<span class="nc" id="L61">		auth.setPwd(&quot;user2&quot;);</span>
+<span class="nc" id="L62">		response=updateAccount.manage(ari);</span>
+<span class="nc" id="L63">		assertEquals(&quot;Username di autenticazione diverso da quello dei dati&quot;,&quot;UsernameNotCorrespondingUpdateAccount&quot;,response.getReq());</span>
+		
+<span class="nc" id="L65">		wpd.setPersonalData(null);</span>
+<span class="nc" id="L66">		pack.setWorldPersonalData(wpd);</span>
+<span class="nc" id="L67">		packString=conv.convertJavaToJson(pack);</span>
+<span class="nc" id="L68">		ari.setInfo(packString);</span>
+		
+<span class="nc" id="L70">		auth.setPwd(&quot;user2&quot;);</span>
+<span class="nc" id="L71">		response=updateAccount.manage(ari);</span>
+<span class="nc" id="L72">		assertEquals(&quot;Pacchetto mal formato&quot;,&quot;CorruptedPack&quot;,response.getReq());</span>
+		
+<span class="nc" id="L74">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GenericDAO.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage.dao</a> &gt; <span class="el_source">GenericDAO.java</span></div><h1>GenericDAO.java</h1><pre class="source lang-java linenums">/**
+* Filename: GenericDAO.java
+* Package: com.mytalk.server.data.storage
+* Author: Nicolo' Mazzucato
+* Date: 2013-04-12
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-12 |    NM     | [+] Creazione classe    
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe astratta che offre operazioni di apertura e chiusura della sessione Hibernate alle classi
+* che la estendono
+*/
+
+package com.mytalk.server.data.storage.dao;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.mytalk.server.data.storage.HibernateUtil;
+
+public abstract class GenericDAO {
+	/**
+	 * Riferimento alla sessione aperta all'istanziazione della classe
+	 * 
+	 * @property #session
+	 * @type {Session}
+	 */
+	protected static Session session; 
+	
+	/**
+	 * Costruttore della classe che inizializza la sessione di Hibernate
+	 * 
+	 * @method +GenericDAO
+	 */
+<span class="fc" id="L43">	public GenericDAO(){</span>
+<span class="fc" id="L44">		openSession();</span>
+<span class="fc" id="L45">	}</span>
+	
+	/**
+	 * Usa classe SessionFactory per aprire una sessione, e assegnare il valore dell'oggetto
+	 *  Session ritornato all'attributo session
+	 *  
+	 *  @method +openSession
+	 *  @return {void}
+	 */
+	public static void openSession(){
+<span class="fc" id="L55">		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if(session==null){</span>
+<span class="fc" id="L57">			session=sessionFactory.openSession();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		}else if(!session.isOpen()){</span>
+<span class="fc" id="L59">			session=sessionFactory.openSession();</span>
+		}
+<span class="fc" id="L61">	}</span>
+	
+	/**
+	 * Chiude la sessione riferita dall'attributo session
+	 * 
+	 * @method +closeSession
+	 * @return {void}
+	 */
+	public static void closeSession(){
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if(session!=null){</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if(session.isOpen()){</span>
+<span class="fc" id="L72">				session.close();</span>
+			}
+		}
+<span class="fc" id="L75">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

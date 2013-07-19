@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserList.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared.model_client</a> &gt; <span class="el_source">UserList.java</span></div><h1>UserList.java</h1><pre class="source lang-java linenums">/**
+* Filename: UserList.java
+* Package: com.mytalk.server.logic.shared.model_client
+* Author: Nicolo' Toso
+* Date: 2013-04-18
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-18 |    NT     | [+] Creazione classe e metodi   
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che rappresenta la lista di un utente
+*/
+
+package com.mytalk.server.logic.shared.model_client;
+
+import java.util.List;
+
+public class UserList{
+	/**
+	 * Rappresenta l'id della lista
+	 * 
+	 * @property -id
+	 * @type {Integer}
+	 */
+	private Integer id;
+	/**
+	 * Rappresenta il nome della lista
+	 * 
+	 * @property -name
+	 * @type {String}
+	 */
+	private String name;
+	/**
+	 * Rappresenta la lista degli id che identificano gli utenti presenti nella lista 
+	 * 
+	 * @property -user_ids
+	 * @type {List&lt;Integer&gt;}
+	 */
+	private List&lt;Integer&gt; user_ids; 
+	/**
+	 * Costruttore della classe che inizializza i campi dati user_ids, name e id
+	 * 
+	 * @method +UserList
+	 * @param {Integer} i e' l'oggetto utilizzato per inizializzare il campo dati id
+	 * @param {String} n e' l'oggetto utilizzato per inizializzare il campo dati name
+	 * @param {List&lt;Integer&gt;} c e' l'oggetto utilizzato per inizializzare il campo dati user_ids
+	 */
+<span class="fc" id="L55">	public UserList(Integer i,String n,List&lt;Integer&gt; c){</span>
+<span class="fc" id="L56">		user_ids=c;</span>
+<span class="fc" id="L57">		name=n;</span>
+<span class="fc" id="L58">		id=i;</span>
+<span class="fc" id="L59">	}</span>
+	/**
+	 * Ritorna il campo dati id
+	 * 
+	 * @method +getId
+	 * @return {Integer}
+	 */
+	public int getId(){
+<span class="nc" id="L67">		return id;</span>
+	}
+	/** 
+	 * Imposta il campo dati id
+	 * 
+	 * @method +setId
+	 * @param {Integer} i e' l'oggetto assegnato al campo dati id
+	 * @return {void}
+	 */
+	public void setId(int i){
+<span class="nc" id="L77">		id=i;</span>
+<span class="nc" id="L78">	}</span>
+	/**
+	 * Ritorna il campo dati name
+	 * 
+	 * @method +getName
+	 * @return {String}
+	 */
+	public String getName(){
+<span class="fc" id="L86">		return name;</span>
+	}
+	/**
+	 * Imposta il campo dati name
+	 * 
+	 * @method +setName
+	 * @param {String} c e' l'oggetto assegnato al campo dati name
+	 * @return {void}
+	 */
+	public void setName(String c){
+<span class="fc" id="L96">		name=c;</span>
+<span class="fc" id="L97">	}</span>
+	/**
+	 * Ritorna la lista list
+	 * 
+	 * @method +getList
+	 * @return {List&lt;Integer&gt;}
+	 */
+	public List&lt;Integer&gt; getList(){
+<span class="fc" id="L105">		return user_ids;</span>
+	}
+	/**
+	 * Imposta il campo dati list
+	 * 
+	 * @method +setList
+	 * @param {List&lt;Integer&gt;} c e' l'oggetto assegnato al campo dati user_ids
+	 * @return {void}
+	 */
+	public void setList(List&lt;Integer&gt; c){
+<span class="fc" id="L115">		user_ids=c;</span>
+<span class="fc" id="L116">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

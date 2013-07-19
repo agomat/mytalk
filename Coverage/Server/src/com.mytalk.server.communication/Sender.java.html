@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Sender.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.communication</a> &gt; <span class="el_source">Sender.java</span></div><h1>Sender.java</h1><pre class="source lang-java linenums">/**
+* Filename: Sender.java
+* Package: com.mytalk.server.communication
+* Author: Nicolo' Mazzucato
+* Date: 2013-05-14
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.3     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.2     | 2013-05-14 |    NT     | [+] Riempimento classi    
+* 0.1	  |	2013-05-14 |    NM     | [+] Inserimento classe, oggetti e costruttore
+
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Thread che prende i messaggi in uscita dal buffer apposito, una alla volta in ordine FIFO, e
+* li invia al client specificato nel messaggio oppure in broadcast a tutti i client connessi
+*/
+
+
+package com.mytalk.server.communication;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Iterator;
+
+import org.java_websocket.WebSocket;
+
+import com.mytalk.server.communication.buffer.BufferOutgoing;
+import com.mytalk.server.communication.buffer.Message;
+import com.mytalk.server.exceptions.IpNotFoundException;
+
+<span class="nc" id="L38">public class Sender implements Runnable {</span>
+	
+	/**
+	 * Riferimento a un oggetto di tipo Receiver, serve al Sender per cercare nella collezione
+	 * di connessioni aperte, contenuta in questo oggetto, l'oggetto WebSocket corrispondente 
+	 * al client a cui inviare un messaggio
+	 * 
+	 * @property -receiver
+	 * @type {Receiver}
+	 */
+	private Receiver receiver;
+	
+	/**
+	 * Riferimento al singleton di tipo BufferOutgoing inerente alle richieste in uscita dal 
+	 * server; serve alla classe Sender per inviare i messaggi contenuti in esso ai corrispettivi 
+	 * client
+	 * 
+	 * @property -bufferOut
+	 * @type {BufferOutgoing}
+	 */
+<span class="nc" id="L58">	private BufferOutgoing bufferOut=BufferOutgoing.getInstance();</span>
+
+	/**
+	 * Metodo che deve invocare la classe che istanzia un oggetto di tipo Receiver che ne 
+	 * memorizza il riferimento nell'oggetto Sender
+	 * 
+	 * @method +registerReceiver
+	 * @param {Receiver} rec e' l'oggetto che identifica un receiver da registrare
+	 * @return {void}
+	 */
+	public void registerReceiver(Receiver rec){
+<span class="nc" id="L69">		receiver=rec;</span>
+<span class="nc" id="L70">	}</span>
+	
+	/**
+	 * Override del metodo run dell'interfaccia Runnable implementata; il corpo del metodo viene 
+	 * eseguito quando si esegue il metodo start sul thread. Prende i messaggi in uscita dal buffer 
+	 * apposito BufferOutgoing, uno alla volta usando il metodo pop, controlla a che ip mandare 
+	 * il messaggio e in caso l'ip sia uguale a &quot;/broadcast&quot; invoca il metodo sendToAll su quel 
+	 * messaggio; altrimenti usa il metodo searchConnection reso disponibile dall'oggetto Receiver 
+	 * per cercare l'oggetto WebSocket con cui invocare il metodo send passando come parametro 
+	 * il messaggio da inviare
+	 * 
+	 * @method +run
+	 * @return {void}
+	 */
+	@Override
+	public void run() {
+<span class="nc" id="L86">		while(true){</span>
+<span class="nc" id="L87">			Message pack=bufferOut.pop();</span>
+<span class="nc" id="L88">			String ip= pack.getIp();</span>
+<span class="nc" id="L89">			Calendar cal = Calendar.getInstance();</span>
+<span class="nc" id="L90">			DateFormat dateFormat = new SimpleDateFormat(&quot;yyyy/MM/dd HH:mm:ss&quot;);</span>
+			try{
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				if(ip.equals(&quot;/broadcast&quot;)){</span>
+<span class="nc" id="L93">					sendToAll(pack.getJson());</span>
+<span class="nc" id="L94">					System.out.println(&quot;[&quot;+dateFormat.format(cal.getTime())+&quot;] Messaggio broadcast&quot;);</span>
+				}else{
+<span class="nc" id="L96">					WebSocket ws=receiver.searchConnection(ip);</span>
+<span class="nc" id="L97">					String json=pack.getJson();</span>
+<span class="nc" id="L98">					ws.send(json);</span>
+<span class="nc" id="L99">					System.out.println(&quot;[&quot;+dateFormat.format(cal.getTime())+&quot;] Risposta inviata&quot;);</span>
+				}
+<span class="nc" id="L101">			}catch(IpNotFoundException exc){</span>
+<span class="nc" id="L102">				exc.printStackTrace();</span>
+			}
+		}
+	}
+	
+	/**
+	 * Metodo che invia in broadcast a tutti i client connessi la stringa JSON passata; per 
+	 * cercare i client connessi usa il riferimento all'oggetto Receiver
+	 * 
+	 * @method +sendToAll
+	 * @param {String} json e' l'oggetto che identifica il messaggio da mandare a tutti i client
+	 * @return {void}
+	 */
+	private void sendToAll(String json){
+<span class="nc" id="L116">		Iterator&lt;WebSocket&gt; iterator = receiver.connections().iterator();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		while (iterator.hasNext()) {</span>
+<span class="nc" id="L118">			WebSocket ws=iterator.next();</span>
+<span class="nc" id="L119">			ws.send(json);</span>
+		}
+<span class="nc" id="L121">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

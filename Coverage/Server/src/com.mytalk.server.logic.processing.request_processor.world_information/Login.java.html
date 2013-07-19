@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Login.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.world_information</a> &gt; <span class="el_source">Login.java</span></div><h1>Login.java</h1><pre class="source lang-java linenums">/**
+* Filename: Login.java
+* Package: com.mytalk.server.logic.processing.request_processor.world_information
+* Author: Nicolo' Toso
+* Date: 2013-05-02
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.4     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.3	  |	2013-05-22 |    MF     | [#] Modifica dei nomi del metodo manage al fine di renderli
+* 									     piu' espressivi e di facile comprensione
+* 0.2	  |	2013-05-15 |    MF     | [#] Ottimizzazione del metodo manage al fine di ridurre la 
+* 										 complessita'
+* 0.1	  |	2013-05-02 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che si occupa di effettuare il login di un utente del client che ne fa richiesta
+*/
+
+
+package com.mytalk.server.logic.processing.request_processor.world_information;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.model_client.*;
+
+import com.mytalk.server.logic.processing.request_processor.*;
+import com.mytalk.server.data.model.ListName;
+import com.mytalk.server.data.model.OnlineUser;
+import com.mytalk.server.exceptions.*;
+
+public class Login extends GenericRequest{
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +Login
+	 */
+<span class="fc" id="L47">	public Login(){}</span>
+	
+	/**
+	 * Una volta ricevuto il pacchetto ARI, si controlla se e' ben formato. Se la risposta e' negativa,
+	 *  viene ritornato un &quot;CorruptedPack&quot;. Viceversa, viene invocato il corrispondente metodo 
+	 *  sull'oggetto DataAccess e, se l'operazione e' andata a buon fine, vengono caricate tutte le
+	 *  informazioni riguardanti l'utente e le sue liste. Nel dettaglio, viene caricata la lista 
+	 *  degli utenti distinguendo quelli online da quelli offline, le liste personali dell'utente e 
+	 *  la blacklist. Tutto questo viene inserito nel pacchetto WorldPack, che a sua volta fara' parte
+	 *  del pacchetto informazione del nuovo pacchetto ARI sotto forma di stringa JSON. Tale 
+	 *  pacchetto conterra' anche la buona riuscita dell'operazione: &quot;SuccessfulLogin&quot;. Altrimenti,
+	 *  e' possibile che vengano sollevate e catturate le seguenti eccezioni: &quot;AuthenticationFailException&quot;, 
+	 *  &quot;UsernameNotCorrespondingException&quot;, &quot;IpNotLoggedException&quot;, &quot;UserAlreadyLoggedException&quot;, &quot;IpAlreadyLoggedException&quot;, 
+	 *  &quot;UserNotLoggedException&quot;, ritornando un pacchetto con campo richiesta &quot;AuthenticationFailLogin&quot;, 
+	 *  &quot;UsernameNotCorrespondingLogin&quot;, &quot;IpNotLoggedLogin&quot;, &quot;UserAlreadyLoggedLogin&quot;,
+	 *  &quot;IpAlreadyLoggedLogin&quot; o &quot;UserNotLoggedLogin&quot;.
+	 *  
+	 *  @method +manage
+	 *  @param {ARI} ari e' l'oggetto che contiene le informazioni necessarie alla classe per
+	 *  poter processare la specifica richiesta e restituire il risultato dell'elaborazione
+	 *  @return {ARI}
+	 */
+	public ARI manage(ARI ari){
+<span class="fc" id="L70">		ARI response=null;</span>
+<span class="fc" id="L71">		Authentication auth=ari.getAuth();</span>
+<span class="fc" id="L72">		WorldPack responsePack=null;</span>
+<span class="fc" id="L73">		boolean checkAuth=checkAuthenticationWellFormed(auth);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if(!checkAuth){</span>
+<span class="nc" id="L75">			response=new ARI(null,&quot;CorruptedPack&quot;,null);</span>
+		}else{
+<span class="fc" id="L77">			com.mytalk.server.data.model.User user=new com.mytalk.server.data.model.User(auth.getUser(),auth.getPwd(),null,null,null,null);</span>
+<span class="fc" id="L78">			OnlineUser onlineUser=new OnlineUser(ari.getAuth().getUser(), ari.getAuth().getIp());</span>
+<span class="fc" id="L79">			List&lt;com.mytalk.server.data.model.User&gt; listOnlineServer=null;</span>
+<span class="fc" id="L80">			List&lt;com.mytalk.server.data.model.User&gt; listOfflineServer=null;</span>
+<span class="fc" id="L81">			List&lt;User&gt; listAllUsersClient=new ArrayList&lt;User&gt;();</span>
+<span class="fc" id="L82">			User userClient=null;</span>
+<span class="fc" id="L83">			com.mytalk.server.data.model.User userServer=null;</span>
+<span class="fc" id="L84">			List&lt;ListName&gt; listName=null;</span>
+<span class="fc" id="L85">			List&lt;UserList&gt; listUserlist= new ArrayList&lt;UserList&gt;();</span>
+<span class="fc" id="L86">			UserList userList=null;</span>
+<span class="fc" id="L87">			List&lt;com.mytalk.server.data.model.User&gt; list=null;</span>
+<span class="fc" id="L88">			String ip_user=null;</span>
+<span class="fc" id="L89">			com.mytalk.server.data.model.User myData=null;</span>
+<span class="fc" id="L90">			List&lt;com.mytalk.server.data.model.User&gt; blackListUserServer=null;</span>
+<span class="fc" id="L91">			List&lt;Integer&gt; blackListInteger=new ArrayList&lt;Integer&gt;();</span>
+			try{
+<span class="fc" id="L93">				da.login(onlineUser, user);</span>
+				
+<span class="fc" id="L95">				listOnlineServer=da.getOnlineUsers(user);</span>
+<span class="fc" id="L96">				listOfflineServer=da.getOfflineUsers(user);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				for(int i=0;i&lt;listOfflineServer.size();i++){</span>
+<span class="fc" id="L98">					userServer=listOfflineServer.get(i);</span>
+<span class="fc" id="L99">					userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash() ,null,false);</span>
+<span class="fc" id="L100">					listAllUsersClient.add(userClient);</span>
+				}
+				
+<span class="fc bfc" id="L103" title="All 2 branches covered.">				for(int j=0;j&lt;listOnlineServer.size();j++){</span>
+<span class="fc" id="L104">					userServer=listOnlineServer.get(j);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">					if(userServer.getUsername().equals(user.getUsername())){</span>
+<span class="fc" id="L106">						myData=userServer;</span>
+					}
+					else{
+<span class="fc" id="L109">						ip_user=da.getUserIp(userServer.getUsername());</span>
+<span class="fc" id="L110">						userClient=new User(userServer.getId(),userServer.getUsername(),userServer.getName(),userServer.getSurname(),userServer.getEmailHash(),ip_user,true);</span>
+<span class="fc" id="L111">						listAllUsersClient.add(userClient);</span>
+					}			
+				}
+				
+<span class="fc" id="L115">				listName=da.userLists(user); </span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">				for(int k=0;k&lt;listName.size();k++){</span>
+<span class="fc" id="L117">					List&lt;Integer&gt; listInteger=new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L118">					list=da.getListUsers(listName.get(k), user);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">					for(int z=0;z&lt;list.size();z++){</span>
+<span class="fc" id="L120">						listInteger.add(list.get(z).getId());</span>
+					}
+<span class="fc" id="L122">					userList=new UserList(listName.get(k).getId(),listName.get(k).getName(),listInteger);</span>
+<span class="fc" id="L123">					listUserlist.add(userList);</span>
+				}
+				
+<span class="fc" id="L126">				blackListUserServer=da.getUserBlacklist(user);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">				for(int x=0;x&lt;blackListUserServer.size();x++){</span>
+<span class="fc" id="L128">					blackListInteger.add(blackListUserServer.get(x).getId());</span>
+				}
+<span class="fc" id="L130">				userList=new UserList(1,&quot;BlackList&quot;,blackListInteger);</span>
+<span class="fc" id="L131">				listUserlist.add(userList);</span>
+					
+<span class="fc" id="L133">				WorldList worldList=new WorldList(listUserlist,listAllUsersClient);</span>
+<span class="fc" id="L134">				String myIp=da.getUserIp(myData.getUsername());</span>
+<span class="fc" id="L135">				PersonalData pd=new PersonalData(myData.getId(),myData.getUsername(),myData.getPassword(),myData.getName(),myData.getSurname(),myData.getEmail(),myData.getEmailHash(),myIp);</span>
+<span class="fc" id="L136">				WorldPersonalData worldPersonalData=new WorldPersonalData(pd);</span>
+				
+<span class="fc" id="L138">				responsePack=new WorldPack(worldList,worldPersonalData);</span>
+<span class="fc" id="L139">				String responsePackString=conv.convertJavaToJson(responsePack);</span>
+				
+<span class="fc" id="L141">				response=new ARI(null, &quot;SuccessfulLogin&quot;, responsePackString);</span>
+<span class="fc" id="L142">			} catch(AuthenticationFailException af){</span>
+<span class="fc" id="L143">				response=new ARI(null, &quot;AuthenticationFailLogin&quot;, null);</span>
+<span class="nc" id="L144">			} catch (UsernameNotCorrespondingException e) {</span>
+<span class="nc" id="L145">				response= new ARI(null, &quot;UsernameNotCorrespondingLogin&quot;,null);</span>
+<span class="fc" id="L146">			}catch (IpNotLoggedException e) {</span>
+<span class="fc" id="L147">				response= new ARI(null, &quot;IpNotLoggedLogin&quot;,null);</span>
+<span class="fc" id="L148">			} catch (UserAlreadyLoggedException e) {</span>
+<span class="fc" id="L149">				response= new ARI(null, &quot;UserAlreadyLoggedLogin&quot;,null);</span>
+<span class="fc" id="L150">			} catch (IpAlreadyLoggedException e) {</span>
+<span class="fc" id="L151">				response= new ARI(null, &quot;IpAlreadyLoggedLogin&quot;,null);</span>
+<span class="nc" id="L152">			} catch (UserNotLoggedException e) {</span>
+<span class="nc" id="L153">				response= new ARI(null,&quot;UserNotLoggedLogin&quot;,null);</span>
+			}
+		}
+<span class="fc" id="L156">		return response;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

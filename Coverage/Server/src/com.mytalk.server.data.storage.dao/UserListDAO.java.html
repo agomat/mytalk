@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserListDAO.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage.dao</a> &gt; <span class="el_source">UserListDAO.java</span></div><h1>UserListDAO.java</h1><pre class="source lang-java linenums">/**
+* Filename: UserListDAO.java
+* Package: com.mytalk.server.data.storage.dao
+* Author: Nicolo' Toso
+* Date: 2013-04-11
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-15 | NT        | [+] Creato classe e metodi  
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che offre operazioni di lettura e scrittura sul database riguardanti la tabella degli
+* utenti presenti nelle liste
+*/
+
+package com.mytalk.server.data.storage.dao;
+
+import org.hibernate.*;
+
+import com.mytalk.server.data.model.UserList;
+
+import java.util.List;
+
+
+public class UserListDAO extends GenericDAO{
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +UserListDAO
+	 */
+<span class="fc" id="L37">	public UserListDAO(){}</span>
+	
+	/**
+	 * Salva nel database il record corrispondente all'oggetto userlistObj passato
+	 * 
+	 * @method +save
+	 * @param {UserList} userlistObj e' l'oggetto utilizzato da Hibernate per il salvataggio 
+	 * nel database
+	 * @return {void}
+	 */
+	public void save(UserList userlistObj){
+<span class="fc" id="L48">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L49">		session.save(userlistObj);</span>
+<span class="fc" id="L50">		t.commit();</span>
+<span class="fc" id="L51">	}</span>
+	
+	/**
+	 * Elimina dal database il record avente chiave primaria uguale a quella di userlistObj
+	 * 
+	 * @method +delete
+	 * @param {UserList} userlistObj e' l'oggetto utilizzato da Hibernate per eliminare un
+	 * record dal database
+	 * @return {void}
+	 */
+	public void delete(UserList userlistObj){
+<span class="fc" id="L62">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L63">		session.delete(userlistObj);</span>
+<span class="fc" id="L64">		t.commit();</span>
+<span class="fc" id="L65">	}</span>
+	
+	/**
+	 * Aggiorna nel database il record avente chiave primaria uguale a quella di userlistObj usando
+	 *  gli attributi in userlistObj
+	 *  
+	 *  @method +update
+	 *  @param {UserList} userlistObj e' l'oggetto utilizzato da Hibernate per fare l'aggiornamento
+	 *   del database
+	 *  @return {void}
+	 */
+	public void update(UserList userlistObj){
+<span class="nc" id="L77">		Transaction t=session.beginTransaction();</span>
+<span class="nc" id="L78">		session.update(userlistObj);</span>
+<span class="nc" id="L79">		t.commit();</span>
+<span class="nc" id="L80">	}</span>
+
+	/**
+	 * Ritorna l'oggetto UserList avente chiave primaria la coppia (primaryKeyId, primaryKeyUser); 
+	 * se non e' presente nel database tale record ritorna un oggetto UserList=null
+	 * 
+	 * @method +get
+	 * @param {int} primaryKeyId e' il valore utilizzato assieme a primaryKeyUser per ottenere 
+	 * un determinato oggetto UserList 
+	 * @param {String} primaryKeyUser e' l'oggetto utilizzato assieme a primaryKeyId per ottenere 
+	 * un determinato oggetto UserList
+	 * @return {UserList}
+	 */
+	public UserList get(int primaryKeyId,String primaryKeyUser){
+<span class="fc" id="L94">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L95">		UserList user=new UserList(primaryKeyId,primaryKeyUser);</span>
+<span class="fc" id="L96">		UserList dbUser=(UserList)session.get(UserList.class, user);</span>
+<span class="fc" id="L97">		t.commit();</span>
+<span class="fc" id="L98">		return dbUser;</span>
+	}
+	
+	/**
+	 * Ritorna una lista di oggetti UserList aventi id uguale all'intero passato, ovvero ritorna 
+	 * la lista degli utenti presenti nella lista con id passato
+	 * 
+	 * @method +getUsersInList
+	 * @param {int} id e' il valore utilizzato per ottenere gli utenti appartenenti alla lista
+	 * identificata da tale id
+	 * @return {List&lt;UserList&gt;}
+	 */
+	public List&lt;UserList&gt; getUsersInList(int id){
+<span class="fc" id="L111">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L112">		SQLQuery query=session.createSQLQuery(&quot;SELECT * FROM UserLists WHERE idList='&quot;+id+&quot;'&quot;);</span>
+<span class="fc" id="L113">		query=query.addEntity(UserList.class);</span>
+<span class="fc" id="L114">		List&lt;UserList&gt; list=(List&lt;UserList&gt;)query.list();</span>
+<span class="fc" id="L115">		t.commit();</span>
+<span class="fc" id="L116">		return list;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

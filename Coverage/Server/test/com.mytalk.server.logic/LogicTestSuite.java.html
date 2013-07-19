@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>LogicTestSuite.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic</a> &gt; <span class="el_source">LogicTestSuite.java</span></div><h1>LogicTestSuite.java</h1><pre class="source lang-java linenums">/**
+ * Filename: LogicTestSuite.java
+ * Package: com.mytalk.server.logic
+ * Author: Nicolo' Mazzucato
+ * Date: 2013-05-22
+ *
+ * Diary:
+ * Version | Date       | Developer | Changes
+ * --------+------------+-----------+------------------
+ * 0.1	   | 2013-05-22 |    NM     | [+] Inserimento classe e metodi   
+ *
+ * This software is distributed under GNU/GPL 2.0.
+ *
+ * Software licensed to:
+ * - Zucchetti SRL
+ */
+
+package com.mytalk.server.logic;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+import com.mytalk.server.logic.processing.request_processor.GenericRequestTest;
+import com.mytalk.server.logic.processing.request_processor.connection_information.AcceptCallTest;
+import com.mytalk.server.logic.processing.request_processor.connection_information.RefuseCallTest;
+import com.mytalk.server.logic.processing.request_processor.connection_information.UserCallTest;
+import com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccountTest;
+import com.mytalk.server.logic.processing.request_processor.empty_information.LogoutTest;
+import com.mytalk.server.logic.processing.request_processor.empty_information.LogoutToAnonymousTest;
+import com.mytalk.server.logic.processing.request_processor.give_call_information.AddCallTest;
+import com.mytalk.server.logic.processing.request_processor.give_call_information.GetCallsTest;
+import com.mytalk.server.logic.processing.request_processor.list_information.BlackListAddTest;
+import com.mytalk.server.logic.processing.request_processor.list_information.BlackListRemoveTest;
+import com.mytalk.server.logic.processing.request_processor.list_information.ListUserAddTest;
+import com.mytalk.server.logic.processing.request_processor.list_information.ListUserRemoveTest;
+import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdateTest;
+import com.mytalk.server.logic.processing.request_processor.update_list_information.ListCreateTest;
+import com.mytalk.server.logic.processing.request_processor.update_list_information.ListDeleteTest;
+import com.mytalk.server.logic.processing.request_processor.update_list_information.UpdateListNameTest;
+import com.mytalk.server.logic.processing.request_processor.world_information.CreateAccountTest;
+import com.mytalk.server.logic.processing.request_processor.world_information.LoginAsAnonymousTest;
+import com.mytalk.server.logic.processing.request_processor.world_information.LoginTest;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+	   GenericRequestTest.class,
+	   CreateAccountTest.class,
+	   DeleteAccountTest.class,
+	   LoginAsAnonymousTest.class,
+	   LoginTest.class,
+	   LogoutToAnonymousTest.class,
+	   LogoutTest.class,
+	   StateUpdateTest.class,
+	   AddCallTest.class,
+	   GetCallsTest.class,
+	   BlackListAddTest.class,
+	   BlackListRemoveTest.class,
+	   ListCreateTest.class,
+	   ListDeleteTest.class,
+	   ListUserAddTest.class,
+	   ListUserRemoveTest.class,
+	   UpdateListNameTest.class,
+	   AcceptCallTest.class,
+	   RefuseCallTest.class,
+	   UserCallTest.class
+	})
+<span class="nc" id="L67">public class LogicTestSuite {</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

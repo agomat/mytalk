@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BlackListAddTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.list_information</a> &gt; <span class="el_source">BlackListAddTest.java</span></div><h1>BlackListAddTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: BlackListAddTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.list_information
+* Author: Michael Ferronato
+* Date: 2013-05-08
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |2013-05-08  |   MF      | [+] Inserimento classe    
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+package com.mytalk.server.logic.processing.request_processor.list_information;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.list_information.BlackListAdd;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ListPack;
+import com.mytalk.server.logic.shared.model_client.UserList;
+
+<span class="fc" id="L36">public class BlackListAddTest {</span>
+
+<span class="fc" id="L38">	EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L39">	private Convert conv=new Convert();</span>
+
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L43">		envSetter.cleanDB();</span>
+<span class="fc" id="L44">		envSetter.initDB();</span>
+<span class="fc" id="L45">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L49">		BlackListAdd blackListAdd=new BlackListAdd();</span>
+<span class="fc" id="L50">		Authentication auth=new Authentication(&quot;user1&quot;,&quot;user1&quot;,&quot;123.123.123.1&quot;);</span>
+<span class="fc" id="L51">		List&lt;Integer&gt; listIdUser=new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L52">		listIdUser.add(3);</span>
+<span class="fc" id="L53">		UserList userList=new UserList(0,&quot;Blacklist&quot;,listIdUser);</span>
+<span class="fc" id="L54">		List&lt;UserList&gt; listUserList=new ArrayList&lt;UserList&gt;();</span>
+<span class="fc" id="L55">		listUserList.add(userList);</span>
+<span class="fc" id="L56">		ListPack pack=new ListPack(listUserList);</span>
+<span class="fc" id="L57">		String packString=conv.convertJavaToJson(pack);</span>
+<span class="fc" id="L58">		ARI ari= new ARI(auth,&quot;BlackListAdd&quot;,packString);</span>
+		
+<span class="fc" id="L60">		ARI ariResponse=blackListAdd.manage(ari);</span>
+<span class="fc" id="L61">		assertEquals(&quot;Dati corretti ma non viene processata la richiesta&quot;,&quot;SuccessfulBlackListAdd&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L63">		ariResponse=blackListAdd.manage(ari);</span>
+<span class="fc" id="L64">		assertEquals(&quot;User gia' in blacklist ma viene aggiunto lo stesso&quot;,&quot;UserAlreadyBlacklisted&quot;,ariResponse.getReq());</span>
+	
+<span class="fc" id="L66">		Authentication new_auth=new Authentication(&quot;user1&quot;,&quot;user2&quot;,&quot;123.123.123.1&quot;);</span>
+<span class="fc" id="L67">		ari=new ARI(new_auth,&quot;BlackListAdd&quot;,packString);</span>
+<span class="fc" id="L68">		ariResponse=blackListAdd.manage(ari);</span>
+<span class="fc" id="L69">		assertEquals(&quot;Autenticazione assente ma viene aggiunto lo stesso&quot;,&quot;AuthenticationFailBlackListAdd&quot;,ariResponse.getReq());</span>
+		
+<span class="fc" id="L71">		listIdUser.remove(0);</span>
+<span class="fc" id="L72">		listIdUser.add(13);</span>
+<span class="fc" id="L73">		String new_packString=conv.convertJavaToJson(pack);</span>
+<span class="fc" id="L74">		ari=new ARI(auth,&quot;BlackListAdd&quot;,new_packString);</span>
+<span class="fc" id="L75">		ariResponse=blackListAdd.manage(ari);</span>
+<span class="fc" id="L76">		assertEquals(&quot;Id non esiste ma viene aggiunto lo stesso&quot;,&quot;IdNotFoundBlackListAdd&quot;,ariResponse.getReq());</span>
+		
+		
+		
+<span class="fc" id="L80">		listUserList.get(0).setList(null);</span>
+<span class="fc" id="L81">		new_packString=conv.convertJavaToJson(pack);</span>
+<span class="fc" id="L82">		ari=new ARI(auth,&quot;BlackListAdd&quot;,new_packString);</span>
+<span class="fc" id="L83">		ariResponse=blackListAdd.manage(ari);</span>
+<span class="fc" id="L84">		assertEquals(&quot;Nesssun user da aggiungere in blacklist ma processata&quot;,&quot;CorruptedPack&quot;,ariResponse.getReq());</span>
+			
+	/**
+	 * UsernameNotCorrespondingException non viene mai sollevata perche' per 
+	 * creare l'user si usa il valore presente in authentication
+	 * UsernameNotExisting non viene mai sollevata perche' vi e' l'eccezione 
+	 * IdNotFoundException che previene cio'
+	 */
+	
+<span class="fc" id="L93">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

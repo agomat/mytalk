@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GenericRequest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor</a> &gt; <span class="el_source">GenericRequest.java</span></div><h1>GenericRequest.java</h1><pre class="source lang-java linenums">/**
+* Filename: GenericRequest.java
+* Package: com.mytalk.server.logic.processing.request_processor
+* Author: Nicolo' Toso
+* Date: 2013-04-29
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-22 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-29 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe astratta che rappresenta una richiesta generica proveniente dal client e contiene dei
+* metodi di utilita' necessari per verificare il corretto contenuto dei pacchetti information e dei
+* dati di autenticazione
+*/
+
+package com.mytalk.server.logic.processing.request_processor;
+
+import java.util.List;
+import com.mytalk.server.data.storage.DataAccess;
+import com.mytalk.server.data.storage.IDataAccess;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.ConnectionPack;
+import com.mytalk.server.logic.shared.GiveCallPack;
+import com.mytalk.server.logic.shared.ListPack;
+import com.mytalk.server.logic.shared.UpdateListPack;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.model_client.UserList;
+import com.mytalk.server.logic.processing.Convert;
+
+<span class="fc" id="L38">public abstract class GenericRequest {</span>
+	/**
+	 * Identifica l'oggetto di tipo DataAccess utilizzato per comunicare con la componente CSDAT2
+	 * 
+	 * @property #da
+	 * @type {IDataAccess}
+	 */
+<span class="fc" id="L45">	protected static IDataAccess da=new DataAccess();</span>
+	
+	/**
+	 * Identifica l'oggetto di tipo CSDAT1.Convert utilizzato per convertire le stringhe
+	 *  da Java a JSON e viceversa
+	 *  
+	 *  @property #conv
+	 *  @type {Convert}
+	 */
+<span class="fc" id="L54">	protected static Convert conv=new Convert();</span>
+	
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' i due campi dati sono statici e vengono
+	 * inizializzati staticamente
+	 * 
+	 * @method +GenericRequest
+	 */
+<span class="fc" id="L62">	public GenericRequest(){};</span>
+	
+	/**
+	 * Metodo astratto che si occupa di elaborare la richiesta e viene definito in modo specifico 
+	 * dalle classi che implementano tale interfaccia 
+	 * 
+	 * @method +manage
+	 * @param {ARI} pack e' l'oggetto che viene elaborato dal metodo al fine di processare la 
+	 * specifica richiesta
+	 * @return {ARI}
+	 */
+	public abstract ARI manage(ARI pack);
+	
+	/**
+	 * Verifica che il pacchetto auth non abbia valore null e che i campi dati username e password
+	 * siano diversi da null, in caso positivo restituisce true altrimenti false
+	 * 
+	 * @method +checkAuthenticationWellFormed
+	 * @param {Authentication} auth e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public  static boolean checkAuthenticationWellFormed(Authentication auth){
+<span class="fc" id="L84">		boolean check=false;</span>
+<span class="fc bfc" id="L85" title="All 6 branches covered.">		if(auth!=null &amp;&amp; auth.getUser()!=null &amp;&amp; auth.getPwd()!=null){</span>
+<span class="fc" id="L86">			check=true;</span>
+		}
+<span class="fc" id="L88">		return check;</span>
+	}
+	
+	/**
+	 * Verifica che il pacchetto pack non abbia valore null e che tutti i suoi campi dati non
+	 * abbiano un valore null, in caso positivo restituisce true altrimenti false
+	 * 
+	 * @method +checkConnectionPackWellFormed
+	 * @param {ConnectionPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkConnectionPackWellFormed(ConnectionPack pack){
+<span class="fc" id="L100">		boolean check=false;</span>
+<span class="fc bfc" id="L101" title="All 10 branches covered.">		if(pack!=null &amp;&amp; pack.getMyIp()!=null &amp;&amp; pack.getSpeakerIp()!=null &amp;&amp; pack.getRTCinfo()!=null &amp;&amp; pack.getMyUserId()!=null){</span>
+<span class="fc" id="L102">			check=true;</span>
+		}
+<span class="fc" id="L104">		return check;</span>
+	}
+	
+	/**
+	 * Verifica che il pacchetto pack non abbia valore null e che i suoi campi dati 
+	 * myIp, speakerIp e RTCInfo non abbiano un valore null, in caso positivo restituisce true
+	 * altrimenti false
+	 * 
+	 * @method +checkAnonymousConnectionPackWellFormed
+	 * @param {ConnectionPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkAnonymousConnectionPackWellFormed(ConnectionPack pack){
+<span class="fc" id="L117">		boolean check=false;</span>
+<span class="fc bfc" id="L118" title="All 8 branches covered.">		if(pack!=null &amp;&amp; pack.getMyIp()!=null &amp;&amp; pack.getSpeakerIp()!=null &amp;&amp; pack.getRTCinfo()!=null){</span>
+<span class="fc" id="L119">				check=true;</span>
+		}
+<span class="fc" id="L121">		return check;</span>
+	} 
+
+	/**
+	 * Verifica che il pacchetto pack non abbia valore null, che la lista di userlist non 
+	 * abbia valore null e che l'oggetto userlist abbia i campi name e list con valore diverso 
+	 * da null
+	 * 
+	 * @method +checkListPackWellFormed
+	 * @param {ListPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkListPackWellFormed(ListPack pack){
+<span class="fc" id="L134">		boolean check=false;</span>
+		
+<span class="fc bfc" id="L136" title="All 4 branches covered.">		if(pack!=null &amp;&amp; pack.getList()!=null){</span>
+<span class="fc" id="L137">			List&lt;UserList&gt; listUserList=pack.getList();</span>
+<span class="pc bpc" id="L138" title="2 of 6 branches missed.">			if(listUserList.get(0)!=null &amp;&amp; listUserList.get(0).getList()!=null &amp;&amp; listUserList.get(0).getName()!=null){</span>
+<span class="fc" id="L139">				check=true;</span>
+			}	
+		}
+<span class="fc" id="L142">		return check;</span>
+	}
+	
+	/**
+	 * Verifica che il pacchetto pack non abbia valore null, che la lista di userlist non abbia 
+	 * valore null e che abbia dimensione maggiore di 0
+	 * 
+	 * @method +checkPartialListPackWellFormed
+	 * @param {ListPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkPartialListPackWellFormed(ListPack pack){
+<span class="fc" id="L154">		boolean check=false;		</span>
+<span class="pc bpc" id="L155" title="3 of 6 branches missed.">		if(pack!=null &amp;&amp; pack.getList()!=null &amp;&amp; pack.getList().size()!=0){</span>
+<span class="fc" id="L156">			check=true;</span>
+		}
+<span class="fc" id="L158">		return check;</span>
+	}
+	
+	/**
+	 * Verifica che il paccheto pack non abbia valore null, che il wrapperCall contenuto non abbia
+	 * valore null, che il suo campo dati list non abbia valore null e che la corrispondente lista
+	 * abbia dimensione maggiore di 0
+	 * 
+	 * @method +checkGiveCallPackWellFormed
+	 * @param {GiveCallPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkGiveCallPackWellFormed(GiveCallPack pack){
+<span class="fc" id="L171">		boolean check=false;</span>
+<span class="fc bfc" id="L172" title="All 8 branches covered.">		if(pack!=null &amp;&amp; pack.getWrapperCall()!=null &amp;&amp; pack.getWrapperCall().getList()!=null &amp;&amp; pack.getWrapperCall().getList().size()!=0){</span>
+<span class="fc" id="L173">			check=true;</span>
+		}
+<span class="fc" id="L175">		return check;</span>
+	}
+	
+	/**
+	 * Verifica che il pacchetto pack non abbia valore null e che i due campi dati worldList e 
+	 * worldPersonalData non abbiano valore uguale a null
+	 * 
+	 * @method +checkWorldPackWellFormed
+	 * @param {WorldPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkWorldPackWellFormed(WorldPack pack){
+<span class="fc" id="L187">		boolean check=false;</span>
+<span class="fc bfc" id="L188" title="All 6 branches covered.">		if(pack!=null &amp;&amp; pack.getWorldPersonalData()!=null &amp;&amp; pack.getWorldPersonalData().getPersonalData()!=null){</span>
+<span class="fc" id="L189">			check=true;</span>
+		}
+<span class="fc" id="L191">		return check;</span>
+	}
+	
+	/**
+	 * Verifica che il pacchetto pack non abbia valore null e che i suoi tre campi dati non
+	 * abbiano valore uguale a null
+	 * 
+	 * @method +checkUpdateListPackWellFormed
+	 * @param {UpdateListPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkUpdateListPackWellFormed(UpdateListPack pack){
+<span class="fc" id="L203">		boolean check=false;</span>
+<span class="fc bfc" id="L204" title="All 8 branches covered.">		if(pack!=null &amp;&amp; pack.getListName()!=null &amp;&amp; pack.getNewListName()!=null &amp;&amp; pack.getOwner()!=null){</span>
+<span class="fc" id="L205">			check=true;</span>
+		}
+<span class="fc" id="L207">		return check;</span>
+	}
+	
+	/**
+	 * verifica che il pacchetto pack non abbia valore null e che i suoi campi dati owner
+	 * e listName non abbiamo valore null
+	 * 
+	 * @method +checkPartialUpdateListPackWellFormed
+	 * @param {UpdateListPack} pack e' l'oggetto sottoposto a verifica sulla sua buona formazione
+	 * @return {boolean}
+	 */
+	public static boolean checkPartialUpdateListPackWellFormed(UpdateListPack pack){
+<span class="fc" id="L219">		boolean check=false;</span>
+<span class="fc bfc" id="L220" title="All 6 branches covered.">		if(pack!=null &amp;&amp; pack.getListName()!=null &amp;&amp; pack.getOwner()!=null){</span>
+<span class="fc" id="L221">			check=true;</span>
+		}
+<span class="fc" id="L223">		return check;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

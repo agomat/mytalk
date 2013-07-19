@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>StateUpdateTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.processing.request_processor.state_update_information</a> &gt; <span class="el_source">StateUpdateTest.java</span></div><h1>StateUpdateTest.java</h1><pre class="source lang-java linenums">/**
+* Filename: StateUpdateTest.java
+* Package: com.mytalk.server.logic.processing.request_processor.state_update_information
+* Author: Michael Ferronato
+* Date: 2013-05-20
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.1	  |	2013-05-20 |    MF     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+*/
+
+package com.mytalk.server.logic.processing.request_processor.state_update_information;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.mytalk.server.EnvironmentSetter;
+import com.mytalk.server.exceptions.IdNotFoundException;
+import com.mytalk.server.exceptions.UserNotExistingException;
+import com.mytalk.server.logic.processing.Convert;
+import com.mytalk.server.logic.processing.request_processor.empty_information.DeleteAccount;
+import com.mytalk.server.logic.processing.request_processor.state_update_information.StateUpdate;
+import com.mytalk.server.logic.processing.request_processor.world_information.UpdateAccount;
+import com.mytalk.server.logic.shared.ARI;
+import com.mytalk.server.logic.shared.Authentication;
+import com.mytalk.server.logic.shared.UserStatePack;
+import com.mytalk.server.logic.shared.WorldPack;
+import com.mytalk.server.logic.shared.model_client.PersonalData;
+import com.mytalk.server.logic.shared.model_client.User;
+import com.mytalk.server.logic.shared.model_client.WorldPersonalData;
+
+<span class="fc" id="L40">public class StateUpdateTest {</span>
+
+<span class="fc" id="L42">	private EnvironmentSetter envSetter=new EnvironmentSetter();</span>
+<span class="fc" id="L43">	private Convert conv=new Convert();</span>
+	
+	@Before
+	public void setTestEnvironment(){
+<span class="fc" id="L47">		envSetter.cleanDB();</span>
+<span class="fc" id="L48">		envSetter.initDB();</span>
+<span class="fc" id="L49">	}</span>
+	
+	@Test
+	public void testManage() {
+<span class="fc" id="L53">		StateUpdate stateUpdate=new StateUpdate();</span>
+<span class="fc" id="L54">		UpdateAccount updateAccount=new UpdateAccount();</span>
+<span class="fc" id="L55">		Authentication auth=new Authentication(&quot;user3&quot;,&quot;user3&quot;,&quot;123.123.123.3&quot;);</span>
+<span class="fc" id="L56">		PersonalData personalData=new PersonalData(4,&quot;user3&quot;,&quot;user3&quot;,&quot;user3&quot;,&quot;user3&quot;,&quot;user3@mytalk.com&quot;,&quot;emailhash123123123&quot;,&quot;123.123.123.3&quot;);</span>
+<span class="fc" id="L57">		WorldPersonalData wpd=new WorldPersonalData(personalData);</span>
+<span class="fc" id="L58">		WorldPack pack=new WorldPack(null,wpd);</span>
+<span class="fc" id="L59">		String packString=conv.convertJavaToJson(pack);</span>
+<span class="fc" id="L60">		ARI ari=new ARI(auth,&quot;Login&quot;,packString);</span>
+		
+<span class="fc" id="L62">		ARI esito=stateUpdate.manage(ari);</span>
+<span class="fc" id="L63">		String stringEsito=esito.getInfo();</span>
+<span class="fc" id="L64">		UserStatePack userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);</span>
+<span class="fc" id="L65">		User userEsito=userStatePack.getList();</span>
+<span class="fc" id="L66">		User user=new User(4,&quot;user3&quot;,&quot;user3&quot;,&quot;user3&quot;,&quot;emailhash123123123&quot;,&quot;123.123.123.3&quot;,true);</span>
+		
+<span class="fc" id="L68">		assertEquals(userEsito.getId(),user.getId());</span>
+<span class="fc" id="L69">		assertEquals(userEsito.getIp(),user.getIp());</span>
+<span class="fc" id="L70">		assertEquals(userEsito.getMd5(),user.getMd5());</span>
+<span class="fc" id="L71">		assertEquals(userEsito.getName(),user.getName());</span>
+<span class="fc" id="L72">		assertEquals(userEsito.getSurname(),user.getSurname());</span>
+<span class="fc" id="L73">		assertEquals(userEsito.getUsername(),user.getUsername());</span>
+<span class="fc" id="L74">		assertEquals(userEsito.getOnline(),user.getOnline());</span>
+		
+<span class="fc" id="L76">		PersonalData updatePersonalData=new PersonalData(4,&quot;user3&quot;,&quot;user3&quot;,&quot;user03&quot;,&quot;user3&quot;,&quot;user3@mytalk.com&quot;,&quot;emailhash123123123&quot;,&quot;123.123.123.3&quot;);</span>
+<span class="fc" id="L77">		wpd.setPersonalData(updatePersonalData);</span>
+<span class="fc" id="L78">		pack.setWorldPersonalData(wpd);</span>
+<span class="fc" id="L79">		packString=conv.convertJavaToJson(pack);</span>
+<span class="fc" id="L80">		ARI ariUpdate= new ARI(auth,&quot;UpdateAccount&quot;,packString);</span>
+<span class="fc" id="L81">		updateAccount.manage(ariUpdate);</span>
+<span class="fc" id="L82">		esito=stateUpdate.manage(ariUpdate);</span>
+<span class="fc" id="L83">		stringEsito=esito.getInfo();</span>
+<span class="fc" id="L84">		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);</span>
+<span class="fc" id="L85">		userEsito=userStatePack.getList();</span>
+<span class="fc" id="L86">		user=new User(4,&quot;user3&quot;,&quot;user03&quot;,&quot;user3&quot;,&quot;emailhash123123123&quot;,&quot;123.123.123.3&quot;,true);</span>
+		
+<span class="fc" id="L88">		assertEquals(userEsito.getId(),user.getId());</span>
+<span class="fc" id="L89">		assertEquals(userEsito.getIp(),user.getIp());</span>
+<span class="fc" id="L90">		assertEquals(userEsito.getMd5(),user.getMd5());</span>
+<span class="fc" id="L91">		assertEquals(userEsito.getName(),user.getName());</span>
+<span class="fc" id="L92">		assertEquals(userEsito.getSurname(),user.getSurname());</span>
+<span class="fc" id="L93">		assertEquals(userEsito.getUsername(),user.getUsername());</span>
+<span class="fc" id="L94">		assertEquals(userEsito.getOnline(),user.getOnline());</span>
+		
+		
+<span class="fc" id="L97">		ari.setReq(&quot;Logout&quot;);</span>
+<span class="fc" id="L98">		esito=stateUpdate.manage(ari);</span>
+<span class="fc" id="L99">		stringEsito=esito.getInfo();</span>
+<span class="fc" id="L100">		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);</span>
+<span class="fc" id="L101">		userEsito=userStatePack.getList();</span>
+<span class="fc" id="L102">		assertFalse(userEsito.getOnline());</span>
+
+		
+<span class="fc" id="L105">		DeleteAccount deleteAccount=new DeleteAccount();</span>
+<span class="fc" id="L106">		Authentication authRightTest=new Authentication(&quot;user3&quot;,&quot;user3&quot;,&quot;123.123.123.3&quot;);</span>
+<span class="fc" id="L107">		ARI ariDelete=new ARI(authRightTest,&quot;DeleteAccount&quot;,null);</span>
+<span class="fc" id="L108">		ARI ariResult=deleteAccount.manage(ari);</span>
+<span class="fc" id="L109">		UserStatePack userPack=(UserStatePack)conv.convertJsonToJava(ariResult.getInfo(), UserStatePack.class);</span>
+<span class="fc" id="L110">		User userTest=userPack.getList();</span>
+<span class="fc" id="L111">		ariDelete.setInfo(ariResult.getInfo());</span>
+<span class="fc" id="L112">		esito=stateUpdate.manage(ariDelete);</span>
+<span class="fc" id="L113">		stringEsito=esito.getInfo();</span>
+<span class="fc" id="L114">		userStatePack=(UserStatePack)conv.convertJsonToJava(stringEsito, UserStatePack.class);</span>
+<span class="fc" id="L115">		userEsito=userStatePack.getList();</span>
+<span class="fc" id="L116">		assertEquals(userTest.getId(),userEsito.getId());</span>
+<span class="fc" id="L117">		assertEquals(userTest.getUsername(),userEsito.getUsername());</span>
+<span class="fc" id="L118">		assertEquals(userTest.getName(),userEsito.getName());</span>
+<span class="fc" id="L119">		assertEquals(userTest.getSurname(),userEsito.getSurname());</span>
+<span class="fc" id="L120">		assertEquals(userTest.getMd5(),userEsito.getMd5());</span>
+<span class="fc" id="L121">		assertEquals(userTest.getIp(),userEsito.getIp());</span>
+<span class="fc" id="L122">		assertEquals(userTest.getOnline(),userEsito.getOnline());</span>
+		
+		/**
+		 *  Le due eccezioni UserNotExistingException e IdNotFoundException non vengono lanciate 
+		 *  per correttezza da costruzione
+		 */
+<span class="fc" id="L128">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

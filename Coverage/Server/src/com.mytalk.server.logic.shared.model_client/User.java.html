@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared.model_client</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">/**
+* Filename: User.java
+* Package: com.mytalk.server.logic.shared.model_client
+* Author: Nicolo' Toso
+* Date: 2013-04-11
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-11 |    NT     | [+] Inserimento classe, oggetti e costruttore     
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che fornisce i dati dell'utente
+*/
+
+package com.mytalk.server.logic.shared.model_client;
+
+public class User{
+	/**
+	 * Identifica l'id dell'utente
+	 * 
+	 * @property -id
+	 * @type {Integer}
+	 */
+	private Integer id;
+	/**
+	 * Identifica l'username dell'utente
+	 * 
+	 * @property -username
+	 * @type {String}
+	 */
+	private String username;
+	/**
+	 * Identifica il nome dell'utente
+	 *  
+	 * @property -name
+	 * @type {String}
+	 */
+	private String name;
+	/**
+	 * Identifica il cognome dell'utente
+	 * 
+	 * @property -surname
+	 * @type {String}
+	 */
+	private String surname;	
+	/**
+	 * Identifica l'indirizzo email, codificato, dell'utente
+	 * 
+	 * @property -md5
+	 * @type {String}
+	 */
+	private String md5;
+	/**
+	 * Identifica l'indirizzo ip dell'utente
+	 * 
+	 * @property -ip
+	 * @type {String}
+	 */
+	private String ip;
+	/**
+	 * Identifica lo stato dell'utente
+	 * 
+	 * @property -online
+	 * @type {boolean}
+	 */
+	private boolean online;
+	
+	/**
+	 * Costruttore della classe che inizializza i campi dati 
+	 * 
+	 * @method +User
+	 * @param {Integer} id_user e' l'oggetto utilizzato per inizializzare il campo dati id
+	 * @param {String} us e' l'oggetto utilizzato per inizializzare il campo dati username
+	 * @param {String} n e' l'oggetto utilizzato per inizializzare il campo dati name
+	 * @param {String} sn e' l'oggetto utilizzato per inizializzare il campo dati surname
+	 * @param {String} m e' l'oggetto utilizzato per inizializzare il campo dati md5
+	 * @param {String} i e' l'oggetto utilizzato per inizializzare il campo dati ip
+	 * @param {boolean} o e' l'oggetto utilizzato per inizializzare il campo dati online
+	 */
+<span class="fc" id="L86">	public User(Integer id_user, String us, String n, String sn, String m, String i, boolean o){</span>
+<span class="fc" id="L87">		id=id_user;</span>
+<span class="fc" id="L88">		username=us;</span>
+<span class="fc" id="L89">		name=n;</span>
+<span class="fc" id="L90">		surname=sn;</span>
+<span class="fc" id="L91">		online=o;</span>
+<span class="fc" id="L92">		ip=i;</span>
+<span class="fc" id="L93">		md5=m;</span>
+<span class="fc" id="L94">	}</span>
+	/**
+	 * Ritorna il campo dati id
+	 * 
+	 * @method +getId
+	 * @return {Integer}
+	 */
+	public Integer getId(){
+<span class="fc" id="L102">		return id;</span>
+	}
+	/** 
+	 * Imposta il campo dati id
+	 * 
+	 * @method +setId
+	 * @param {Integer} id_user e' l'oggetto assegnato al campo dati id
+	 * @return {void}
+	 */
+	public void setId(Integer id_user){
+<span class="nc" id="L112">		id=id_user;</span>
+<span class="nc" id="L113">	}</span>
+	/**
+	 * Ritorna il campo dati username
+	 * 
+	 * @method +getUsername
+	 * @return {String}
+	 */
+	public String getUsername(){
+<span class="fc" id="L121">		return username;</span>
+	}
+	/** 
+	 * Imposta il campo dati username
+	 * 
+	 * @method +setUsername
+	 * @param {String} u e' l'oggetto assegnato al campo dati username
+	 * @return {void}
+	 */
+	public void setUsername(String u){
+<span class="nc" id="L131">		username=u;</span>
+<span class="nc" id="L132">	}</span>
+	/**
+	 * Ritorna il campo dati name
+	 * 
+	 * @method +getName
+	 * @return {String}
+	 */
+	public String getName(){
+<span class="fc" id="L140">		return name;</span>
+	}
+	/** 
+	 * Imposta il campo dati name
+	 * 
+	 * @method +setName
+	 * @param {String} n e' l'oggetto assegnato al campo dati name
+	 * @return {void}
+	 */
+	public void setName(String n){
+<span class="nc" id="L150">		name=n;</span>
+<span class="nc" id="L151">	}</span>
+	/**
+	 * Ritorna il campo dati surname
+	 * 
+	 * @method +getSurname
+	 * @return {String}
+	 */
+	public String getSurname(){
+<span class="fc" id="L159">		return surname;</span>
+	}
+	/** 
+	 * Imposta il campo dati surname
+	 * 
+	 * @method +setSurname
+	 * @param {String} sn e' l'oggetto assegnato al campo dati surname
+	 * @return {void}
+	 */
+	public void setSurname(String sn){
+<span class="nc" id="L169">		surname=sn;</span>
+<span class="nc" id="L170">	}</span>
+	/**
+	 * Ritorna il campo dati online
+	 * 
+	 * @method +getOnline
+	 * @return {boolean}
+	 */
+	public boolean getOnline(){
+<span class="fc" id="L178">		return online;</span>
+	}
+	/** 
+	 * Imposta il campo dati online
+	 * 
+	 * @method +setStatus
+	 * @param {boolean} o e' l'oggetto assegnato al campo dati online
+	 * @return {void}
+	 */
+	public void setStatus(boolean o){
+<span class="nc" id="L188">		online=o;</span>
+<span class="nc" id="L189">	}</span>
+	/**
+	 * Ritorna il campo dati md5
+	 * 
+	 * @method +getMd5
+	 * @return {String}
+	 */
+	public String getMd5(){
+<span class="fc" id="L197">		return md5;</span>
+	}
+	/** 
+	 * Imposta il campo dati md5
+	 * 
+	 * @method +setMd5
+	 * @param {String} m e' l'oggetto assegnato al campo dati md5
+	 * @return {void}
+	 */
+	public void setMd5(String m){
+<span class="nc" id="L207">		md5=m;</span>
+<span class="nc" id="L208">	}</span>
+	/**
+	 * Ritorna il campo dati ip
+	 * 
+	 * @method +getIp
+	 * @return {String}
+	 */
+	public String getIp(){
+<span class="fc" id="L216">		return ip;</span>
+	}
+	/** 
+	 * Imposta il campo dati ip
+	 * 
+	 * @method +setIp
+	 * @param {String} i e' l'oggetto assegnato al campo dati ip
+	 * @return {void}
+	 */
+	public void setIp(String i){
+<span class="nc" id="L226">		ip=i;</span>
+<span class="nc" id="L227">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

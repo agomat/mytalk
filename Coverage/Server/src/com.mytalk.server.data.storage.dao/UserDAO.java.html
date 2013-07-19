@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserDAO.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.data.storage.dao</a> &gt; <span class="el_source">UserDAO.java</span></div><h1>UserDAO.java</h1><pre class="source lang-java linenums">/**
+* Filename: UserDao.java
+* Package: com.mytalk.server.data.storage.dao
+* Author: Michael Ferronato
+* Date: 2013-04-12
+*
+* Diary:
+* Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-18 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-15 |    MF     | [+] Creazione classe e definizione metodi  
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che offre operazioni di lettura e scrittura sul database riguardanti la tabella degli
+* utenti registrati nel sistema
+*/
+
+package com.mytalk.server.data.storage.dao;
+
+import java.util.List;
+
+import org.hibernate.SQLQuery;
+import org.hibernate.Transaction;
+
+import com.mytalk.server.data.model.User;
+
+public class UserDAO extends GenericDAO{
+	/**
+	 * Costruttore della classe con corpo vuoto poiche' non vi sono campi dati da inizializzare
+	 * 
+	 * @method +UserDAO
+	 */
+<span class="fc" id="L37">	public UserDAO(){}</span>
+	
+	/**
+	 * Salva nel database il record corrispondente all'oggetto userObj passato
+	 * 
+	 * @method +save
+	 * @param {User} userObj e' l'oggetto utilizzato da Hibernate per il salvataggio nel database
+	 * @return {void}
+	 */
+	public void save(User userObj){
+<span class="fc" id="L47">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L48">		session.save(userObj);</span>
+<span class="fc" id="L49">		t.commit();</span>
+<span class="fc" id="L50">	}</span>
+	
+	/**
+	 * Aggiorna nel database il record avente chiave primaria uguale a quella di userObj usando
+	 *  gli attributi in userObj
+	 *  
+	 *  @method +update
+	 *  @param {User} userObj e' l'oggetto utilizzato da Hibernate per fare l'aggiornamento del
+	 *  database
+	 *  @return {void}
+	 */
+	public void update(User userObj){
+<span class="fc" id="L62">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L63">		User userEntity=(User) session.get(User.class, userObj.getUsername());</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if(userObj.getName()==null){</span>
+<span class="nc" id="L65">			userObj.setName(userEntity.getName());</span>
+		}
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if(userObj.getSurname()==null){</span>
+<span class="nc" id="L68">			userObj.setSurname(userEntity.getSurname());</span>
+		}
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if(userObj.getPassword()==null){</span>
+<span class="nc" id="L71">			userObj.setPassword(userEntity.getPassword());</span>
+		}
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if(userObj.getEmail()==null){</span>
+<span class="nc" id="L74">			userObj.setEmail(userEntity.getEmail());</span>
+		}
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if(userObj.getEmailHash()==null){</span>
+<span class="nc" id="L77">			userObj.setEmailHash(userEntity.getEmailHash());</span>
+		}
+<span class="fc" id="L79">		session.update(userObj);</span>
+<span class="fc" id="L80">		t.commit();</span>
+<span class="fc" id="L81">	}	</span>
+	
+	/**
+	 * Ritorna l'oggetto User avente chiave primaria la stringa primaryKey; se non e' presente
+	 *  nel database tale record ritorna un oggetto User=null
+	 *  
+	 *  @method +get
+	 *  @param {String} primaryKey e' il valore utilizzato da Hibernate per ottenere una determinata 
+	 * entita' dal database
+	 *  @return {User}
+	 */
+	public User get(String primaryKey){
+<span class="fc" id="L93">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L94">		User userEntity=(User) session.get(User.class,primaryKey);</span>
+<span class="fc" id="L95">		t.commit();</span>
+<span class="fc" id="L96">		return userEntity;</span>
+	}
+	
+	/**
+	 * Ritorna una lista contenente tutti gli oggetti User corrispondenti a record nel database, 
+	 * ovvero ritorna tutti gli utenti registrati
+	 * 
+	 * @method +getAllUsers
+	 * @return {List&lt;User&gt;}
+	 */
+	public List&lt;User&gt; getAllUsers(){
+<span class="nc" id="L107">		Transaction t=session.beginTransaction();</span>
+<span class="nc" id="L108">		List&lt;User&gt; listUsers=null;</span>
+<span class="nc" id="L109">		SQLQuery query=session.createSQLQuery(&quot;SELECT * FROM Users&quot;);</span>
+<span class="nc" id="L110">		query=query.addEntity(User.class);</span>
+<span class="nc" id="L111">		listUsers=query.list();</span>
+<span class="nc" id="L112">		t.commit();</span>
+<span class="nc" id="L113">		return listUsers;</span>
+	}
+	
+	/**
+	 * Ritorna una lista conentente gli oggetti User corrispondenti agli utenti che non risultano 
+	 * al momento autenticati, cioe' il cui username non compare in nessun record della tabella 
+	 * degli utenti online
+	 * 
+	 * @method +getOfflineUsers
+	 * @return {List&lt;User&gt;}
+	 */
+	public List&lt;User&gt; getOfflineUsers(){
+<span class="fc" id="L125">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L126">		List&lt;User&gt; listUsers=null;</span>
+<span class="fc" id="L127">		SQLQuery query=session.createSQLQuery(&quot;SELECT * FROM Users WHERE username NOT IN (SELECT username FROM OnlineUsers WHERE username IS NOT NULL)&quot;);</span>
+<span class="fc" id="L128">		query=query.addEntity(User.class);</span>
+<span class="fc" id="L129">		listUsers=query.list();</span>
+<span class="fc" id="L130">		t.commit();</span>
+<span class="fc" id="L131">		return listUsers;</span>
+	}
+	
+	/**
+	 * Elimina dal database il record avente chiave primaria uguale a quella di userObj
+	 * 
+	 * @method +delete
+	 * @param {User} userObj e' l'oggetto utilizzato da Hibernate per eliminare un record dal 
+	 * database
+	 * @return {void}
+	 */
+	public void delete(User userObj){
+<span class="fc" id="L143">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L144">		session.delete(userObj);</span>
+<span class="fc" id="L145">		t.commit();</span>
+<span class="fc" id="L146">	}</span>
+	
+	/**
+	 * Ritorna l'oggetto User avente attributo id uguale all'intero passato; metodo di utilita'
+	 * 
+	 * @method +getById
+	 * @param {int} id e' il valore utilizzato per ottenere l'utente con il corrispondente id
+	 * @return {User}
+	 */
+	public User getById(int id){
+<span class="fc" id="L156">		Transaction t=session.beginTransaction();</span>
+<span class="fc" id="L157">		SQLQuery query=session.createSQLQuery(&quot;SELECT * FROM Users WHERE id='&quot;+id+&quot;'&quot;);</span>
+<span class="fc" id="L158">		query=query.addEntity(User.class);</span>
+<span class="fc" id="L159">		User user=(User)query.uniqueResult();</span>
+<span class="fc" id="L160">		t.commit();</span>
+<span class="fc" id="L161">		return user;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

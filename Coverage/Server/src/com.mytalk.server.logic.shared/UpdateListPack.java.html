@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UpdateListPack.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</a> &gt; <a href="../../index.html" class="el_group">Server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">com.mytalk.server.logic.shared</a> &gt; <span class="el_source">UpdateListPack.java</span></div><h1>UpdateListPack.java</h1><pre class="source lang-java linenums">/**
+* Filename: UpdateListPack.java
+* Package: com.mytalk.server.logic.shared
+* Author: Nicolo' Toso
+* Date: 2013-04-23
+*
+* Diary:
+| Version | Date       | Developer | Changes
+* --------+------------+-----------+------------------
+* 0.2     | 2013-06-24 |	MF	   | [+] Aggiunta commenti al codice in formato Javadoc
+* 0.1	  |	2013-04-23 |    NT     | [+] Creazione classe e costruttore
+*
+* This software is distributed under GNU/GPL 2.0.
+*
+* Software licensed to:
+* - Zucchetti SRL
+* 
+* Classe che rappresenta l'insieme di informazioni necessarie per la creazione, eliminazione e 
+* la modifica del nome di una lista
+*/
+package com.mytalk.server.logic.shared;
+
+public class UpdateListPack extends Information{
+	/**
+	 * Identifica il nome della lista
+	 * 
+	 *  @property -listName
+	 *  @type {String}
+	 */
+	private String listName;
+	/**
+	 * Identifica l'username del proprietario
+	 * 
+	 * @property -owner
+	 * @type {String}
+	 */
+	private String owner;
+	
+	/**
+	 * Identifica il nuovo nome da attribuire alla lista
+	 * 
+	 * @property -newListName
+	 * @type {String}
+	 */
+	private String newListName;
+	
+	/**
+	 * Costruttore della classe che inizializza i campi dati listName, owner, newListName
+	 * 
+	 * @method +UpdateListPack
+	 * @param {String} n e' l'oggetto utilizzato per inizializzare il campo dati listName
+	 * @param {String} o e' l'oggetto utilizzato per inizializzare il campo dati owner
+	 * @param {String} nn e' l'oggetto utilizzato per inizializzare il campo dati newListName
+	 */
+<span class="fc" id="L55">	public UpdateListPack(String n,String o,String nn){</span>
+<span class="fc" id="L56">		listName=n;</span>
+<span class="fc" id="L57">		owner=o;</span>
+<span class="fc" id="L58">		newListName=nn;</span>
+<span class="fc" id="L59">	}</span>
+	
+	/**
+	 * Ritorna il valore del campo dati listName
+	 * 
+	 * @method +getListName
+	 * @return {String}
+	 */
+	public String getListName(){
+<span class="fc" id="L68">		return listName;</span>
+	}
+	
+	/**
+	 * Imposta il valore del campo dati listName
+	 * 
+	 * @method +setListName
+	 * @param {String} n e' l'oggetto assegnato al campo dati listName
+	 * @return {void}
+	 */
+	public void setListName(String n){
+<span class="fc" id="L79">		listName=n;</span>
+<span class="fc" id="L80">	}</span>
+	
+	/**
+	 * Ritorna il valore del campo dati owner
+	 * 
+	 * @method +getOwner
+	 * @return {String}
+	 */
+	public String getOwner(){
+<span class="fc" id="L89">		return owner;</span>
+	}
+	
+	/**
+	 * Imposta il valore del campo dati owner
+	 * 
+	 * @method +setOwner
+	 * @param {String} o e' l'oggetto assegnato al campo dati owner
+	 * @return {void}
+	 */
+	public void setOwner(String o){
+<span class="fc" id="L100">		owner=o;</span>
+<span class="fc" id="L101">	}</span>
+	
+	/**
+	 * Ritorna il valore del campo dati newListName
+	 * 
+	 * @method +getNewListName
+	 * @return {String}
+	 */
+	public String getNewListName(){
+<span class="fc" id="L110">		return newListName;</span>
+	}
+	
+	/**
+	 * Imposta il valore del campo dati newListName
+	 * 
+	 * @method +setNewListName
+	 * @param {String} n e' l'oggetto assegnato al campo dati newListName
+	 * @return {void}
+	 */
+	public void setNewListName(String n){
+<span class="fc" id="L121">		newListName=n;</span>
+<span class="fc" id="L122">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.0.201210061924</span>ServerUnitTestSuite (Jul 19, 2013 4:34:09 PM)</div></body></html>

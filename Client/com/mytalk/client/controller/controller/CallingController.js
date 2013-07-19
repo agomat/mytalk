@@ -4,7 +4,7 @@
 * Dependencies: com.mytalk.client.controller.controller.ChatMessage
 *          com.mytalk.client.controller.controller.CallInfo
 *          com.mytalk.client.model.statemanager.CallState
-*          com.mytalk.client.controller.comunicator.PeerConnection
+*          com.mytalk.client.controller.communicator.PeerConnection
 *          com.mytalk.client.model.storage.processing.ProcessorFactory
 *          com.mytalk.client.model.modelstruct.WCall
 *          com.mytalk.client.model.modelstruct.Call

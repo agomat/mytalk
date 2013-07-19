@@ -578,7 +578,6 @@
       </div>
 
       <div id="comunicazione">
-
         <video id="local" autoplay muted {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
         <video id="remote" autoplay {{bindAttr class="isConnected:dispay_yes:display_none"}}></video>
         
@@ -604,7 +603,7 @@
           <li {{bindAttr class="stats.receivedBytes:display_yes:display_none"}}><span>Dati ricevuti:</span>{{conversion stats.receivedBytes}}</li>
           <li {{bindAttr class="stats.sentBytes:display_yes:display_none"}}><span>Dati trasmessi:</span>{{conversion stats.sentBytes}}</li>
           <li {{bindAttr class="bitrate:display_yes:display_none"}}><span>Velocit&agrave;:</span>{{bitrate}} kbits/sec</li>
-          <li {{bindAttr class="rtt:display_yes:display_none"}}><span>Round Trip Time:</span>{{rtt}} ms <img src="assets/img/info-icon.png" alt="info" class="infobox" title="Il Round Trip Time o Round Trip Delay (acronimo RTT) è una misura del tempo impiegato da un pacchetto di dimensione trascurabile per viaggiare da un computer della rete ad un altro e tornare indietro (tipicamente, un'andata client-server ed il ritorno server-client). [Wikipedia]" /></li>
+          <li {{bindAttr class="rtt:display_yes:display_none"}}><div id="round_trip_info" class="infobox" original-title="Il Round Trip Time o Round Trip Delay (acronimo RTT) è una misura del tempo impiegato da un pacchetto di dimensione trascurabile per viaggiare da un computer della rete ad un altro e tornare indietro (tipicamente, un'andata client-server ed il ritorno server-client). [Wikipedia]"></div><span>Round Trip Time:</span>{{rtt}} ms </li>
         </ul>
         
       </div>
